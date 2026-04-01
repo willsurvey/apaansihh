@@ -1,30 +1,28 @@
 # ============================================================
 # requirements.txt — Stock Screener IDX
-# Versi terakhir diverifikasi: April 2026
 # ============================================================
 
 # Data finance
-yfinance>=1.2.0
+yfinance>=0.2.40
 
 # Data processing
-pandas>=3.0.2
-numpy>=2.4.4
+pandas>=2.2.0
+numpy>=1.26.0
 
-# Technical analysis
-# pandas-ta versi stabil terakhir di PyPI adalah 0.3.14b
-pandas-ta>=0.3.14b0
+# Technical analysis — install dari GitHub karena PyPI sudah tidak diupdate
+git+https://github.com/twopirllc/pandas-ta.git@development
 
 # HTTP requests ke Stockbit API
-requests>=2.33.1
+requests>=2.31.0
 
 # Parquet cache (OHLCV)
-pyarrow>=23.0.1
+pyarrow>=14.0.0
 
 # Browser automation (refresh Stockbit token)
-playwright>=1.50.0
+playwright>=1.40.0
 
 # Terminal color output
 colorama>=0.4.6
 
 # Excel support
-openpyxl>=3.1.5
+openpyxl>=3.1.2
