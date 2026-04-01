@@ -1,18 +1,19 @@
 # .github/workflows/screener.yml
-# =====================================================================
+# ============================================================
 # SCREENER TRADER INDONESIA — GitHub Actions Workflow
 # Jadwal: Senin-Jumat jam 11:00 UTC = 18:00 WIB
 # Trigger: cron otomatis + manual dispatch + POST dari Vercel (api/cron)
-# =====================================================================
+# Python: 3.13 | Dependencies: numpy>=2.2.6,<2.3 (kompatibel numba)
+# ============================================================
 
 name: Stock Screener IDX
 
 on:
-  # Cron otomatis: jam 11:00 UTC = 18:00 WIB, Senin-Jumat
+  # Cron otomatis: Senin-Jumat jam 11:00 UTC (18:00 WIB)
   schedule:
     - cron: "0 11 * * 1-5"
-
-  # Manual trigger dari Vercel cron.js atau manual dari GitHub UI
+  
+  # Manual trigger dari GitHub UI atau Vercel cron.js
   workflow_dispatch:
     inputs:
       trigger_source:
@@ -29,43 +30,43 @@ jobs:
     name: Run Stock Screener
     runs-on: ubuntu-latest
     timeout-minutes: 45
-
     permissions:
-      contents: write   # Untuk commit hasil JSON ke repo
+      contents: write  # Untuk commit hasil JSON ke repo
 
     steps:
       # -----------------------------------------------------------
-      # 1. Checkout repo
+      # 1. Checkout repository
       # -----------------------------------------------------------
       - name: Checkout repository
         uses: actions/checkout@v4
 
       # -----------------------------------------------------------
       # 2. Setup Python 3.13
-      #    pandas-ta >= 0.4.71b0 requires Python >= 3.12
-      #    TIDAK pakai cache: pip karena menyebabkan error saat
-      #    requirements.txt belum terbaca sebelum checkout selesai
+      #    pandas-ta >=0.4.71b0 memerlukan Python >=3.12
       # -----------------------------------------------------------
       - name: Set up Python 3.13
         uses: actions/setup-python@v5
         with:
           python-version: "3.13"
+          cache: "pip"  # Aktifkan cache untuk percepat instalasi
 
       # -----------------------------------------------------------
-      # 3. Install dependencies
+      # 3. Install dependencies — dengan flag --prefer-binary
+      #    Mencegah build from source yang gagal untuk numpy/numba
       # -----------------------------------------------------------
       - name: Install Python dependencies
         run: |
-          pip install --upgrade pip
-          pip install -r requirements.txt
+          python -m pip install --upgrade pip
+          pip install --prefer-binary --no-cache-dir -r requirements.txt
 
       # -----------------------------------------------------------
-      # 4. Install Playwright browser (untuk refresh token)
+      # 4. Install Playwright Chromium (untuk refresh token Stockbit)
+      #    continue-on-error: true agar workflow tidak gagal total
       # -----------------------------------------------------------
       - name: Install Playwright Chromium
         run: |
           python -m playwright install chromium --with-deps
-        continue-on-error: true   # Tidak fatal jika gagal install
+        continue-on-error: true
 
       # -----------------------------------------------------------
       # 5. Restore Stockbit session dari GitHub Secrets
@@ -79,11 +80,11 @@ jobs:
             echo "$STOCKBIT_SESSION" | base64 -d > stockbit_session.json
             echo "✅ stockbit_session.json restored"
           else
-            echo "⚠️ STOCKBIT_SESSION secret tidak tersedia — akan pakai YAHOO_ONLY mode"
+            echo "⚠️ STOCKBIT_SESSION secret tidak tersedia — fallback ke YAHOO_ONLY mode"
           fi
 
       # -----------------------------------------------------------
-      # 6. Jalankan screener
+      # 6. Jalankan screener.py
       # -----------------------------------------------------------
       - name: Run screener
         env:
@@ -93,12 +94,12 @@ jobs:
         run: |
           echo "🚀 Memulai screening..."
           echo "Trigger: ${{ github.event.inputs.trigger_source || 'cron' }}"
+          echo "FORCE_MODE: ${FORCE_MODE:-AUTO}"
           python screener.py
           echo "✅ Screening selesai"
 
       # -----------------------------------------------------------
-      # 7. Commit hasil JSON ke repo
-      #    latest_screening.json dan watchlist_YYYYMMDD.json
+      # 7. Commit hasil JSON ke repo (latest_screening.json + watchlist)
       # -----------------------------------------------------------
       - name: Commit screening results
         if: always()
@@ -106,14 +107,14 @@ jobs:
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Actions Bot"
 
-          # Add output files — ignore error kalau file tidak ada
+          # Tambahkan file output — abaikan error jika file tidak ada
           git add latest_screening.json 2>/dev/null || true
           git add watchlist_*.json 2>/dev/null || true
           git add screener.log 2>/dev/null || true
 
           # Commit hanya jika ada perubahan
           if git diff --staged --quiet; then
-            echo "Tidak ada perubahan untuk di-commit"
+            echo "ℹ️ Tidak ada perubahan untuk di-commit"
           else
             TODAY=$(date '+%Y-%m-%d %H:%M UTC')
             git commit -m "📊 Screening results — $TODAY [skip ci]"
@@ -122,7 +123,7 @@ jobs:
           fi
 
       # -----------------------------------------------------------
-      # 8. Upload artifacts (untuk debug kalau perlu)
+      # 8. Upload artifacts (untuk debugging jika diperlukan)
       # -----------------------------------------------------------
       - name: Upload screening artifacts
         if: always()
