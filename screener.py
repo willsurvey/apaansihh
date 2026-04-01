@@ -97,7 +97,7 @@ CONFIG = {
     "SB_SCREENER_ID": "",                # Kosong = gunakan template baru, isi jika sudah punya ID
     "SB_SCREENER_VOL_MA5_MULTIPLIER": 2.0,   # Volume > VolMA5 × 2
     "SB_SCREENER_VOL_MA5_MA20_MULT": 1.5,    # VolMA5 > VolMA20 × 1.5
-    "SB_SCREENER_MAX_PAGES": 3,              # Jumlah page screener yang diambil
+    "SB_SCREENER_MAX_PAGES": 5,              # Jumlah page screener yang diambil
 
     # --- Stockbit Guru Screener ---
     # GET /screener/templates/{id}?type=TEMPLATE_TYPE_GURU
@@ -108,14 +108,14 @@ CONFIG = {
     "SB_GURU_SCREENER_ENABLED": True,
     "SB_GURU_SCREENER_LIST": [
         # (id,  nama,                                   max_page)
-        (92,  "Big Accumulation",                       2),   # Bandar Accum/Dist > 20
-        (77,  "Foreign Flow Uptrend",                   2),   # Net Foreign streak ≥2
-        (94,  "Bandar Bullish Reversal",                2),   # Bandar Value naik lewati MA10
-        (87,  "Reversal on Bearish Trend",              2),   # Price > MA20 > MA10 + vol spike
-        (88,  "Potential Reversal on Bearish Trend",    2),   # MA20 > Price > MA10 + vol spike
-        (63,  "High Volume Breakout",                   2),   # Volume > 2x MA20
-        (97,  "Frequency Spike",                        1),   # Frekuensi > 3x rata-rata
-        (72,  "IHSG Short-term Outperformers",          2),   # 3M RS Line > 1.1
+        (92,  "Big Accumulation",                       5),   # Bandar Accum/Dist > 20
+        (77,  "Foreign Flow Uptrend",                   5),   # Net Foreign streak ≥2
+        (94,  "Bandar Bullish Reversal",                5),   # Bandar Value naik lewati MA10
+        (87,  "Reversal on Bearish Trend",              5),   # Price > MA20 > MA10 + vol spike
+        (88,  "Potential Reversal on Bearish Trend",    5),   # MA20 > Price > MA10 + vol spike
+        (63,  "High Volume Breakout",                   5),   # Volume > 2x MA20
+        (97,  "Frequency Spike",                        5),   # Frekuensi > 3x rata-rata
+        (72,  "IHSG Short-term Outperformers",          5),   # 3M RS Line > 1.1
         (78,  "Daily Net Foreign Flow",                 5),   # Net Foreign Buy harian (besar)
         (79,  "1 Week Net Foreign Flow",                5),   # Net Foreign Buy 1 minggu (besar)
     ],
