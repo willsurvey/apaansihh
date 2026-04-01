@@ -1,0 +1,137 @@
+# .github/workflows/screener.yml
+# =====================================================================
+# SCREENER TRADER INDONESIA — GitHub Actions Workflow
+# Jadwal: Senin-Jumat jam 11:00 UTC = 18:00 WIB
+# Trigger: cron otomatis + manual dispatch + POST dari Vercel (api/cron)
+# =====================================================================
+
+name: Stock Screener IDX
+
+on:
+  # Cron otomatis: jam 11:00 UTC = 18:00 WIB, Senin-Jumat
+  schedule:
+    - cron: "0 11 * * 1-5"
+
+  # Manual trigger dari Vercel cron.js atau manual dari GitHub UI
+  workflow_dispatch:
+    inputs:
+      trigger_source:
+        description: "Sumber trigger (vercel-cron / manual)"
+        required: false
+        default: "manual"
+      force_mode:
+        description: "Override mode (YAHOO_ONLY / kosong=AUTO)"
+        required: false
+        default: ""
+
+jobs:
+  screening:
+    name: Run Stock Screener
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+
+    permissions:
+      contents: write   # Untuk commit hasil JSON ke repo
+
+    steps:
+      # -----------------------------------------------------------
+      # 1. Checkout repo
+      # -----------------------------------------------------------
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      # -----------------------------------------------------------
+      # 2. Setup Python
+      # -----------------------------------------------------------
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: "pip"
+
+      # -----------------------------------------------------------
+      # 3. Install dependencies
+      # -----------------------------------------------------------
+      - name: Install Python dependencies
+        run: |
+          pip install --upgrade pip
+          pip install -r requirements.txt
+
+      # -----------------------------------------------------------
+      # 4. Install Playwright browser (untuk refresh token)
+      # -----------------------------------------------------------
+      - name: Install Playwright Chromium
+        run: |
+          python -m playwright install chromium --with-deps
+        continue-on-error: true   # Tidak fatal jika gagal install
+
+      # -----------------------------------------------------------
+      # 5. Restore Stockbit session dari GitHub Secrets
+      #    STOCKBIT_SESSION berisi base64 dari stockbit_session.json
+      # -----------------------------------------------------------
+      - name: Restore Stockbit session
+        env:
+          STOCKBIT_SESSION: ${{ secrets.STOCKBIT_SESSION }}
+        run: |
+          if [ -n "$STOCKBIT_SESSION" ]; then
+            echo "$STOCKBIT_SESSION" | base64 -d > stockbit_session.json
+            echo "✅ stockbit_session.json restored"
+          else
+            echo "⚠️ STOCKBIT_SESSION secret tidak tersedia — akan pakai YAHOO_ONLY mode"
+          fi
+
+      # -----------------------------------------------------------
+      # 6. Jalankan screener
+      # -----------------------------------------------------------
+      - name: Run screener
+        env:
+          STOCKBIT_BEARER_TOKEN: ${{ secrets.STOCKBIT_BEARER_TOKEN }}
+          GITHUB_ACTIONS: "true"
+          FORCE_MODE: ${{ github.event.inputs.force_mode }}
+        run: |
+          echo "🚀 Memulai screening..."
+          echo "Trigger: ${{ github.event.inputs.trigger_source || 'cron' }}"
+          python screener.py
+          echo "✅ Screening selesai"
+
+      # -----------------------------------------------------------
+      # 7. Commit hasil JSON ke repo
+      #    latest_screening.json dan watchlist_YYYYMMDD.json
+      # -----------------------------------------------------------
+      - name: Commit screening results
+        if: always()
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Actions Bot"
+
+          # Add output files — ignore error kalau file tidak ada
+          git add latest_screening.json 2>/dev/null || true
+          git add watchlist_*.json 2>/dev/null || true
+          git add screener.log 2>/dev/null || true
+
+          # Commit hanya jika ada perubahan
+          if git diff --staged --quiet; then
+            echo "Tidak ada perubahan untuk di-commit"
+          else
+            TODAY=$(date '+%Y-%m-%d %H:%M UTC')
+            git commit -m "📊 Screening results — $TODAY [skip ci]"
+            git push
+            echo "✅ Hasil commit ke repo"
+          fi
+
+      # -----------------------------------------------------------
+      # 8. Upload artifacts (untuk debug kalau perlu)
+      # -----------------------------------------------------------
+      - name: Upload screening artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: screening-results-${{ github.run_number }}
+          path: |
+            latest_screening.json
+            watchlist_*.json
+            screener.log
+          retention-days: 7
+          if-no-files-found: ignore

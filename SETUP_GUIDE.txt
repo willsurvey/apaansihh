@@ -1,0 +1,177 @@
+# ================================================================
+# PANDUAN SETUP LENGKAP — Stock Screener IDX
+# ================================================================
+# Stack: Python (screener) + Next.js (frontend) + Vercel (hosting)
+#        + GitHub Actions (cron otomatis)
+# ================================================================
+
+
+## STRUKTUR REPO
+```
+repo/
+├── .github/
+│   └── workflows/
+│       └── screener.yml        ← GitHub Actions workflow
+├── pages/
+│   ├── _app.js                 ← Next.js app wrapper
+│   ├── index.js                ← Dashboard utama
+│   └── api/
+│       ├── cron.js             ← POST /api/cron → trigger GH Actions
+│       ├── health.js           ← GET /api/health → status check
+│       └── screening.js        ← GET /api/screening → proxy data JSON
+├── styles/
+│   ├── globals.css
+│   └── Home.module.css
+├── screener.py                 ← Otak screener (JANGAN diubah)
+├── kode_saham_958.txt          ← Universe saham IDX
+├── requirements.txt            ← Dependensi Python
+├── next.config.js              ← Konfigurasi Next.js
+├── package.json                ← Dependensi Node.js
+├── vercel.json                 ← Konfigurasi Vercel + cron schedule
+└── .env.local.example          ← Template env vars (jangan commit .env.local)
+```
+
+
+## LANGKAH 1: SETUP GITHUB REPO
+
+1. Push semua file ke repo GitHub kamu
+2. Pastikan repo memiliki permission untuk GitHub Actions:
+   Repo → Settings → Actions → General → Allow all actions ✓
+
+
+## LANGKAH 2: GITHUB SECRETS
+
+Masuk ke: Repo → Settings → Secrets and variables → Actions
+
+### STOCKBIT_BEARER_TOKEN
+Token JWT dari stockbit_token.txt (string panjang eyJhbGci...)
+Update: setiap 24 jam (token expire), atau setup Playwright refresh
+
+### STOCKBIT_SESSION
+Base64 dari stockbit_session.json:
+
+Di terminal:
+  base64 -w 0 stockbit_session.json    # Linux
+  base64 -i stockbit_session.json      # macOS
+
+Di Python:
+  import base64
+  data = open("stockbit_session.json", "rb").read()
+  print(base64.b64encode(data).decode())
+
+Update: setiap ~30 hari (session expire)
+
+
+## LANGKAH 3: SETUP VERCEL
+
+1. Import repo dari GitHub ke Vercel
+   https://vercel.com/new
+
+2. Framework Preset: Next.js (auto-detect)
+
+3. Set Environment Variables di Vercel Dashboard:
+   Project → Settings → Environment Variables
+
+   GITHUB_OWNER         = username GitHub kamu
+   GITHUB_REPO          = nama repo ini
+   WORKFLOW_FILE        = screener.yml
+   GITHUB_TOKEN_WORKFLOW = ghp_xxx... (Personal Access Token)
+   CRON_SECRET          = string random untuk keamanan
+
+   ⚠️  PENTING: Gunakan GITHUB_TOKEN_WORKFLOW (bukan GITHUB_TOKEN)
+   karena GITHUB_TOKEN sudah direservasi oleh sistem Vercel/GitHub.
+
+4. Buat Personal Access Token (untuk GITHUB_TOKEN_WORKFLOW):
+   GitHub → Settings → Developer settings → Personal access tokens → Fine-grained
+   Scopes yang diperlukan: Actions (read & write), Contents (read & write)
+
+5. Deploy! Vercel akan otomatis deploy setiap push ke main.
+
+
+## LANGKAH 4: VERIFIKASI SETUP
+
+### Test health endpoint:
+  curl https://your-app.vercel.app/api/health
+
+  Response yang benar:
+  {
+    "status": "ok",
+    "env": {
+      "hasGithubOwner": true,
+      "hasGithubRepo": true,
+      "hasGithubToken": true,
+      ...
+    }
+  }
+
+### Test cron endpoint manual:
+  curl -X POST https://your-app.vercel.app/api/cron \
+    -H "Authorization: Bearer YOUR_CRON_SECRET"
+
+  Response sukses: { "success": true, ... }
+
+### Test screening data:
+  curl https://your-app.vercel.app/api/screening
+  (Hanya bisa setelah GitHub Actions pernah berhasil jalan)
+
+
+## CARA KERJA OTOMATIS
+
+Setiap hari Senin-Jumat jam 18:00 WIB (11:00 UTC):
+
+1. Vercel Cron Job → POST /api/cron
+2. /api/cron → trigger GitHub Actions workflow via API
+3. GitHub Actions:
+   a. Restore stockbit_session.json dari secret STOCKBIT_SESSION
+   b. Jalankan screener.py
+      → Token dari STOCKBIT_BEARER_TOKEN (env var)
+      → Kalau expired → refresh via Playwright headless
+      → Kalau gagal → fallback YAHOO_ONLY mode
+   c. Simpan hasil ke latest_screening.json + watchlist_YYYYMMDD.json
+   d. Commit otomatis ke repo
+4. Dashboard di Vercel membaca data dari /api/screening
+   (yang proxy ke raw GitHub URL)
+
+
+## URL OUTPUT
+
+Setelah workflow berjalan:
+  https://raw.githubusercontent.com/{OWNER}/{REPO}/main/latest_screening.json
+  https://raw.githubusercontent.com/{OWNER}/{REPO}/main/watchlist_YYYYMMDD.json
+
+Via API Vercel (lebih baik, ada cache + CORS handle):
+  https://your-app.vercel.app/api/screening
+
+
+## REFRESH TOKEN MANUAL
+
+Di mesin lokal:
+  python screener.py    # Test lokal dengan session yang ada
+
+  FORCE_MODE=YAHOO_ONLY python screener.py   # Test tanpa token
+
+Setelah update token, update GitHub Secrets:
+  STOCKBIT_BEARER_TOKEN = token baru dari stockbit_token.txt
+  STOCKBIT_SESSION      = base64 dari stockbit_session.json (baru)
+
+
+## TROUBLESHOOTING
+
+### GitHub Actions tidak terpicu dari Vercel:
+- Cek env var GITHUB_TOKEN_WORKFLOW sudah diset di Vercel
+- Pastikan token punya scope Actions (write)
+- Cek log di Vercel: Functions → cron → View logs
+
+### Screening selalu YAHOO_ONLY:
+- STOCKBIT_BEARER_TOKEN expired → update secret dengan token baru
+- STOCKBIT_SESSION expired → login ulang, base64 ulang, update secret
+
+### Data tidak muncul di dashboard:
+- Pastikan GITHUB_OWNER dan GITHUB_REPO benar di Vercel env vars
+- Pastikan latest_screening.json ada di repo (GitHub Actions sudah pernah jalan)
+- Cek /api/health untuk lihat env vars status
+
+### Build Vercel gagal:
+- Pastikan package.json ada dan benar
+- Pastikan next.config.js (bukan next_config.js) ada
+- Node.js version: minimal 18 (sudah diset di package.json engines)

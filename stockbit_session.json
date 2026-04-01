@@ -1,0 +1,328 @@
+{
+  "cookies": [
+    {
+      "name": "_GRECAPTCHA",
+      "value": "09AKhCRwiRShxU_apjo4FU6zLbkvyUBfbuFlPT1yOEonF1zf_1mbWW8S6Xf7RIipLARyOpfG4ROkiTWJ53O_2PQ8Q",
+      "domain": "www.google.com",
+      "path": "/recaptcha",
+      "expires": 1790597680.417942,
+      "httpOnly": true,
+      "secure": true,
+      "sameSite": "None"
+    },
+    {
+      "name": "gen-websocket",
+      "value": "undefined",
+      "domain": ".stockbit.com",
+      "path": "/v1",
+      "expires": -1,
+      "httpOnly": false,
+      "secure": true,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "_ttp",
+      "value": "3Bkv1Vjy0XXGscyC0PFoU015K9n",
+      "domain": ".tiktok.com",
+      "path": "/",
+      "expires": 1808742059.773722,
+      "httpOnly": false,
+      "secure": true,
+      "sameSite": "None"
+    },
+    {
+      "name": "_tt_enable_cookie",
+      "value": "1",
+      "domain": ".stockbit.com",
+      "path": "/",
+      "expires": 1808742064,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "_ttp",
+      "value": "01KN4FEVA208SCSCS9SZ7GRQ6G_.tt.1",
+      "domain": ".stockbit.com",
+      "path": "/",
+      "expires": 1808742064,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "WZRK_G",
+      "value": "2be8421705da43fcb2ce628694eb5572",
+      "domain": ".stockbit.com",
+      "path": "/",
+      "expires": 1806582062,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "crisp-client%2Fsocket%2F44ed90bf-ce78-4f5f-a9f8-82e000538b9b",
+      "value": "0",
+      "domain": "stockbit.com",
+      "path": "/",
+      "expires": 1775046269,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "G_ENABLED_IDPS",
+      "value": "google",
+      "domain": ".stockbit.com",
+      "path": "/",
+      "expires": 1809605691.705165,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "NID",
+      "value": "530=SIIlPHLvgrR_Dc-dKXVO8bCYZcYQRc10f-bRXaMQf_mDVnOSLknRKVnRxSw487B0zy2QRmyRr3inLsCDjHCcLoMISCgLBPz4rSMAjESHAKDt5h29cjmhV513XzLLUrlXslhULDonDqJ0bqYrWf7UqsHV13ryfXLFt9bJTBI-N-suZ5udS1LN1Ow_KQyPThk_n9WLRjwgI_dTFDjI",
+      "domain": ".google.com",
+      "path": "/",
+      "expires": 1790856893.741014,
+      "httpOnly": true,
+      "secure": true,
+      "sameSite": "None"
+    },
+    {
+      "name": "AWSALB",
+      "value": "RxIy3cwCO+M/K2osx7B7Chs8wMEHZ4tA0+XLXEQsy/QuDLoELh2TYCE0hknfL79cCNsdiBRJvHTzE8QDenml9G2C8QoAlaUQsYD7YEfkR999OxcFxezUWjUeHDmV",
+      "domain": "wss-jkt.trading.stockbit.com",
+      "path": "/",
+      "expires": 1775650860.235209,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "AWSALBCORS",
+      "value": "RxIy3cwCO+M/K2osx7B7Chs8wMEHZ4tA0+XLXEQsy/QuDLoELh2TYCE0hknfL79cCNsdiBRJvHTzE8QDenml9G2C8QoAlaUQsYD7YEfkR999OxcFxezUWjUeHDmV",
+      "domain": "wss-jkt.trading.stockbit.com",
+      "path": "/",
+      "expires": 1775650860.235558,
+      "httpOnly": false,
+      "secure": true,
+      "sameSite": "None"
+    },
+    {
+      "name": "AWSALB",
+      "value": "UTs/lAzrsKlqIKPqQAjrjfJk9t1AbEqG94gwIKsg/ihGwXwIHc2eTNPyWUtA7xkoEmcs430jV+JzT1AoAFhsW6w5Q/UeGHUrTgGeqURe4yoicX+tyJa/1Mxc1HPc",
+      "domain": "wssocial.stockbit.com",
+      "path": "/",
+      "expires": 1775650860.644395,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "AWSALBCORS",
+      "value": "UTs/lAzrsKlqIKPqQAjrjfJk9t1AbEqG94gwIKsg/ihGwXwIHc2eTNPyWUtA7xkoEmcs430jV+JzT1AoAFhsW6w5Q/UeGHUrTgGeqURe4yoicX+tyJa/1Mxc1HPc",
+      "domain": "wssocial.stockbit.com",
+      "path": "/",
+      "expires": 1775650860.645065,
+      "httpOnly": false,
+      "secure": true,
+      "sameSite": "None"
+    },
+    {
+      "name": "WZRK_S_6ZW-897-5R6Z",
+      "value": "%7B%22p%22%3A3%2C%22s%22%3A1775045667%2C%22t%22%3A1775046064%7D",
+      "domain": ".stockbit.com",
+      "path": "/",
+      "expires": 1775047264,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "ttcsid",
+      "value": "1775045668170::F9oZSVIowl_Uft1WhumS.1.1775046065681.0::1.390976.396288::366703.10.569.492::0.0.0",
+      "domain": ".stockbit.com",
+      "path": "/",
+      "expires": 1808742065,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "ttcsid_C5P9ESLODNNK397VS21G",
+      "value": "1775045668169::2sXwCKhyZvNmK0wPe_QK.1.1775046065681.1",
+      "domain": ".stockbit.com",
+      "path": "/",
+      "expires": 1808742065,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "Lax"
+    }
+  ],
+  "origins": [
+    {
+      "origin": "https://stockbit.com",
+      "localStorage": [
+        {
+          "name": "avatarUserIds",
+          "value": "6710053"
+        },
+        {
+          "name": "ws",
+          "value": "WyJ5MmZMT0JSbnQ0b2EyMXlWNFZmelljZEhZWmhYYTd0YXhBczdhOTdCU2R3PSJd"
+        },
+        {
+          "name": "brokerSummaryDisplayFrequency",
+          "value": "{\"state\":{\"displayFrequency\":false,\"displayFrequencyTooltipVisible\":true},\"version\":0}"
+        },
+        {
+          "name": "WZRK_K",
+          "value": "%7B%22flag%22%3Atrue%2C%22id%22%3A%22willsurvey%22%7D"
+        },
+        {
+          "name": "_grecaptcha",
+          "value": "09AKhCRwhLEpTCfs2HuqUmKsj_hkgscyZNT18RkyIfVOTBZsirZo6cd7b6YdHe45CyDnyq_wxSJC9f1MMSFM3oCSH-EOs-qXEyHmHHSJesCobidlfOebkk31UHE2dg_nF4"
+        },
+        {
+          "name": "multi-portfolio-storage",
+          "value": "{\"state\":{\"subAccountsData\":{\"isLoading\":false,\"error\":\"\",\"data\":{\"regular\":{\"accounts\":[],\"can_create_new_account\":false},\"margin\":{\"accounts\":[],\"can_create_new_account\":false}}},\"activeAccount\":\"\",\"subAccountsPurposeData\":{\"isLoading\":false,\"error\":\"\",\"data\":{\"purposes\":[]}},\"tradingBalanceData\":{\"isLoading\":false,\"error\":\"\",\"data\":{\"balance\":0,\"equity\":0}},\"hideOddLot\":false},\"version\":0}"
+        },
+        {
+          "name": "zustandOrderTableStore",
+          "value": "{\"state\":{\"isFilterActive\":false,\"orderSearchValue\":{\"action\":\"\",\"stock\":\"\",\"text\":\"\"},\"orderFilterValue\":{\"status\":[],\"orderType\":[],\"expiry\":[],\"accountType\":[]}},\"version\":0}"
+        },
+        {
+          "name": "WZRK_EV",
+          "value": "%7B%22Login%20Selected%22%3A%5B1%2C1775045680%2C1775045680%5D%2C%22New%20Device%20Login%20Attempt%22%3A%5B1%2C1775045680%2C1775045680%5D%2C%22Login%20Successful%22%3A%5B1%2C1775046028%2C1775046028%5D%2C%22New%20Device%20Login%20Completed%22%3A%5B1%2C1775046028%2C1775046028%5D%2C%22Ideas%20Viewed%22%3A%5B3%2C1775046029%2C1775046062%5D%2C%22Company%20Page%20Viewed%22%3A%5B1%2C1775046060%2C1775046060%5D%7D"
+        },
+        {
+          "name": "UIConfigStore",
+          "value": "{\"state\":{\"userConfig\":{\"6710053\":{\"featureFlags\":{\"web-b-jkt-trading-socket\":{\"isEnabled\":true},\"disable-registration-live-support\":{\"isEnabled\":true},\"all-b-ifa-transaction\":{\"isEnabled\":false},\"enable-market-order\":{\"isEnabled\":true},\"all-b-running-trade-chart-eligibility\":{\"isEnabled\":true},\"all-b-broker-distribution-eligibility\":{\"isEnabled\":true}},\"remisier\":{\"isLeader\":false,\"isCommunityAccessGranted\":false}}}},\"version\":0}"
+        },
+        {
+          "name": "@fast-trade/shell-transaction-form",
+          "value": "{\"state\":{\"formType\":\"Classic\"},\"version\":0}"
+        },
+        {
+          "name": "WEBSOCKET_WS_SOCIAL_PING_INTERNAL",
+          "value": "143"
+        },
+        {
+          "name": "virtualFormula",
+          "value": "{\"state\":{\"formula\":{}},\"version\":0}"
+        },
+        {
+          "name": "WZRK_PR",
+          "value": "%7B%22Name%22%3A%22willsurvey%22%2C%22Identity%22%3A%22willsurvey%22%2C%22Photo%22%3A%22https%3A%2F%2Favatar.stockbit.com%2Fothers%2Fpanda-black-toy1-32-min.png%22%2C%22Email%22%3A%22wildownsurvey%40gmail.com%22%2C%22Is%20Emiten%20User%22%3Afalse%2C%22tz%22%3A%22GMT%2B0700%22%7D"
+        },
+        {
+          "name": "WZRK_G",
+          "value": "%222be8421705da43fcb2ce628694eb5572%22"
+        },
+        {
+          "name": "isLoggedInLS",
+          "value": "true"
+        },
+        {
+          "name": "at",
+          "value": "ZXlKaGJHY2lPaUpTVXpJMU5pSXNJbXRwWkNJNkltRXhOV1E1T0dFMkxUZGtZemd0TkRNM05TMDVORGswTFRFeU9XSmxNMlJsT0RWa05DSXNJblI1Y0NJNklrcFhWQ0o5LmV5SmtZWFJoSWpwN0luVnpaU0k2SW5kcGJHeHpkWEoyWlhraUxDSmxiV0VpT2lKM2FXeGtiM2R1YzNWeWRtVjVRR2R0WVdsc0xtTnZiU0lzSW1aMWJDSTZJbmRwYkd4emRYSjJaWGtpTENKelpYTWlPaUl5TlZsVWMybFNaM2xRU21Jd1IwSlhJaXdpWkhaaklqb2lNamczT1RJd016QTNPV0ZpT1RFMVlUZzBPR0UxTnpCbVpXRXhNelZsTkRVaUxDSjFhV1FpT2pZM01UQXdOVE1zSW1OdmRTSTZJa2xFSW4wc0ltVjRjQ0k2TVRjM05URXpNalF5T0N3aWFXRjBJam94TnpjMU1EUTJNREk0TENKcGMzTWlPaUpUVkU5RFMwSkpWQ0lzSW1wMGFTSTZJbUUzWWpneU5tVTRMV0V3WTJFdE5EaGtZUzFoTlRBNExUYzRNV1ZtWm1ZMVptWm1PU0lzSW01aVppSTZNVGMzTlRBME5qQXlPQ3dpZG1WeUlqb2lkakVpZlEuWGtnaXAwaWh5Z19TVi13S0xPS0RBQ1FoczBrWVQzQU9FWC10blRfSVdkMjViZm9VZk1lZVZRZ1hjRURJUE9uWGtOR1NDWnEybVowVGxBNFQtMUg3Y2F4VTJIUHhVTFJFNko2MHZ6VjdjX0JpYzRROWNxblRFX2lycnh6QWJudWt1clFlWTVSdXlyTWVFNlVnWWYzd3NxeHZqS1FZNk11N3J3UW1PT1pVZGMzV19zNGpMMWE0V0NyTEFYQVdsZTZQLVR2VDk5NlZSb0FyOFFSWlE2azNmS3pBc3R3SHUxenFnT1g4b1BoOGtYcjVqTnJKSGo2VFlwMnhVVFVrc2t1a0FNS2ZQMG5hNV80TEpMeFNMak9CRk5XcDY1SU5KOXAzWU5rcUdKd2NCOXU3VmRSVlZYUHZZeUIwbUI0S08zdkJtbXhDZ2JYNzUzM250VEVDSjJlX0hR"
+        },
+        {
+          "name": "tooltipShare",
+          "value": "true"
+        },
+        {
+          "name": "eipoRefreshToken",
+          "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjcmVhdGVkX2F0IjoxNzc1MDQ2MDM0LCJleHAiOjE3NzUwNDY2MzQsImlzX3JlZnJlc2giOiJ0cnVlIiwicGFydG5lcl9pZCI6IlBKUDAzNjFYWE8iLCJzZWN1cml0aWVzX2lkIjoiMmVhMjE4ZjViNmU0NzFkZjdiMDVmMDIwYjU5NTdkNzFmZjRlMTQzNTUyMWY1N2E2YmJiYzMwNzA3NzQxMjYxYVZPUkhXNUNJQkUiLCJ0b2tlbl90eXBlIjoiRUlQT19QQVJUTkVSX0FDQ0VTU19UT0tFTiJ9.JsJ-yWavU_P7RoKfC_fved3q2neUAtlxbOwa2-ckPlY"
+        },
+        {
+          "name": "feature-storage",
+          "value": "{\"state\":{\"features\":{\"broker-distribution\":false}},\"version\":0}"
+        },
+        {
+          "name": "WZRK_L",
+          "value": "%7B%7D"
+        },
+        {
+          "name": "are",
+          "value": "MTc3NTY1MDgyODAwMA=="
+        },
+        {
+          "name": "au",
+          "value": "eyJ1c2VybmFtZSI6IndpbGxzdXJ2ZXkiLCJlbWFpbCI6IndpbGRvd25zdXJ2ZXlAZ21haWwuY29tIiwiZnVsbG5hbWUiOiIiLCJhdmF0YXIiOiJodHRwczovL2F2YXRhci5zdG9ja2JpdC5jb20vb3RoZXJzL3BhbmRhLWJsYWNrLXRveTEtMzItbWluLnBuZyIsInBhc3N3b3JkIjoxLCJ2ZXJpZmllZCI6MSwicHJpdmlsZWdlIjowLCJpZCI6NjcxMDA1Mywid2F0Y2hsaXN0X2lkIjoxNDQ0NjI4OSwiY291bnRyeSI6IklEIiwiZXhjaGFuZ2UiOiJJRCJ9"
+        },
+        {
+          "name": "notifChatCounter",
+          "value": "{\"state\":{\"count\":27,\"isReset\":false},\"version\":0}"
+        },
+        {
+          "name": "crisp",
+          "value": "eyJpZCI6ImI3MGI3ODdhLTY3MDgtNGQ5Mi1iMTAzLTExOTFkYmZmYWY4NSJ9"
+        },
+        {
+          "name": "WZRK_ARP",
+          "value": "%7B%22j_n%22%3A%22Zw%3D%3D%22%2C%22i_n%22%3A%22Y25kfQMIAQE%3D%22%2C%22d_ts%22%3A0%2C%22dh%22%3A0%2C%22v%22%3A2%2C%22j_s%22%3A%22%7B%7D%22%2C%22id%22%3A%226ZW-897-5R6Z%22%2C%22r_ts%22%3A1775045667%7D"
+        },
+        {
+          "name": "WZRK_FPU",
+          "value": "false"
+        },
+        {
+          "name": "WEBSOCKET_WS_SOCIAL_ERROR_NO_RECONNECTION",
+          "value": "false"
+        },
+        {
+          "name": "WZRK_META",
+          "value": "%7B%22useIP%22%3Afalse%2C%22ps%22%3A1775045667%2C%22cs%22%3A1775045667%2C%22sc%22%3A1%7D"
+        },
+        {
+          "name": "WZRK_X",
+          "value": "%7B%22cache%22%3A%5B%5B%22willsurvey%22%2C%222be8421705da43fcb2ce628694eb5572%22%5D%5D%7D"
+        },
+        {
+          "name": "ate",
+          "value": "MTc3NTEzMjQyODAwMA=="
+        },
+        {
+          "name": "zustandStockbitFormula",
+          "value": "{\"state\":{\"configFormula\":{\"isLoading\":false,\"message\":\"\",\"data\":null,\"error\":\"\"}},\"version\":0}"
+        },
+        {
+          "name": "ar",
+          "value": "ZXlKaGJHY2lPaUpTVXpJMU5pSXNJbXRwWkNJNkltRXhOV1E1T0dFMkxUZGtZemd0TkRNM05TMDVORGswTFRFeU9XSmxNMlJsT0RWa05DSXNJblI1Y0NJNklrcFhWQ0o5LmV5SmtZWFJoSWpwN0luUjVjQ0k2SW5KbFpuSmxjMmdpTENKMWMyVWlPaUozYVd4c2MzVnlkbVY1SWl3aVpXMWhJam9pZDJsc1pHOTNibk4xY25abGVVQm5iV0ZwYkM1amIyMGlMQ0ptZFd3aU9pSjNhV3hzYzNWeWRtVjVJaXdpYzJWeklqb2lNalZaVkhOcFVtZDVVRXBpTUVkQ1Z5SXNJbVIyWXlJNklqSTROemt5TURNd056bGhZamt4TldFNE5EaGhOVGN3Wm1WaE1UTTFaVFExSWl3aWRXbGtJam8yTnpFd01EVXpMQ0pqYjNVaU9pSkpSQ0o5TENKbGVIQWlPakUzTnpVMk5UQTRNamdzSW1saGRDSTZNVGMzTlRBME5qQXlPQ3dpYVhOeklqb2lVMVJQUTB0Q1NWUWlMQ0pxZEdraU9pSmhOMkk0TWpabE9DMWhNR05oTFRRNFpHRXRZVFV3T0MwM09ERmxabVptTldabVpqa2lMQ0p1WW1ZaU9qRTNOelV3TkRZd01qZ3NJblpsY2lJNkluWXhJbjAuZ01oTnZ2VnM5NjN1ZjdsQVNrSkZCVnhiMjZ1NU9SX0UxV2hFV0UxUXhfeDU0LXJETFpYNHFEeFJUSWNnQllQdlhQQi01ZE14RHVNYUR6ZlNpV01sNUU1MGk4UXJZS3hGMWxHd2RsR2duSXgtb2pDSmhiZmpWb3JwM0VEdktwNnRVSTg5WDRpUmhJMFpIZVgxbGkzQzY4R3NZeUc4ZXAwcE5XMTlRNm1qNEZIT2RoS3ZZS1UxcnJadm5FMmZRSFkteUttNVY0NGJ2QTZZbmZnN0NLblpNSFZXcFBjWFlPaWZyTFo0MDBxNTBHM0JzeWJtdTUzMElvaGlUS0tpcDBJTUF2cGw5alg4RGFUalkwTWl6SFFZX2c4N0dCa2ZDeGw1aDlTYVpITEVJTXVfaExPeURXdnlsNkZBcGJXZnRza0xoR2RWcldXV3ViS3VyMEMzUmhkOGZ3"
+        },
+        {
+          "name": "player-id",
+          "value": "93c9f912-b96b-4ac5-b382-8a56a5e9f605"
+        },
+        {
+          "name": "eipoToken",
+          "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjcmVhdGVkX2F0IjoxNzc1MDQ2MDM0LCJleHAiOjE3NzUwNDYwOTQsInBhcnRuZXJfaWQiOiJQSlAwMzYxWFhPIiwic2VjdXJpdGllc19pZCI6IjJlYTIxOGY1YjZlNDcxZGY3YjA1ZjAyMGI1OTU3ZDcxZmY0ZTE0MzU1MjFmNTdhNmJiYmMzMDcwNzc0MTI2MWFWT1JIVzVDSUJFIiwidG9rZW5fdHlwZSI6IkVJUE9fUEFSVE5FUl9BQ0NFU1NfVE9LRU4ifQ.0zZAUXmQwBzN_0pD8gCiOVjXIFhxVBMQufvCU95avkU"
+        },
+        {
+          "name": "trustedDevice",
+          "value": "{\"state\":{\"loginType\":\"LOGIN_DATA_TYPE_NEW_DEVICE\",\"newDeviceConfig\":{\"login_token\":\"\",\"verification_token\":\"\"},\"isAccountFrozen\":false,\"trustedDevice\":{\"token\":\"\",\"deviceName\":\"\",\"promptToken\":\"\",\"promptRemainingSecond\":0,\"promptTarget\":\"\",\"promptStatus\":\"PROMPT_STATUS_UNSPECIFIED\",\"ackPrompToken\":\"\",\"otpRecipients\":[],\"channel\":\"CHANNEL_EMAIL\",\"otp\":\"\",\"target\":\"\",\"remainingSecond\":0,\"isSubmitting\":false,\"errorText\":\"\",\"errors\":[]}},\"version\":0}"
+        },
+        {
+          "name": "location",
+          "value": "https://stockbit.com"
+        }
+      ]
+    },
+    {
+      "origin": "https://www.google.com",
+      "localStorage": [
+        {
+          "name": "rc::a",
+          "value": "MW1vdXN6eDEzdDh1bjk="
+        },
+        {
+          "name": "rc::f",
+          "value": "0aAMm6y2-hp8zI1ZRoASNFc0Jk-hytU3QzguNQA9SVz21A5HAPWTqk5jV51O2mzbf46Il0gU4"
+        }
+      ]
+    }
+  ]
+}

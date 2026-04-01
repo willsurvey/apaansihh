@@ -1,0 +1,587 @@
+/* ===== LAYOUT ===== */
+.container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 16px 48px;
+}
+
+/* ===== HEADER ===== */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 0 16px;
+  border-bottom: 1px solid #1e2640;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.headerLeft {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.logo {
+  font-size: 32px;
+}
+
+.title {
+  font-size: 22px;
+  font-weight: 700;
+  color: #00d4aa;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.subtitle {
+  font-size: 11px;
+  color: #5a6a8a;
+  margin-top: 2px;
+  letter-spacing: 0.5px;
+}
+
+.headerRight {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.refreshTime {
+  font-size: 11px;
+  color: #5a6a8a;
+}
+
+.refreshBtn {
+  background: #1e2640;
+  border: 1px solid #2e3a5a;
+  color: #00d4aa;
+  padding: 6px 14px;
+  border-radius: 4px;
+  font-size: 12px;
+  letter-spacing: 0.5px;
+  transition: all 0.15s;
+}
+.refreshBtn:hover:not(:disabled) {
+  background: #2e3a5a;
+  border-color: #00d4aa;
+}
+.refreshBtn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ===== MARKET BANNER ===== */
+.marketBanner {
+  display: flex;
+  gap: 0;
+  background: #0d1224;
+  border: 1px solid #1e2640;
+  border-radius: 6px;
+  padding: 12px 20px;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+  gap: 24px;
+  align-items: center;
+}
+
+.marketItem {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.marketLabel {
+  font-size: 10px;
+  color: #5a6a8a;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+}
+
+.marketValue {
+  font-size: 16px;
+  font-weight: 700;
+  color: #e8eaf0;
+}
+
+.marketValueSm {
+  font-size: 12px;
+  color: #8a9aba;
+}
+
+/* ===== WARNING BANNER ===== */
+.warningBanner {
+  background: #2a1a00;
+  border: 1px solid #f5a62344;
+  color: #f5a623;
+  padding: 10px 16px;
+  border-radius: 4px;
+  font-size: 13px;
+  margin-bottom: 12px;
+}
+
+/* ===== SUMMARY BAR ===== */
+.summaryBar {
+  display: flex;
+  gap: 0;
+  background: #0d1224;
+  border: 1px solid #1e2640;
+  border-radius: 6px;
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+
+.summaryItem {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px 8px;
+  border-right: 1px solid #1e2640;
+  gap: 2px;
+}
+
+.summaryItem:last-child {
+  border-right: none;
+}
+
+.summaryVal {
+  font-size: 18px;
+  font-weight: 700;
+  color: #00d4aa;
+}
+
+.summaryLabel {
+  font-size: 9px;
+  color: #5a6a8a;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* ===== LOADING / ERROR / NO SIGNAL ===== */
+.center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 16px;
+  gap: 16px;
+  color: #5a6a8a;
+}
+
+.spinner {
+  width: 36px;
+  height: 36px;
+  border: 3px solid #1e2640;
+  border-top-color: #00d4aa;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.errorBox {
+  background: #1a0d0d;
+  border: 1px solid #e74c3c44;
+  color: #e74c3c;
+  padding: 24px;
+  border-radius: 6px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: center;
+  margin: 32px 0;
+}
+
+.noSignal {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 16px;
+  gap: 16px;
+  color: #5a6a8a;
+  text-align: center;
+}
+
+.noSignalIcon {
+  font-size: 48px;
+}
+
+/* ===== CARDS GRID ===== */
+.cardsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(420px, 1fr));
+  gap: 16px;
+}
+
+/* ===== CARD ===== */
+.card {
+  background: #0d1224;
+  border: 1px solid #1e2640;
+  border-radius: 8px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: border-color 0.2s;
+}
+
+.card:hover {
+  border-color: #2e3a5a;
+}
+
+/* ===== CARD HEADER ===== */
+.cardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 14px 16px;
+  background: #111829;
+  border-bottom: 1px solid #1e2640;
+}
+
+.cardTitle {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.rank {
+  font-size: 11px;
+  color: #5a6a8a;
+  font-weight: 700;
+  background: #1e2640;
+  padding: 2px 6px;
+  border-radius: 3px;
+}
+
+.ticker {
+  display: block;
+  font-size: 20px;
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: 1px;
+}
+
+.company {
+  display: block;
+  font-size: 11px;
+  color: #5a6a8a;
+  margin-top: 2px;
+  max-width: 180px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.scoreBox {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+}
+
+.scoreBadge {
+  font-size: 24px;
+  font-weight: 900;
+  padding: 4px 10px;
+  border-radius: 4px;
+  color: #0a0e1a;
+  line-height: 1;
+}
+
+.tier {
+  font-size: 9px;
+  color: #5a6a8a;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* ===== SECTION ===== */
+.section {
+  padding: 12px 16px;
+  border-bottom: 1px solid #151d30;
+}
+
+.sectionTitle {
+  font-size: 11px;
+  color: #8a9aba;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* ===== GRIDS ===== */
+.grid3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+
+.grid2 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+}
+
+.dataItem {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.dataLabel {
+  font-size: 9px;
+  color: #5a6a8a;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.dataVal {
+  font-size: 14px;
+  font-weight: 600;
+  color: #e8eaf0;
+}
+
+/* ===== ENTRY GRID ===== */
+.entryGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+  margin-bottom: 8px;
+}
+
+.entryItem {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  background: #111829;
+  border: 1px solid #1e2640;
+  border-radius: 4px;
+  padding: 8px;
+}
+
+.entryLabel {
+  font-size: 9px;
+  color: #5a6a8a;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+}
+
+.entryVal {
+  font-size: 13px;
+  font-weight: 700;
+  color: #00d4aa;
+}
+
+.entryNote {
+  font-size: 9px;
+  color: #4a5a7a;
+  margin-top: 2px;
+  line-height: 1.3;
+}
+
+.avgEntry {
+  font-size: 12px;
+  color: #8a9aba;
+  text-align: center;
+  padding: 6px;
+  background: #111829;
+  border-radius: 4px;
+}
+
+.avgEntry strong {
+  color: #ffffff;
+}
+
+/* ===== SL / TP ===== */
+.slTpGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 6px;
+  margin-bottom: 8px;
+}
+
+.slBox {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  background: #1a0a0a;
+  border: 1px solid #e74c3c33;
+  border-radius: 4px;
+  padding: 8px;
+}
+
+.slLabel {
+  font-size: 9px;
+  color: #e74c3c88;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+}
+
+.slVal {
+  font-size: 12px;
+  font-weight: 700;
+  color: #e74c3c;
+}
+
+.slPct {
+  font-size: 10px;
+  color: #e74c3c88;
+}
+
+.tpBox {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  background: #0a1a10;
+  border: 1px solid #00d4aa33;
+  border-radius: 4px;
+  padding: 8px;
+}
+
+.tpLabel {
+  font-size: 9px;
+  color: #00d4aa88;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+}
+
+.tpVal {
+  font-size: 12px;
+  font-weight: 700;
+  color: #00d4aa;
+}
+
+.rrBadge {
+  text-align: center;
+  font-size: 12px;
+  color: #8a9aba;
+  padding: 6px;
+  background: #111829;
+  border-radius: 4px;
+}
+
+.rrBadge strong {
+  color: #f5a623;
+  font-size: 14px;
+}
+
+/* ===== BROKER / SMC BADGES ===== */
+.brokerBadge {
+  display: inline-block;
+  padding: 3px 8px;
+  border-radius: 3px;
+  border: 1px solid;
+  font-size: 11px;
+  font-weight: 600;
+  margin-top: 4px;
+}
+
+.smcBadge {
+  display: inline-block;
+  margin-top: 4px;
+  font-size: 11px;
+  color: #8a9aba;
+  background: #111829;
+  padding: 3px 8px;
+  border-radius: 3px;
+  border: 1px solid #1e2640;
+}
+
+/* ===== SIGNALS & WARNINGS ===== */
+.signalsList {
+  padding: 8px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  border-bottom: 1px solid #151d30;
+  background: #0a1a12;
+}
+
+.signalItem {
+  font-size: 11px;
+  color: #6ad4aa;
+  padding: 2px 0;
+}
+
+.warningsList {
+  padding: 8px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  border-bottom: 1px solid #151d30;
+  background: #1a1200;
+}
+
+.warningItem {
+  font-size: 11px;
+  color: #d4aa44;
+  padding: 2px 0;
+}
+
+/* ===== CARD FOOTER ===== */
+.cardFooter {
+  padding: 8px 16px;
+  display: flex;
+  justify-content: space-between;
+  font-size: 10px;
+  color: #4a5a7a;
+  margin-top: auto;
+}
+
+/* ===== FOOTER ===== */
+.footer {
+  margin-top: 40px;
+  padding: 20px 0;
+  border-top: 1px solid #1e2640;
+  text-align: center;
+  font-size: 12px;
+  color: #4a5a7a;
+  line-height: 1.6;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+  .cardsGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .entryGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .slTpGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .summaryBar {
+    flex-wrap: wrap;
+  }
+
+  .summaryItem {
+    flex: 0 0 calc(25% - 1px);
+  }
+
+  .marketBanner {
+    gap: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .grid3 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .summaryItem {
+    flex: 0 0 calc(33% - 1px);
+  }
+
+  .title {
+    font-size: 18px;
+  }
+}
