@@ -97,7 +97,11 @@ CONFIG = {
     "SB_SCREENER_ID": "",                # Kosong = gunakan template baru, isi jika sudah punya ID
     "SB_SCREENER_VOL_MA5_MULTIPLIER": 2.0,   # Volume > VolMA5 × 2
     "SB_SCREENER_VOL_MA5_MA20_MULT": 1.5,    # VolMA5 > VolMA20 × 1.5
-    "SB_SCREENER_MAX_PAGES": 5,              # Jumlah page screener yang diambil
+    "SB_SCREENER_MAX_PAGES": 3,              # Jumlah page screener yang diambil
+
+    # --- Stockbit Screener Top Value (semua saham IHSG diurutkan by Value DESC) ---
+    "SB_TOP_VALUE_ENABLED": True,
+    "SB_TOP_VALUE_MAX_PAGES": 15,            # 15 page × 25 = 375 saham teratas by value
 
     # --- Stockbit Guru Screener ---
     # GET /screener/templates/{id}?type=TEMPLATE_TYPE_GURU
@@ -108,14 +112,14 @@ CONFIG = {
     "SB_GURU_SCREENER_ENABLED": True,
     "SB_GURU_SCREENER_LIST": [
         # (id,  nama,                                   max_page)
-        (92,  "Big Accumulation",                       5),   # Bandar Accum/Dist > 20
-        (77,  "Foreign Flow Uptrend",                   5),   # Net Foreign streak ≥2
-        (94,  "Bandar Bullish Reversal",                5),   # Bandar Value naik lewati MA10
-        (87,  "Reversal on Bearish Trend",              5),   # Price > MA20 > MA10 + vol spike
-        (88,  "Potential Reversal on Bearish Trend",    5),   # MA20 > Price > MA10 + vol spike
-        (63,  "High Volume Breakout",                   5),   # Volume > 2x MA20
-        (97,  "Frequency Spike",                        5),   # Frekuensi > 3x rata-rata
-        (72,  "IHSG Short-term Outperformers",          5),   # 3M RS Line > 1.1
+        (92,  "Big Accumulation",                       2),   # Bandar Accum/Dist > 20
+        (77,  "Foreign Flow Uptrend",                   2),   # Net Foreign streak ≥2
+        (94,  "Bandar Bullish Reversal",                2),   # Bandar Value naik lewati MA10
+        (87,  "Reversal on Bearish Trend",              2),   # Price > MA20 > MA10 + vol spike
+        (88,  "Potential Reversal on Bearish Trend",    2),   # MA20 > Price > MA10 + vol spike
+        (63,  "High Volume Breakout",                   2),   # Volume > 2x MA20
+        (97,  "Frequency Spike",                        1),   # Frekuensi > 3x rata-rata
+        (72,  "IHSG Short-term Outperformers",          2),   # 3M RS Line > 1.1
         (78,  "Daily Net Foreign Flow",                 5),   # Net Foreign Buy harian (besar)
         (79,  "1 Week Net Foreign Flow",                5),   # Net Foreign Buy 1 minggu (besar)
     ],
@@ -629,8 +633,21 @@ def get_universe_mode_a(token: str) -> List[Dict]:
             label = g.get("guru_template_name", "")
             all_stocks[code]["in_mover_types"].append(f"GURU_{tid}_{label[:12]}")
 
+    # --- Sumber 6: Top Value (375 saham teratas by value) ---
+    top_value_stocks = get_universe_top_value(token)
+    for tv in top_value_stocks:
+        code = tv["ticker"]
+        if code not in all_stocks:
+            all_stocks[code] = tv
+        else:
+            all_stocks[code]["from_top_value"] = True
+            all_stocks[code]["in_mover_types"].append("SCREENER_TOP_VALUE")
+            # Update value_today kalau lebih akurat dari sumber lain
+            if tv.get("value_today", 0) > 0 and all_stocks[code].get("value_today", 0) == 0:
+                all_stocks[code]["value_today"] = tv["value_today"]
+
     result = list(all_stocks.values())
-    log.info(f"✅ Universe MODE A: {len(result)} saham unik (MM + Gainer + Loser + Screener + Guru)")
+    log.info(f"✅ Universe MODE A: {len(result)} saham unik (MM + Gainer + Loser + Screener + Guru + TopValue)")
     return result
 
 
@@ -993,6 +1010,119 @@ def get_universe_screener(token: str) -> List[Dict]:
         log.info(f"  Screener page {page}: {page_count} saham baru")
 
     log.info(f"  Screener Volume Explosion total: {len(result)} saham ({max_pages} page maks)")
+    return result
+
+
+def get_universe_top_value(token: str) -> List[Dict]:
+    """
+    Ambil universe berdasarkan Top Value — semua saham IHSG diurutkan
+    berdasarkan nilai transaksi hari ini (DESC), ambil 15 page (375 saham).
+
+    Logika: saham dengan nilai transaksi terbesar = saham paling liquid
+    dan paling banyak diperdagangkan hari ini. Ini memperluas universe
+    di luar Market Mover yang hanya ambil top 50 per kategori.
+
+    Filter: Value > 1 (semua saham yang ada transaksi hari ini)
+    Endpoint: POST /screener/templates
+    """
+    if not CONFIG.get("SB_TOP_VALUE_ENABLED", True):
+        return []
+
+    log.info("💰 Ambil universe Top Value (15 page)...")
+
+    url = f"{CONFIG['SB_BASE']}/screener/templates"
+    headers = _make_sb_headers(token)
+    headers["content-type"] = "application/json"
+
+    base_payload = {
+        "name": "TOP VALUE BY wILL",
+        "description": "",
+        "ordercol": 2,
+        "ordertype": "desc",
+        "filters": json.dumps([
+            {
+                "item1": 13620,
+                "item1_name": "Value",
+                "item2": "1",
+                "item2_name": "",
+                "multiplier": "0",
+                "operator": ">",
+                "type": "basic"
+            }
+        ]),
+        "universe": json.dumps({"scope": "IHSG", "scopeID": "0", "name": "IHSG"}),
+        "sequence": "13620",
+        "save": "0",
+        "screenerid": "undefined",
+        "type": "TEMPLATE_TYPE_CUSTOM",
+    }
+
+    seen_codes: set = set()
+    result = []
+    max_pages = CONFIG.get("SB_TOP_VALUE_MAX_PAGES", 15)
+
+    for page in range(1, max_pages + 1):
+        payload = {**base_payload, "page": page}
+        try:
+            time.sleep(CONFIG["SB_DELAY"])
+            r = requests.post(
+                url, headers=headers,
+                data=json.dumps(payload),
+                timeout=CONFIG["SB_TIMEOUT"]
+            )
+            if r.status_code != 200:
+                log.warning(f"Top Value API HTTP {r.status_code} (page {page})")
+                break
+            data = r.json()
+            calcs = data.get("data", {}).get("calcs", [])
+        except Exception as e:
+            log.warning(f"Top Value API error (page {page}): {e}")
+            break
+
+        if not calcs:
+            log.debug(f"  Top Value page {page}: kosong — berhenti")
+            break
+
+        page_count = 0
+        for item in calcs:
+            company = item.get("company", {})
+            code = company.get("symbol", "")
+            if not code or code in seen_codes:
+                continue
+
+            # Ambil value dari results
+            value_today = 0
+            for r_item in item.get("results", []):
+                if r_item.get("id") == 13620:
+                    value_today = float(r_item.get("raw", 0))
+
+            if value_today <= 0:
+                continue
+
+            seen_codes.add(code)
+            page_count += 1
+            result.append({
+                "ticker":            code,
+                "name":              company.get("name", code),
+                "price":             0,
+                "change_pct":        0,
+                "value_today":       value_today,
+                "frequency_today":   0,
+                "net_foreign_today": 0,
+                "iep":               0,
+                "iep_change_pct":    0,
+                "in_mover_types":    ["SCREENER_TOP_VALUE"],
+                "vol_ratio_screener": 0,
+                "from_screener":     False,
+                "from_gainer":       False,
+                "from_loser":        False,
+                "from_guru":         False,
+                "from_top_value":    True,
+            })
+
+        log.debug(f"  Top Value page {page}: {page_count} saham baru")
+
+    log.info(f"  Top Value total: {len(result)} saham ({max_pages} page maks)")
     return result
 
 
