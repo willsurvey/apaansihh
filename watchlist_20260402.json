@@ -1,6 +1,6 @@
 {
   "status": "success",
-  "generated_at": "2026-04-02 16:43:50 WIB",
+  "generated_at": "2026-04-02 17:14:18 WIB",
   "date": "2026-04-02",
   "mode": "FULL_STOCKBIT",
   "session_label": "MARKET_DAY",
@@ -8,12 +8,12 @@
   "mode_warning": null,
   "total_saham": 2,
   "market_context": {
-    "ihsg_close": 7026,
-    "ihsg_change_pct": -2.19,
+    "ihsg_close": 7184,
+    "ihsg_change_pct": 1.93,
     "ihsg_trend": "BEARISH",
     "ihsg_above_ma50": false,
     "market_safe": true,
-    "warning": "⚠️ IHSG turun -2.2% kemarin. Trading dengan sangat hati-hati."
+    "warning": null
   },
   "screening_summary": {
     "universe": 424,
@@ -78,8 +78,8 @@
         }
       },
       "trend": {
-        "ma50": 1216.0,
-        "gap_from_ma50_pct": 7.3,
+        "ma50": 1213.0,
+        "gap_from_ma50_pct": 3.03,
         "ma50_slope": "POSITIVE"
       },
       "smc": {
@@ -127,10 +127,11 @@
         "✅ Net Foreign Buy hari ini: Rp4.3B",
         "✅ Net Foreign Buy 3 hari berturut",
         "✅ Harga di zona FVG aktif",
-        "✅ Swing Structure: BULLISH"
+        "✅ Swing Structure: BULLISH",
+        "✅ Pullback ke MA50 (3.0% di atas MA50)"
       ],
       "warnings": [],
-      "updated_at": "16.43 WIB"
+      "updated_at": "17.14 WIB"
     },
     {
       "rank": 2,
@@ -165,8 +166,8 @@
         }
       },
       "trend": {
-        "ma50": 1448.0,
-        "gap_from_ma50_pct": 15.32,
+        "ma50": 1444.0,
+        "gap_from_ma50_pct": 15.67,
         "ma50_slope": "POSITIVE"
       },
       "smc": {
@@ -216,7 +217,7 @@
         "✅ Swing Structure: BULLISH"
       ],
       "warnings": [],
-      "updated_at": "16.43 WIB"
+      "updated_at": "17.14 WIB"
     }
   ]
 }
