@@ -2,10 +2,10 @@
   "cookies": [
     {
       "name": "_GRECAPTCHA",
-      "value": "09AKhCRwiuuotn0IZaPq13BUl_gB0GJ_gt_TRmJ_8jRj9mVXxd1piGh8SuCZ1CsqXDJa_ShER8Nhxaf37BoxibJoI",
+      "value": "09AKhCRwjZocZB_SgYIBxTmpnWwRZp1r8jjS4BLSnWfbUqqoGtjBR6yMUAWY1t5WiwdEDSZgIbKuS9gcye6apXPuI",
       "domain": "www.google.com",
       "path": "/recaptcha",
-      "expires": 1790683103.84408,
+      "expires": 1791031775.479258,
       "httpOnly": true,
       "secure": true,
       "sameSite": "None"
@@ -21,151 +21,179 @@
       "sameSite": "Lax"
     },
     {
-      "name": "_ttp",
-      "value": "3Bni9GlixC9CPezQrl081ZurPEr",
-      "domain": ".tiktok.com",
+      "name": "WZRK_G",
+      "value": "42df57b30c9946cab171d101b3b162bb",
+      "domain": ".stockbit.com",
       "path": "/",
-      "expires": 1808827577.639579,
+      "expires": 1807016773,
       "httpOnly": false,
-      "secure": true,
-      "sameSite": "None"
+      "secure": false,
+      "sameSite": "Lax"
     },
     {
       "name": "G_ENABLED_IDPS",
       "value": "google",
       "domain": ".stockbit.com",
       "path": "/",
-      "expires": 1809691084.233839,
-      "httpOnly": false,
-      "secure": false,
-      "sameSite": "Lax"
-    },
-    {
-      "name": "WZRK_G",
-      "value": "75fd4ba4a9814f379c0be2d4d382a84d",
-      "domain": ".stockbit.com",
-      "path": "/",
-      "expires": 1806667580,
-      "httpOnly": false,
-      "secure": false,
-      "sameSite": "Lax"
-    },
-    {
-      "name": "_tt_enable_cookie",
-      "value": "1",
-      "domain": ".stockbit.com",
-      "path": "/",
-      "expires": 1808827581,
+      "expires": 1810039722.948409,
       "httpOnly": false,
       "secure": false,
       "sameSite": "Lax"
     },
     {
       "name": "_ttp",
-      "value": "01KN70XHMGSB2E4BHPEM8871YD_.tt.1",
-      "domain": ".stockbit.com",
+      "value": "3Bz6oSicoEyziN7tkfEXoAutxeH",
+      "domain": ".tiktok.com",
       "path": "/",
-      "expires": 1808827581,
-      "httpOnly": false,
-      "secure": false,
-      "sameSite": "Lax"
-    },
-    {
-      "name": "crisp-client%2Fsession%2F44ed90bf-ce78-4f5f-a9f8-82e000538b9b",
-      "value": "session_9ae89c66-25d6-4cd2-a42e-dca8aefdffdb",
-      "domain": ".stockbit.com",
-      "path": "/",
-      "expires": 1790899591,
-      "httpOnly": false,
-      "secure": false,
-      "sameSite": "Lax"
-    },
-    {
-      "name": "crisp-client%2Fsession%2F44ed90bf-ce78-4f5f-a9f8-82e000538b9b%2F6c7c44ff-5a31-4445-984d-3d2977216c85",
-      "value": "session_9ae89c66-25d6-4cd2-a42e-dca8aefdffdb",
-      "domain": ".stockbit.com",
-      "path": "/",
-      "expires": 1790899591,
-      "httpOnly": false,
-      "secure": false,
-      "sameSite": "Lax"
-    },
-    {
-      "name": "AWSALB",
-      "value": "fgFyfoWGxkkl6KpFVmlI4GCMmcsQiL4U8OfZIGSjBlXxYX/qVS31xXcgJfc3PyfjVYaDcmqPcSbbRWG9wkvkETOOGZ1YFMIQJ69MBkrG5m6xbr8USIn83hmgw2GE",
-      "domain": "wssocial.stockbit.com",
-      "path": "/",
-      "expires": 1775736378.463086,
-      "httpOnly": false,
-      "secure": false,
-      "sameSite": "Lax"
-    },
-    {
-      "name": "AWSALBCORS",
-      "value": "fgFyfoWGxkkl6KpFVmlI4GCMmcsQiL4U8OfZIGSjBlXxYX/qVS31xXcgJfc3PyfjVYaDcmqPcSbbRWG9wkvkETOOGZ1YFMIQJ69MBkrG5m6xbr8USIn83hmgw2GE",
-      "domain": "wssocial.stockbit.com",
-      "path": "/",
-      "expires": 1775736378.46364,
+      "expires": 1809176770.408773,
       "httpOnly": false,
       "secure": true,
       "sameSite": "None"
     },
     {
-      "name": "AWSALB",
-      "value": "6HOv/2tx1TzlFQEuF/awX5IZWym1WERcfc/w2wXG+R7C3WyQSGt1V2iX0yCC8r9lQseQEu1+9/OEYG3BlgvoGNWs1iou4PId0hgU5DeO512RnMSMAu19NeYOCuTo",
-      "domain": "wss-jkt.trading.stockbit.com",
+      "name": "_tt_enable_cookie",
+      "value": "1",
+      "domain": ".stockbit.com",
       "path": "/",
-      "expires": 1775736379.980569,
+      "expires": 1809176774,
       "httpOnly": false,
       "secure": false,
       "sameSite": "Lax"
     },
     {
-      "name": "AWSALBCORS",
-      "value": "6HOv/2tx1TzlFQEuF/awX5IZWym1WERcfc/w2wXG+R7C3WyQSGt1V2iX0yCC8r9lQseQEu1+9/OEYG3BlgvoGNWs1iou4PId0hgU5DeO512RnMSMAu19NeYOCuTo",
-      "domain": "wss-jkt.trading.stockbit.com",
+      "name": "_ttp",
+      "value": "01KNHDD77TBZT35DGXMXB3S2KW_.tt.1",
+      "domain": ".stockbit.com",
       "path": "/",
-      "expires": 1775736379.984209,
+      "expires": 1809176774,
       "httpOnly": false,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "YSC",
+      "value": "ElYJv_4ZCMw",
+      "domain": ".youtube.com",
+      "path": "/",
+      "expires": -1,
+      "httpOnly": true,
       "secure": true,
-      "sameSite": "None"
+      "sameSite": "None",
+      "partitionKey": "https://stockbit.com",
+      "_crHasCrossSiteAncestor": true
     },
     {
-      "name": "WZRK_S_6ZW-897-5R6Z",
-      "value": "%7B%22p%22%3A3%2C%22s%22%3A1775131082%2C%22t%22%3A1775131584%7D",
-      "domain": ".stockbit.com",
+      "name": "VISITOR_INFO1_LIVE",
+      "value": "a8pNQRpoG-Y",
+      "domain": ".youtube.com",
       "path": "/",
-      "expires": 1775132784,
-      "httpOnly": false,
-      "secure": false,
-      "sameSite": "Lax"
+      "expires": 1791032712.214443,
+      "httpOnly": true,
+      "secure": true,
+      "sameSite": "None",
+      "partitionKey": "https://stockbit.com",
+      "_crHasCrossSiteAncestor": true
     },
     {
-      "name": "ttcsid",
-      "value": "1775131084438::AHky0mN0bkDYab3-lbbu.1.1775131584492.0::1.492281.496837::411380.68.257.1409::417517.70.0",
-      "domain": ".stockbit.com",
+      "name": "VISITOR_PRIVACY_METADATA",
+      "value": "CgJJRBIEGgAgYQ%3D%3D",
+      "domain": ".youtube.com",
       "path": "/",
-      "expires": 1808827584,
-      "httpOnly": false,
-      "secure": false,
-      "sameSite": "Lax"
+      "expires": 1791032712.214637,
+      "httpOnly": true,
+      "secure": true,
+      "sameSite": "None",
+      "partitionKey": "https://stockbit.com",
+      "_crHasCrossSiteAncestor": true
     },
     {
-      "name": "ttcsid_C5P9ESLODNNK397VS21G",
-      "value": "1775131084437::GyHbQ4-K2JvYyyI64tjO.1.1775131584492.1",
-      "domain": ".stockbit.com",
+      "name": "__Secure-ROLLOUT_TOKEN",
+      "value": "COL_qPrp2Pfk7gEQof_t-KTZkwMYut74-aTZkwM%3D",
+      "domain": ".youtube.com",
       "path": "/",
-      "expires": 1808827584,
-      "httpOnly": false,
-      "secure": false,
-      "sameSite": "Lax"
+      "expires": 1791032680.289165,
+      "httpOnly": true,
+      "secure": true,
+      "sameSite": "None",
+      "partitionKey": "https://stockbit.com",
+      "_crHasCrossSiteAncestor": true
     },
     {
       "name": "crisp-client%2Fsocket%2F44ed90bf-ce78-4f5f-a9f8-82e000538b9b",
       "value": "0",
       "domain": "stockbit.com",
       "path": "/",
-      "expires": 1775132191,
+      "expires": 1775481281,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "AWSALB",
+      "value": "m9AQxKWox/uZBVruSX66Q74qMIl/XqeOafx9vuyxCTrAaoFbnzKlL5RKbNzWU1F+YrDf0UarIHqjP1w0yppwgJnekJcrgGA24VsUjb2+urK/G4TffFSvYbLdM27E",
+      "domain": "wssocial.stockbit.com",
+      "path": "/",
+      "expires": 1776085571.569339,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "AWSALBCORS",
+      "value": "m9AQxKWox/uZBVruSX66Q74qMIl/XqeOafx9vuyxCTrAaoFbnzKlL5RKbNzWU1F+YrDf0UarIHqjP1w0yppwgJnekJcrgGA24VsUjb2+urK/G4TffFSvYbLdM27E",
+      "domain": "wssocial.stockbit.com",
+      "path": "/",
+      "expires": 1776085571.569657,
+      "httpOnly": false,
+      "secure": true,
+      "sameSite": "None"
+    },
+    {
+      "name": "AWSALB",
+      "value": "nws2KfSERmWV5HkKTHMKWpm0x4HUGKdzuPnL2BmjtT0l/Jz987d3BhSJjAn0OgaGzr/Fe4s32FtMz0x4SErPNm65kAveWv9OaJ0+xthVSdZsby+1f2hidS2PXMMU",
+      "domain": "wss-jkt.trading.stockbit.com",
+      "path": "/",
+      "expires": 1776085574.175869,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "AWSALBCORS",
+      "value": "nws2KfSERmWV5HkKTHMKWpm0x4HUGKdzuPnL2BmjtT0l/Jz987d3BhSJjAn0OgaGzr/Fe4s32FtMz0x4SErPNm65kAveWv9OaJ0+xthVSdZsby+1f2hidS2PXMMU",
+      "domain": "wss-jkt.trading.stockbit.com",
+      "path": "/",
+      "expires": 1776085574.176182,
+      "httpOnly": false,
+      "secure": true,
+      "sameSite": "None"
+    },
+    {
+      "name": "ttcsid",
+      "value": "1775479725310::DA9my-wp4JNr77pNsvk6.1.1775480778521.0::1.1044205.1049511::954248.15.531.480::0.0.0",
+      "domain": ".stockbit.com",
+      "path": "/",
+      "expires": 1809176778,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "ttcsid_C5P9ESLODNNK397VS21G",
+      "value": "1775479725309::cAulx6ibrSiTAByT-fv3.1.1775480778521.1",
+      "domain": ".stockbit.com",
+      "path": "/",
+      "expires": 1809176778,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "WZRK_S_6ZW-897-5R6Z",
+      "value": "%7B%22p%22%3A3%2C%22s%22%3A1775479722%2C%22t%22%3A1775480780%7D",
+      "domain": ".stockbit.com",
+      "path": "/",
+      "expires": 1775481980,
       "httpOnly": false,
       "secure": false,
       "sameSite": "Lax"
@@ -181,7 +209,7 @@
         },
         {
           "name": "ws",
-          "value": "WyIzNGxGVU1RNWN5U3J6cWU2WW9nS0RNM2VQNHRBV3oyb1BVVWVEYlBIQ3NJPSJd"
+          "value": "WyJPcUNLMFVLaXd0Z3dxSTZVNnJwX0J5bHpMVTBsVU1lVXk0V1gzLWVISTJBPSJd"
         },
         {
           "name": "brokerSummaryDisplayFrequency",
@@ -193,19 +221,11 @@
         },
         {
           "name": "_grecaptcha",
-          "value": "09AKhCRwjpYM0u2kfBuXpOXk7Uv16sdRYu3O9E5rhWdovvz4WIfjl3XAMP0VygH6lKPMHOAQuuR5n_tzYLvaiRPLiL2bIOTbCD7aHny_kzo7yVhK_IqNMZRgOOzc20Nf5C"
-        },
-        {
-          "name": "securitiesRegistrationStatus",
-          "value": "true"
+          "value": "09AKhCRwjmgvfYOLcv9A4lgEDy3gCsBraqvbW2NZLdvoiCwgv0DbfpNWkGfaHvP3bfYRPoUNVL2Izkh0ebXrhlB1CAfXHujtMPvm811z5nBlJQui09wwYOsDPvPopLIqba"
         },
         {
           "name": "multi-portfolio-storage",
           "value": "{\"state\":{\"subAccountsData\":{\"isLoading\":false,\"error\":\"\",\"data\":{\"regular\":{\"accounts\":[],\"can_create_new_account\":false},\"margin\":{\"accounts\":[],\"can_create_new_account\":false}}},\"activeAccount\":\"\",\"subAccountsPurposeData\":{\"isLoading\":false,\"error\":\"\",\"data\":{\"purposes\":[]}},\"tradingBalanceData\":{\"isLoading\":false,\"error\":\"\",\"data\":{\"balance\":0,\"equity\":0}},\"hideOddLot\":false},\"version\":0}"
-        },
-        {
-          "name": "crisp-client/session/44ed90bf-ce78-4f5f-a9f8-82e000538b9b:e",
-          "value": "1775147359311"
         },
         {
           "name": "zustandOrderTableStore",
@@ -213,11 +233,11 @@
         },
         {
           "name": "WZRK_EV",
-          "value": "%7B%22Login%20Selected%22%3A%5B1%2C1775131103%2C1775131103%5D%2C%22New%20Device%20Login%20Attempt%22%3A%5B1%2C1775131104%2C1775131104%5D%2C%22Login%20Successful%22%3A%5B1%2C1775131207%2C1775131207%5D%2C%22New%20Device%20Login%20Completed%22%3A%5B1%2C1775131207%2C1775131207%5D%2C%22Ideas%20Viewed%22%3A%5B3%2C1775131208%2C1775131579%5D%2C%22Settings%20Viewed%22%3A%5B1%2C1775131223%2C1775131223%5D%2C%22Settings%20Action%22%3A%5B1%2C1775131273%2C1775131273%5D%2C%22Share%20Trade%20Settings%20Viewed%22%3A%5B1%2C1775131273%2C1775131273%5D%2C%22Public%20Profile%20Selected%22%3A%5B2%2C1775131281%2C1775131325%5D%2C%22header_menu_action%22%3A%5B1%2C1775131335%2C1775131335%5D%2C%22Company%20Page%20Viewed%22%3A%5B1%2C1775131579%2C1775131579%5D%7D"
+          "value": "%7B%22Login%20Selected%22%3A%5B2%2C1775479775%2C1775480561%5D%2C%22New%20Device%20Login%20Attempt%22%3A%5B2%2C1775479775%2C1775480561%5D%2C%22Login%20Successful%22%3A%5B1%2C1775480676%2C1775480676%5D%2C%22New%20Device%20Login%20Completed%22%3A%5B1%2C1775480676%2C1775480676%5D%2C%22Ideas%20Viewed%22%3A%5B3%2C1775480676%2C1775480774%5D%2C%22Company%20Page%20Viewed%22%3A%5B1%2C1775480772%2C1775480772%5D%7D"
         },
         {
           "name": "UIConfigStore",
-          "value": "{\"state\":{\"userConfig\":{\"6927213\":{\"featureFlags\":{\"web-b-jkt-trading-socket\":{\"isEnabled\":true},\"disable-registration-live-support\":{\"isEnabled\":true},\"all-b-ifa-transaction\":{\"isEnabled\":false},\"enable-data-change-warning\":{\"isEnabled\":true},\"enable-market-order\":{\"isEnabled\":true},\"all-b-running-trade-chart-eligibility\":{\"isEnabled\":true},\"all-b-broker-distribution-eligibility\":{\"isEnabled\":true},\"all-b-running-trade-chart-date-filter-eligibility\":{\"isEnabled\":true},\"all-b-broker-distribution-eligible-pro-users\":{\"isEnabled\":false}},\"remisier\":{\"isLeader\":false,\"isCommunityAccessGranted\":true}}}},\"version\":0}"
+          "value": "{\"state\":{\"userConfig\":{\"6927213\":{\"featureFlags\":{\"web-b-jkt-trading-socket\":{\"isEnabled\":true},\"disable-registration-live-support\":{\"isEnabled\":true},\"all-b-ifa-transaction\":{\"isEnabled\":false},\"enable-market-order\":{\"isEnabled\":true},\"all-b-running-trade-chart-eligibility\":{\"isEnabled\":true},\"all-b-broker-distribution-eligibility\":{\"isEnabled\":true},\"all-b-running-trade-chart-date-filter-eligibility\":{\"isEnabled\":true},\"all-b-broker-distribution-eligible-pro-users\":{\"isEnabled\":false}},\"remisier\":{\"isLeader\":false,\"isCommunityAccessGranted\":true}}}},\"version\":0}"
         },
         {
           "name": "@fast-trade/shell-transaction-form",
@@ -225,7 +245,7 @@
         },
         {
           "name": "WEBSOCKET_WS_SOCIAL_PING_INTERNAL",
-          "value": "135"
+          "value": "139"
         },
         {
           "name": "virtualFormula",
@@ -237,7 +257,7 @@
         },
         {
           "name": "WZRK_G",
-          "value": "%2275fd4ba4a9814f379c0be2d4d382a84d%22"
+          "value": "%2242df57b30c9946cab171d101b3b162bb%22"
         },
         {
           "name": "isLoggedInLS",
@@ -245,7 +265,7 @@
         },
         {
           "name": "at",
-          "value": "ZXlKaGJHY2lPaUpTVXpJMU5pSXNJbXRwWkNJNkltRXhOV1E1T0dFMkxUZGtZemd0TkRNM05TMDVORGswTFRFeU9XSmxNMlJsT0RWa05DSXNJblI1Y0NJNklrcFhWQ0o5LmV5SmtZWFJoSWpwN0luVnpaU0k2SWxCMWFtbE1aWE4wWVhKcE56a2lMQ0psYldFaU9pSndkV3BwYkdWemRHRnlhVEl5TURNM09VQm5iV0ZwYkM1amIyMGlMQ0ptZFd3aU9pSlFkV3BwSUV4bGMzUmhjbWtpTENKelpYTWlPaUpxT0RWeWJUTlBRblV3YzJoSlNXcG1JaXdpWkhaaklqb2lObVpsTXpKa056UTVaRE5tWkRsbVpUQXpOV0prWVdZMVlUVmhOVE16TlRBaUxDSjFhV1FpT2pZNU1qY3lNVE1zSW1OdmRTSTZJa2xFSW4wc0ltVjRjQ0k2TVRjM05USXhOell3TlN3aWFXRjBJam94TnpjMU1UTXhNakExTENKcGMzTWlPaUpUVkU5RFMwSkpWQ0lzSW1wMGFTSTZJakV3TWpBek1tRTVMVGRpWkdRdE5EUTJZaTA1WVRZNExXRmpOakU1TXpCbVl6TTBOaUlzSW01aVppSTZNVGMzTlRFek1USXdOU3dpZG1WeUlqb2lkakVpZlEuRmFROWJyd3Z2Z2RXNmM3UmRUVjZUcml6NjBkVmZ3bTlpRlgtMldRXzVMS2I1N1Z5Rm95aDVzWi12dUtaZmxXNnRWVVRMbkV2dElCbXlQZDZxblFsZ3RoUE8xSVlqcXl0YUNaUDZTUzJUbWh0QUlsQVVPdGZUTTFKWUNENTdBNml2WERxdjIzNkY4OWxnVUo1djRVYjk5bHl4d2NsX1BmLVlTWW1kbzIzVUViMXZMM1Ayck9WY2pCU2RZb01qQTNydE5DRTF0ZkdsSHFNZnBLSExCMUhhN1U3U0tDdHlJWm1vY0dsY1VCTzJ6ckN6VUFneDNvTVlOVWpraUVRRF9rcUhydGY4aXJ4bGg0T0tWWTVUTmJfdTBlcU5NcURYOWpxb2ZEZ0NJVXdhd2V2M3VPOFZwNDFrX3NrOXdocHQzQU94Y0N4akpOajdydXR5Si0tZlptNDN3"
+          "value": "ZXlKaGJHY2lPaUpTVXpJMU5pSXNJbXRwWkNJNkltRXhOV1E1T0dFMkxUZGtZemd0TkRNM05TMDVORGswTFRFeU9XSmxNMlJsT0RWa05DSXNJblI1Y0NJNklrcFhWQ0o5LmV5SmtZWFJoSWpwN0luVnpaU0k2SWxCMWFtbE1aWE4wWVhKcE56a2lMQ0psYldFaU9pSndkV3BwYkdWemRHRnlhVEl5TURNM09VQm5iV0ZwYkM1amIyMGlMQ0ptZFd3aU9pSlFkV3BwSUV4bGMzUmhjbWtpTENKelpYTWlPaUk1YW5CeWRrWkJUbUZFUVZkbGVGSkRJaXdpWkhaaklqb2lOamcyTVRGaE1EZG1OREF6Tm1ZMk5XTXhNV0U0WTJKak1UQmhNVFZtTURBaUxDSjFhV1FpT2pZNU1qY3lNVE1zSW1OdmRTSTZJa2xFSW4wc0ltVjRjQ0k2TVRjM05UVTJOekEzTlN3aWFXRjBJam94TnpjMU5EZ3dOamMxTENKcGMzTWlPaUpUVkU5RFMwSkpWQ0lzSW1wMGFTSTZJalJsWm1ZMllqSXlMVGsxTnpRdE5EQmtNUzA0WWpNd0xURXpOVE15TmpZMk1qUmpOQ0lzSW01aVppSTZNVGMzTlRRNE1EWTNOU3dpZG1WeUlqb2lkakVpZlEuS1U5Z0w4cHhlZklRUk5rWUtZQWhWU1JnWU9jSXFPRnV3T2pKUXNzT3JOV1p6YlA5ZnhYcGhoU3JrX1JsamdLbmRoeXpoRG4xdHJFOC0xbXN0MlpEVjhvdTVoMkdjS3lETURBUHdIeWg1NDBnTUFUR1Q0YXVkTVJJcjh3ZEtlMHp0RFF0dWowcG1iOXF5RlJnSkRmai0zM1pPOHJoNXdvUDZSYzBSaHBRTVo2ODFXdFRqRlFndDV0U3c3ZU1HdFNPZnh0Z3I4TEd2ODFZNWdDbFFLclcyWDRlV0N3VkZ6TkdlR0pleWJiUWU5eUFhNUpMT0I0RDRLRF80dDUyOHptWkFNeUNNbWF2c1RwSlZIaFJ1Wk1mMkJGeHp3aDdCcnJuZVNCTVhHU2dEOG51dHlLR3BFNElyRC1yYUJmLW96SUMzYnpSaXR2MEFJMUZDTGJzdWkyWHNn"
         },
         {
           "name": "tooltipShare",
@@ -253,7 +273,7 @@
         },
         {
           "name": "eipoRefreshToken",
-          "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjcmVhdGVkX2F0IjoxNzc1MTMxMjEwLCJleHAiOjE3NzUxMzE4MTAsImlzX3JlZnJlc2giOiJ0cnVlIiwicGFydG5lcl9pZCI6IlBKUDAzNjFYWE8iLCJzZWN1cml0aWVzX2lkIjoiM2RmMjY1M2M3NWJlNzg5Yjk5YzAyMjliOGZmZjQzN2JlOGNhZjQ2NDFhNjA0YTY3NTJhMGEzZmRhNmY3M2MzNThTODdRTUFTUkwiLCJ0b2tlbl90eXBlIjoiRUlQT19QQVJUTkVSX0FDQ0VTU19UT0tFTiJ9.xzORvWa8bUO3SD1erak1_Gv-d6jMYaUydnLvwpeR8SY"
+          "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjcmVhdGVkX2F0IjoxNzc1NDgwNjgxLCJleHAiOjE3NzU0ODEyODEsImlzX3JlZnJlc2giOiJ0cnVlIiwicGFydG5lcl9pZCI6IlBKUDAzNjFYWE8iLCJzZWN1cml0aWVzX2lkIjoiM2RmMjY1M2M3NWJlNzg5Yjk5YzAyMjliOGZmZjQzN2JlOGNhZjQ2NDFhNjA0YTY3NTJhMGEzZmRhNmY3M2MzNThTODdRTUFTUkwiLCJ0b2tlbl90eXBlIjoiRUlQT19QQVJUTkVSX0FDQ0VTU19UT0tFTiJ9.Nrvz84V61KKyH7n5jPnZ9TJlV4MmabjI4UnuzW5O0FU"
         },
         {
           "name": "feature-storage",
@@ -265,11 +285,7 @@
         },
         {
           "name": "are",
-          "value": "MTc3NTczNjAwNTAwMA=="
-        },
-        {
-          "name": "crisp-client/session/44ed90bf-ce78-4f5f-a9f8-82e000538b9b/6c7c44ff-5a31-4445-984d-3d2977216c85",
-          "value": "session_9ae89c66-25d6-4cd2-a42e-dca8aefdffdb"
+          "value": "MTc3NjA4NTQ3NTAwMA=="
         },
         {
           "name": "au",
@@ -277,7 +293,7 @@
         },
         {
           "name": "notifChatCounter",
-          "value": "{\"state\":{\"count\":6,\"isReset\":false},\"version\":0}"
+          "value": "{\"state\":{\"count\":7,\"isReset\":false},\"version\":0}"
         },
         {
           "name": "crisp",
@@ -285,7 +301,7 @@
         },
         {
           "name": "WZRK_ARP",
-          "value": "%7B%22j_n%22%3A%22Zw%3D%3D%22%2C%22i_n%22%3A%22Y25lfAIJAA0%3D%22%2C%22d_ts%22%3A0%2C%22dh%22%3A0%2C%22v%22%3A2%2C%22j_s%22%3A%22%7B%7D%22%2C%22id%22%3A%226ZW-897-5R6Z%22%2C%22r_ts%22%3A1775131082%7D"
+          "value": "%7B%22j_n%22%3A%22Zw%3D%3D%22%2C%22i_n%22%3A%22Y25regoIAQA%3D%22%2C%22d_ts%22%3A0%2C%22dh%22%3A0%2C%22v%22%3A2%2C%22j_s%22%3A%22%7B%7D%22%2C%22id%22%3A%226ZW-897-5R6Z%22%2C%22r_ts%22%3A1775479722%7D"
         },
         {
           "name": "WZRK_FPU",
@@ -297,15 +313,15 @@
         },
         {
           "name": "WZRK_META",
-          "value": "%7B%22useIP%22%3Afalse%2C%22ps%22%3A1775131082%2C%22cs%22%3A1775131082%2C%22sc%22%3A1%7D"
+          "value": "%7B%22useIP%22%3Afalse%2C%22ps%22%3A1775479722%2C%22cs%22%3A1775479722%2C%22sc%22%3A1%7D"
         },
         {
           "name": "WZRK_X",
-          "value": "%7B%22cache%22%3A%5B%5B%22PujiLestari79%22%2C%2275fd4ba4a9814f379c0be2d4d382a84d%22%5D%5D%7D"
+          "value": "%7B%22cache%22%3A%5B%5B%22PujiLestari79%22%2C%2242df57b30c9946cab171d101b3b162bb%22%5D%5D%7D"
         },
         {
           "name": "ate",
-          "value": "MTc3NTIxNzYwNTAwMA=="
+          "value": "MTc3NTU2NzA3NTAwMA=="
         },
         {
           "name": "zustandStockbitFormula",
@@ -313,23 +329,15 @@
         },
         {
           "name": "ar",
-          "value": "ZXlKaGJHY2lPaUpTVXpJMU5pSXNJbXRwWkNJNkltRXhOV1E1T0dFMkxUZGtZemd0TkRNM05TMDVORGswTFRFeU9XSmxNMlJsT0RWa05DSXNJblI1Y0NJNklrcFhWQ0o5LmV5SmtZWFJoSWpwN0luUjVjQ0k2SW5KbFpuSmxjMmdpTENKMWMyVWlPaUpRZFdwcFRHVnpkR0Z5YVRjNUlpd2laVzFoSWpvaWNIVnFhV3hsYzNSaGNta3lNakF6TnpsQVoyMWhhV3d1WTI5dElpd2lablZzSWpvaVVIVnFhU0JNWlhOMFlYSnBJaXdpYzJWeklqb2lhamcxY20welQwSjFNSE5vU1VscVppSXNJbVIyWXlJNklqWm1aVE15WkRjME9XUXpabVE1Wm1Vd016VmlaR0ZtTldFMVlUVXpNelV3SWl3aWRXbGtJam8yT1RJM01qRXpMQ0pqYjNVaU9pSkpSQ0o5TENKbGVIQWlPakUzTnpVM016WXdNRFVzSW1saGRDSTZNVGMzTlRFek1USXdOU3dpYVhOeklqb2lVMVJQUTB0Q1NWUWlMQ0pxZEdraU9pSXhNREl3TXpKaE9TMDNZbVJrTFRRME5tSXRPV0UyT0MxaFl6WXhPVE13Wm1Nek5EWWlMQ0p1WW1ZaU9qRTNOelV4TXpFeU1EVXNJblpsY2lJNkluWXhJbjAuaXc5dHlMblBHVlhkeW1hbDd2SFhNTHk0c1VNQnVHYlZWdWlZam1mWHlKbUc5RjFnc09yQTlqSUFuM3dKaEJHZUNhNk50UFc3VGl6NHdjZEpST1RaOGxOT01rWWM3RGV1cUpSSk1NR2lzQVFZMWdlcXhvU3VPN0JiZm55cTJIX1BLY2hIdXdiNG85SjFCSFBUMEprNlZNWURkMGdPRGVYMVlrUC1zMDJESW9JZE1Bb01Gb3ZWSnYwY1FKOU04bHo0Q1J6ZFQycXhybXJ0NldmWXdrYVBRUE1nTUtuSVhIbWlyaHIyek1ydWtCNmNwNG9SMGdWMGhUd3p2SWJVOFQyRGRtekljN2w2VWVGN0hNd1NjUGE5dVBxVTNPckxxWUhJN2NGQ29QN2RJcUg4OU5lUHVpTUNxYTdNX2hWZEU0emFmQUN6b1lodmFBMzJBUzd4YVV4bHBn"
-        },
-        {
-          "name": "crisp-client/session/44ed90bf-ce78-4f5f-a9f8-82e000538b9b/6c7c44ff-5a31-4445-984d-3d2977216c85:e",
-          "value": "1775147359311"
+          "value": "ZXlKaGJHY2lPaUpTVXpJMU5pSXNJbXRwWkNJNkltRXhOV1E1T0dFMkxUZGtZemd0TkRNM05TMDVORGswTFRFeU9XSmxNMlJsT0RWa05DSXNJblI1Y0NJNklrcFhWQ0o5LmV5SmtZWFJoSWpwN0luUjVjQ0k2SW5KbFpuSmxjMmdpTENKMWMyVWlPaUpRZFdwcFRHVnpkR0Z5YVRjNUlpd2laVzFoSWpvaWNIVnFhV3hsYzNSaGNta3lNakF6TnpsQVoyMWhhV3d1WTI5dElpd2lablZzSWpvaVVIVnFhU0JNWlhOMFlYSnBJaXdpYzJWeklqb2lPV3B3Y25aR1FVNWhSRUZYWlhoU1F5SXNJbVIyWXlJNklqWTROakV4WVRBM1pqUXdNelptTmpWak1URmhPR05pWXpFd1lURTFaakF3SWl3aWRXbGtJam8yT1RJM01qRXpMQ0pqYjNVaU9pSkpSQ0o5TENKbGVIQWlPakUzTnpZd09EVTBOelVzSW1saGRDSTZNVGMzTlRRNE1EWTNOU3dpYVhOeklqb2lVMVJQUTB0Q1NWUWlMQ0pxZEdraU9pSTBaV1ptTm1JeU1pMDVOVGMwTFRRd1pERXRPR0l6TUMweE16VXpNalkyTmpJMFl6UWlMQ0p1WW1ZaU9qRTNOelUwT0RBMk56VXNJblpsY2lJNkluWXhJbjAuRjdKTE9vX2VhM3JTUDJBNWtiRS04OVdTbXVpTWxlZWVBSGh3SFlHWVc5YWVaZWNZc2p1SkZkdmpScUIzTFVPUkUtNFlOVVhVcV9TcW81eEs3U25mNWl5ME1ObVdJSmhiMFhkZjUxS0JteXlNQ2Q0T2NjU3U1cWQ3TzQ4djF4SGdVcEtWcGhWaWZFZHNRQ19rVndsMEJMdzE4RUVOazctVnBUZjYxSEJ3MlItSnFTejNHc3FCWnRPRTNwU0U4bGxmMjB3dXl4XzZ3S1JWR1k1S1prZDFWVzJ2ckxrV2RLc3U3Q0lLTGY1RkFXV1p4cmhHcmlmRUNmc1g0ZGFUbnozZnBaT1M3UFBIQmJHemNkeWxMUG1qX016OWNDbG5seXN4MUJ5bWpHanJWdjd6aTlPUVBaVklaV0ZycVBuNmtVY3M5R0FWUHExcm9JRGFibFBoNWR5QTF3"
         },
         {
           "name": "player-id",
-          "value": "25297581-df91-4e24-aef7-5869061b058d"
+          "value": "b2b24dd7-8f3c-44a7-8b24-6ac4f7aae451"
         },
         {
           "name": "eipoToken",
-          "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjcmVhdGVkX2F0IjoxNzc1MTMxMjEwLCJleHAiOjE3NzUxMzEyNzAsInBhcnRuZXJfaWQiOiJQSlAwMzYxWFhPIiwic2VjdXJpdGllc19pZCI6IjNkZjI2NTNjNzViZTc4OWI5OWMwMjI5YjhmZmY0MzdiZThjYWY0NjQxYTYwNGE2NzUyYTBhM2ZkYTZmNzNjMzU4Uzg3UU1BU1JMIiwidG9rZW5fdHlwZSI6IkVJUE9fUEFSVE5FUl9BQ0NFU1NfVE9LRU4ifQ.mOcz_uv_Tjmcj1_Gap98Pnc_0ccHf1IDZ9SZj96cSU4"
-        },
-        {
-          "name": "crisp-client/session/44ed90bf-ce78-4f5f-a9f8-82e000538b9b",
-          "value": "session_9ae89c66-25d6-4cd2-a42e-dca8aefdffdb"
+          "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjcmVhdGVkX2F0IjoxNzc1NDgwNjgxLCJleHAiOjE3NzU0ODA3NDEsInBhcnRuZXJfaWQiOiJQSlAwMzYxWFhPIiwic2VjdXJpdGllc19pZCI6IjNkZjI2NTNjNzViZTc4OWI5OWMwMjI5YjhmZmY0MzdiZThjYWY0NjQxYTYwNGE2NzUyYTBhM2ZkYTZmNzNjMzU4Uzg3UU1BU1JMIiwidG9rZW5fdHlwZSI6IkVJUE9fUEFSVE5FUl9BQ0NFU1NfVE9LRU4ifQ.v4j9NNk97HfLtMJjDSNzoljQ1ftYFqNUkNXWOKWMIRg"
         },
         {
           "name": "trustedDevice",
@@ -346,11 +354,24 @@
       "localStorage": [
         {
           "name": "rc::a",
-          "value": "NDMzMDdmMWsxcGV3cQ=="
+          "value": "MXl6dTh1ampwMHVlcg=="
         },
         {
           "name": "rc::f",
-          "value": "0aAMm6y2-qfhfjqIKG8nmJsSpjk9bxGmpHcUdrM3Vg07hxkjI9Cj8exz14h449QQaVqs74HLU"
+          "value": "0aAD1zX5G3CG2dxpZI9VtJLWBMEJDP2c9t5V6kKjeXuRQTuNAIndDybFdvl9y5srSfaPG3rOE"
+        }
+      ]
+    },
+    {
+      "origin": "https://www.youtube.com",
+      "localStorage": [
+        {
+          "name": "ytidb::LAST_RESULT_ENTRY_KEY",
+          "value": "{\"data\":{\"hasSucceededOnce\":true},\"expiration\":1778072715734,\"creation\":1775480715734}"
+        },
+        {
+          "name": "yt-icons-last-purged",
+          "value": "1770383112658"
         }
       ]
     }
