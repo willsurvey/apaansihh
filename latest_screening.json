@@ -1,22 +1,28 @@
 {
-  "status": "no_signal",
-  "generated_at": "2026-04-07 03:01:10 WIB",
+  "status": "success",
+  "generated_at": "2026-04-07 03:43:07 WIB",
   "date": "2026-04-07",
   "mode": "FULL_STOCKBIT",
   "session_label": "MARKET_DAY",
   "session_warning": null,
   "mode_warning": null,
-  "total_saham": 0,
+  "total_saham": 1,
   "market_context": {
-    "ihsg_close": 6973,
-    "ihsg_change_pct": -0.22,
+    "ihsg_close": 7000,
+    "ihsg_change_pct": 0.16,
     "ihsg_trend": "BEARISH",
     "ihsg_above_ma50": false,
-    "market_safe": false,
-    "warning": "IHSG turun 3 hari berturut-turut. Tidak ada output hari ini."
+    "market_safe": true,
+    "warning": null
   },
   "screening_summary": {
-    "stopped": "market_unsafe"
+    "universe": 418,
+    "after_liquidity": 71,
+    "after_accumulation": 18,
+    "after_trend": 3,
+    "after_smc": 3,
+    "after_entry": 1,
+    "final": 1
   },
   "config": {
     "strategy": "Pre-Market Intraday — Limit Order",
@@ -36,5 +42,96 @@
     "max_output": 3,
     "min_rr": 2.0
   },
-  "data": []
+  "data": [
+    {
+      "rank": 1,
+      "ticker": "AADI",
+      "company": "Adaro Andalan Indonesia Tbk.",
+      "mode": "FULL_STOCKBIT",
+      "universe_sources": [
+        "MOVER_TYPE_TOP_VALUE",
+        "MOVER_TYPE_NET_FOREIGN_BUY",
+        "GURU_92_Big Accumula",
+        "SCREENER_TOP_VALUE"
+      ],
+      "market_data": {
+        "close": 10675,
+        "change_pct": -1.61,
+        "value_today": 51776707500,
+        "frequency_today": 2571,
+        "iep": 10950,
+        "iep_change_pct": 2.34
+      },
+      "accumulation": {
+        "broker_signal": "Big Acc",
+        "net_foreign_today": 17060917500,
+        "net_foreign_3d": 0,
+        "acc_score": 25,
+        "score_breakdown": {
+          "broker": 35,
+          "foreign_1d": 0,
+          "foreign_3d": 0,
+          "candle": -5,
+          "volume": -5,
+          "total": 25
+        }
+      },
+      "trend": {
+        "ma50": 9285.0,
+        "gap_from_ma50_pct": 14.7,
+        "ma50_slope": "POSITIVE"
+      },
+      "smc": {
+        "internal_structure": "NONE",
+        "swing_trend_bias": "BULLISH",
+        "ob_zone": "10375 - 10500",
+        "fvg_zone": null,
+        "strong_low": 10375.0,
+        "weak_high": 11700.0
+      },
+      "entry_plan": {
+        "entry_direction": "GAP_UP",
+        "entry_direction_label": "⬆️ Gap Up entry — entry di atas PDC jika gap terkonfirmasi",
+        "entry_direction_reason": "IEP gap up 2.3%",
+        "entry_1": 10950,
+        "entry_1_pct": 20,
+        "entry_1_note": "Gap up entry (IEP +2.3%)",
+        "entry_2": 10675,
+        "entry_2_pct": 50,
+        "entry_2_note": "PDC / Bid Wall — antisipasi flat open",
+        "entry_3": 10625,
+        "entry_3_pct": 30,
+        "entry_3_note": "Pullback fallback / OB zone",
+        "average_entry": 10725,
+        "entry_zone": "10625 - 10950",
+        "sl": 10575,
+        "sl_pct_risk": 1.4,
+        "sl_note": "Cut loss wajib jika close harian di bawah ini",
+        "tp1": 11000,
+        "tp1_note": "PDH / Target psikologis intraday",
+        "tp2": 11700,
+        "tp2_note": "Weak High / Supply Zone 1H",
+        "tp3": 12050,
+        "tp3_note": "RR minimum 1:2.0",
+        "rr_ratio": "1:8.8",
+        "risk_pct": 2,
+        "risk_note": "Max 2% dari total portofolio"
+      },
+      "scoring": {
+        "confidence_score": 40,
+        "tier": "MODERATE"
+      },
+      "signals": [
+        "✅ Broker Signal: Big Acc",
+        "✅ Net Foreign Buy hari ini: Rp17.1B",
+        "✅ Harga di zona Order Block aktif",
+        "✅ Swing Structure: BULLISH"
+      ],
+      "warnings": [
+        "⚠️ Potensi GAP UP 2.3% — entry_1 disesuaikan ke IEP",
+        "⚠️ Entry 1 DI ATAS close — prediksi gap up. Jika tidak gap, skip entry_1."
+      ],
+      "updated_at": "03.43 WIB"
+    }
+  ]
 }
