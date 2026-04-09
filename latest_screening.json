@@ -1,6 +1,6 @@
 {
   "status": "success",
-  "generated_at": "2026-04-09 11:33:39 WIB",
+  "generated_at": "2026-04-09 12:15:24 WIB",
   "date": "2026-04-09",
   "mode": "FULL_STOCKBIT",
   "session_label": "MARKET_DAY",
@@ -16,7 +16,7 @@
     "warning": null
   },
   "screening_summary": {
-    "universe": 397,
+    "universe": 399,
     "after_liquidity": 105,
     "after_accumulation": 31,
     "after_trend": 7,
@@ -50,7 +50,7 @@
       "mode": "FULL_STOCKBIT",
       "universe_sources": [
         "MOVER_TYPE_NET_FOREIGN_BUY",
-        "GURU_77_Foreign Flow",
+        "GURU_92_Big Accumula",
         "SCREENER_TOP_VALUE"
       ],
       "market_data": {
@@ -128,7 +128,7 @@
         "✅ Swing Structure: BULLISH"
       ],
       "warnings": [],
-      "updated_at": "11.33 WIB"
+      "updated_at": "12.15 WIB"
     },
     {
       "rank": 2,
@@ -215,7 +215,7 @@
         "✅ Swing Structure: BULLISH"
       ],
       "warnings": [],
-      "updated_at": "11.33 WIB"
+      "updated_at": "12.15 WIB"
     },
     {
       "rank": 3,
@@ -224,6 +224,7 @@
       "mode": "FULL_STOCKBIT",
       "universe_sources": [
         "MOVER_TYPE_NET_FOREIGN_BUY",
+        "GURU_92_Big Accumula",
         "SCREENER_TOP_VALUE"
       ],
       "market_data": {
@@ -300,7 +301,7 @@
         "✅ Swing Structure: BULLISH"
       ],
       "warnings": [],
-      "updated_at": "11.33 WIB"
+      "updated_at": "12.15 WIB"
     }
   ]
 }
