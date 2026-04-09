@@ -1,6 +1,6 @@
 {
   "status": "success",
-  "generated_at": "2026-04-09 18:14:10 WIB",
+  "generated_at": "2026-04-09 18:47:06 WIB",
   "date": "2026-04-09",
   "mode": "FULL_STOCKBIT",
   "session_label": "MARKET_DAY",
@@ -19,9 +19,9 @@
     "universe": 399,
     "after_liquidity": 105,
     "after_accumulation": 31,
-    "after_trend": 8,
-    "after_smc": 7,
-    "after_entry": 5,
+    "after_trend": 7,
+    "after_smc": 6,
+    "after_entry": 4,
     "final": 3
   },
   "config": {
@@ -76,8 +76,8 @@
         }
       },
       "trend": {
-        "ma50": 595.0,
-        "gap_from_ma50_pct": 10.05,
+        "ma50": 596.0,
+        "gap_from_ma50_pct": 10.65,
         "ma50_slope": "POSITIVE"
       },
       "smc": {
@@ -128,7 +128,7 @@
         "✅ Swing Structure: BULLISH"
       ],
       "warnings": [],
-      "updated_at": "18.14 WIB"
+      "updated_at": "18.47 WIB"
     },
     {
       "rank": 2,
@@ -164,8 +164,8 @@
         }
       },
       "trend": {
-        "ma50": 24548.0,
-        "gap_from_ma50_pct": 6.63,
+        "ma50": 24644.0,
+        "gap_from_ma50_pct": 10.07,
         "ma50_slope": "POSITIVE"
       },
       "smc": {
@@ -215,7 +215,7 @@
         "✅ Swing Structure: BULLISH"
       ],
       "warnings": [],
-      "updated_at": "18.14 WIB"
+      "updated_at": "18.47 WIB"
     },
     {
       "rank": 3,
@@ -250,8 +250,8 @@
         }
       },
       "trend": {
-        "ma50": 1606.0,
-        "gap_from_ma50_pct": 7.43,
+        "ma50": 1612.0,
+        "gap_from_ma50_pct": 12.63,
         "ma50_slope": "POSITIVE"
       },
       "smc": {
@@ -301,7 +301,7 @@
         "✅ Swing Structure: BULLISH"
       ],
       "warnings": [],
-      "updated_at": "18.14 WIB"
+      "updated_at": "18.47 WIB"
     }
   ]
 }
