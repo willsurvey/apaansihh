@@ -1,11 +1,11 @@
 {
   "status": "no_signal",
-  "generated_at": "2026-04-11 03:01:30 WIB",
+  "generated_at": "2026-04-11 03:32:45 WIB",
   "date": "2026-04-11",
-  "mode": "YAHOO_ONLY",
+  "mode": "FULL_STOCKBIT",
   "session_label": "PRE_MARKET_WEEKEND (Saturday)",
   "session_warning": "⚠️ Screening dijalankan di akhir pekan — gunakan sebagai referensi persiapan, bukan sinyal eksekusi langsung.",
-  "mode_warning": "⚠️ TOKEN TIDAK TERSEDIA — Data terbatas (Yahoo Finance only)",
+  "mode_warning": null,
   "total_saham": 0,
   "market_context": {
     "ihsg_close": 7458,
