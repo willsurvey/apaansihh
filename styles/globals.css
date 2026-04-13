@@ -11,6 +11,17 @@ html {
   -moz-osx-font-smoothing: grayscale;
 }
 
+:root {
+  --c-teal: #1D9E75;
+  --c-amber: #BA7517;
+  --c-coral: #D85A30;
+  --c-blue: #378ADD;
+  --c-red: #E24B4A;
+  --c-green: #639922;
+  --c-purple: #7F77DD;
+  --c-gray: #888780;
+}
+
 body {
   background: var(--color-background-tertiary, #f2f2f0);
   color: var(--color-text-primary, #1a1a1a);
