@@ -2,10 +2,10 @@
   "cookies": [
     {
       "name": "_GRECAPTCHA",
-      "value": "09AKhCRwiX3i5KX9N-F-jqoD4T1jhk8nDDydkPptby2Nnp9fhCWlKMsQZiIlygXhRwJagGueMHmfIqoF5O2kkilOU",
+      "value": "09AKhCRwieuhHAy_aSFBFeMdlvvPpNELVHr1ZGdreVl7bw1bYDzSX6oR9KzC-2ctd6qHUP5dh0ObdKlJvbYetfEGY",
       "domain": "www.google.com",
       "path": "/recaptcha",
-      "expires": 1791284606.627389,
+      "expires": 1791629698.494073,
       "httpOnly": true,
       "secure": true,
       "sameSite": "None"
@@ -21,21 +21,11 @@
       "sameSite": "Lax"
     },
     {
-      "name": "WZRK_G",
-      "value": "350adbea2354452db0eb2a42467fd151",
-      "domain": ".stockbit.com",
-      "path": "/",
-      "expires": 1807268750,
-      "httpOnly": false,
-      "secure": false,
-      "sameSite": "Lax"
-    },
-    {
       "name": "_ttp",
-      "value": "3C7NB5VKDiRxSOBDqNWG7qPkVpJ",
+      "value": "3CIen6F8UQ71skmZISrG1L69iRp",
       "domain": ".tiktok.com",
       "path": "/",
-      "expires": 1809428749.228879,
+      "expires": 1809773986.094325,
       "httpOnly": false,
       "secure": true,
       "sameSite": "None"
@@ -45,17 +35,27 @@
       "value": "1",
       "domain": ".stockbit.com",
       "path": "/",
-      "expires": 1809428753,
+      "expires": 1809774004,
       "httpOnly": false,
       "secure": false,
       "sameSite": "Lax"
     },
     {
       "name": "_ttp",
-      "value": "01KNRYFKWTD34ZSCHGXKN1WC5X_.tt.1",
+      "value": "01KP37N77E5CM0F5ZJXVXRSXD9_.tt.1",
       "domain": ".stockbit.com",
       "path": "/",
-      "expires": 1809428753,
+      "expires": 1809774004,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "WZRK_G",
+      "value": "eff7884aa4bf4039ab60eade4aa424c9",
+      "domain": ".stockbit.com",
+      "path": "/",
+      "expires": 1807614009,
       "httpOnly": false,
       "secure": false,
       "sameSite": "Lax"
@@ -65,97 +65,87 @@
       "value": "google",
       "domain": ".stockbit.com",
       "path": "/",
-      "expires": 1810292510.899699,
+      "expires": 1810637676.014878,
       "httpOnly": false,
       "secure": false,
       "sameSite": "Lax"
     },
     {
-      "name": "crisp-client%2Fsession%2F44ed90bf-ce78-4f5f-a9f8-82e000538b9b",
-      "value": "session_97a8c970-553d-4c79-85d7-b58879020ce5",
-      "domain": ".stockbit.com",
+      "name": "crisp-client%2Fsocket%2F44ed90bf-ce78-4f5f-a9f8-82e000538b9b",
+      "value": "0",
+      "domain": "stockbit.com",
       "path": "/",
-      "expires": 1791500755,
-      "httpOnly": false,
-      "secure": false,
-      "sameSite": "Lax"
-    },
-    {
-      "name": "crisp-client%2Fsession%2F44ed90bf-ce78-4f5f-a9f8-82e000538b9b%2F6c7c44ff-5a31-4445-984d-3d2977216c85",
-      "value": "session_97a8c970-553d-4c79-85d7-b58879020ce5",
-      "domain": ".stockbit.com",
-      "path": "/",
-      "expires": 1791500755,
+      "expires": 1776078515,
       "httpOnly": false,
       "secure": false,
       "sameSite": "Lax"
     },
     {
       "name": "AWSALB",
-      "value": "apuoZgFrDn+zY15SrvKGCqDFhq+fit/7ldQ+yLCb/QmDJgeBeKMftFKPHyJAZIvDXbRLSof2g+wSia/ciNMvqdTnqHhYO2xa+sqqaOXuQj8cKs3Uus99FLFYeLrw",
-      "domain": "wssocial.stockbit.com",
+      "value": "yrJwflhYz4tyF6gUGV5wI2kIHY4fn7SjKWPcuNR+HFe7Tg+vLCM1hBmwnLSn+4YyX7Fu/ZK2wHKFDrYTW5WKfcnyZ1GBnaZ5v2f527xYXi7fU9Bx32t02qxRPxdI",
+      "domain": "wss-jkt.trading.stockbit.com",
       "path": "/",
-      "expires": 1776337549.417148,
+      "expires": 1776682787.380246,
       "httpOnly": false,
       "secure": false,
       "sameSite": "Lax"
     },
     {
       "name": "AWSALBCORS",
-      "value": "apuoZgFrDn+zY15SrvKGCqDFhq+fit/7ldQ+yLCb/QmDJgeBeKMftFKPHyJAZIvDXbRLSof2g+wSia/ciNMvqdTnqHhYO2xa+sqqaOXuQj8cKs3Uus99FLFYeLrw",
-      "domain": "wssocial.stockbit.com",
+      "value": "yrJwflhYz4tyF6gUGV5wI2kIHY4fn7SjKWPcuNR+HFe7Tg+vLCM1hBmwnLSn+4YyX7Fu/ZK2wHKFDrYTW5WKfcnyZ1GBnaZ5v2f527xYXi7fU9Bx32t02qxRPxdI",
+      "domain": "wss-jkt.trading.stockbit.com",
       "path": "/",
-      "expires": 1776337549.417289,
+      "expires": 1776682787.380711,
       "httpOnly": false,
       "secure": true,
       "sameSite": "None"
     },
     {
       "name": "AWSALB",
-      "value": "U37elrzVgxNrEywQwhGIPX7lrrI5CG6f7XwdGqsK/wDdta4b5TJm+gEZPiyHQz2S1PgAXywfr8Ykt0YWfqHIeqzaluX6XhGc4w2QOntEdcKvOY37AbYDFd4kynCO",
-      "domain": "wss-jkt.trading.stockbit.com",
+      "value": "v4KNFOd4RTasT4dr0otxiklWnzi+R+4wrutRdVWbnI36vP0LQILFatFu/aV3jejsrOWXEsyLqG5rgeFi6XQdlrDMU6aJ3zrWvnC467ieICYjt2yTrXGOh9Vj3WqV",
+      "domain": "wssocial.stockbit.com",
       "path": "/",
-      "expires": 1776337550.189806,
+      "expires": 1776682788.466397,
       "httpOnly": false,
       "secure": false,
       "sameSite": "Lax"
     },
     {
       "name": "AWSALBCORS",
-      "value": "U37elrzVgxNrEywQwhGIPX7lrrI5CG6f7XwdGqsK/wDdta4b5TJm+gEZPiyHQz2S1PgAXywfr8Ykt0YWfqHIeqzaluX6XhGc4w2QOntEdcKvOY37AbYDFd4kynCO",
-      "domain": "wss-jkt.trading.stockbit.com",
+      "value": "v4KNFOd4RTasT4dr0otxiklWnzi+R+4wrutRdVWbnI36vP0LQILFatFu/aV3jejsrOWXEsyLqG5rgeFi6XQdlrDMU6aJ3zrWvnC467ieICYjt2yTrXGOh9Vj3WqV",
+      "domain": "wssocial.stockbit.com",
       "path": "/",
-      "expires": 1776337550.189972,
+      "expires": 1776682788.466803,
       "httpOnly": false,
       "secure": true,
       "sameSite": "None"
-    },
-    {
-      "name": "WZRK_S_6ZW-897-5R6Z",
-      "value": "%7B%22p%22%3A3%2C%22s%22%3A1775732507%2C%22t%22%3A1775732752%7D",
-      "domain": ".stockbit.com",
-      "path": "/",
-      "expires": 1775733952,
-      "httpOnly": false,
-      "secure": false,
-      "sameSite": "Lax"
     },
     {
       "name": "ttcsid",
-      "value": "1775732510623::bjp1Lxwld21MWp9npjC9.1.1775732753782.0::1.236152.242581::160410.8.539.484::157100.3.0",
+      "value": "1776077675762::tQaNCcNO1e8qQ9ZhBReQ.1.1776078005191.0::1.309648.329209::239361.9.574.487::0.0.0",
       "domain": ".stockbit.com",
       "path": "/",
-      "expires": 1809428753,
+      "expires": 1809774005,
       "httpOnly": false,
       "secure": false,
       "sameSite": "Lax"
     },
     {
       "name": "ttcsid_C5P9ESLODNNK397VS21G",
-      "value": "1775732510623::Ul0SqUT-utdN2Y3oRW5v.1.1775732753782.1",
+      "value": "1776077675760::31WSYu_wsAyWKeucQT7q.1.1776078005192.1",
       "domain": ".stockbit.com",
       "path": "/",
-      "expires": 1809428753,
+      "expires": 1809774005,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "WZRK_S_6ZW-897-5R6Z",
+      "value": "%7B%22p%22%3A3%2C%22s%22%3A1776077674%2C%22t%22%3A1776078019%7D",
+      "domain": ".stockbit.com",
+      "path": "/",
+      "expires": 1776079219,
       "httpOnly": false,
       "secure": false,
       "sameSite": "Lax"
@@ -171,7 +161,7 @@
         },
         {
           "name": "ws",
-          "value": "WyJ1ZVRDcGpoeWI3UndDLWFqYkoxQ3gxbEFuc0JNMm1TUVFKN0p2TU4tQkZnPSJd"
+          "value": "WyI4ekVjdi1JUG8yRkJWZTI1Y2Zpb3pFdmhyc2FWckFqRldxSGN2MFl4YTh3PSJd"
         },
         {
           "name": "brokerSummaryDisplayFrequency",
@@ -183,15 +173,11 @@
         },
         {
           "name": "_grecaptcha",
-          "value": "09AKhCRwg_6MDntSYLGNWzSGVNC6BogxMdcKI9eT-mGY-VWe1R-hDCbCcjopzJgqBpEevm3Le5qfKghcljMd3dByofF9tifC8dMUCXubuoSUzBlqE70gVZCceHYVM3FDOS"
+          "value": "09AKhCRwjwL8KqAS84TzAdNNONz9Wn_sTiJWhSeR2CGPmXI62UEmav2QVD0HOf9Y0tvMaXbwjNZ1ihhvsEDFcnqAyUGIukk0_rZPSS-fOa1a38gSr_rg2vcOXNm7vT00O6"
         },
         {
           "name": "multi-portfolio-storage",
           "value": "{\"state\":{\"subAccountsData\":{\"isLoading\":false,\"error\":\"\",\"data\":{\"regular\":{\"accounts\":[],\"can_create_new_account\":false},\"margin\":{\"accounts\":[],\"can_create_new_account\":false}}},\"activeAccount\":\"\",\"subAccountsPurposeData\":{\"isLoading\":false,\"error\":\"\",\"data\":{\"purposes\":[]}},\"tradingBalanceData\":{\"isLoading\":false,\"error\":\"\",\"data\":{\"balance\":0,\"equity\":0}},\"hideOddLot\":false},\"version\":0}"
-        },
-        {
-          "name": "crisp-client/session/44ed90bf-ce78-4f5f-a9f8-82e000538b9b:e",
-          "value": "1775748523356"
         },
         {
           "name": "zustandOrderTableStore",
@@ -199,7 +185,7 @@
         },
         {
           "name": "WZRK_EV",
-          "value": "%7B%22Login%20Selected%22%3A%5B1%2C1775732606%2C1775732606%5D%2C%22New%20Device%20Login%20Attempt%22%3A%5B1%2C1775732606%2C1775732606%5D%2C%22Login%20Successful%22%3A%5B1%2C1775732667%2C1775732667%5D%2C%22New%20Device%20Login%20Completed%22%3A%5B1%2C1775732667%2C1775732667%5D%2C%22Ideas%20Viewed%22%3A%5B3%2C1775732668%2C1775732750%5D%2C%22Company%20Page%20Viewed%22%3A%5B1%2C1775732749%2C1775732749%5D%7D"
+          "value": "%7B%22Login%20Selected%22%3A%5B1%2C1776077698%2C1776077698%5D%2C%22New%20Device%20Login%20Attempt%22%3A%5B1%2C1776077702%2C1776077702%5D%2C%22Login%20Successful%22%3A%5B1%2C1776077911%2C1776077911%5D%2C%22New%20Device%20Login%20Completed%22%3A%5B1%2C1776077911%2C1776077911%5D%2C%22Ideas%20Viewed%22%3A%5B3%2C1776077912%2C1776078011%5D%2C%22Company%20Page%20Viewed%22%3A%5B1%2C1776077993%2C1776077993%5D%7D"
         },
         {
           "name": "UIConfigStore",
@@ -211,7 +197,7 @@
         },
         {
           "name": "WEBSOCKET_WS_SOCIAL_PING_INTERNAL",
-          "value": "138"
+          "value": "118"
         },
         {
           "name": "virtualFormula",
@@ -223,7 +209,7 @@
         },
         {
           "name": "WZRK_G",
-          "value": "%22350adbea2354452db0eb2a42467fd151%22"
+          "value": "%22eff7884aa4bf4039ab60eade4aa424c9%22"
         },
         {
           "name": "isLoggedInLS",
@@ -231,7 +217,7 @@
         },
         {
           "name": "at",
-          "value": "ZXlKaGJHY2lPaUpTVXpJMU5pSXNJbXRwWkNJNkltRXhOV1E1T0dFMkxUZGtZemd0TkRNM05TMDVORGswTFRFeU9XSmxNMlJsT0RWa05DSXNJblI1Y0NJNklrcFhWQ0o5LmV5SmtZWFJoSWpwN0luVnpaU0k2SWxCMWFtbE1aWE4wWVhKcE56a2lMQ0psYldFaU9pSndkV3BwYkdWemRHRnlhVEl5TURNM09VQm5iV0ZwYkM1amIyMGlMQ0ptZFd3aU9pSlFkV3BwSUV4bGMzUmhjbWtpTENKelpYTWlPaUpWVldkaWJYTlRZVEJNZHpsT2FucDVJaXdpWkhaaklqb2lNRFk1Wm1JeE9UVTNOVGsxWmpBMFkySTNZbVZpWkdaallUVmtNREZsWlRBaUxDSjFhV1FpT2pZNU1qY3lNVE1zSW1OdmRTSTZJa2xFSW4wc0ltVjRjQ0k2TVRjM05UZ3hPVEEyTml3aWFXRjBJam94TnpjMU56TXlOalkyTENKcGMzTWlPaUpUVkU5RFMwSkpWQ0lzSW1wMGFTSTZJak5pTldNeU5EZzFMV1U1TlRJdE5EUTNOQzA0TVdSbExUTmtZVGc0TVRkbVpqVmhOaUlzSW01aVppSTZNVGMzTlRjek1qWTJOaXdpZG1WeUlqb2lkakVpZlEuSkU4NXo4MUp0bDhyemszbHM5QlVJcklHZkdnOFpqaE5rTklsb29LWFlXay1TczM0QmV2YVV3Mk9aZTI1MEd5YWhvbzZiQ2t2STZvd2JrcGtEUWlSc1dFelotbVdSSzJndGU5VFhZLVQ5dlk3bXZwMHk4LVVaX1NYYUpqOUN1dHpIdGo1QTZTRExJVUZab2gzbE9hb3BiYjBhTlZ3OEo3eFV5b1FrQVRjUnRXOGQ5bTBwS09MU242LW1wa09pWjFLQVhjQUNCeG5BbXctXzd5MFl3LTdIalhwYXBXTThaRXRodk1sdnpiS0ZVVjAzcWM0enRveGlVSzNiSkI0Vnc5aHdDNUJiSVhZM3VQYlhoWUdKNnVNSlJ0SW5STk5aYWpPVG9JZThSejRHOURGQ28xdjlzbjIycDhEOUlKcmE4X2pzRXlsa3BsWTU4ZVpMRmZ1RTlzRWZn"
+          "value": "ZXlKaGJHY2lPaUpTVXpJMU5pSXNJbXRwWkNJNkltRXhOV1E1T0dFMkxUZGtZemd0TkRNM05TMDVORGswTFRFeU9XSmxNMlJsT0RWa05DSXNJblI1Y0NJNklrcFhWQ0o5LmV5SmtZWFJoSWpwN0luVnpaU0k2SWxCMWFtbE1aWE4wWVhKcE56a2lMQ0psYldFaU9pSndkV3BwYkdWemRHRnlhVEl5TURNM09VQm5iV0ZwYkM1amIyMGlMQ0ptZFd3aU9pSlFkV3BwSUV4bGMzUmhjbWtpTENKelpYTWlPaUpMZGtwMVNUTlNaalJMUjNGTWVFbFFJaXdpWkhaaklqb2lZbU15WW1ReU9ERTNPR0kxTURVMlpUUm1OMkprT0RreU1EUTFZV0ZoT1RBaUxDSjFhV1FpT2pZNU1qY3lNVE1zSW1OdmRTSTZJa2xFSW4wc0ltVjRjQ0k2TVRjM05qRTJORE13T1N3aWFXRjBJam94TnpjMk1EYzNPVEE1TENKcGMzTWlPaUpUVkU5RFMwSkpWQ0lzSW1wMGFTSTZJalF3TVdOa1l6RmpMVEZpWkRJdE5EbG1ZUzFoTWpVekxUaGhNVFV5TkRZME1HSmlNeUlzSW01aVppSTZNVGMzTmpBM056a3dPU3dpZG1WeUlqb2lkakVpZlEuYzk1cnpfR3RteF9mWHEwRFZPS05OSm1DQUlURXlxTy1WaWl4dUhhMmlqNVdzWkJORnc4cnNxS2FqbHZGZi1zTzdOZlJrcmxPWTdpRTRBUDQ0VTF3aTkyYW0yWS0zUUR5RzZ3RzdDTFVFeFIwVkdPWEtTbnV0SHZTRmRRM083NjFFem5ReDcyb2NJWlVnb01kWWsydkMxOVRJaTZZRnNrRFBuWmJGU1ZjS0h4RlVuQ2l2WkJhU2Y0ZGN3SzB3SEJCaDk4endzWkpFZjNSejk1WlY2TnNOUUM2STZad1phWWtLSUdMVW9URUpDc0lHSFZtc2gtVGFYVVN1NHotY0o1VEFINTNpVjN3c2wwaVQ5X3ptYmdCZVlJR0gwM3RJdTg2Z1JZWlZLbUJHdWlKa183QlpKRmU5ajMzUTRqY3VDWWpHUVZ5NjlUQ2o1VUxCeUhOS0lUak5B"
         },
         {
           "name": "tooltipShare",
@@ -239,7 +225,7 @@
         },
         {
           "name": "eipoRefreshToken",
-          "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjcmVhdGVkX2F0IjoxNzc1NzMyNjcyLCJleHAiOjE3NzU3MzMyNzIsImlzX3JlZnJlc2giOiJ0cnVlIiwicGFydG5lcl9pZCI6IlBKUDAzNjFYWE8iLCJzZWN1cml0aWVzX2lkIjoiM2RmMjY1M2M3NWJlNzg5Yjk5YzAyMjliOGZmZjQzN2JlOGNhZjQ2NDFhNjA0YTY3NTJhMGEzZmRhNmY3M2MzNThTODdRTUFTUkwiLCJ0b2tlbl90eXBlIjoiRUlQT19QQVJUTkVSX0FDQ0VTU19UT0tFTiJ9.k_t0qOtn7E4hLOV0Iqb7tMdt1zF0Wm0sOx2-VJ5mOls"
+          "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjcmVhdGVkX2F0IjoxNzc2MDc3OTE0LCJleHAiOjE3NzYwNzg1MTQsImlzX3JlZnJlc2giOiJ0cnVlIiwicGFydG5lcl9pZCI6IlBKUDAzNjFYWE8iLCJzZWN1cml0aWVzX2lkIjoiM2RmMjY1M2M3NWJlNzg5Yjk5YzAyMjliOGZmZjQzN2JlOGNhZjQ2NDFhNjA0YTY3NTJhMGEzZmRhNmY3M2MzNThTODdRTUFTUkwiLCJ0b2tlbl90eXBlIjoiRUlQT19QQVJUTkVSX0FDQ0VTU19UT0tFTiJ9.iUuJM8xbQ2re9Kg1FvBMjM7_52dVCUPkdCI82PnKGOA"
         },
         {
           "name": "feature-storage",
@@ -251,11 +237,7 @@
         },
         {
           "name": "are",
-          "value": "MTc3NjMzNzQ2NjAwMA=="
-        },
-        {
-          "name": "crisp-client/session/44ed90bf-ce78-4f5f-a9f8-82e000538b9b/6c7c44ff-5a31-4445-984d-3d2977216c85",
-          "value": "session_97a8c970-553d-4c79-85d7-b58879020ce5"
+          "value": "MTc3NjY4MjcwOTAwMA=="
         },
         {
           "name": "au",
@@ -263,7 +245,7 @@
         },
         {
           "name": "notifChatCounter",
-          "value": "{\"state\":{\"count\":8,\"isReset\":false},\"version\":0}"
+          "value": "{\"state\":{\"count\":10,\"isReset\":false},\"version\":0}"
         },
         {
           "name": "crisp",
@@ -271,7 +253,7 @@
         },
         {
           "name": "WZRK_ARP",
-          "value": "%7B%22j_n%22%3A%22Zw%3D%3D%22%2C%22i_n%22%3A%22Y29gewQJBwc%3D%22%2C%22d_ts%22%3A0%2C%22dh%22%3A0%2C%22v%22%3A2%2C%22j_s%22%3A%22%7B%7D%22%2C%22id%22%3A%226ZW-897-5R6Z%22%2C%22r_ts%22%3A1775732507%7D"
+          "value": "%7B%22j_n%22%3A%22Zw%3D%3D%22%2C%22i_n%22%3A%22Y29negIGAwY%3D%22%2C%22d_ts%22%3A0%2C%22dh%22%3A0%2C%22v%22%3A2%2C%22j_s%22%3A%22%7B%7D%22%2C%22id%22%3A%226ZW-897-5R6Z%22%2C%22r_ts%22%3A1776077674%7D"
         },
         {
           "name": "WZRK_FPU",
@@ -283,15 +265,15 @@
         },
         {
           "name": "WZRK_META",
-          "value": "%7B%22useIP%22%3Afalse%2C%22ps%22%3A1775732507%2C%22cs%22%3A1775732507%2C%22sc%22%3A1%7D"
+          "value": "%7B%22useIP%22%3Afalse%2C%22ps%22%3A1776077674%2C%22cs%22%3A1776077674%2C%22sc%22%3A1%7D"
         },
         {
           "name": "WZRK_X",
-          "value": "%7B%22cache%22%3A%5B%5B%22PujiLestari79%22%2C%22350adbea2354452db0eb2a42467fd151%22%5D%5D%7D"
+          "value": "%7B%22cache%22%3A%5B%5B%22PujiLestari79%22%2C%22eff7884aa4bf4039ab60eade4aa424c9%22%5D%5D%7D"
         },
         {
           "name": "ate",
-          "value": "MTc3NTgxOTA2NjAwMA=="
+          "value": "MTc3NjE2NDMwOTAwMA=="
         },
         {
           "name": "zustandStockbitFormula",
@@ -299,23 +281,15 @@
         },
         {
           "name": "ar",
-          "value": "ZXlKaGJHY2lPaUpTVXpJMU5pSXNJbXRwWkNJNkltRXhOV1E1T0dFMkxUZGtZemd0TkRNM05TMDVORGswTFRFeU9XSmxNMlJsT0RWa05DSXNJblI1Y0NJNklrcFhWQ0o5LmV5SmtZWFJoSWpwN0luUjVjQ0k2SW5KbFpuSmxjMmdpTENKMWMyVWlPaUpRZFdwcFRHVnpkR0Z5YVRjNUlpd2laVzFoSWpvaWNIVnFhV3hsYzNSaGNta3lNakF6TnpsQVoyMWhhV3d1WTI5dElpd2lablZzSWpvaVVIVnFhU0JNWlhOMFlYSnBJaXdpYzJWeklqb2lWVlZuWW0xelUyRXdUSGM1VG1wNmVTSXNJbVIyWXlJNklqQTJPV1ppTVRrMU56VTVOV1l3TkdOaU4ySmxZbVJtWTJFMVpEQXhaV1V3SWl3aWRXbGtJam8yT1RJM01qRXpMQ0pqYjNVaU9pSkpSQ0o5TENKbGVIQWlPakUzTnpZek16YzBOallzSW1saGRDSTZNVGMzTlRjek1qWTJOaXdpYVhOeklqb2lVMVJQUTB0Q1NWUWlMQ0pxZEdraU9pSXpZalZqTWpRNE5TMWxPVFV5TFRRME56UXRPREZrWlMwelpHRTRPREUzWm1ZMVlUWWlMQ0p1WW1ZaU9qRTNOelUzTXpJMk5qWXNJblpsY2lJNkluWXhJbjAuRGxYaF9XQnlJcFNfMnRHemNsVmxINncxbHZORnJ6alBWaWR0VkpzVWJTSm9ieEJsbWFvbDJQNWhxTzhlV09NZE9Nd3FWWmcxQ2dkS3Q1eXVCWDZTMF9sczhYVk5DaENxQWF4THNDLUxiOXJvRnF2M0w0aVpCMEVaSHVhTlhOcm9wR05wU191alluOWJ4Unc5TGRmLXg4bmlhb3FvVmNvWTFkQVBUaUdsbkw0VnpjeHVyRVlvTHJ4bnZYcmtScDdkSkRwRlNKS09UNmEwLU5pRjBzcGt3SXoxRW03LTk2SmUwZm1VRnA0ZHpiU0M2dGgzaVJFZlVhNmdhMmgwOGZpckhycE90WVRHUTg2Zm9lRFpKdWF5NkN6d1ZWYWYxNFVtdDduaF93blpKWVRQcFM5SjJKcUozMTVrajdjaDBqbG1BaXNGUGFVdzRDaG0wRXZ2VzRZWWJ3"
-        },
-        {
-          "name": "crisp-client/session/44ed90bf-ce78-4f5f-a9f8-82e000538b9b/6c7c44ff-5a31-4445-984d-3d2977216c85:e",
-          "value": "1775748523356"
+          "value": "ZXlKaGJHY2lPaUpTVXpJMU5pSXNJbXRwWkNJNkltRXhOV1E1T0dFMkxUZGtZemd0TkRNM05TMDVORGswTFRFeU9XSmxNMlJsT0RWa05DSXNJblI1Y0NJNklrcFhWQ0o5LmV5SmtZWFJoSWpwN0luUjVjQ0k2SW5KbFpuSmxjMmdpTENKMWMyVWlPaUpRZFdwcFRHVnpkR0Z5YVRjNUlpd2laVzFoSWpvaWNIVnFhV3hsYzNSaGNta3lNakF6TnpsQVoyMWhhV3d1WTI5dElpd2lablZzSWpvaVVIVnFhU0JNWlhOMFlYSnBJaXdpYzJWeklqb2lTM1pLZFVrelVtWTBTMGR4VEhoSlVDSXNJbVIyWXlJNkltSmpNbUprTWpneE56aGlOVEExTm1VMFpqZGlaRGc1TWpBME5XRmhZVGt3SWl3aWRXbGtJam8yT1RJM01qRXpMQ0pqYjNVaU9pSkpSQ0o5TENKbGVIQWlPakUzTnpZMk9ESTNNRGtzSW1saGRDSTZNVGMzTmpBM056a3dPU3dpYVhOeklqb2lVMVJQUTB0Q1NWUWlMQ0pxZEdraU9pSTBNREZqWkdNeFl5MHhZbVF5TFRRNVptRXRZVEkxTXkwNFlURTFNalEyTkRCaVlqTWlMQ0p1WW1ZaU9qRTNOell3TnpjNU1Ea3NJblpsY2lJNkluWXhJbjAuU0ZwQnM0WGxnYkp1eElIWFFTcmFHUF8wSEtRaXpVM083S1kyX1JZRHByNWo1Ml9oZzd5cnN0UDF1NWZJOUE2TEhIR2tXYUkwMzNQWkRPWUc1N2hXeGhjRE4tTmF0WGR5OXpmNmFBN2kzVkI4SWM1cW9nakJ6SDVKMk1lbGdlZDFycHg2a0hUanI0NEVpWEpoMkFHYWlPamJMdlBtM3VNbXI4SENBQ0VMU3c1czVpa0JsN2U5R3ZRdG5ndmZMaTBUV014YVhZWG0tcDAzNzlPaEQ1NkxobEFFNzU1WktWb0NvMHBHbXRjNUFzejBTbnFpaV9iaEQ4Z0dEdEstYkFkelcta1RxQlZaQmw4UUZnNUgxc01zTTM2MXNKS2xMWTc4MEwwbHFQS1k2OElMczFtVGFXSlF6bkFtdGJmWk1KNFd3V3BYb1dXc0NHeFpVZGNqZ3BsWTdn"
         },
         {
           "name": "player-id",
-          "value": "c4a7ab73-2914-4a76-b947-e1a416c1c4d6"
+          "value": "909582fb-1778-4a66-bbf0-d9a74bbebbec"
         },
         {
           "name": "eipoToken",
-          "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjcmVhdGVkX2F0IjoxNzc1NzMyNjcyLCJleHAiOjE3NzU3MzI3MzIsInBhcnRuZXJfaWQiOiJQSlAwMzYxWFhPIiwic2VjdXJpdGllc19pZCI6IjNkZjI2NTNjNzViZTc4OWI5OWMwMjI5YjhmZmY0MzdiZThjYWY0NjQxYTYwNGE2NzUyYTBhM2ZkYTZmNzNjMzU4Uzg3UU1BU1JMIiwidG9rZW5fdHlwZSI6IkVJUE9fUEFSVE5FUl9BQ0NFU1NfVE9LRU4ifQ.mj186pjk-xnDPg943Q4PWj3bEbxCoz8B9aZ5HnH1ksA"
-        },
-        {
-          "name": "crisp-client/session/44ed90bf-ce78-4f5f-a9f8-82e000538b9b",
-          "value": "session_97a8c970-553d-4c79-85d7-b58879020ce5"
+          "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjcmVhdGVkX2F0IjoxNzc2MDc3OTE0LCJleHAiOjE3NzYwNzc5NzQsInBhcnRuZXJfaWQiOiJQSlAwMzYxWFhPIiwic2VjdXJpdGllc19pZCI6IjNkZjI2NTNjNzViZTc4OWI5OWMwMjI5YjhmZmY0MzdiZThjYWY0NjQxYTYwNGE2NzUyYTBhM2ZkYTZmNzNjMzU4Uzg3UU1BU1JMIiwidG9rZW5fdHlwZSI6IkVJUE9fUEFSVE5FUl9BQ0NFU1NfVE9LRU4ifQ.4Wn_ZSZdfyeGdd3p-ON-Y1PBPSrLefjt4_KPqd_13Ok"
         },
         {
           "name": "trustedDevice",
@@ -332,11 +306,11 @@
       "localStorage": [
         {
           "name": "rc::a",
-          "value": "MTVzdWU1Y2liZHZxOQ=="
+          "value": "MXdpMm5seXVudWUwZw=="
         },
         {
           "name": "rc::f",
-          "value": "0aAD1zX5GwvW6bLfW7bjVJqsF2eLOFWIUkibdjENdxrbpZEBOAWoALpiAYsi3BpPdhXQ0d1M4"
+          "value": "0aAD1zX5GRpYm7B5TBA6QWtBntLa4YoXsFDvGiC4t_v1tJ5z2t-W__TsDalep76j9xtCtNnZA"
         }
       ]
     }

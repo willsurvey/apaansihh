@@ -1,3 +1,4 @@
+/* styles/globals.css */
 *, *::before, *::after {
   box-sizing: border-box;
   margin: 0;
@@ -7,13 +8,15 @@
 html {
   font-size: 16px;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 body {
-  background: #0a0e1a;
-  color: #e8eaf0;
-  font-family: 'Courier New', 'Consolas', monospace;
+  background: var(--color-background-tertiary, #f2f2f0);
+  color: var(--color-text-primary, #1a1a1a);
+  font-family: var(--font-sans, system-ui, -apple-system, sans-serif);
   min-height: 100vh;
+  line-height: 1.5;
 }
 
 a {
@@ -21,7 +24,15 @@ a {
   text-decoration: none;
 }
 
+button, input, select, textarea {
+  font-family: inherit;
+  font-size: inherit;
+}
+
 button {
   cursor: pointer;
-  font-family: inherit;
+}
+
+input[type="search"]::-webkit-search-cancel-button {
+  -webkit-appearance: none;
 }
