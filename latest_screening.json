@@ -1,6 +1,6 @@
 {
   "status": "success",
-  "generated_at": "2026-04-13 16:07:10 WIB",
+  "generated_at": "2026-04-13 17:00:54 WIB",
   "date": "2026-04-13",
   "mode": "FULL_STOCKBIT",
   "session_label": "MARKET_DAY",
@@ -129,7 +129,7 @@
         "✅ Swing Structure: BULLISH"
       ],
       "warnings": [],
-      "updated_at": "16.07 WIB"
+      "updated_at": "17.00 WIB"
     },
     {
       "rank": 2,
@@ -215,7 +215,7 @@
         "✅ Harga di zona FVG aktif"
       ],
       "warnings": [],
-      "updated_at": "16.07 WIB"
+      "updated_at": "17.00 WIB"
     },
     {
       "rank": 3,
@@ -303,7 +303,7 @@
         "✅ Pullback ke MA50 (2.3% di atas MA50)"
       ],
       "warnings": [],
-      "updated_at": "16.07 WIB"
+      "updated_at": "17.00 WIB"
     }
   ]
 }
