@@ -1,6 +1,6 @@
 {
   "status": "success",
-  "generated_at": "2026-04-14 02:56:45 WIB",
+  "generated_at": "2026-04-14 03:28:22 WIB",
   "date": "2026-04-14",
   "mode": "FULL_STOCKBIT",
   "session_label": "MARKET_DAY",
@@ -8,8 +8,8 @@
   "mode_warning": null,
   "total_saham": 2,
   "market_context": {
-    "ihsg_close": 7623,
-    "ihsg_change_pct": 1.65,
+    "ihsg_close": 7614,
+    "ihsg_change_pct": 1.52,
     "ihsg_trend": "BEARISH",
     "ihsg_above_ma50": false,
     "market_safe": true,
@@ -17,9 +17,9 @@
   },
   "screening_summary": {
     "universe": 972,
-    "after_liquidity": 91,
-    "after_accumulation": 19,
-    "after_trend": 6,
+    "after_liquidity": 98,
+    "after_accumulation": 20,
+    "after_trend": 5,
     "after_smc": 2,
     "after_entry": 2,
     "final": 2
@@ -55,30 +55,30 @@
         "SCREENER_TOP_VALUE"
       ],
       "market_data": {
-        "close": 10425,
-        "change_pct": -0.48,
-        "value_today": 34651612500,
-        "frequency_today": 1743,
+        "close": 10325,
+        "change_pct": -1.2,
+        "value_today": 47416902500,
+        "frequency_today": 2510,
         "iep": 10400,
-        "iep_change_pct": 0
+        "iep_change_pct": 0.73
       },
       "accumulation": {
         "broker_signal": "Big Acc",
         "net_foreign_today": 34192790000,
         "net_foreign_3d": 0,
-        "acc_score": 40,
+        "acc_score": 30,
         "score_breakdown": {
           "broker": 35,
           "foreign_1d": 0,
           "foreign_3d": 0,
-          "candle": 10,
+          "candle": 0,
           "volume": -5,
-          "total": 40
+          "total": 30
         }
       },
       "trend": {
         "ma50": 9552.0,
-        "gap_from_ma50_pct": 8.62,
+        "gap_from_ma50_pct": 8.36,
         "ma50_slope": "POSITIVE"
       },
       "smc": {
@@ -93,19 +93,19 @@
         "entry_direction": "PULLBACK",
         "entry_direction_label": "⬇️ Pullback entry — tunggu harga turun ke zona entry",
         "entry_direction_reason": "",
-        "entry_1": 10400,
+        "entry_1": 10350,
         "entry_1_pct": 20,
         "entry_1_note": "Pullback ringan / Bid Wall area",
-        "entry_2": 10325,
+        "entry_2": 10300,
         "entry_2_pct": 50,
         "entry_2_note": "Area OB / FVG / Support",
         "entry_3": 10250,
         "entry_3_pct": 30,
         "entry_3_note": "Deep pullback / PDL area",
-        "average_entry": 10325,
-        "entry_zone": "10250 - 10400",
+        "average_entry": 10300,
+        "entry_zone": "10250 - 10350",
         "sl": 10200,
-        "sl_pct_risk": 1.21,
+        "sl_pct_risk": 0.97,
         "sl_note": "Cut loss wajib jika close harian di bawah ini",
         "tp1": 10450,
         "tp1_note": "PDH / Target psikologis intraday",
@@ -113,12 +113,12 @@
         "tp2_note": "Weak High / Supply Zone 1H",
         "tp3": 11325,
         "tp3_note": "RR minimum 1:2.0",
-        "rr_ratio": "1:8.0",
+        "rr_ratio": "1:10.2",
         "risk_pct": 2,
         "risk_note": "Max 2% dari total portofolio"
       },
       "scoring": {
-        "confidence_score": 45,
+        "confidence_score": 40,
         "tier": "MODERATE"
       },
       "signals": [
@@ -128,7 +128,7 @@
         "✅ Swing Structure: BULLISH"
       ],
       "warnings": [],
-      "updated_at": "02.56 WIB"
+      "updated_at": "03.28 WIB"
     },
     {
       "rank": 2,
@@ -142,12 +142,12 @@
         "SCREENER_TOP_VALUE"
       ],
       "market_data": {
-        "close": 9675,
-        "change_pct": -0.26,
-        "value_today": 14068707500,
-        "frequency_today": 1038,
+        "close": 9550,
+        "change_pct": -1.04,
+        "value_today": 16624642500,
+        "frequency_today": 1251,
         "iep": 9700,
-        "iep_change_pct": 0.78
+        "iep_change_pct": 1.57
       },
       "accumulation": {
         "broker_signal": "Big Acc",
@@ -164,8 +164,8 @@
         }
       },
       "trend": {
-        "ma50": 8495.0,
-        "gap_from_ma50_pct": 13.89,
+        "ma50": 8494.0,
+        "gap_from_ma50_pct": 13.32,
         "ma50_slope": "POSITIVE"
       },
       "smc": {
@@ -177,20 +177,20 @@
         "weak_high": 9200.0
       },
       "entry_plan": {
-        "entry_direction": "PULLBACK",
-        "entry_direction_label": "⬇️ Pullback entry — tunggu harga turun ke zona entry",
-        "entry_direction_reason": "",
-        "entry_1": 9650,
+        "entry_direction": "GAP_UP",
+        "entry_direction_label": "⬆️ Gap Up entry — entry di atas PDC jika gap terkonfirmasi",
+        "entry_direction_reason": "IEP gap up 1.6%",
+        "entry_1": 9700,
         "entry_1_pct": 20,
-        "entry_1_note": "Pullback ringan / Bid Wall area",
+        "entry_1_note": "Gap up entry (IEP +1.6%)",
         "entry_2": 9600,
         "entry_2_pct": 50,
-        "entry_2_note": "Area OB / FVG / Support",
+        "entry_2_note": "PDC / Bid Wall — antisipasi flat open",
         "entry_3": 9550,
         "entry_3_pct": 30,
-        "entry_3_note": "Deep pullback / PDL area",
+        "entry_3_note": "Pullback fallback / OB zone",
         "average_entry": 9600,
-        "entry_zone": "9550 - 9650",
+        "entry_zone": "9550 - 9700",
         "sl": 9500,
         "sl_pct_risk": 1.04,
         "sl_note": "Cut loss wajib jika close harian di bawah ini",
@@ -214,8 +214,10 @@
         "✅ Harga di zona FVG aktif",
         "✅ Swing Structure: BULLISH"
       ],
-      "warnings": [],
-      "updated_at": "02.56 WIB"
+      "warnings": [
+        "⚠️ Entry 1 DI ATAS close — prediksi gap up. Jika tidak gap, skip entry_1."
+      ],
+      "updated_at": "03.28 WIB"
     }
   ]
 }
