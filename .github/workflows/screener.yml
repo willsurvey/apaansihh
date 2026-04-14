@@ -109,6 +109,7 @@ jobs:
 
           # Tambahkan file output — abaikan error jika file tidak ada
           git add latest_screening.json 2>/dev/null || true
+          git add combined_screening.json 2>/dev/null || true
           git add watchlist_*.json 2>/dev/null || true
           git add screener.log 2>/dev/null || true
 
