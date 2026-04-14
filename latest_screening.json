@@ -1,6 +1,6 @@
 {
   "status": "success",
-  "generated_at": "2026-04-14 05:28:50 WIB",
+  "generated_at": "2026-04-14 06:27:36 WIB",
   "date": "2026-04-14",
   "mode": "FULL_STOCKBIT",
   "session_label": "MARKET_DAY",
@@ -8,8 +8,8 @@
   "mode_warning": null,
   "total_saham": 1,
   "market_context": {
-    "ihsg_close": 7663,
-    "ihsg_change_pct": 2.18,
+    "ihsg_close": 7660,
+    "ihsg_change_pct": 2.14,
     "ihsg_trend": "BEARISH",
     "ihsg_above_ma50": false,
     "market_safe": true,
@@ -77,8 +77,8 @@
         }
       },
       "trend": {
-        "ma50": 9550.0,
-        "gap_from_ma50_pct": 7.85,
+        "ma50": 9551.0,
+        "gap_from_ma50_pct": 8.1,
         "ma50_slope": "POSITIVE"
       },
       "smc": {
@@ -128,7 +128,7 @@
         "✅ Swing Structure: BULLISH"
       ],
       "warnings": [],
-      "updated_at": "05.28 WIB"
+      "updated_at": "06.27 WIB"
     }
   ]
 }
