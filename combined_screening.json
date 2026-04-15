@@ -87,7 +87,7 @@
         "✅ Swing Structure: BULLISH"
       ],
       "warnings": [],
-      "updated_at": "22.00 WIB"
+      "updated_at": "22.58 WIB"
     },
     {
       "rank": 2,
@@ -175,7 +175,7 @@
         "✅ Swing Structure: BULLISH"
       ],
       "warnings": [],
-      "updated_at": "22.00 WIB"
+      "updated_at": "22.58 WIB"
     }
   ],
   "logika_baru_calon_ara": [
@@ -221,7 +221,7 @@
         "SCREENER_VOL_EXPLOSION"
       ],
       "warning": "⚠️ FALSE SIGNAL RATE TINGGI (~85-95%). Pipeline ini hanya mendeteksi Tipe 1 (Continuation) dan Tipe 2 (Silent Accumulation). Tipe 3 (Out of Nowhere, ~60% ARA) tidak bisa dideteksi dari OHLCV. Gunakan sebagai WATCHLIST saja. Konfirmasi dengan broker flow, news, dan analisis manual sebelum eksekusi.",
-      "generated_at": "22:00 WIB"
+      "generated_at": "22:59 WIB"
     },
     {
       "ticker": "MDIA",
@@ -265,7 +265,7 @@
         "SCREENER_VOL_EXPLOSION"
       ],
       "warning": "⚠️ FALSE SIGNAL RATE TINGGI (~85-95%). Pipeline ini hanya mendeteksi Tipe 1 (Continuation) dan Tipe 2 (Silent Accumulation). Tipe 3 (Out of Nowhere, ~60% ARA) tidak bisa dideteksi dari OHLCV. Gunakan sebagai WATCHLIST saja. Konfirmasi dengan broker flow, news, dan analisis manual sebelum eksekusi.",
-      "generated_at": "22:00 WIB"
+      "generated_at": "22:59 WIB"
     },
     {
       "ticker": "BAPA",
@@ -309,7 +309,7 @@
         "SCREENER_VOL_EXPLOSION"
       ],
       "warning": "⚠️ FALSE SIGNAL RATE TINGGI (~85-95%). Pipeline ini hanya mendeteksi Tipe 1 (Continuation) dan Tipe 2 (Silent Accumulation). Tipe 3 (Out of Nowhere, ~60% ARA) tidak bisa dideteksi dari OHLCV. Gunakan sebagai WATCHLIST saja. Konfirmasi dengan broker flow, news, dan analisis manual sebelum eksekusi.",
-      "generated_at": "22:00 WIB"
+      "generated_at": "22:59 WIB"
     },
     {
       "ticker": "BELL",
@@ -353,7 +353,7 @@
         "SCREENER_VOL_EXPLOSION"
       ],
       "warning": "⚠️ FALSE SIGNAL RATE TINGGI (~85-95%). Pipeline ini hanya mendeteksi Tipe 1 (Continuation) dan Tipe 2 (Silent Accumulation). Tipe 3 (Out of Nowhere, ~60% ARA) tidak bisa dideteksi dari OHLCV. Gunakan sebagai WATCHLIST saja. Konfirmasi dengan broker flow, news, dan analisis manual sebelum eksekusi.",
-      "generated_at": "22:00 WIB"
+      "generated_at": "22:59 WIB"
     },
     {
       "ticker": "BMTR",
@@ -399,12 +399,12 @@
         "GURU_77"
       ],
       "warning": "⚠️ FALSE SIGNAL RATE TINGGI (~85-95%). Pipeline ini hanya mendeteksi Tipe 1 (Continuation) dan Tipe 2 (Silent Accumulation). Tipe 3 (Out of Nowhere, ~60% ARA) tidak bisa dideteksi dari OHLCV. Gunakan sebagai WATCHLIST saja. Konfirmasi dengan broker flow, news, dan analisis manual sebelum eksekusi.",
-      "generated_at": "22:00 WIB"
+      "generated_at": "22:59 WIB"
     }
   ],
   "meta": {
     "status": "success",
-    "generated_at": "2026-04-15 22:02:10 WIB",
+    "generated_at": "2026-04-15 23:01:08 WIB",
     "date": "2026-04-15",
     "mode": "FULL_STOCKBIT",
     "session_label": "MARKET_DAY",
