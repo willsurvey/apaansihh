@@ -1,15 +1,15 @@
 {
   "status": "success",
-  "generated_at": "2026-04-16 06:29:11 WIB",
+  "generated_at": "2026-04-16 07:27:29 WIB",
   "date": "2026-04-16",
   "mode": "FULL_STOCKBIT",
   "session_label": "MARKET_DAY",
   "session_warning": null,
   "mode_warning": null,
-  "total_saham": 2,
+  "total_saham": 1,
   "market_context": {
-    "ihsg_close": 7596,
-    "ihsg_change_pct": -0.36,
+    "ihsg_close": 7589,
+    "ihsg_change_pct": -0.45,
     "ihsg_trend": "BEARISH",
     "ihsg_above_ma50": false,
     "market_safe": true,
@@ -17,12 +17,12 @@
   },
   "screening_summary": {
     "universe": 972,
-    "after_liquidity": 108,
-    "after_accumulation": 22,
-    "after_trend": 6,
-    "after_smc": 3,
-    "after_entry": 2,
-    "final": 2
+    "after_liquidity": 111,
+    "after_accumulation": 23,
+    "after_trend": 7,
+    "after_smc": 1,
+    "after_entry": 1,
+    "final": 1
   },
   "config": {
     "strategy": "Pre-Market Intraday — Limit Order",
@@ -45,91 +45,6 @@
   "data": [
     {
       "rank": 1,
-      "ticker": "INDF",
-      "company": "Indofood Sukses Makmur Tbk.",
-      "mode": "FULL_STOCKBIT",
-      "universe_sources": [
-        "MOVER_TYPE_NET_FOREIGN_BUY",
-        "GURU_77_Foreign Flow",
-        "SCREENER_TOP_VALUE"
-      ],
-      "market_data": {
-        "close": 6975,
-        "change_pct": 2.2,
-        "value_today": 34249925000,
-        "frequency_today": 4011,
-        "iep": 6900,
-        "iep_change_pct": -1.08
-      },
-      "accumulation": {
-        "broker_signal": "Big Acc",
-        "net_foreign_today": 25516915000,
-        "net_foreign_3d": 0,
-        "acc_score": 40,
-        "score_breakdown": {
-          "broker": 35,
-          "foreign_1d": 0,
-          "foreign_3d": 0,
-          "candle": 10,
-          "volume": -5,
-          "total": 40
-        }
-      },
-      "trend": {
-        "ma50": 6534.0,
-        "gap_from_ma50_pct": 6.75,
-        "ma50_slope": "POSITIVE"
-      },
-      "smc": {
-        "internal_structure": "NONE",
-        "swing_trend_bias": "BEARISH",
-        "ob_zone": null,
-        "fvg_zone": "6825 - 6925",
-        "strong_low": 6575.0,
-        "weak_high": 6325.0
-      },
-      "entry_plan": {
-        "entry_direction": "PULLBACK",
-        "entry_direction_label": "⬇️ Pullback entry — tunggu harga turun ke zona entry",
-        "entry_direction_reason": "",
-        "entry_1": 6950,
-        "entry_1_pct": 20,
-        "entry_1_note": "Pullback ringan / Bid Wall area",
-        "entry_2": 6925,
-        "entry_2_pct": 50,
-        "entry_2_note": "Area OB / FVG / Support",
-        "entry_3": 6900,
-        "entry_3_pct": 30,
-        "entry_3_note": "Deep pullback / PDL area",
-        "average_entry": 6925,
-        "entry_zone": "6900 - 6950",
-        "sl": 6850,
-        "sl_pct_risk": 1.08,
-        "sl_note": "Cut loss wajib jika close harian di bawah ini",
-        "tp1": 6975,
-        "tp1_note": "PDH / Target psikologis intraday",
-        "tp2": 7175,
-        "tp2_note": "Weak High / Supply Zone 1H",
-        "tp3": 7400,
-        "tp3_note": "RR minimum 1:2.0",
-        "rr_ratio": "1:6.3",
-        "risk_pct": 2,
-        "risk_note": "Max 2% dari total portofolio"
-      },
-      "scoring": {
-        "confidence_score": 45,
-        "tier": "MODERATE"
-      },
-      "signals": [
-        "✅ Broker Signal: Big Acc",
-        "✅ Net Foreign Buy hari ini: Rp25.5B",
-        "✅ Harga di zona FVG aktif"
-      ],
-      "warnings": [],
-      "updated_at": "06.29 WIB"
-    },
-    {
-      "rank": 2,
       "ticker": "AKRA",
       "company": "AKR Corporindo Tbk.",
       "mode": "FULL_STOCKBIT",
@@ -139,12 +54,12 @@
         "SCREENER_TOP_VALUE"
       ],
       "market_data": {
-        "close": 1455,
-        "change_pct": -1.69,
-        "value_today": 9982484500,
-        "frequency_today": 3060,
+        "close": 1460,
+        "change_pct": -1.01,
+        "value_today": 11219167500,
+        "frequency_today": 3428,
         "iep": 1490,
-        "iep_change_pct": 2.41
+        "iep_change_pct": 1.71
       },
       "accumulation": {
         "broker_signal": "Big Acc",
@@ -162,7 +77,7 @@
       },
       "trend": {
         "ma50": 1316.0,
-        "gap_from_ma50_pct": 10.55,
+        "gap_from_ma50_pct": 11.29,
         "ma50_slope": "POSITIVE"
       },
       "smc": {
@@ -176,11 +91,11 @@
       "entry_plan": {
         "entry_direction": "GAP_UP",
         "entry_direction_label": "⬆️ Gap Up entry — entry di atas PDC jika gap terkonfirmasi",
-        "entry_direction_reason": "IEP gap up 2.4%",
+        "entry_direction_reason": "IEP gap up 1.7%",
         "entry_1": 1490,
         "entry_1_pct": 20,
-        "entry_1_note": "Gap up entry (IEP +2.4%)",
-        "entry_2": 1465,
+        "entry_1_note": "Gap up entry (IEP +1.7%)",
+        "entry_2": 1460,
         "entry_2_pct": 50,
         "entry_2_note": "PDC / Bid Wall — antisipasi flat open",
         "entry_3": 1455,
@@ -212,10 +127,9 @@
         "✅ Swing Structure: BULLISH"
       ],
       "warnings": [
-        "⚠️ Potensi GAP UP 2.4% — entry_1 disesuaikan ke IEP",
         "⚠️ Entry 1 DI ATAS close — prediksi gap up. Jika tidak gap, skip entry_1."
       ],
-      "updated_at": "06.29 WIB"
+      "updated_at": "07.27 WIB"
     }
   ]
 }
