@@ -1,6 +1,6 @@
 {
   "status": "success",
-  "generated_at": "2026-04-16 02:56:53 WIB",
+  "generated_at": "2026-04-16 03:27:39 WIB",
   "date": "2026-04-16",
   "mode": "FULL_STOCKBIT",
   "session_label": "MARKET_DAY",
@@ -8,8 +8,8 @@
   "mode_warning": null,
   "total_saham": 1,
   "market_context": {
-    "ihsg_close": 7700,
-    "ihsg_change_pct": 1.01,
+    "ihsg_close": 7688,
+    "ihsg_change_pct": 0.86,
     "ihsg_trend": "BEARISH",
     "ihsg_above_ma50": false,
     "market_safe": true,
@@ -17,10 +17,10 @@
   },
   "screening_summary": {
     "universe": 972,
-    "after_liquidity": 83,
-    "after_accumulation": 14,
+    "after_liquidity": 99,
+    "after_accumulation": 16,
     "after_trend": 6,
-    "after_smc": 2,
+    "after_smc": 1,
     "after_entry": 1,
     "final": 1
   },
@@ -49,20 +49,21 @@
       "company": "AKR Corporindo Tbk.",
       "mode": "FULL_STOCKBIT",
       "universe_sources": [
-        "GURU_92",
+        "MOVER_TYPE_NET_FOREIGN_BUY",
+        "GURU_92_Big Accumula",
         "SCREENER_TOP_VALUE"
       ],
       "market_data": {
         "close": 1475,
-        "change_pct": 0,
-        "value_today": 4081682500.0,
-        "frequency_today": 0,
-        "iep": 0,
-        "iep_change_pct": 0
+        "change_pct": -0.34,
+        "value_today": 5244397000,
+        "frequency_today": 1550,
+        "iep": 1490,
+        "iep_change_pct": 1.02
       },
       "accumulation": {
         "broker_signal": "Big Acc",
-        "net_foreign_today": 0,
+        "net_foreign_today": 15125328000,
         "net_foreign_3d": 0,
         "acc_score": 25,
         "score_breakdown": {
@@ -76,7 +77,7 @@
       },
       "trend": {
         "ma50": 1317.0,
-        "gap_from_ma50_pct": 12.4,
+        "gap_from_ma50_pct": 12.03,
         "ma50_slope": "POSITIVE"
       },
       "smc": {
@@ -121,12 +122,13 @@
       },
       "signals": [
         "✅ Broker Signal: Big Acc",
+        "✅ Net Foreign Buy hari ini: Rp15.1B",
         "✅ Internal BOS Bullish (1H)",
         "✅ Harga di zona FVG aktif",
         "✅ Swing Structure: BULLISH"
       ],
       "warnings": [],
-      "updated_at": "02.56 WIB"
+      "updated_at": "03.27 WIB"
     }
   ]
 }
