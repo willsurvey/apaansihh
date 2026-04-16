@@ -1,6 +1,6 @@
 {
   "status": "success",
-  "generated_at": "2026-04-16 07:57:43 WIB",
+  "generated_at": "2026-04-16 08:28:47 WIB",
   "date": "2026-04-16",
   "mode": "FULL_STOCKBIT",
   "session_label": "MARKET_DAY",
@@ -8,8 +8,8 @@
   "mode_warning": null,
   "total_saham": 1,
   "market_context": {
-    "ihsg_close": 7633,
-    "ihsg_change_pct": 0.14,
+    "ihsg_close": 7621,
+    "ihsg_change_pct": -0.02,
     "ihsg_trend": "BEARISH",
     "ihsg_above_ma50": false,
     "market_safe": true,
@@ -18,7 +18,7 @@
   "screening_summary": {
     "universe": 972,
     "after_liquidity": 114,
-    "after_accumulation": 23,
+    "after_accumulation": 24,
     "after_trend": 7,
     "after_smc": 1,
     "after_entry": 1,
@@ -54,12 +54,12 @@
         "SCREENER_TOP_VALUE"
       ],
       "market_data": {
-        "close": 1465,
-        "change_pct": -1.35,
-        "value_today": 12149676500,
-        "frequency_today": 3679,
+        "close": 1460,
+        "change_pct": -1.01,
+        "value_today": 12591962500,
+        "frequency_today": 3851,
         "iep": 1490,
-        "iep_change_pct": 2.05
+        "iep_change_pct": 1.71
       },
       "accumulation": {
         "broker_signal": "Big Acc",
@@ -77,7 +77,7 @@
       },
       "trend": {
         "ma50": 1316.0,
-        "gap_from_ma50_pct": 11.29,
+        "gap_from_ma50_pct": 10.92,
         "ma50_slope": "POSITIVE"
       },
       "smc": {
@@ -91,11 +91,11 @@
       "entry_plan": {
         "entry_direction": "GAP_UP",
         "entry_direction_label": "⬆️ Gap Up entry — entry di atas PDC jika gap terkonfirmasi",
-        "entry_direction_reason": "IEP gap up 2.1%",
+        "entry_direction_reason": "IEP gap up 1.7%",
         "entry_1": 1490,
         "entry_1_pct": 20,
-        "entry_1_note": "Gap up entry (IEP +2.1%)",
-        "entry_2": 1465,
+        "entry_1_note": "Gap up entry (IEP +1.7%)",
+        "entry_2": 1460,
         "entry_2_pct": 50,
         "entry_2_note": "PDC / Bid Wall — antisipasi flat open",
         "entry_3": 1455,
@@ -127,10 +127,9 @@
         "✅ Swing Structure: BULLISH"
       ],
       "warnings": [
-        "⚠️ Potensi GAP UP 2.0% — entry_1 disesuaikan ke IEP",
         "⚠️ Entry 1 DI ATAS close — prediksi gap up. Jika tidak gap, skip entry_1."
       ],
-      "updated_at": "07.57 WIB"
+      "updated_at": "08.28 WIB"
     }
   ]
 }
