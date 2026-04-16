@@ -1,6 +1,6 @@
 {
   "status": "success",
-  "generated_at": "2026-04-16 03:58:18 WIB",
+  "generated_at": "2026-04-16 04:27:35 WIB",
   "date": "2026-04-16",
   "mode": "FULL_STOCKBIT",
   "session_label": "MARKET_DAY",
@@ -8,8 +8,8 @@
   "mode_warning": null,
   "total_saham": 1,
   "market_context": {
-    "ihsg_close": 7667,
-    "ihsg_change_pct": 0.57,
+    "ihsg_close": 7635,
+    "ihsg_change_pct": 0.15,
     "ihsg_trend": "BEARISH",
     "ihsg_above_ma50": false,
     "market_safe": true,
@@ -17,10 +17,10 @@
   },
   "screening_summary": {
     "universe": 972,
-    "after_liquidity": 104,
-    "after_accumulation": 18,
-    "after_trend": 7,
-    "after_smc": 4,
+    "after_liquidity": 106,
+    "after_accumulation": 20,
+    "after_trend": 6,
+    "after_smc": 2,
     "after_entry": 1,
     "final": 1
   },
@@ -54,12 +54,12 @@
         "SCREENER_TOP_VALUE"
       ],
       "market_data": {
-        "close": 1475,
-        "change_pct": -0.68,
-        "value_today": 5838550500,
-        "frequency_today": 1742,
+        "close": 1455,
+        "change_pct": -1.35,
+        "value_today": 8513012500,
+        "frequency_today": 2491,
         "iep": 1490,
-        "iep_change_pct": 1.36
+        "iep_change_pct": 2.05
       },
       "accumulation": {
         "broker_signal": "Big Acc",
@@ -76,35 +76,35 @@
         }
       },
       "trend": {
-        "ma50": 1317.0,
-        "gap_from_ma50_pct": 12.03,
+        "ma50": 1316.0,
+        "gap_from_ma50_pct": 11.29,
         "ma50_slope": "POSITIVE"
       },
       "smc": {
         "internal_structure": "BOS_BULLISH",
         "swing_trend_bias": "BULLISH",
         "ob_zone": null,
-        "fvg_zone": "1440 - 1465",
+        "fvg_zone": null,
         "strong_low": 1375.0,
         "weak_high": 1445.0
       },
       "entry_plan": {
-        "entry_direction": "MOMENTUM",
-        "entry_direction_label": "➡️ Momentum entry — bisa entry di/dekat PDC",
-        "entry_direction_reason": "Internal BOS/CHoCH bullish 1H",
-        "entry_1": 1495,
+        "entry_direction": "GAP_UP",
+        "entry_direction_label": "⬆️ Gap Up entry — entry di atas PDC jika gap terkonfirmasi",
+        "entry_direction_reason": "IEP gap up 2.1%",
+        "entry_1": 1490,
         "entry_1_pct": 20,
-        "entry_1_note": "PDC entry — momentum kuat (Internal BOS/CHoCH bullish 1H)",
-        "entry_2": 1485,
+        "entry_1_note": "Gap up entry (IEP +2.1%)",
+        "entry_2": 1470,
         "entry_2_pct": 50,
-        "entry_2_note": "Pullback ringan / OB zone",
-        "entry_3": 1475,
+        "entry_2_note": "PDC / Bid Wall — antisipasi flat open",
+        "entry_3": 1460,
         "entry_3_pct": 30,
-        "entry_3_note": "Deep pullback / PDL area",
-        "average_entry": 1485,
-        "entry_zone": "1475 - 1495",
-        "sl": 1465,
-        "sl_pct_risk": 1.35,
+        "entry_3_note": "Pullback fallback / OB zone",
+        "average_entry": 1470,
+        "entry_zone": "1460 - 1490",
+        "sl": 1450,
+        "sl_pct_risk": 1.36,
         "sl_note": "Cut loss wajib jika close harian di bawah ini",
         "tp1": 1495,
         "tp1_note": "PDH / Target psikologis intraday",
@@ -112,23 +112,25 @@
         "tp2_note": "Weak High / Supply Zone 1H",
         "tp3": 1585,
         "tp3_note": "RR minimum 1:2.0",
-        "rr_ratio": "1:5.0",
+        "rr_ratio": "1:5.8",
         "risk_pct": 2,
         "risk_note": "Max 2% dari total portofolio"
       },
       "scoring": {
-        "confidence_score": 50,
+        "confidence_score": 45,
         "tier": "MODERATE"
       },
       "signals": [
         "✅ Broker Signal: Big Acc",
         "✅ Net Foreign Buy hari ini: Rp15.1B",
         "✅ Internal BOS Bullish (1H)",
-        "✅ Harga di zona FVG aktif",
         "✅ Swing Structure: BULLISH"
       ],
-      "warnings": [],
-      "updated_at": "03.58 WIB"
+      "warnings": [
+        "⚠️ Potensi GAP UP 2.0% — entry_1 disesuaikan ke IEP",
+        "⚠️ Entry 1 DI ATAS close — prediksi gap up. Jika tidak gap, skip entry_1."
+      ],
+      "updated_at": "04.27 WIB"
     }
   ]
 }
