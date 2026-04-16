@@ -1,6 +1,6 @@
 {
   "status": "success",
-  "generated_at": "2026-04-16 05:29:46 WIB",
+  "generated_at": "2026-04-16 06:29:11 WIB",
   "date": "2026-04-16",
   "mode": "FULL_STOCKBIT",
   "session_label": "MARKET_DAY",
@@ -8,8 +8,8 @@
   "mode_warning": null,
   "total_saham": 2,
   "market_context": {
-    "ihsg_close": 7580,
-    "ihsg_change_pct": -0.57,
+    "ihsg_close": 7596,
+    "ihsg_change_pct": -0.36,
     "ihsg_trend": "BEARISH",
     "ihsg_above_ma50": false,
     "market_safe": true,
@@ -77,7 +77,7 @@
       },
       "trend": {
         "ma50": 6534.0,
-        "gap_from_ma50_pct": 6.37,
+        "gap_from_ma50_pct": 6.75,
         "ma50_slope": "POSITIVE"
       },
       "smc": {
@@ -126,7 +126,7 @@
         "✅ Harga di zona FVG aktif"
       ],
       "warnings": [],
-      "updated_at": "05.29 WIB"
+      "updated_at": "06.29 WIB"
     },
     {
       "rank": 2,
@@ -215,7 +215,7 @@
         "⚠️ Potensi GAP UP 2.4% — entry_1 disesuaikan ke IEP",
         "⚠️ Entry 1 DI ATAS close — prediksi gap up. Jika tidak gap, skip entry_1."
       ],
-      "updated_at": "05.29 WIB"
+      "updated_at": "06.29 WIB"
     }
   ]
 }
