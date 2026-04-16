@@ -2,10 +2,10 @@
   "cookies": [
     {
       "name": "_GRECAPTCHA",
-      "value": "09AKhCRwgvwB9IZgWXnZF5rfqlwq70bKPth5LWUFRCRtIRL0_OEUcS52GmgZ5KLbe2HvWSzvWw5SuiKO6Rijqh5_c",
+      "value": "09AKhCRwjiLIufpmAa0U4zaQ49Y8nzn7r0zAX2fR3Eyf9yriHwinH116JNdb059rCoz3Bxd0iiJSVyzdcaiFQVdyo",
       "domain": "www.google.com",
       "path": "/recaptcha",
-      "expires": 1791805092.842766,
+      "expires": 1791888996.948349,
       "httpOnly": true,
       "secure": true,
       "sameSite": "None"
@@ -22,193 +22,123 @@
     },
     {
       "name": "_ttp",
-      "value": "3COOJV6XO9bHFNvdRMcBdLRdxxr",
+      "value": "3CR8NmQVfVnRdWsaEvsHYUnkHkC",
       "domain": ".tiktok.com",
       "path": "/",
-      "expires": 1809949191.476545,
+      "expires": 1810032984.956503,
       "httpOnly": false,
       "secure": true,
       "sameSite": "None"
-    },
-    {
-      "name": "_tt_enable_cookie",
-      "value": "1",
-      "domain": ".stockbit.com",
-      "path": "/",
-      "expires": 1809949195,
-      "httpOnly": false,
-      "secure": false,
-      "sameSite": "Lax"
-    },
-    {
-      "name": "_ttp",
-      "value": "01KP8EY4CZSV5PP7TN9EN2HB7X_.tt.1",
-      "domain": ".stockbit.com",
-      "path": "/",
-      "expires": 1809949195,
-      "httpOnly": false,
-      "secure": false,
-      "sameSite": "Lax"
-    },
-    {
-      "name": "WZRK_G",
-      "value": "f119e96561ed42ac947a9946b7414911",
-      "domain": ".stockbit.com",
-      "path": "/",
-      "expires": 1807789193,
-      "httpOnly": false,
-      "secure": false,
-      "sameSite": "Lax"
     },
     {
       "name": "G_ENABLED_IDPS",
       "value": "google",
       "domain": ".stockbit.com",
       "path": "/",
-      "expires": 1810813081.866126,
+      "expires": 1810896985.350311,
       "httpOnly": false,
       "secure": false,
       "sameSite": "Lax"
     },
     {
-      "name": "crisp-client%2Fsocket%2F44ed90bf-ce78-4f5f-a9f8-82e000538b9b",
-      "value": "0",
-      "domain": "stockbit.com",
-      "path": "/",
-      "expires": 1776253749,
-      "httpOnly": false,
-      "secure": false,
-      "sameSite": "Lax"
-    },
-    {
-      "name": "AWSALB",
-      "value": "c5LrVdUvoDfRLJBi1iK2+IrC1+AiuFSqD7CgXLulK8xt8qH2AQ6jRpOg8WGZpK2Br3eZN6Zc1kRCyf2GlPpv9ZoLZj2Ih88SBIpCKBF6HWnr7hoWzHUg8k3vftIa",
-      "domain": "wss-jkt.trading.stockbit.com",
-      "path": "/",
-      "expires": 1776857991.545443,
-      "httpOnly": false,
-      "secure": false,
-      "sameSite": "Lax"
-    },
-    {
-      "name": "AWSALBCORS",
-      "value": "c5LrVdUvoDfRLJBi1iK2+IrC1+AiuFSqD7CgXLulK8xt8qH2AQ6jRpOg8WGZpK2Br3eZN6Zc1kRCyf2GlPpv9ZoLZj2Ih88SBIpCKBF6HWnr7hoWzHUg8k3vftIa",
-      "domain": "wss-jkt.trading.stockbit.com",
-      "path": "/",
-      "expires": 1776857991.545582,
-      "httpOnly": false,
-      "secure": true,
-      "sameSite": "None"
-    },
-    {
-      "name": "AWSALB",
-      "value": "K8n47R5jt1y8hqPTJQPqDrM9QM854ZbPAKtJWRV46GAJ5H9TrYQFV3A6S+tpReRrc/vn6MQkPsTF78wb2uZqwgmxF8f2Zq2byJNS076HQiEO67AIiwrSZDhSZzFq",
-      "domain": "wssocial.stockbit.com",
-      "path": "/",
-      "expires": 1776857991.837638,
-      "httpOnly": false,
-      "secure": false,
-      "sameSite": "Lax"
-    },
-    {
-      "name": "AWSALBCORS",
-      "value": "K8n47R5jt1y8hqPTJQPqDrM9QM854ZbPAKtJWRV46GAJ5H9TrYQFV3A6S+tpReRrc/vn6MQkPsTF78wb2uZqwgmxF8f2Zq2byJNS076HQiEO67AIiwrSZDhSZzFq",
-      "domain": "wssocial.stockbit.com",
-      "path": "/",
-      "expires": 1776857991.837778,
-      "httpOnly": false,
-      "secure": true,
-      "sameSite": "None"
-    },
-    {
-      "name": "WZRK_S_6ZW-897-5R6Z",
-      "value": "%7B%22p%22%3A3%2C%22s%22%3A1776253078%2C%22t%22%3A1776253194%7D",
+      "name": "WZRK_G",
+      "value": "b6cb705a7dcd4e62b10de58eb3fe247c",
       "domain": ".stockbit.com",
       "path": "/",
-      "expires": 1776254394,
+      "expires": 1807872985,
       "httpOnly": false,
       "secure": false,
       "sameSite": "Lax"
+    },
+    {
+      "name": "_tt_enable_cookie",
+      "value": "1",
+      "domain": ".stockbit.com",
+      "path": "/",
+      "expires": 1810032985,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "_ttp",
+      "value": "01KPAYYQD0ZQAWPJFNA51GFMWD_.tt.1",
+      "domain": ".stockbit.com",
+      "path": "/",
+      "expires": 1810032985,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "AWSALB",
+      "value": "6VFm5oWI9Q2AXtLbY4xuaUO4ol+sNBUbIRr0OlfW6rEL7tmvMjDlhMMm+pAtr09FeFsRQBXJ5D33JBTLc2d1cH8fiPlHMpira/ngitGLaO3O8iv/fEwa2jXwepcC",
+      "domain": "wssocial.stockbit.com",
+      "path": "/",
+      "expires": 1776941852.38569,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "AWSALBCORS",
+      "value": "6VFm5oWI9Q2AXtLbY4xuaUO4ol+sNBUbIRr0OlfW6rEL7tmvMjDlhMMm+pAtr09FeFsRQBXJ5D33JBTLc2d1cH8fiPlHMpira/ngitGLaO3O8iv/fEwa2jXwepcC",
+      "domain": "wssocial.stockbit.com",
+      "path": "/",
+      "expires": 1776941852.385811,
+      "httpOnly": false,
+      "secure": true,
+      "sameSite": "None"
+    },
+    {
+      "name": "AWSALB",
+      "value": "0bOZXIkIsMeN7dW8Illh3LwVmkSWv40FURj3GEDN2qwg9iR2MLTgMp3OlcU5yPBbmpBPQKiYCawqTBJjGZE75yil45SWp5H5IwNaDMx2JyHrWFsaZ79NJqUTZGU9",
+      "domain": "wss-jkt.trading.stockbit.com",
+      "path": "/",
+      "expires": 1776941852.443771,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "AWSALBCORS",
+      "value": "0bOZXIkIsMeN7dW8Illh3LwVmkSWv40FURj3GEDN2qwg9iR2MLTgMp3OlcU5yPBbmpBPQKiYCawqTBJjGZE75yil45SWp5H5IwNaDMx2JyHrWFsaZ79NJqUTZGU9",
+      "domain": "wss-jkt.trading.stockbit.com",
+      "path": "/",
+      "expires": 1776941852.443886,
+      "httpOnly": false,
+      "secure": true,
+      "sameSite": "None"
     },
     {
       "name": "ttcsid",
-      "value": "1776253079975::82Fj4kZ00IzoZWzlr0He.1.1776253196226.0::1.110949.115443::68623.8.557.487::91621.22.0",
+      "value": "1776336985512::7QznrFlo9VGf_Om11QZz.1.1776337055674.0::1.66674.0::70157.8.582.491::0.0.0",
       "domain": ".stockbit.com",
       "path": "/",
-      "expires": 1809949196,
+      "expires": 1810033055,
       "httpOnly": false,
       "secure": false,
       "sameSite": "Lax"
     },
     {
       "name": "ttcsid_C5P9ESLODNNK397VS21G",
-      "value": "1776253079973::e3ApoH_r74HogLYQ4v3Q.1.1776253196227.1",
+      "value": "1776336985511::D0beBL7KGEOmB1DVL7Wt.1.1776337055674.1",
       "domain": ".stockbit.com",
       "path": "/",
-      "expires": 1809949196,
+      "expires": 1810033055,
       "httpOnly": false,
       "secure": false,
       "sameSite": "Lax"
     },
     {
-      "name": "YSC",
-      "value": "9hkqCV2mv1A",
-      "domain": ".youtube.com",
+      "name": "WZRK_S_6ZW-897-5R6Z",
+      "value": "%7B%22p%22%3A1%2C%22s%22%3A1776336985%2C%22t%22%3A1776337055%7D",
+      "domain": ".stockbit.com",
       "path": "/",
-      "expires": -1,
-      "httpOnly": true,
-      "secure": true,
-      "sameSite": "None",
-      "partitionKey": "https://stockbit.com",
-      "_crHasCrossSiteAncestor": true
-    },
-    {
-      "name": "VISITOR_INFO1_LIVE",
-      "value": "DOC7wizcIIM",
-      "domain": ".youtube.com",
-      "path": "/",
-      "expires": 1791805198.130919,
-      "httpOnly": true,
-      "secure": true,
-      "sameSite": "None",
-      "partitionKey": "https://stockbit.com",
-      "_crHasCrossSiteAncestor": true
-    },
-    {
-      "name": "VISITOR_PRIVACY_METADATA",
-      "value": "CgJJRBIEGgAgaw%3D%3D",
-      "domain": ".youtube.com",
-      "path": "/",
-      "expires": 1791805198.131118,
-      "httpOnly": true,
-      "secure": true,
-      "sameSite": "None",
-      "partitionKey": "https://stockbit.com",
-      "_crHasCrossSiteAncestor": true
-    },
-    {
-      "name": "__Secure-YNID",
-      "value": "17.YT=GmiZiqvGwDsL6aj8zN5UQtFtVUnMzArOrvWH7soOqlxkpVHfh80ANAMUYvA7SnBycgyl4oMec3_BsKSSTbasOuYNQl_x9979jxuiOV-Me66LGl1v7K8ftFb2OFD597OD6PnxpExtsMworHh4t8iUJTmc7K42yR-el2bog6yAIRASIsq60JiXmVUjK0wsftXjgcNKpchMw6TRUGCjfUGkbzDU3VN63HJiLqfDjP1PFD1uZPURYBUttuclo8dE26zgdtFfoxX35Ybz2o-LWPPUV-kZ0nRsEWbhJWQRmdjHFwXP6MxmxpEu915JCSr6Vowd_UhLRJsNvmxttCANNi0hGA",
-      "domain": ".youtube.com",
-      "path": "/",
-      "expires": 1791805198.13055,
-      "httpOnly": true,
-      "secure": true,
-      "sameSite": "None",
-      "partitionKey": "https://stockbit.com",
-      "_crHasCrossSiteAncestor": true
-    },
-    {
-      "name": "__Secure-ROLLOUT_TOKEN",
-      "value": "CNzBzq7b_8zbkQEQi_aq5uLvkwMYquC45uLvkwM%3D",
-      "domain": ".youtube.com",
-      "path": "/",
-      "expires": 1791805198.131259,
-      "httpOnly": true,
-      "secure": true,
-      "sameSite": "None",
-      "partitionKey": "https://stockbit.com",
-      "_crHasCrossSiteAncestor": true
+      "expires": 1776338255,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "Lax"
     }
   ],
   "origins": [
@@ -221,7 +151,7 @@
         },
         {
           "name": "ws",
-          "value": "WyJEMFVwNUJEM0JCMTF5UTR2VGdBa0QwVlZjc2lWQ1AyUEZwNkNVcGx2VXk0PSJd"
+          "value": "WyJSc1luTncxZVBjRXRVZ2pJbFViTjYzYXNtblJxcjZ6dVoyLS00V2JiUnFnPSJd"
         },
         {
           "name": "brokerSummaryDisplayFrequency",
@@ -233,7 +163,7 @@
         },
         {
           "name": "_grecaptcha",
-          "value": "09AKhCRwgWHhhznghugU6YjFArabaL9SQqiMnoAcEMJvbLlU6v0uawSe1EmVTbwrKbd4g4TGFXr4i3xE53HEKMTbD6OXhq2vNgk0fLloRD6PSoBc6smIAZci7vr0Fa6AM8"
+          "value": "09AKhCRwjwlQ042bxG1QHnvhGE-QigXhgHObtMtTk1sYP1mFGj1A2PiVXMXeEC5ER1zdxjzgsBYq-k_-yxodalF2t4rfsZJ7zckyY1d1tp5befdvG-eG4h7CqvOq_jrFbJ"
         },
         {
           "name": "multi-portfolio-storage",
@@ -245,11 +175,11 @@
         },
         {
           "name": "WZRK_EV",
-          "value": "%7B%22Login%20Selected%22%3A%5B1%2C1776253092%2C1776253092%5D%2C%22New%20Device%20Login%20Attempt%22%3A%5B1%2C1776253093%2C1776253093%5D%2C%22Login%20Successful%22%3A%5B1%2C1776253144%2C1776253144%5D%2C%22New%20Device%20Login%20Completed%22%3A%5B1%2C1776253144%2C1776253144%5D%2C%22Ideas%20Viewed%22%3A%5B3%2C1776253145%2C1776253192%5D%2C%22Company%20Page%20Viewed%22%3A%5B1%2C1776253191%2C1776253191%5D%7D"
+          "value": "%7B%22Login%20Selected%22%3A%5B1%2C1776336996%2C1776336996%5D%2C%22New%20Device%20Login%20Attempt%22%3A%5B1%2C1776336997%2C1776336997%5D%2C%22Login%20Successful%22%3A%5B1%2C1776337052%2C1776337052%5D%2C%22New%20Device%20Login%20Completed%22%3A%5B1%2C1776337052%2C1776337052%5D%2C%22Ideas%20Viewed%22%3A%5B1%2C1776337052%2C1776337052%5D%7D"
         },
         {
           "name": "UIConfigStore",
-          "value": "{\"state\":{\"userConfig\":{\"6927213\":{\"featureFlags\":{\"web-b-jkt-trading-socket\":{\"isEnabled\":true},\"disable-registration-live-support\":{\"isEnabled\":true},\"all-b-ifa-transaction\":{\"isEnabled\":false},\"enable-market-order\":{\"isEnabled\":true},\"all-b-running-trade-chart-eligibility\":{\"isEnabled\":true},\"all-b-broker-distribution-eligibility\":{\"isEnabled\":true},\"all-b-running-trade-chart-date-filter-eligibility\":{\"isEnabled\":true},\"all-b-broker-distribution-eligible-pro-users\":{\"isEnabled\":false}},\"remisier\":{\"isLeader\":false,\"isCommunityAccessGranted\":true}}}},\"version\":0}"
+          "value": "{\"state\":{\"userConfig\":{\"6927213\":{\"featureFlags\":{\"web-b-jkt-trading-socket\":{\"isEnabled\":true},\"disable-registration-live-support\":{\"isEnabled\":true},\"all-b-ifa-transaction\":{\"isEnabled\":false}},\"remisier\":{\"isLeader\":false,\"isCommunityAccessGranted\":true}}}},\"version\":0}"
         },
         {
           "name": "@fast-trade/shell-transaction-form",
@@ -257,7 +187,7 @@
         },
         {
           "name": "WEBSOCKET_WS_SOCIAL_PING_INTERNAL",
-          "value": "144"
+          "value": "2029"
         },
         {
           "name": "virtualFormula",
@@ -269,7 +199,7 @@
         },
         {
           "name": "WZRK_G",
-          "value": "%22f119e96561ed42ac947a9946b7414911%22"
+          "value": "%22b6cb705a7dcd4e62b10de58eb3fe247c%22"
         },
         {
           "name": "isLoggedInLS",
@@ -277,7 +207,7 @@
         },
         {
           "name": "at",
-          "value": "ZXlKaGJHY2lPaUpTVXpJMU5pSXNJbXRwWkNJNkltRXhOV1E1T0dFMkxUZGtZemd0TkRNM05TMDVORGswTFRFeU9XSmxNMlJsT0RWa05DSXNJblI1Y0NJNklrcFhWQ0o5LmV5SmtZWFJoSWpwN0luVnpaU0k2SWxCMWFtbE1aWE4wWVhKcE56a2lMQ0psYldFaU9pSndkV3BwYkdWemRHRnlhVEl5TURNM09VQm5iV0ZwYkM1amIyMGlMQ0ptZFd3aU9pSlFkV3BwSUV4bGMzUmhjbWtpTENKelpYTWlPaUpETmxZeE1tOURPVXROUjJFeU5rOXRJaXdpWkhaaklqb2lOVGxqTm1Vek9UTmlNelU1Tm1WaU9HWm1PRGxoWXpnNFpETTVNbVU0TnpZaUxDSjFhV1FpT2pZNU1qY3lNVE1zSW1OdmRTSTZJa2xFSW4wc0ltVjRjQ0k2TVRjM05qTXpPVFUwTXl3aWFXRjBJam94TnpjMk1qVXpNVFF6TENKcGMzTWlPaUpUVkU5RFMwSkpWQ0lzSW1wMGFTSTZJakptWlRKa01EUmtMVEprTVRFdE5EQm1aUzFoWXpWaExUVTROakJpWmpNeFpEZzJaQ0lzSW01aVppSTZNVGMzTmpJMU16RTBNeXdpZG1WeUlqb2lkakVpZlEuYXZpWmdfTHZEQmM0cndNRVJFa3lMdC16bC1WZFp1ajdhSmM0bzFMb0gwVnVLLUlUdWlyQTZJVjFlOXI2cWs4UldJSjZOWUt2bTRWVGhLbjFIbTFhdVNRdXRSd2ptcGR2NWdzckk2WVB5dVRzX3lyRFdzMDlfTFRWSU9YNTJhQ1MyVEpHQjRLMUJWa1VaZGRwOUMxNXpnSGdXSkVITU40RElVSnVhdkZ2OENSSlNXTUpzZVA3X0NLZGJZWkhJaXFSdGxSREFrbHFUU29ZQWFWZklLdVQyNlVPM2djT2VCUmhKQzAwMUZoR0FiU25ybExZMlF1MUdNSE9kVW1ycEMxWm9FMmVZZW5ON0RtRzdEV2xqcmhYSXpBVUQyRHd2VzNvU0RXZ01RalZteVN3a3JKa1hmU0pqWU5WNW5QZ1FlUGR5YmV4dks3VlJOLTg4NFFKY2xNN3NR"
+          "value": "ZXlKaGJHY2lPaUpTVXpJMU5pSXNJbXRwWkNJNkltRXhOV1E1T0dFMkxUZGtZemd0TkRNM05TMDVORGswTFRFeU9XSmxNMlJsT0RWa05DSXNJblI1Y0NJNklrcFhWQ0o5LmV5SmtZWFJoSWpwN0luVnpaU0k2SWxCMWFtbE1aWE4wWVhKcE56a2lMQ0psYldFaU9pSndkV3BwYkdWemRHRnlhVEl5TURNM09VQm5iV0ZwYkM1amIyMGlMQ0ptZFd3aU9pSlFkV3BwSUV4bGMzUmhjbWtpTENKelpYTWlPaUoyUjI5V1FrOW9SbWRsTVZaeVpqUnRJaXdpWkhaaklqb2lNREJqTnpsa09XVm1NakEzT0RFeE9HWTRZelZtTVRneU5EZG1aV0ZoWXpJaUxDSjFhV1FpT2pZNU1qY3lNVE1zSW1OdmRTSTZJa2xFSW4wc0ltVjRjQ0k2TVRjM05qUXlNelExTVN3aWFXRjBJam94TnpjMk16TTNNRFV4TENKcGMzTWlPaUpUVkU5RFMwSkpWQ0lzSW1wMGFTSTZJbVppTW1Ga1lqSmlMV0l3WXpZdE5HTTBZaTFoT0RnNUxUUTBNekUxTUdWbU0yRmlOQ0lzSW01aVppSTZNVGMzTmpNek56QTFNU3dpZG1WeUlqb2lkakVpZlEuTUJTUzBSZlRQZ3RMRHY1OWtnZ3F2UTJaSjlMZUVzLXBXZURXdGRhNW9LcjBaRmVObG8zNTlySjE4cGg1RVVoOUJsQmxUb3BzcUpUbUYxT0drUm5KWTI1VmtkMXpod2NuNTc5ZG9VTS04VUtjNzZrSGMyU0FxTlpaTHBwcEVQN3U5MzFGVWN0QzQ4cDBLbGhrd3RCWWV0LTRzSG5Ld1FQbGhBOHNtVzVZdWhNMzZIRk1IX3BMN05xM3BrS3lMUHA0VlpHUXFUYkdiQi03V0cyRHlFR3Izay1KYUlzOTFQelh6cjZwOE1MM29paUdlVEo0Rkl3dWktbXN4RWZVMGN0Q0FzcTh4QlNZSDRVbTJJMHhoSzJaWWdlMVZMY3VtRTZPekJFelp5NXVhR0d6U0dVNjJCVW93MUZOSDd6VXV5dzdKekZFWmpiOUJ3T3IzLXVtUGNFcGVB"
         },
         {
           "name": "tooltipShare",
@@ -285,7 +215,7 @@
         },
         {
           "name": "eipoRefreshToken",
-          "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjcmVhdGVkX2F0IjoxNzc2MjUzMTQ3LCJleHAiOjE3NzYyNTM3NDcsImlzX3JlZnJlc2giOiJ0cnVlIiwicGFydG5lcl9pZCI6IlBKUDAzNjFYWE8iLCJzZWN1cml0aWVzX2lkIjoiM2RmMjY1M2M3NWJlNzg5Yjk5YzAyMjliOGZmZjQzN2JlOGNhZjQ2NDFhNjA0YTY3NTJhMGEzZmRhNmY3M2MzNThTODdRTUFTUkwiLCJ0b2tlbl90eXBlIjoiRUlQT19QQVJUTkVSX0FDQ0VTU19UT0tFTiJ9.mDYjbyC6U-YOUkABrpcqBjhhsBjIZYN90GCSzG2vQYo"
+          "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjcmVhdGVkX2F0IjoxNzc2MzM3MDU2LCJleHAiOjE3NzYzMzc2NTYsImlzX3JlZnJlc2giOiJ0cnVlIiwicGFydG5lcl9pZCI6IlBKUDAzNjFYWE8iLCJzZWN1cml0aWVzX2lkIjoiM2RmMjY1M2M3NWJlNzg5Yjk5YzAyMjliOGZmZjQzN2JlOGNhZjQ2NDFhNjA0YTY3NTJhMGEzZmRhNmY3M2MzNThTODdRTUFTUkwiLCJ0b2tlbl90eXBlIjoiRUlQT19QQVJUTkVSX0FDQ0VTU19UT0tFTiJ9.tyu0twrqhB76-u3TgzZLxE_JANjQklpAL_GnqfVfp9U"
         },
         {
           "name": "feature-storage",
@@ -296,16 +226,16 @@
           "value": "%7B%7D"
         },
         {
-          "name": "are",
-          "value": "MTc3Njg1Nzk0MzAwMA=="
-        },
-        {
           "name": "au",
           "value": "eyJ1c2VybmFtZSI6IlB1amlMZXN0YXJpNzkiLCJlbWFpbCI6InB1amlsZXN0YXJpMjIwMzc5QGdtYWlsLmNvbSIsImZ1bGxuYW1lIjoiIiwiYXZhdGFyIjoiaHR0cHM6Ly9hdmF0YXIuc3RvY2tiaXQuY29tL290aGVycy9Sb2JvMi1HcmVlbi1Ub3kzLTE1LW1pbi5wbmciLCJwYXNzd29yZCI6MSwidmVyaWZpZWQiOjEsInByaXZpbGVnZSI6MCwiaWQiOjY5MjcyMTMsIndhdGNobGlzdF9pZCI6MTUwMDIxMDEsImNvdW50cnkiOiJJRCIsImV4Y2hhbmdlIjoiSUQifQ=="
         },
         {
+          "name": "are",
+          "value": "MTc3Njk0MTg1MTAwMA=="
+        },
+        {
           "name": "notifChatCounter",
-          "value": "{\"state\":{\"count\":12,\"isReset\":false},\"version\":0}"
+          "value": "{\"state\":{\"count\":13,\"isReset\":false},\"version\":0}"
         },
         {
           "name": "crisp",
@@ -313,27 +243,27 @@
         },
         {
           "name": "WZRK_ARP",
-          "value": "%7B%22j_n%22%3A%22Zw%3D%3D%22%2C%22i_n%22%3A%22Y29leAYACAM%3D%22%2C%22d_ts%22%3A0%2C%22dh%22%3A0%2C%22v%22%3A2%2C%22j_s%22%3A%22%7B%7D%22%2C%22id%22%3A%226ZW-897-5R6Z%22%2C%22r_ts%22%3A1776253078%7D"
+          "value": "%7B%22j_n%22%3A%22Zw%3D%3D%22%2C%22i_n%22%3A%22Y2xiewAJAgA%3D%22%2C%22d_ts%22%3A0%2C%22dh%22%3A0%2C%22v%22%3A2%2C%22j_s%22%3A%22%7B%7D%22%2C%22id%22%3A%226ZW-897-5R6Z%22%2C%22r_ts%22%3A1776336985%7D"
         },
         {
           "name": "WZRK_FPU",
           "value": "false"
         },
         {
+          "name": "WZRK_X",
+          "value": "%7B%22cache%22%3A%5B%5B%22PujiLestari79%22%2C%22b6cb705a7dcd4e62b10de58eb3fe247c%22%5D%5D%7D"
+        },
+        {
+          "name": "WZRK_META",
+          "value": "%7B%22useIP%22%3Afalse%2C%22ps%22%3A1776336985%2C%22cs%22%3A1776336985%2C%22sc%22%3A1%7D"
+        },
+        {
           "name": "WEBSOCKET_WS_SOCIAL_ERROR_NO_RECONNECTION",
           "value": "false"
         },
         {
-          "name": "WZRK_META",
-          "value": "%7B%22useIP%22%3Afalse%2C%22ps%22%3A1776253078%2C%22cs%22%3A1776253078%2C%22sc%22%3A1%7D"
-        },
-        {
-          "name": "WZRK_X",
-          "value": "%7B%22cache%22%3A%5B%5B%22PujiLestari79%22%2C%22f119e96561ed42ac947a9946b7414911%22%5D%5D%7D"
-        },
-        {
           "name": "ate",
-          "value": "MTc3NjMzOTU0MzAwMA=="
+          "value": "MTc3NjQyMzQ1MTAwMA=="
         },
         {
           "name": "zustandStockbitFormula",
@@ -341,15 +271,15 @@
         },
         {
           "name": "ar",
-          "value": "ZXlKaGJHY2lPaUpTVXpJMU5pSXNJbXRwWkNJNkltRXhOV1E1T0dFMkxUZGtZemd0TkRNM05TMDVORGswTFRFeU9XSmxNMlJsT0RWa05DSXNJblI1Y0NJNklrcFhWQ0o5LmV5SmtZWFJoSWpwN0luUjVjQ0k2SW5KbFpuSmxjMmdpTENKMWMyVWlPaUpRZFdwcFRHVnpkR0Z5YVRjNUlpd2laVzFoSWpvaWNIVnFhV3hsYzNSaGNta3lNakF6TnpsQVoyMWhhV3d1WTI5dElpd2lablZzSWpvaVVIVnFhU0JNWlhOMFlYSnBJaXdpYzJWeklqb2lRelpXTVRKdlF6bExUVWRoTWpaUGJTSXNJbVIyWXlJNklqVTVZelpsTXprellqTTFPVFpsWWpobVpqZzVZV000T0dRek9USmxPRGMySWl3aWRXbGtJam8yT1RJM01qRXpMQ0pqYjNVaU9pSkpSQ0o5TENKbGVIQWlPakUzTnpZNE5UYzVORE1zSW1saGRDSTZNVGMzTmpJMU16RTBNeXdpYVhOeklqb2lVMVJQUTB0Q1NWUWlMQ0pxZEdraU9pSXlabVV5WkRBMFpDMHlaREV4TFRRd1ptVXRZV00xWVMwMU9EWXdZbVl6TVdRNE5tUWlMQ0p1WW1ZaU9qRTNOell5TlRNeE5ETXNJblpsY2lJNkluWXhJbjAuQWxKanVYcmlDYmFRWEFlRmFxdVJZOHloMHZqR0QwWHg0Z0lLNzUzWU5fTThfTnBpMTVyNFBXOE1vVkJxdVlHemJhR2tjdWl6XzZoZzVReWVIYXdFRERHU2dyUFk0V3YwdGdBd25fVVBZVEFpR1gzcUFLaHVCZjFacG9mZ1dOSURlR0Zjb3QtSU1VVXJwZFJjOUg5Ni1PN0pzU0R3TzBISjFlN3ZjN1pLQnJVN3RhQV81TmRnd0J5cWI0UENEQjhyR3hsTDlXelZUbTdwaFliMWtqeklfRV9pbkxockhST296aUZ1TUhIOTMzcS1jZXVEYXByWDN2Vm9SbExFNEFEV0FyanJkNmlxb3R0bnN6ZVRKLW1fS3Jwd2FENlRUYXRXYlp4eEZBUTVUaVEwWTFwZGhieVBORV8tYkxCVUxpdGhoLWw0NkRJZGkyUng2R0pMME9lX0Z3"
+          "value": "ZXlKaGJHY2lPaUpTVXpJMU5pSXNJbXRwWkNJNkltRXhOV1E1T0dFMkxUZGtZemd0TkRNM05TMDVORGswTFRFeU9XSmxNMlJsT0RWa05DSXNJblI1Y0NJNklrcFhWQ0o5LmV5SmtZWFJoSWpwN0luUjVjQ0k2SW5KbFpuSmxjMmdpTENKMWMyVWlPaUpRZFdwcFRHVnpkR0Z5YVRjNUlpd2laVzFoSWpvaWNIVnFhV3hsYzNSaGNta3lNakF6TnpsQVoyMWhhV3d1WTI5dElpd2lablZzSWpvaVVIVnFhU0JNWlhOMFlYSnBJaXdpYzJWeklqb2lka2R2VmtKUGFFWm5aVEZXY21ZMGJTSXNJbVIyWXlJNklqQXdZemM1WkRsbFpqSXdOemd4TVRobU9HTTFaakU0TWpRM1ptVmhZV015SWl3aWRXbGtJam8yT1RJM01qRXpMQ0pqYjNVaU9pSkpSQ0o5TENKbGVIQWlPakUzTnpZNU5ERTROVEVzSW1saGRDSTZNVGMzTmpNek56QTFNU3dpYVhOeklqb2lVMVJQUTB0Q1NWUWlMQ0pxZEdraU9pSm1ZakpoWkdJeVlpMWlNR00yTFRSak5HSXRZVGc0T1MwME5ETXhOVEJsWmpOaFlqUWlMQ0p1WW1ZaU9qRTNOell6TXpjd05URXNJblpsY2lJNkluWXhJbjAuYXBWQ0NpMWdxVTFCY1ZXUDR1UTFKN21yLUk2THp3YXlsUmw4UlBJNTJmU3I2TTJLUlZoLTRiaUNNbUJuN1g4MHpyUUJxZXNmX2d0MnRZY1FKeTRLMF80VkxiTEVsaEJrNUI0ZVQ2OW5jUkhNdTFWNmJxR3RvLW9EYTFEejVPZldlY0hRSGR1T0VqWlJYTnVKcUZjd1kzaHZWWEhjTDdhUXJWVnJZVmZuSlpKYXFYMFUxaWk1dXczOHFCeVhvNjdpVTVLV0ZZMkZJTTFWR09UQjA4S2xyQmlmVE0tZnhZbVJGU19wN2xxZWhOamRxbzh1SVBuVFZMbW1xb0MxTFpkUks1dnZ6QlFiOXRlOEFMZ204eGVCMlcwQnZ2SHNQT2lSbEktbWUxamtuX1FyVUE2ejl4ZlZCWFFOZXdOb3pMY1c0YVl6Q0hiQWhlUzdRcXNjdzI2SW1R"
         },
         {
           "name": "player-id",
-          "value": "430818d0-8858-4643-8ec2-f1b1de3871d5"
+          "value": "f84faac7-7936-4cb0-ae57-a74a0c40d3ea"
         },
         {
           "name": "eipoToken",
-          "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjcmVhdGVkX2F0IjoxNzc2MjUzMTQ3LCJleHAiOjE3NzYyNTMyMDcsInBhcnRuZXJfaWQiOiJQSlAwMzYxWFhPIiwic2VjdXJpdGllc19pZCI6IjNkZjI2NTNjNzViZTc4OWI5OWMwMjI5YjhmZmY0MzdiZThjYWY0NjQxYTYwNGE2NzUyYTBhM2ZkYTZmNzNjMzU4Uzg3UU1BU1JMIiwidG9rZW5fdHlwZSI6IkVJUE9fUEFSVE5FUl9BQ0NFU1NfVE9LRU4ifQ.p25QrGRJtTM_fXXU2R3qXJ4DvXRGYYlp3aZeLySNDQU"
+          "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjcmVhdGVkX2F0IjoxNzc2MzM3MDU2LCJleHAiOjE3NzYzMzcxMTYsInBhcnRuZXJfaWQiOiJQSlAwMzYxWFhPIiwic2VjdXJpdGllc19pZCI6IjNkZjI2NTNjNzViZTc4OWI5OWMwMjI5YjhmZmY0MzdiZThjYWY0NjQxYTYwNGE2NzUyYTBhM2ZkYTZmNzNjMzU4Uzg3UU1BU1JMIiwidG9rZW5fdHlwZSI6IkVJUE9fUEFSVE5FUl9BQ0NFU1NfVE9LRU4ifQ.xnaIsTCYB3wouTMPGHlQskodQg3uc88zjeOOq1X1jS4"
         },
         {
           "name": "trustedDevice",
@@ -366,24 +296,11 @@
       "localStorage": [
         {
           "name": "rc::a",
-          "value": "MXExeXp5bTVlM2dleg=="
+          "value": "MTB1N3ppMzF2ajUzcDc="
         },
         {
           "name": "rc::f",
-          "value": "0aAD1zX5Gn7_twkJE3IcmSAk4n_p3xJuZleFbBQoHMk384oskg9HepIjxQyxoo2uE9kOqR6xk"
-        }
-      ]
-    },
-    {
-      "origin": "https://www.youtube.com",
-      "localStorage": [
-        {
-          "name": "ytidb::LAST_RESULT_ENTRY_KEY",
-          "value": "{\"data\":{\"hasSucceededOnce\":true},\"expiration\":1778845202173,\"creation\":1776253202173}"
-        },
-        {
-          "name": "yt-icons-last-purged",
-          "value": "1770550798643"
+          "value": "0aAKJliPgJL5bB4yfsXt6kvwnEPklBAB0d0VAoXevC7zEA7vhegZDTVWpL1jVZn5t7Fa16jWE"
         }
       ]
     }
