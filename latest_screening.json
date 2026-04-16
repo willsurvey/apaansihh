@@ -1,6 +1,6 @@
 {
   "status": "success",
-  "generated_at": "2026-04-16 04:27:35 WIB",
+  "generated_at": "2026-04-16 04:58:14 WIB",
   "date": "2026-04-16",
   "mode": "FULL_STOCKBIT",
   "session_label": "MARKET_DAY",
@@ -8,8 +8,8 @@
   "mode_warning": null,
   "total_saham": 1,
   "market_context": {
-    "ihsg_close": 7635,
-    "ihsg_change_pct": 0.15,
+    "ihsg_close": 7629,
+    "ihsg_change_pct": 0.08,
     "ihsg_trend": "BEARISH",
     "ihsg_above_ma50": false,
     "market_safe": true,
@@ -17,8 +17,8 @@
   },
   "screening_summary": {
     "universe": 972,
-    "after_liquidity": 106,
-    "after_accumulation": 20,
+    "after_liquidity": 107,
+    "after_accumulation": 21,
     "after_trend": 6,
     "after_smc": 2,
     "after_entry": 1,
@@ -56,8 +56,8 @@
       "market_data": {
         "close": 1455,
         "change_pct": -1.35,
-        "value_today": 8513012500,
-        "frequency_today": 2491,
+        "value_today": 9530186500,
+        "frequency_today": 2860,
         "iep": 1490,
         "iep_change_pct": 2.05
       },
@@ -77,7 +77,7 @@
       },
       "trend": {
         "ma50": 1316.0,
-        "gap_from_ma50_pct": 11.29,
+        "gap_from_ma50_pct": 10.55,
         "ma50_slope": "POSITIVE"
       },
       "smc": {
@@ -95,16 +95,16 @@
         "entry_1": 1490,
         "entry_1_pct": 20,
         "entry_1_note": "Gap up entry (IEP +2.1%)",
-        "entry_2": 1470,
+        "entry_2": 1465,
         "entry_2_pct": 50,
         "entry_2_note": "PDC / Bid Wall — antisipasi flat open",
-        "entry_3": 1460,
+        "entry_3": 1455,
         "entry_3_pct": 30,
         "entry_3_note": "Pullback fallback / OB zone",
-        "average_entry": 1470,
-        "entry_zone": "1460 - 1490",
-        "sl": 1450,
-        "sl_pct_risk": 1.36,
+        "average_entry": 1465,
+        "entry_zone": "1455 - 1490",
+        "sl": 1445,
+        "sl_pct_risk": 1.37,
         "sl_note": "Cut loss wajib jika close harian di bawah ini",
         "tp1": 1495,
         "tp1_note": "PDH / Target psikologis intraday",
@@ -112,7 +112,7 @@
         "tp2_note": "Weak High / Supply Zone 1H",
         "tp3": 1585,
         "tp3_note": "RR minimum 1:2.0",
-        "rr_ratio": "1:5.8",
+        "rr_ratio": "1:6.0",
         "risk_pct": 2,
         "risk_note": "Max 2% dari total portofolio"
       },
@@ -130,7 +130,7 @@
         "⚠️ Potensi GAP UP 2.0% — entry_1 disesuaikan ke IEP",
         "⚠️ Entry 1 DI ATAS close — prediksi gap up. Jika tidak gap, skip entry_1."
       ],
-      "updated_at": "04.27 WIB"
+      "updated_at": "04.58 WIB"
     }
   ]
 }
