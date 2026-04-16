@@ -1,15 +1,15 @@
 {
   "status": "success",
-  "generated_at": "2026-04-16 08:28:47 WIB",
+  "generated_at": "2026-04-16 09:32:19 WIB",
   "date": "2026-04-16",
   "mode": "FULL_STOCKBIT",
   "session_label": "MARKET_DAY",
   "session_warning": null,
   "mode_warning": null,
-  "total_saham": 1,
+  "total_saham": 3,
   "market_context": {
-    "ihsg_close": 7621,
-    "ihsg_change_pct": -0.02,
+    "ihsg_close": 7614,
+    "ihsg_change_pct": -0.12,
     "ihsg_trend": "BEARISH",
     "ihsg_above_ma50": false,
     "market_safe": true,
@@ -17,12 +17,12 @@
   },
   "screening_summary": {
     "universe": 972,
-    "after_liquidity": 114,
-    "after_accumulation": 24,
+    "after_liquidity": 115,
+    "after_accumulation": 26,
     "after_trend": 7,
-    "after_smc": 1,
-    "after_entry": 1,
-    "final": 1
+    "after_smc": 3,
+    "after_entry": 3,
+    "final": 3
   },
   "config": {
     "strategy": "Pre-Market Intraday — Limit Order",
@@ -45,6 +45,93 @@
   "data": [
     {
       "rank": 1,
+      "ticker": "INDF",
+      "company": "Indofood Sukses Makmur Tbk.",
+      "mode": "FULL_STOCKBIT",
+      "universe_sources": [
+        "MOVER_TYPE_TOP_VALUE",
+        "MOVER_TYPE_NET_FOREIGN_BUY",
+        "SCREENER_VOLUME_EXPLOSION",
+        "GURU_77_Foreign Flow",
+        "SCREENER_TOP_VALUE"
+      ],
+      "market_data": {
+        "close": 6975,
+        "change_pct": 2.2,
+        "value_today": 95598820000,
+        "frequency_today": 8039,
+        "iep": 6975,
+        "iep_change_pct": 0
+      },
+      "accumulation": {
+        "broker_signal": "Big Acc",
+        "net_foreign_today": 25516915000,
+        "net_foreign_3d": 0,
+        "acc_score": 40,
+        "score_breakdown": {
+          "broker": 35,
+          "foreign_1d": 0,
+          "foreign_3d": 0,
+          "candle": 10,
+          "volume": -5,
+          "total": 40
+        }
+      },
+      "trend": {
+        "ma50": 6533.0,
+        "gap_from_ma50_pct": 6.0,
+        "ma50_slope": "POSITIVE"
+      },
+      "smc": {
+        "internal_structure": "NONE",
+        "swing_trend_bias": "BEARISH",
+        "ob_zone": null,
+        "fvg_zone": "6750 - 6800",
+        "strong_low": 6575.0,
+        "weak_high": 6325.0
+      },
+      "entry_plan": {
+        "entry_direction": "PULLBACK",
+        "entry_direction_label": "⬇️ Pullback entry — tunggu harga turun ke zona entry",
+        "entry_direction_reason": "",
+        "entry_1": 6950,
+        "entry_1_pct": 20,
+        "entry_1_note": "Pullback ringan / Bid Wall area",
+        "entry_2": 6925,
+        "entry_2_pct": 50,
+        "entry_2_note": "Area OB / FVG / Support",
+        "entry_3": 6900,
+        "entry_3_pct": 30,
+        "entry_3_note": "Deep pullback / PDL area",
+        "average_entry": 6925,
+        "entry_zone": "6900 - 6950",
+        "sl": 6850,
+        "sl_pct_risk": 1.08,
+        "sl_note": "Cut loss wajib jika close harian di bawah ini",
+        "tp1": 7000,
+        "tp1_note": "PDH / Target psikologis intraday",
+        "tp2": 7200,
+        "tp2_note": "Weak High / Supply Zone 1H",
+        "tp3": 7425,
+        "tp3_note": "RR minimum 1:2.0",
+        "rr_ratio": "1:6.7",
+        "risk_pct": 2,
+        "risk_note": "Max 2% dari total portofolio"
+      },
+      "scoring": {
+        "confidence_score": 45,
+        "tier": "MODERATE"
+      },
+      "signals": [
+        "✅ Broker Signal: Big Acc",
+        "✅ Net Foreign Buy hari ini: Rp25.5B",
+        "✅ Harga di zona FVG aktif"
+      ],
+      "warnings": [],
+      "updated_at": "09.32 WIB"
+    },
+    {
+      "rank": 2,
       "ticker": "AKRA",
       "company": "AKR Corporindo Tbk.",
       "mode": "FULL_STOCKBIT",
@@ -54,12 +141,12 @@
         "SCREENER_TOP_VALUE"
       ],
       "market_data": {
-        "close": 1460,
-        "change_pct": -1.01,
-        "value_today": 12591962500,
-        "frequency_today": 3851,
-        "iep": 1490,
-        "iep_change_pct": 1.71
+        "close": 1445,
+        "change_pct": -2.36,
+        "value_today": 18497908500,
+        "frequency_today": 5333,
+        "iep": 1445,
+        "iep_change_pct": 0
       },
       "accumulation": {
         "broker_signal": "Big Acc",
@@ -77,7 +164,7 @@
       },
       "trend": {
         "ma50": 1316.0,
-        "gap_from_ma50_pct": 10.92,
+        "gap_from_ma50_pct": 9.8,
         "ma50_slope": "POSITIVE"
       },
       "smc": {
@@ -89,21 +176,21 @@
         "weak_high": 1445.0
       },
       "entry_plan": {
-        "entry_direction": "GAP_UP",
-        "entry_direction_label": "⬆️ Gap Up entry — entry di atas PDC jika gap terkonfirmasi",
-        "entry_direction_reason": "IEP gap up 1.7%",
-        "entry_1": 1490,
+        "entry_direction": "MOMENTUM",
+        "entry_direction_label": "➡️ Momentum entry — bisa entry di/dekat PDC",
+        "entry_direction_reason": "Internal BOS/CHoCH bullish 1H",
+        "entry_1": 1465,
         "entry_1_pct": 20,
-        "entry_1_note": "Gap up entry (IEP +1.7%)",
-        "entry_2": 1460,
+        "entry_1_note": "PDC entry — momentum kuat (Internal BOS/CHoCH bullish 1H)",
+        "entry_2": 1455,
         "entry_2_pct": 50,
-        "entry_2_note": "PDC / Bid Wall — antisipasi flat open",
-        "entry_3": 1455,
+        "entry_2_note": "Pullback ringan / OB zone",
+        "entry_3": 1445,
         "entry_3_pct": 30,
-        "entry_3_note": "Pullback fallback / OB zone",
-        "average_entry": 1465,
-        "entry_zone": "1455 - 1490",
-        "sl": 1445,
+        "entry_3_note": "Deep pullback / PDL area",
+        "average_entry": 1455,
+        "entry_zone": "1445 - 1465",
+        "sl": 1435,
         "sl_pct_risk": 1.37,
         "sl_note": "Cut loss wajib jika close harian di bawah ini",
         "tp1": 1495,
@@ -112,7 +199,7 @@
         "tp2_note": "Weak High / Supply Zone 1H",
         "tp3": 1585,
         "tp3_note": "RR minimum 1:2.0",
-        "rr_ratio": "1:6.0",
+        "rr_ratio": "1:6.5",
         "risk_pct": 2,
         "risk_note": "Max 2% dari total portofolio"
       },
@@ -126,10 +213,93 @@
         "✅ Internal BOS Bullish (1H)",
         "✅ Swing Structure: BULLISH"
       ],
-      "warnings": [
-        "⚠️ Entry 1 DI ATAS close — prediksi gap up. Jika tidak gap, skip entry_1."
+      "warnings": [],
+      "updated_at": "09.32 WIB"
+    },
+    {
+      "rank": 3,
+      "ticker": "LSIP",
+      "company": "PP London Sumatra Indonesia Tbk.",
+      "mode": "FULL_STOCKBIT",
+      "universe_sources": [
+        "SCREENER_VOLUME_EXPLOSION",
+        "GURU_92_Big Accumula",
+        "SCREENER_TOP_VALUE"
       ],
-      "updated_at": "08.28 WIB"
+      "market_data": {
+        "close": 1600,
+        "change_pct": 0,
+        "value_today": 31700915000.0,
+        "frequency_today": 0,
+        "iep": 0,
+        "iep_change_pct": 0
+      },
+      "accumulation": {
+        "broker_signal": "Big Acc",
+        "net_foreign_today": 0,
+        "net_foreign_3d": 0,
+        "acc_score": 30,
+        "score_breakdown": {
+          "broker": 35,
+          "foreign_1d": 0,
+          "foreign_3d": 0,
+          "candle": -5,
+          "volume": 0,
+          "total": 30
+        }
+      },
+      "trend": {
+        "ma50": 1294.0,
+        "gap_from_ma50_pct": 23.66,
+        "ma50_slope": "POSITIVE"
+      },
+      "smc": {
+        "internal_structure": "NONE",
+        "swing_trend_bias": "BULLISH",
+        "ob_zone": "1500 - 1585",
+        "fvg_zone": null,
+        "strong_low": 1500.0,
+        "weak_high": 1510.0
+      },
+      "entry_plan": {
+        "entry_direction": "PULLBACK",
+        "entry_direction_label": "⬇️ Pullback entry — tunggu harga turun ke zona entry",
+        "entry_direction_reason": "",
+        "entry_1": 1595,
+        "entry_1_pct": 20,
+        "entry_1_note": "Pullback ringan / Bid Wall area",
+        "entry_2": 1585,
+        "entry_2_pct": 50,
+        "entry_2_note": "Area OB / FVG / Support",
+        "entry_3": 1575,
+        "entry_3_pct": 30,
+        "entry_3_note": "Deep pullback / PDL area",
+        "average_entry": 1585,
+        "entry_zone": "1575 - 1595",
+        "sl": 1565,
+        "sl_pct_risk": 1.26,
+        "sl_note": "Cut loss wajib jika close harian di bawah ini",
+        "tp1": 1660,
+        "tp1_note": "PDH / Target psikologis intraday",
+        "tp2": 1710,
+        "tp2_note": "Weak High / Supply Zone 1H",
+        "tp3": 1760,
+        "tp3_note": "RR minimum 1:2.0",
+        "rr_ratio": "1:8.8",
+        "risk_pct": 2,
+        "risk_note": "Max 2% dari total portofolio"
+      },
+      "scoring": {
+        "confidence_score": 40,
+        "tier": "MODERATE"
+      },
+      "signals": [
+        "✅ Broker Signal: Big Acc",
+        "✅ Harga di zona Order Block aktif",
+        "✅ Swing Structure: BULLISH"
+      ],
+      "warnings": [],
+      "updated_at": "09.32 WIB"
     }
   ]
 }
