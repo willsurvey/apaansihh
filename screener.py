@@ -167,7 +167,7 @@ CONFIG = {
     "YF_CACHE_DAYS": 1,              # Stale setelah 1 hari
 
     # --- Output ---
-    "MAX_OUTPUT": 3,
+    "MAX_OUTPUT": 5,
     "IHSG_3DAY_DOWN_STOP": True,
     "IHSG_1DAY_DOWN_WARNING": -1.5,  # %
 
@@ -228,6 +228,22 @@ os.makedirs(CONFIG["DATA_DIR"], exist_ok=True)
 # =============================================================================
 # STEP 0A: TOKEN MANAGEMENT
 # =============================================================================
+# Strategi login (prioritas):
+#   1. Direct API Login  — STOCKBIT_USERNAME + STOCKBIT_PASSWORD (GitHub Actions secrets)
+#   2. Env var token     — STOCKBIT_BEARER_TOKEN (manual override / CI lama)
+#   3. Session file      — stockbit_session.json (Playwright legacy, lokal)
+#   4. Token file        — stockbit_token.txt (fallback file lokal)
+#   5. YAHOO_ONLY mode   — tanpa Stockbit sama sekali
+#
+# Untuk GitHub Actions: cukup set dua secrets:
+#   STOCKBIT_USERNAME  = email/username Stockbit
+#   STOCKBIT_PASSWORD  = password Stockbit
+# =============================================================================
+
+# Cache in-memory agar tidak login ulang setiap panggilan dalam satu run
+_api_token_cache: Optional[str] = None
+_api_token_expiry: float = 0.0
+
 
 def _decode_jwt_payload(token: str) -> Optional[Dict]:
     """Decode JWT payload tanpa verifikasi signature."""
@@ -253,10 +269,104 @@ def _is_token_valid(token: str) -> bool:
     return time.time() < (exp - 300)   # 5 menit buffer
 
 
+def _login_via_api() -> Optional[str]:
+    """
+    Login langsung ke Stockbit API menggunakan username + password dari env vars.
+
+    Endpoint : POST https://exodus.stockbit.com/login/v6/username
+    Response : data.login.token_data.access.token
+
+    Token berlaku ~24 jam. Cache in-memory selama 23 jam agar tidak
+    melakukan login ulang di setiap pemanggilan dalam satu run screener.
+
+    Env vars yang dibutuhkan (set sebagai GitHub Actions secrets):
+        STOCKBIT_USERNAME  — email atau username akun Stockbit
+        STOCKBIT_PASSWORD  — password akun Stockbit
+        STOCKBIT_PLAYER_ID — opsional, bisa dikosongkan
+    """
+    global _api_token_cache, _api_token_expiry
+
+    # Gunakan cache jika masih valid (hemat request login)
+    if _api_token_cache and time.time() < _api_token_expiry:
+        log.debug("🔑 Pakai token dari cache in-memory")
+        return _api_token_cache
+
+    username  = os.environ.get("STOCKBIT_USERNAME",  "").strip()
+    password  = os.environ.get("STOCKBIT_PASSWORD",  "").strip()
+    player_id = os.environ.get("STOCKBIT_PLAYER_ID", "").strip()
+
+    if not username or not password:
+        log.debug("STOCKBIT_USERNAME/PASSWORD tidak diset — skip API login")
+        return None
+
+    log.info("🔑 Login ke Stockbit API (username/password)...")
+
+    url = "https://exodus.stockbit.com/login/v6/username"
+    payload = {
+        "player_id": player_id,
+        "user":      username,
+        "password":  password,
+    }
+    headers = {
+        "Content-Type":   "application/json",
+        "Accept":         "application/json",
+        "Accept-Language": "ID",
+        "User-Agent": (
+            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+            "AppleWebKit/537.36 (KHTML, like Gecko) "
+            "Chrome/147.0.0.0 Safari/537.36"
+        ),
+        "X-DeviceType": "Google Chrome",
+        "X-Platform":   "PC",
+        "X-AppVersion": "3.17.2",
+        "Origin":       "https://stockbit.com",
+        "Referer":      "https://stockbit.com/",
+    }
+
+    try:
+        r = requests.post(url, json=payload, headers=headers, timeout=30)
+
+        if r.status_code == 200:
+            data  = r.json()
+            token = (
+                data.get("data", {})
+                    .get("login", {})
+                    .get("token_data", {})
+                    .get("access", {})
+                    .get("token", "")
+            )
+            if token and _is_token_valid(token):
+                # Cache selama 23 jam
+                _api_token_cache  = token
+                _api_token_expiry = time.time() + (23 * 3600)
+                log.info(f"✅ Login API berhasil — token {len(token)} karakter")
+                return token
+            else:
+                log.warning(f"⚠️  Login API: response OK tapi token tidak valid (len={len(token)})")
+                log.debug(f"Response snippet: {r.text[:300]}")
+
+        elif r.status_code == 400:
+            # Biasanya username/password salah
+            log.warning(f"⚠️  Login API gagal: HTTP 400 — cek STOCKBIT_USERNAME/PASSWORD")
+        elif r.status_code == 429:
+            log.warning(f"⚠️  Login API rate-limited (429) — coba lagi nanti")
+        else:
+            log.warning(f"⚠️  Login API gagal: HTTP {r.status_code} — {r.text[:150]}")
+
+    except requests.exceptions.Timeout:
+        log.warning("⚠️  Login API timeout (30s)")
+    except Exception as e:
+        log.warning(f"⚠️  Login API error: {e}")
+
+    return None
+
+
 def _extract_token_from_session(session_path: str) -> Optional[str]:
     """
-    Ekstrak JWT dari stockbit_session.json.
-    Token ada di localStorage["at"] dalam bentuk base64 encoded JWT.
+    Ekstrak JWT dari stockbit_session.json (Playwright storage state).
+    Token ada di localStorage["at"]:
+      - Kadang base64-encoded JWT
+      - Kadang langsung JWT string
     """
     try:
         with open(session_path, "r", encoding="utf-8") as f:
@@ -267,9 +377,9 @@ def _extract_token_from_session(session_path: str) -> Optional[str]:
                 continue
             for item in origin.get("localStorage", []):
                 name = item.get("name", "")
-                val = item.get("value", "")
+                val  = item.get("value", "")
                 if name == "at" and val:
-                    # "at" disimpan sebagai base64 dari JWT string
+                    # Coba decode base64 dulu
                     try:
                         decoded = base64.urlsafe_b64decode(
                             val + "=" * (4 - len(val) % 4)
@@ -278,7 +388,7 @@ def _extract_token_from_session(session_path: str) -> Optional[str]:
                             return decoded
                     except Exception:
                         pass
-                    # Kadang "at" langsung JWT (bukan base64)
+                    # Fallback: nilai langsung adalah JWT
                     if val.count(".") == 2 and len(val) > 100:
                         return val
         return None
@@ -287,146 +397,79 @@ def _extract_token_from_session(session_path: str) -> Optional[str]:
         return None
 
 
-def _refresh_token_via_playwright(session_path: str) -> Optional[str]:
-    """
-    Buka Playwright headless, load session, intercept network untuk dapat token baru.
-    Dijalankan hanya jika token expired.
-    """
-    try:
-        from playwright.sync_api import sync_playwright
-    except ImportError:
-        log.warning("Playwright tidak terinstall — tidak bisa refresh token")
-        return None
-
-    log.info("🌐 Playwright: Refresh token via browser session...")
-    captured = []
-
-    def on_request(req):
-        auth = req.headers.get("authorization", "")
-        if auth.startswith("Bearer ") and len(auth) > 150:
-            tok = auth[7:].strip()
-            if tok.count(".") == 2 and tok not in captured:
-                captured.append(tok)
-
-    try:
-        is_ci = os.environ.get("GITHUB_ACTIONS") == "true"
-        with sync_playwright() as p:
-            browser = p.chromium.launch(
-                headless=True,
-                args=["--no-sandbox", "--disable-dev-shm-usage"],
-            )
-            ctx = browser.new_context(
-                storage_state=session_path,
-                user_agent=(
-                    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
-                    "AppleWebKit/537.36 (KHTML, like Gecko) "
-                    "Chrome/146.0.0.0 Safari/537.36"
-                ),
-            )
-            page = ctx.new_page()
-            page.on("request", on_request)
-
-            try:
-                page.goto("https://stockbit.com/", wait_until="networkidle", timeout=45_000)
-            except Exception:
-                pass
-            page.wait_for_timeout(2000)
-
-            # Navigasi ke halaman saham untuk trigger API call
-            try:
-                page.goto("https://stockbit.com/#/symbol/BBRI", wait_until="networkidle", timeout=45_000)
-            except Exception:
-                pass
-            page.wait_for_timeout(4000)
-
-            # Update session file
-            try:
-                updated = ctx.storage_state()
-                with open(session_path, "w", encoding="utf-8") as f:
-                    json.dump(updated, f, indent=2)
-            except Exception:
-                pass
-
-            browser.close()
-
-        if captured:
-            token = max(captured, key=len)
-            log.info(f"✅ Token baru dari Playwright ({len(token)} karakter)")
-            return token
-
-    except Exception as e:
-        log.warning(f"Playwright error: {e}")
-
-    return None
-
-
 def get_valid_token() -> Tuple[Optional[str], str]:
     """
     Ambil token yang valid. Return (token, mode).
     mode: "FULL_STOCKBIT" | "YAHOO_ONLY"
 
-    Urutan:
-    1. Baca dari environment variable STOCKBIT_BEARER_TOKEN (GitHub Actions)
-    2. Baca dari stockbit_session.json (lokal)
-    3. Refresh via Playwright jika expired
-    4. Fallback MODE B jika semua gagal
+    Urutan prioritas:
+    1. Direct API login (STOCKBIT_USERNAME + STOCKBIT_PASSWORD)  ← UTAMA
+    2. Env var STOCKBIT_BEARER_TOKEN                             ← manual override
+    3. stockbit_session.json                                     ← Playwright legacy
+    4. stockbit_token.txt                                        ← file fallback lokal
+    5. YAHOO_ONLY                                                ← tanpa Stockbit
     """
-    # --- 1. Env var (GitHub Actions) ---
+    # --- 1. Direct API Login (paling andal untuk GitHub Actions) ---
+    api_token = _login_via_api()
+    if api_token:
+        log.info("✅ Mode: FULL STOCKBIT (API login)")
+        return api_token, "FULL_STOCKBIT"
+
+    # --- 2. Env var (manual override atau CI lama) ---
     env_token = os.environ.get("STOCKBIT_BEARER_TOKEN", "").strip()
     if env_token and _is_token_valid(env_token):
-        log.info("✅ Token dari environment variable — FULL STOCKBIT MODE")
+        log.info("✅ Mode: FULL STOCKBIT (env var token)")
         return env_token, "FULL_STOCKBIT"
 
-    # --- 2. Session file ---
+    # --- 3. Session file (Playwright legacy) ---
     session_path = CONFIG["SESSION_FILE"]
     if Path(session_path).exists():
         token = _extract_token_from_session(session_path)
         if token and _is_token_valid(token):
-            log.info("✅ Token dari session file — FULL STOCKBIT MODE")
+            log.info("✅ Mode: FULL STOCKBIT (session file)")
             return token, "FULL_STOCKBIT"
-
-        # Token ada tapi expired → coba refresh
         if token:
-            log.info("⚠️ Token expired, mencoba refresh via Playwright...")
-            new_token = _refresh_token_via_playwright(session_path)
-            if new_token and _is_token_valid(new_token):
-                # Simpan ke token file untuk referensi
-                try:
-                    with open(CONFIG["TOKEN_FILE"], "w") as f:
-                        f.write(new_token)
-                except Exception:
-                    pass
-                return new_token, "FULL_STOCKBIT"
+            log.info("⚠️  Token session expired — tidak melakukan Playwright refresh")
 
-        # Playwright juga gagal → coba load dari stockbit_token.txt
-        token_file = CONFIG["TOKEN_FILE"]
-        if Path(token_file).exists():
-            try:
-                raw = Path(token_file).read_text().strip()
-                # Ambil baris terakhir yang bukan komentar
-                for line in reversed(raw.splitlines()):
-                    line = line.strip()
-                    if line and not line.startswith("#"):
-                        if _is_token_valid(line):
-                            log.info("✅ Token dari token file — FULL STOCKBIT MODE")
-                            return line, "FULL_STOCKBIT"
-            except Exception:
-                pass
+    # --- 4. Token file (file lokal) ---
+    token_file = CONFIG["TOKEN_FILE"]
+    if Path(token_file).exists():
+        try:
+            raw = Path(token_file).read_text().strip()
+            for line in reversed(raw.splitlines()):
+                line = line.strip()
+                if line and not line.startswith("#"):
+                    if _is_token_valid(line):
+                        log.info("✅ Mode: FULL STOCKBIT (token file)")
+                        return line, "FULL_STOCKBIT"
+        except Exception:
+            pass
 
-    log.warning("⚠️ Tidak ada token valid → YAHOO ONLY MODE")
+    # --- 5. Fallback ---
+    log.warning("⚠️  Semua metode auth gagal → YAHOO ONLY MODE")
+    log.warning("    Pastikan STOCKBIT_USERNAME dan STOCKBIT_PASSWORD sudah diset di Secrets.")
     return None, "YAHOO_ONLY"
 
 
 def _make_sb_headers(token: str) -> Dict:
+    """Header lengkap untuk request ke Stockbit API."""
     return {
-        "accept": "application/json",
-        "authorization": f"Bearer {token}",
-        "origin": "https://stockbit.com",
-        "referer": "https://stockbit.com/",
+        "accept":            "application/json",
+        "accept-language":   "en-US,en;q=0.9",
+        "authorization":     f"Bearer {token}",
+        "origin":            "https://stockbit.com",
+        "priority":          "u=1, i",
+        "referer":           "https://stockbit.com/",
+        "sec-ch-ua":         '"Google Chrome";v="147", "Not.A/Brand";v="8", "Chromium";v="147"',
+        "sec-ch-ua-mobile":  "?0",
+        "sec-ch-ua-platform": '"Windows"',
+        "sec-fetch-dest":    "empty",
+        "sec-fetch-mode":    "cors",
+        "sec-fetch-site":    "same-site",
         "user-agent": (
             "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
             "AppleWebKit/537.36 (KHTML, like Gecko) "
-            "Chrome/146.0.0.0 Safari/537.36"
+            "Chrome/147.0.0.0 Safari/537.36"
         ),
     }
 
@@ -3042,546 +3085,40 @@ def run_screener():
 
 
 
+
 # =============================================================================
-# PIPELINE ARA — LOGIKA BARU (ditambahkan di atas entry point lama)
-# Semua fungsi di bawah ini BARU dan tidak mengubah logika lama sama sekali.
-# Berbagi utilitas: get_daily_data, get_1h_data, sb_get, get_broker_signal,
-#                   round_bei, get_tick_size, detect_pivots_leg_based, dll.
+# COMPATIBILITY SHIMS — run_screener() memanggil fungsi-fungsi ini secara
+# langsung. Shims ini meneruskan panggilan ke versi v2 yang baru.
+# Tidak ada logika di sini — murni redirect.
 # =============================================================================
 
 def compute_ara_features(df: pd.DataFrame) -> Optional[Dict]:
-    """
-    Hitung semua fitur prediktif ARA dari data OHLCV daily.
-
-    Fitur dihitung dari perspektif "hari ini = D-0, kemarin = D-1".
-    Artinya: df.iloc[-1] = D-1 (hari kemarin), df.iloc[-2] = D-2, dst.
-    Screener jalan sore/malam → data hari ini sudah close → D-1 = hari ini.
-
-    Berdasarkan analisis 10 saham ARA 10 April 2026 (n kecil, gunakan hati-hati):
-      d1_upper_wick   corr +0.555 dengan magnitude ARA
-      d1_body_pct     corr -0.575
-      d1_close_pos    corr -0.475
-      d2_vol_ma20     corr +0.425
-
-    Return None jika data tidak cukup (<55 bar untuk MA50).
-    """
-    if len(df) < 55:
-        return None
-
-    # D-1 = baris terakhir (hari kemarin, sudah close)
-    i   = len(df) - 1
-    d1  = df.iloc[i]
-    d2  = df.iloc[i - 1]
-
-    # Volume MA — dihitung SEBELUM D-1 agar tidak look-ahead bias
-    vol_ma5_pre  = df["volume"].iloc[i - 6 : i - 1].mean()   # 5 hari sebelum D-1
-    vol_ma20_pre = df["volume"].iloc[i - 21 : i - 1].mean()  # 20 hari sebelum D-1
-
-    # ---- D-1 candle metrics ----
-    d1_body   = abs(d1["close"] - d1["open"])
-    d1_range  = d1["high"] - d1["low"] + 1e-6     # hindari div/0
-    d1_body_pct    = d1_body / d1_range
-    d1_upper_wick  = (d1["high"] - max(d1["open"], d1["close"])) / d1_range
-    d1_lower_wick  = (min(d1["open"], d1["close"]) - d1["low"]) / d1_range
-    d1_close_pos   = (d1["close"] - d1["low"]) / d1_range
-    d1_bullish     = d1["close"] > d1["open"]
-
-    # Perubahan harga D-1 vs D-2
-    d1_change = (d1["close"] - d2["close"]) / d2["close"] * 100 if d2["close"] > 0 else 0
-
-    # Volume ratio D-1 vs pre-MA
-    d1_vol_ratio_ma20 = d1["volume"] / vol_ma20_pre if vol_ma20_pre > 0 else 0
-    d1_vol_ratio_ma5  = d1["volume"] / vol_ma5_pre  if vol_ma5_pre  > 0 else 0
-
-    # Value transaksi D-1 (IDX: close Rp × lot × 100 lembar/lot)
-    d1_value_rp = d1["close"] * d1["volume"] * 100
-
-    # ---- D-2 metrics ----
-    d3 = df.iloc[i - 2]
-    d2_range  = d2["high"] - d2["low"] + 1e-6
-    d2_body_pct    = abs(d2["close"] - d2["open"]) / d2_range
-    d2_change = (d2["close"] - d3["close"]) / d3["close"] * 100 if d3["close"] > 0 else 0
-    d2_vol_ratio_ma20 = d2["volume"] / vol_ma20_pre if vol_ma20_pre > 0 else 0
-
-    # ---- MA context ----
-    ma20 = df["close"].iloc[i - 21 : i - 1].mean()
-    ma50 = df["close"].iloc[i - 51 : i - 1].mean()
-    above_ma20 = bool(d1["close"] > ma20)
-    above_ma50 = bool(d1["close"] > ma50)
-
-    # ---- Range expansion D-1 vs 5 hari sebelumnya ----
-    # Mengukur apakah range D-1 membesar (expansion sebelum ARA)
-    ranges_5d = []
-    for j in range(i - 6, i - 1):
-        r = df.iloc[j]
-        if r["close"] > 0:
-            ranges_5d.append((r["high"] - r["low"]) / r["close"])
-    avg_range_5d = float(np.mean(ranges_5d)) if ranges_5d else 0
-    d1_range_pct = (d1_range / d1["close"]) if d1["close"] > 0 else 0
-    d1_range_expansion = d1_range_pct / avg_range_5d if avg_range_5d > 0 else 1.0
-
-    # ---- Consecutive up days sebelum D-1 ----
-    up_streak = 0
-    for j in range(i - 1, max(i - 10, 1), -1):
-        if df.iloc[j]["close"] > df.iloc[j - 1]["close"]:
-            up_streak += 1
-        else:
-            break
-
-    return {
-        # D-1 identifiers
-        "d1_date":  d1["date"].strftime("%Y-%m-%d") if hasattr(d1["date"], "strftime") else str(d1["date"]),
-        "d1_close": float(d1["close"]),
-
-        # D-1 fitur utama
-        "d1_change":          round(float(d1_change), 2),
-        "d1_body_pct":        round(float(d1_body_pct), 3),
-        "d1_upper_wick":      round(float(d1_upper_wick), 3),
-        "d1_lower_wick":      round(float(d1_lower_wick), 3),
-        "d1_close_pos":       round(float(d1_close_pos), 3),
-        "d1_bullish":         bool(d1_bullish),
-        "d1_vol_ratio_ma20":  round(float(d1_vol_ratio_ma20), 2),
-        "d1_vol_ratio_ma5":   round(float(d1_vol_ratio_ma5), 2),
-        "d1_value_rp":        float(d1_value_rp),
-        "d1_range_expansion": round(float(d1_range_expansion), 2),
-
-        # D-2 fitur
-        "d2_change":          round(float(d2_change), 2),
-        "d2_body_pct":        round(float(d2_body_pct), 3),
-        "d2_vol_ratio_ma20":  round(float(d2_vol_ratio_ma20), 2),
-
-        # Context
-        "above_ma20":  above_ma20,
-        "above_ma50":  above_ma50,
-        "ma20":        round(float(ma20), 0),
-        "ma50":        round(float(ma50), 0),
-        "up_streak":   int(up_streak),
-        "vol_ma20_pre": float(vol_ma20_pre),
-    }
+    """Shim: redirect ke compute_ara_features_v2 (tanpa minute data)."""
+    return compute_ara_features_v2(df, df_minute=None)
 
 
 def score_ara_candidate(feat: Dict) -> Tuple[int, List[str], List[str]]:
-    """
-    Hitung ARA score 0–100 berdasarkan konfluensi fitur D-1 dan D-2.
-
-    PRINSIP DESAIN — MINIMALISASI FALSE SIGNAL:
-      1. Butuh minimal 2 sinyal konfluensi BERBEDA untuk score meaningful
-      2. Satu sinyal kuat saja di-cap di 30
-      3. Penalty untuk tanda bearish yang jelas
-      4. Score >= 60: STRONG (~1-3 per minggu dari seluruh IHSG)
-      5. Score >= 40: MODERATE (watchlist, perlu konfirmasi manual)
-
-    TIPE YANG DIDETEKSI:
-      - CONTINUATION: D-1 naik besar + volume tinggi (ASPI pattern)
-      - SILENT_ACCUMULATION: volume spike tapi harga flat/turun (OPMS, PNSE pattern)
-      - VOLUME_SPIKE: volume ekstrem tanpa pola candle jelas
-
-    Return: (score, reasons_positif, reasons_negatif)
-    """
-    score = 0
-    pos = []    # alasan positif
-    neg = []    # alasan negatif
-
-    d1_vol  = feat["d1_vol_ratio_ma20"]
-    d1_wick = feat["d1_upper_wick"]
-    d1_body = feat["d1_body_pct"]
-    d1_pos  = feat["d1_close_pos"]
-    d1_chg  = feat["d1_change"]
-    d2_vol  = feat["d2_vol_ratio_ma20"]
-    d2_chg  = feat["d2_change"]
-
-    # ------------------------------------------------------------------
-    # TIPE 1: Continuation
-    # Pola ASPI: D-1 +25%, body 93%, close di HIGH, vol 4.8x
-    # Hanya valid jika KEDUANYA terpenuhi (naik besar DAN volume besar)
-    # ------------------------------------------------------------------
-    if (d1_chg >= CONFIG["ARA_CONTINUATION_CHG_MIN"]
-            and d1_vol >= CONFIG["ARA_CONTINUATION_VOL_MIN"]):
-        score += 35
-        pos.append(f"Continuation D-1: +{d1_chg:.1f}% vol {d1_vol:.1f}x MA20")
-
-    # ------------------------------------------------------------------
-    # VOLUME SPIKE — necessary condition, tidak cukup sendiri
-    # Tier 2 (>=6x) dapat poin lebih banyak
-    # ------------------------------------------------------------------
-    if d1_vol >= CONFIG["ARA_VOL_MA20_TIER2"]:
-        score += 30
-        pos.append(f"Volume D-1 ekstrem: {d1_vol:.1f}x MA20 (tier 2)")
-    elif d1_vol >= CONFIG["ARA_VOL_MA20_TIER1"]:
-        score += 15
-        pos.append(f"Volume D-1 spike: {d1_vol:.1f}x MA20 (tier 1)")
-
-    # Volume D-2 — early accumulation 2 hari sebelum ARA
-    if d2_vol >= CONFIG["ARA_VOL_MA20_D2_MIN"]:
-        score += 10
-        pos.append(f"Volume D-2 elevated: {d2_vol:.1f}x MA20")
-
-    # ------------------------------------------------------------------
-    # CANDLE PATTERN D-1 — berdasarkan korelasi empiris
-    # ------------------------------------------------------------------
-
-    # Upper wick rejection (corr +0.555 dengan ARA magnitude)
-    # Interpretasi: tekanan jual diserap — smart money beli di zona atas
-    if d1_wick >= CONFIG["ARA_UPPER_WICK_MIN"]:
-        score += 20
-        pos.append(f"Upper wick rejection: {d1_wick:.2f} (smart money absorption)")
-
-    # Body kecil / doji (corr body_pct -0.575)
-    # Interpretasi: harga tidak kemana-mana = distribusi seimbang,
-    # akumulasi tersembunyi sebelum breakout
-    if d1_body <= CONFIG["ARA_BODY_MAX_REJECTION"]:
-        score += 15
-        pos.append(f"Body kecil D-1: {d1_body:.2f} (accumulation pattern)")
-
-    # Close position rendah (corr -0.475)
-    # Interpretasi: harga ditutup di bawah midrange setelah ada tekanan jual
-    # = buyers masuk diam-diam di harga rendah
-    if d1_pos <= CONFIG["ARA_CLOSE_POS_MAX"]:
-        score += 15
-        pos.append(f"Close pos rendah: {d1_pos:.2f} (buyers absorbed selling)")
-
-    # D-2 momentum awal
-    if d2_chg >= 5.0 and d2_vol >= 1.5:
-        score += 10
-        pos.append(f"D-2 early signal: +{d2_chg:.1f}% vol {d2_vol:.1f}x")
-
-    # Range expansion D-1 (harga bergerak lebih besar dari biasa)
-    if feat["d1_range_expansion"] >= 1.5:
-        score += 5
-        pos.append(f"Range expansion: {feat['d1_range_expansion']:.1f}x avg-5d")
-
-    # ------------------------------------------------------------------
-    # PENALTY — sinyal bearish yang mengurangi probabilitas
-    # ------------------------------------------------------------------
-
-    # D-1 turun signifikan TANPA volume spike → dumping, bukan akumulasi
-    if d1_chg <= -5.0 and d1_vol < CONFIG["ARA_VOL_MA20_TIER1"]:
-        score -= 20
-        neg.append(f"D-1 turun {d1_chg:.1f}% tanpa volume — kemungkinan dumping")
-
-    # Volume sangat rendah → tidak ada aktivitas signifikan
-    if d1_vol < 0.5:
-        score -= 15
-        neg.append(f"Volume D-1 sangat rendah: {d1_vol:.1f}x MA20")
-
-    # Sudah naik banyak hari berturut-turut TANPA volume → terlambat
-    if feat["up_streak"] >= 4 and d1_vol < 2.0:
-        score -= 10
-        neg.append(f"Naik {feat['up_streak']} hari berturut tanpa volume konfirmasi")
-
-    # ------------------------------------------------------------------
-    # MINIMUM KONFLUENSI: jika hanya 1 sinyal positif, cap score
-    # ------------------------------------------------------------------
-    if len(pos) < 2:
-        score = min(score, 30)
-        if len(pos) < 2:
-            neg.append("Kurang konfluensi (minimal 2 sinyal berbeda diperlukan)")
-
-    return max(0, min(100, score)), pos, neg
+    """Shim: redirect ke score_ara_candidate_v2, strip pattern_type dari return."""
+    score, _pattern, pos, neg = score_ara_candidate_v2(feat)
+    return score, pos, neg
 
 
 def check_ara_liquidity_yahoo(df: pd.DataFrame) -> Tuple[bool, str]:
-    """
-    Cek liquidity dasar untuk pipeline ARA menggunakan data Yahoo Finance.
-    Lebih longgar dari pipeline intraday karena saham ARA sering kecil.
-
-    Return: (lolos: bool, alasan: str)
-    """
-    if len(df) < 25:
-        return False, f"Data hanya {len(df)} bar (butuh >= 25)"
-
-    # Value 5 hari terakhir
-    recent = df.tail(5)
-    values = recent["close"] * recent["volume"] * 100   # IDX: lot × 100 lembar
-    avg_value_5d = float(values.mean())
-
-    if avg_value_5d < CONFIG["ARA_MIN_VALUE_D1"]:
-        return False, f"Value 5d avg Rp{avg_value_5d/1e9:.3f}B < Rp{CONFIG['ARA_MIN_VALUE_D1']/1e9:.2f}B"
-
-    # Harga minimal Rp 25 (hindari saham gorengan ekstrem yang spread-nya tidak masuk akal)
-    last_close = float(df["close"].iloc[-1])
-    if last_close < 25:
-        return False, f"Harga terlalu rendah: Rp{last_close:.0f} (min Rp25)"
-
-    return True, "OK"
+    """Shim: redirect ke check_ara_liquidity_v2."""
+    return check_ara_liquidity_v2(df)
 
 
 def get_ara_universe(token: Optional[str], mode: str) -> Dict[str, Dict]:
-    """
-    Bangun universe khusus untuk pipeline ARA.
-
-    Strategi: gunakan sumber yang paling sensitif terhadap akumulasi dini.
-    Prioritas sumber:
-      1. Stockbit Screener Volume Explosion (3 page) — saham dengan vol spike
-      2. Guru Screener 92 (Big Accumulation) — broker akumulasi
-      3. Guru Screener 77 (Foreign Flow Uptrend) — foreign beli
-      4. Guru Screener 94 (Bandar Bullish Reversal) — bandar mulai akumulasi
-
-    Semua sumber di-merge dengan dedup berdasarkan ticker.
-    Jika mode YAHOO_ONLY, universe kosong (ARA butuh Stockbit data).
-    """
-    universe: Dict[str, Dict] = {}
-
-    if mode != "FULL_STOCKBIT" or not token:
-        log.warning("ARA universe kosong: butuh FULL_STOCKBIT mode")
-        return universe
-
-    # --- Sumber 1: Volume Explosion screener (POST custom) ---
-    log.info("  [ARA Universe] Screener Volume Explosion (3 page)...")
-    vol_url = f"{CONFIG['SB_BASE']}/screener/templates"
-    vol_headers = _make_sb_headers(token)
-    vol_headers["content-type"] = "application/json"
-    vol_base = {
-        "name": "Vol Explosion ARA Screen",
-        "description": "",
-        "ordercol": 3,
-        "ordertype": "desc",
-        "filters": json.dumps([
-            {"item1": 12465, "item1_name": "Volume MA 5", "item2": "12469",
-             "item2_name": "Volume", "multiplier": "2", "operator": "<", "type": "compare"},
-            {"item1": 12464, "item1_name": "Volume MA 20", "item2": "12465",
-             "item2_name": "Volume MA 5", "multiplier": "1.5", "operator": "<", "type": "compare"},
-        ]),
-        "universe": json.dumps({"scope": "IHSG", "scopeID": "0", "name": "IHSG"}),
-        "sequence": "12465,12469,12464",
-        "save": "0",
-        "screenerid": "",
-        "type": "TEMPLATE_TYPE_CUSTOM",
-    }
-    seen_vol: set = set()
-    for page in range(1, 4):
-        try:
-            time.sleep(CONFIG["SB_DELAY"])
-            r = requests.post(vol_url, headers=vol_headers,
-                              data=json.dumps({**vol_base, "page": page}),
-                              timeout=CONFIG["SB_TIMEOUT"])
-            if r.status_code != 200:
-                break
-            calcs = r.json().get("data", {}).get("calcs", [])
-            if not calcs:
-                break
-            cnt = 0
-            for item in calcs:
-                code = item.get("company", {}).get("symbol", "")
-                if not code or code in seen_vol:
-                    continue
-                seen_vol.add(code)
-                cnt += 1
-                universe[code] = {
-                    "ticker": code,
-                    "name": item.get("company", {}).get("name", code),
-                    "in_mover_types": ["SCREENER_VOL_EXPLOSION"],
-                    "from_ara_universe": True,
-                }
-            log.info(f"    Vol Explosion page {page}: {cnt} saham baru")
-        except Exception as e:
-            log.warning(f"    Vol Explosion error page {page}: {e}")
-            break
-
-    # --- Sumber 2-4: Guru Screener yang relevan untuk ARA ---
-    guru_targets = [
-        (92, "Big Accumulation"),
-        (77, "Foreign Flow Uptrend"),
-        (94, "Bandar Bullish Reversal"),
-    ]
-    for guru_id, guru_label in guru_targets:
-        log.info(f"  [ARA Universe] Guru {guru_id} ({guru_label})...")
-        data = sb_get(
-            f"/screener/templates/{guru_id}",
-            token,
-            {"type": "TEMPLATE_TYPE_GURU"},
-        )
-        if not data:
-            continue
-        calcs = data.get("data", {}).get("calcs", [])
-        cnt = 0
-        for item in calcs:
-            code = item.get("company", {}).get("symbol", "")
-            if not code:
-                continue
-            if code not in universe:
-                universe[code] = {
-                    "ticker": code,
-                    "name": item.get("company", {}).get("name", code),
-                    "in_mover_types": [f"GURU_{guru_id}"],
-                    "from_ara_universe": True,
-                }
-                cnt += 1
-            else:
-                universe[code]["in_mover_types"].append(f"GURU_{guru_id}")
-        log.info(f"    +{cnt} saham baru (total universe: {len(universe)})")
-
-    log.info(f"  ARA Universe final: {len(universe)} saham unik")
-    return universe
+    """Shim: redirect ke get_ara_universe_v2."""
+    return get_ara_universe_v2(token, mode)
 
 
 def run_ara_pipeline(token: Optional[str], mode: str) -> List[Dict]:
     """
-    Pipeline deteksi calon ARA (LOGIKA BARU).
-    Berbagi semua utilitas dengan pipeline intraday:
-      get_daily_data, get_broker_signal, sb_get, CONFIG, dll.
-
-    ARSITEKTUR:
-      1. Universe: Stockbit Screener + Guru Screener (Stockbit API)
-      2. Liquidity: Yahoo Finance daily, Rp 500M/hari (longgar)
-      3. Features: compute_ara_features() dari data daily Yahoo
-      4. Scoring: score_ara_candidate(), multi-konfluensi
-      5. Bonus: broker signal dari Stockbit marketdetectors
-      6. Output: max ARA_MAX_OUTPUT kandidat, sorted by score DESC
-
-    WARNING:
-      FALSE SIGNAL RATE ~85-95%.
-      Pipeline ini mendeteksi Tipe 1 (Continuation) dan Tipe 2 (Silent Accumulation).
-      Tipe 3 (Out of Nowhere — 60% dari kasus ARA) TIDAK BISA dideteksi dari OHLCV.
-
-    Return: list of Dict (kandidat ARA), sudah di-sort dan di-trim.
+    Shim: redirect ke run_ara_pipeline_v2.
+    Dipanggil oleh run_screener() (kode lama) — diteruskan ke implementasi v2.
     """
-    if not CONFIG.get("ARA_ENABLED", True):
-        log.info("Pipeline ARA di-skip (ARA_ENABLED=False)")
-        return []
-
-    log.info("\n" + "=" * 70)
-    log.info("🎯 PIPELINE ARA — DETEKSI CALON AUTO REJECT ATAS")
-    log.info("=" * 70)
-
-    # Step 1: Universe
-    log.info("[ARA Step 1] Bangun universe...")
-    ara_universe = get_ara_universe(token, mode)
-    if not ara_universe:
-        log.warning("ARA universe kosong — pipeline dihentikan")
-        return []
-
-    # Step 2-5: Loop kandidat
-    candidates = []
-    total = len(ara_universe)
-    for idx, (code, stock_info) in enumerate(ara_universe.items()):
-        log.info(f"  [ARA {idx+1}/{total}] {code}...")
-
-        # Step 2: Download data daily Yahoo Finance
-        df = get_daily_data(code)
-        if df is None or len(df) < 55:
-            log.debug(f"    {code}: data harian tidak cukup")
-            continue
-
-        # Step 3: Liquidity check (longgar)
-        liq_ok, liq_reason = check_ara_liquidity_yahoo(df)
-        if not liq_ok:
-            log.debug(f"    {code}: FAIL liquidity — {liq_reason}")
-            continue
-
-        # Step 4: Feature engineering
-        feat = compute_ara_features(df)
-        if feat is None:
-            log.debug(f"    {code}: compute_ara_features gagal")
-            continue
-
-        # Step 5: Scoring
-        score, reasons_pos, reasons_neg = score_ara_candidate(feat)
-
-        if score < CONFIG["ARA_SCORE_MIN"]:
-            log.debug(f"    {code}: score {score} < {CONFIG['ARA_SCORE_MIN']} — skip")
-            continue
-
-        # Step 6: Bonus broker signal (pakai fungsi yang sama dengan pipeline intraday)
-        broker_signal = "N/A"
-        if mode == "FULL_STOCKBIT" and token:
-            bs, _ = get_broker_signal(code, token)
-            broker_signal = bs
-            if bs == "Big Acc":
-                score = min(100, score + 10)
-                reasons_pos.append("Broker signal: Big Accumulation (+10)")
-            elif bs == "Acc":
-                score = min(100, score + 5)
-                reasons_pos.append("Broker signal: Accumulation (+5)")
-            elif bs in ("Dist", "Big Dist"):
-                score = max(0, score - 15)
-                reasons_neg.append(f"Broker signal: {bs} (-15)")
-
-        # Re-cek setelah broker adjustment
-        if score < CONFIG["ARA_SCORE_MIN"]:
-            log.debug(f"    {code}: score {score} setelah broker adj — skip")
-            continue
-
-        # Tentukan pattern type
-        if (feat["d1_change"] >= CONFIG["ARA_CONTINUATION_CHG_MIN"]
-                and feat["d1_vol_ratio_ma20"] >= CONFIG["ARA_CONTINUATION_VOL_MIN"]):
-            pattern_type = "CONTINUATION"
-        elif (feat["d1_upper_wick"] >= CONFIG["ARA_UPPER_WICK_MIN"]
-              and feat["d1_body_pct"] <= CONFIG["ARA_BODY_MAX_REJECTION"]):
-            pattern_type = "SILENT_ACCUMULATION"
-        else:
-            pattern_type = "VOLUME_SPIKE"
-
-        score_tier = "STRONG" if score >= CONFIG["ARA_SCORE_STRONG"] else "MODERATE"
-        log.info(f"    ✅ {code}: ARA score {score} ({score_tier}) | {pattern_type} | {len(reasons_pos)} sinyal")
-
-        candidates.append({
-            # Identifikasi
-            "ticker":       code,
-            "company":      stock_info.get("name", code),
-            "type":         "CALON_ARA",
-
-            # Scoring
-            "score":        score,
-            "score_tier":   score_tier,
-            "pattern_type": pattern_type,
-            "confluence_count": len(reasons_pos),
-
-            # Broker signal
-            "broker_signal": broker_signal,
-
-            # Fitur D-1 kunci (untuk audit dan backtest)
-            "d1_date":             feat["d1_date"],
-            "d1_close":            feat["d1_close"],
-            "d1_change_pct":       feat["d1_change"],
-            "d1_vol_ratio_ma20":   feat["d1_vol_ratio_ma20"],
-            "d1_vol_ratio_ma5":    feat["d1_vol_ratio_ma5"],
-            "d1_body_pct":         feat["d1_body_pct"],
-            "d1_upper_wick":       feat["d1_upper_wick"],
-            "d1_lower_wick":       feat["d1_lower_wick"],
-            "d1_close_pos":        feat["d1_close_pos"],
-            "d1_bullish":          feat["d1_bullish"],
-            "d1_range_expansion":  feat["d1_range_expansion"],
-            "d1_value_rp":         round(feat["d1_value_rp"]),
-
-            # Fitur D-2
-            "d2_change_pct":       feat["d2_change"],
-            "d2_vol_ratio_ma20":   feat["d2_vol_ratio_ma20"],
-
-            # Context
-            "above_ma20":          feat["above_ma20"],
-            "above_ma50":          feat["above_ma50"],
-            "ma20":                feat["ma20"],
-            "ma50":                feat["ma50"],
-            "up_streak_days":      feat["up_streak"],
-
-            # Reasoning (transparan untuk audit)
-            "signals_positive":    reasons_pos,
-            "signals_negative":    reasons_neg,
-
-            # Sumber universe
-            "universe_sources":    stock_info.get("in_mover_types", []),
-
-            # Warning wajib — jangan dihapus
-            "warning": (
-                "⚠️ FALSE SIGNAL RATE TINGGI (~85-95%). "
-                "Pipeline ini hanya mendeteksi Tipe 1 (Continuation) dan "
-                "Tipe 2 (Silent Accumulation). Tipe 3 (Out of Nowhere, ~60% ARA) "
-                "tidak bisa dideteksi dari OHLCV. "
-                "Gunakan sebagai WATCHLIST saja. "
-                "Konfirmasi dengan broker flow, news, dan analisis manual sebelum eksekusi."
-            ),
-            "generated_at": datetime.now().strftime("%H:%M WIB"),
-        })
-
-        gc.collect()
-
-    # Sort: score DESC, lalu confluence_count DESC sebagai tiebreaker
-    candidates.sort(key=lambda x: (x["score"], x["confluence_count"]), reverse=True)
-    result = candidates[: CONFIG["ARA_MAX_OUTPUT"]]
-
-    log.info(f"\n✅ ARA pipeline selesai: {len(result)} kandidat (dari {len(candidates)} lolos skor)")
-    return result
+    return run_ara_pipeline_v2(token, mode)
 
 
 def save_combined_output(
@@ -3593,70 +3130,1236 @@ def save_combined_output(
     session_label: str = "MARKET_DAY",
 ):
     """
-    Simpan output gabungan ke combined_screening.json.
-    Struktur JSON:
-      {
-        "logika_lama_intraday": [...],   # hasil pipeline intraday (logika lama)
-        "logika_baru_calon_ara": [...],  # hasil pipeline ARA (logika baru)
-        "meta": {...},
-        "market_context": {...},
-        "screening_summary": {...},      # summary filter intraday
-        "config_ara": {...},             # config yang dipakai pipeline ARA
-      }
+    Shim: redirect ke save_combined_output_v2.
+    Dipanggil oleh run_screener() (kode lama) — diteruskan ke implementasi v2.
+    """
+    save_combined_output_v2(
+        intraday_results=intraday_results,
+        ara_results=ara_results,
+        mode=mode,
+        market_ctx=market_ctx,
+        intraday_summary=intraday_summary,
+        session_label=session_label,
+    )
+
+
+
+
+# =============================================================================
+# PIPELINE ARA v2 — LOGIKA BARU FINAL (REVISED berdasarkan analisis 23 saham ARA)
+# =============================================================================
+#
+# TEMUAN EMPIRIS (n=23 saham ARA, 14-15 April 2026):
+#   - Type 3 "Out of Nowhere" = 48% (TIDAK bisa dideteksi dari OHLCV)
+#   - Type 1 "Continuation"   =  9% (D-1 naik >8%, vol >3x MA20)
+#   - Type 2 "Silent Accum"   =  9% (vol spike, harga flat, wick tinggi)
+#   - Mixed                   = 35% (sinyal lemah, sebagian bisa terdeteksi)
+#
+# SATU SINYAL UNIVERSALNYA (22/22 saham ARA):
+#   - last_15_green >= 10/14 bar terakhir sesi D-1 = tidak ada tekanan jual
+#
+# SCORING: Daily (0-70) + Minute (0-20) + Stockbit bonus (0-10) = max 100
+#
+# FALSE SIGNAL RATE: ~85-92% (Type 1/2), ~95%+ (Mixed/Type3)
+# Gunakan HANYA sebagai watchlist. Konfirmasi manual wajib.
+# =============================================================================
+
+
+def compute_ara_features_v2(
+    df_daily: pd.DataFrame,
+    df_minute: Optional[pd.DataFrame] = None,
+) -> Optional[Dict]:
+    """
+    Hitung semua fitur prediktif ARA dari data OHLCV daily + minute (opsional).
+
+    Perspektif: df_daily.iloc[-1] = D-1 (hari sebelum ARA, sudah close).
+    Screener jalan sore/malam sehingga D-1 = hari ini (data sudah final).
+
+    FITUR DAILY (berdasarkan korelasi empiris n=23 saham ARA):
+      d1_close_pos       : median=0.60 (tutup di atas midrange, tapi tidak selalu)
+      d1_upper_wick      : median=0.29 (rejection moderat di atas)
+      d1_body_pct        : median=0.40 (candle kecil-medium)
+      d1_range_expansion : median=0.80 (sering MENYEMPIT sebelum ARA!)
+      d1_vol_ratio_ma20  : median=1.30 (banyak ARA vol spike TIDAK ada di D-1)
+
+    FITUR MINUTE (satu sinyal universal — 22/22 saham):
+      m1_last15_green >= 10/14 bar hijau di akhir sesi D-1
+
+    Parameters:
+        df_daily  : DataFrame sorted ascending, kolom: date, open, high, low, close, volume
+        df_minute : DataFrame 1-minute OHLCV untuk D-1 (opsional, bisa None)
+
+    Returns:
+        Dict fitur atau None jika data tidak cukup (<55 bar daily).
+    """
+    if df_daily is None or len(df_daily) < 55:
+        return None
+
+    n = len(df_daily)
+    i = n - 1   # index D-1 (baris terakhir)
+    d1 = df_daily.iloc[i]
+    d2 = df_daily.iloc[i - 1]
+    d3 = df_daily.iloc[i - 2] if i >= 2 else d2
+
+    # ---- Volume MA (dihitung SEBELUM D-1, hindari look-ahead bias) ----
+    vol_slice_ma20 = df_daily["volume"].iloc[max(0, i - 21):i]
+    vol_slice_ma5  = df_daily["volume"].iloc[max(0, i - 6):i - 1]
+    vol_ma20_pre = float(vol_slice_ma20.mean()) if len(vol_slice_ma20) >= 5 else 0.0
+    vol_ma5_pre  = float(vol_slice_ma5.mean())  if len(vol_slice_ma5)  >= 3 else 0.0
+
+    if vol_ma20_pre <= 0:
+        return None
+
+    # ---- D-1 candle metrics ----
+    d1_h = float(d1["high"])
+    d1_l = float(d1["low"])
+    d1_o = float(d1["open"])
+    d1_c = float(d1["close"])
+    d1_v = float(d1["volume"])
+
+    d1_range       = d1_h - d1_l + 1e-6
+    d1_body        = abs(d1_c - d1_o)
+    d1_body_pct    = d1_body / d1_range
+    d1_upper_wick  = (d1_h - max(d1_o, d1_c)) / d1_range
+    d1_lower_wick  = (min(d1_o, d1_c) - d1_l) / d1_range
+    d1_close_pos   = (d1_c - d1_l) / d1_range
+    d1_bullish     = d1_c > d1_o
+    d1_change      = (d1_c - float(d2["close"])) / (float(d2["close"]) + 1e-6) * 100
+    d1_vol_r_ma20  = d1_v / vol_ma20_pre
+    d1_vol_r_ma5   = d1_v / (vol_ma5_pre + 1e-6)
+    d1_value_rp    = d1_c * d1_v * 100   # IDX: lot × 100 lembar
+
+    # ---- Range expansion D-1 vs 5 hari sebelumnya ----
+    ranges_5d = []
+    for j in range(max(0, i - 6), i - 1):
+        r = df_daily.iloc[j]
+        rc = float(r["close"])
+        if rc > 0:
+            ranges_5d.append((float(r["high"]) - float(r["low"])) / rc)
+    avg_range_5d  = float(np.mean(ranges_5d)) if ranges_5d else 0.01
+    d1_range_pct  = d1_range / (d1_c + 1e-6)
+    d1_range_exp  = d1_range_pct / avg_range_5d if avg_range_5d > 0 else 1.0
+
+    # ---- D-2 metrics ----
+    d2_range   = float(d2["high"]) - float(d2["low"]) + 1e-6
+    d2_body_pct = abs(float(d2["close"]) - float(d2["open"])) / d2_range
+    d2_change  = (float(d2["close"]) - float(d3["close"])) / (float(d3["close"]) + 1e-6) * 100
+    d2_vol_r_ma20 = float(d2["volume"]) / vol_ma20_pre
+
+    # ---- MA context ----
+    ma20_arr = df_daily["close"].iloc[max(0, i - 21):i].astype(float)
+    ma50_arr = df_daily["close"].iloc[max(0, i - 51):i].astype(float)
+    ma20 = float(ma20_arr.mean()) if len(ma20_arr) >= 5 else d1_c
+    ma50 = float(ma50_arr.mean()) if len(ma50_arr) >= 10 else ma20
+    above_ma20 = d1_c > ma20
+    above_ma50 = d1_c > ma50
+
+    # ---- Up-streak sebelum D-1 ----
+    up_streak = 0
+    for j in range(i - 1, max(i - 10, 1), -1):
+        if float(df_daily.iloc[j]["close"]) > float(df_daily.iloc[j - 1]["close"]):
+            up_streak += 1
+        else:
+            break
+
+    # ---- 5-day price trend ----
+    price_5d_ago = float(df_daily.iloc[max(0, i - 5)]["close"])
+    trend_5d_pct = (d1_c - price_5d_ago) / (price_5d_ago + 1e-6) * 100
+
+    # ---- D-1 date string ----
+    try:
+        d1_date_str = d1["date"].strftime("%Y-%m-%d") if hasattr(d1["date"], "strftime") else str(d1["date"])[:10]
+    except Exception:
+        d1_date_str = ""
+
+    # ---- Minute-derived features (opsional) ----
+    m1_last15_green    = None
+    m1_close_vs_vwap   = None
+    m1_close_pos_intra = None
+    m1_high_timing     = None
+    m1_n_bars          = None
+
+    if df_minute is not None and len(df_minute) >= 15:
+        try:
+            dm = df_minute.sort_values("date").reset_index(drop=True)
+            n_m = len(dm)
+            m1_n_bars = n_m
+
+            dm_h = dm["high"].astype(float)
+            dm_l = dm["low"].astype(float)
+            dm_c = dm["close"].astype(float)
+            dm_v = dm["volume"].astype(float)
+
+            # Intraday close position
+            d1_high_m  = float(dm_h.max())
+            d1_low_m   = float(dm_l.min())
+            d1_close_m = float(dm_c.iloc[-1])
+            intra_range = d1_high_m - d1_low_m + 1e-6
+            m1_close_pos_intra = (d1_close_m - d1_low_m) / intra_range
+
+            # VWAP
+            typical = (dm_h + dm_l + dm_c) / 3
+            total_vol_m = float(dm_v.sum())
+            if total_vol_m > 0:
+                vwap = float((typical * dm_v).sum()) / total_vol_m
+                m1_close_vs_vwap = (d1_close_m - vwap) / (vwap + 1e-6) * 100
+            else:
+                m1_close_vs_vwap = 0.0
+
+            # High timing (fraksi bar di mana high terjadi)
+            high_bar_local_idx = int(dm_h.idxmax()) - int(dm.index[0])
+            m1_high_timing = high_bar_local_idx / (n_m + 1e-6)
+
+            # Last 15 bars: hitung bar hijau (close >= prev close)
+            last_15 = dm_c.iloc[-15:].values
+            green_count = sum(
+                1 for k in range(1, len(last_15))
+                if last_15[k] >= last_15[k - 1]
+            )
+            m1_last15_green = green_count  # dari 14 possible comparisons
+
+        except Exception as e_m:
+            log.debug(f"Minute feature error: {e_m}")
+
+    return {
+        # D-1 identifiers
+        "d1_date":             d1_date_str,
+        "d1_close":            round(d1_c, 2),
+        "d1_open":             round(d1_o, 2),
+        "d1_high":             round(d1_h, 2),
+        "d1_low":              round(d1_l, 2),
+
+        # D-1 fitur utama
+        "d1_change":           round(d1_change, 2),
+        "d1_body_pct":         round(d1_body_pct, 3),
+        "d1_upper_wick":       round(d1_upper_wick, 3),
+        "d1_lower_wick":       round(d1_lower_wick, 3),
+        "d1_close_pos":        round(d1_close_pos, 3),
+        "d1_bullish":          bool(d1_bullish),
+        "d1_vol_ratio_ma20":   round(d1_vol_r_ma20, 2),
+        "d1_vol_ratio_ma5":    round(d1_vol_r_ma5, 2),
+        "d1_value_rp":         round(d1_value_rp),
+        "d1_range_expansion":  round(d1_range_exp, 2),
+
+        # D-2 fitur
+        "d2_change":           round(d2_change, 2),
+        "d2_body_pct":         round(d2_body_pct, 3),
+        "d2_vol_ratio_ma20":   round(d2_vol_r_ma20, 2),
+
+        # Context
+        "above_ma20":          bool(above_ma20),
+        "above_ma50":          bool(above_ma50),
+        "ma20":                round(ma20, 0),
+        "ma50":                round(ma50, 0),
+        "up_streak":           int(up_streak),
+        "trend_5d_pct":        round(trend_5d_pct, 2),
+        "vol_ma20_pre":        round(vol_ma20_pre, 0),
+        "avg_range_5d_pct":    round(avg_range_5d * 100, 3),
+
+        # Minute-derived features (None jika tidak tersedia)
+        "m1_last15_green":     m1_last15_green,
+        "m1_close_vs_vwap":    round(m1_close_vs_vwap, 2) if m1_close_vs_vwap is not None else None,
+        "m1_close_pos_intra":  round(m1_close_pos_intra, 3) if m1_close_pos_intra is not None else None,
+        "m1_high_timing":      round(m1_high_timing, 3) if m1_high_timing is not None else None,
+        "m1_n_bars":           m1_n_bars,
+    }
+
+
+def score_ara_candidate_v2(feat: Dict) -> Tuple[int, str, List[str], List[str]]:
+    """
+    Hitung ARA score v2 (0-100).
+
+    STRUKTUR SKOR:
+      Daily  (0-70 poin) — volume spike, candle pattern, trend context
+      Minute (0-20 poin) — closing momentum confirmation (dari m1_* fields)
+      [Stockbit bonus +0–10 diterapkan SETELAH fungsi ini di run_ara_pipeline_v2]
+
+    THRESHOLD:
+      >= 60 → STRONG  (~85% false signal rate)
+      >= 40 → MODERATE (~90% false signal rate)
+      <  40 → buang
+
+    MINIMUM KONFLUENSI:
+      < 2 sinyal positif → score di-cap 30 (mencegah false positive single-signal)
+
+    Returns: (score, pattern_type, reasons_positive, reasons_negative)
+    """
+    score = 0
+    pos: List[str] = []
+    neg: List[str] = []
+
+    # Ekstrak fields
+    d1_vol  = feat.get("d1_vol_ratio_ma20", 0.0)
+    d1_wick = feat.get("d1_upper_wick", 0.0)
+    d1_body = feat.get("d1_body_pct", 1.0)
+    d1_pos  = feat.get("d1_close_pos", 0.5)
+    d1_chg  = feat.get("d1_change", 0.0)
+    d2_vol  = feat.get("d2_vol_ratio_ma20", 0.0)
+    d2_chg  = feat.get("d2_change", 0.0)
+    trend5d = feat.get("trend_5d_pct", 0.0)
+    up_str  = feat.get("up_streak", 0)
+    rng_exp = feat.get("d1_range_expansion", 1.0)
+
+    # Minute features (None jika data tidak tersedia)
+    m1_green  = feat.get("m1_last15_green")
+    m1_vwap   = feat.get("m1_close_vs_vwap")
+    m1_cpos   = feat.get("m1_close_pos_intra")
+    m1_timing = feat.get("m1_high_timing")
+
+    # ==========================================================
+    # DAILY SCORING (0-70 poin)
+    # ==========================================================
+
+    # Komponen 1: Volume Spike D-1
+    # Tier 2 (>=6x): anomali kuat
+    # Tier 1 (3-6x): moderat (tidak stack dengan tier 2)
+    vol_t2 = CONFIG.get("ARA_VOL_MA20_TIER2", 6.0)
+    vol_t1 = CONFIG.get("ARA_VOL_MA20_TIER1", 3.0)
+    if d1_vol >= vol_t2:
+        score += 25
+        pos.append(f"Volume D-1 ekstrem: {d1_vol:.1f}x MA20 (tier-2 ≥{vol_t2:.0f}x)")
+    elif d1_vol >= vol_t1:
+        score += 12
+        pos.append(f"Volume D-1 spike: {d1_vol:.1f}x MA20 (tier-1 ≥{vol_t1:.0f}x)")
+
+    # Komponen 2: Volume D-2 (early accumulation)
+    vol_d2_min = CONFIG.get("ARA_VOL_MA20_D2_MIN", 1.5)
+    if d2_vol >= vol_d2_min:
+        score += 8
+        pos.append(f"Volume D-2 elevated: {d2_vol:.1f}x MA20 (akumulasi dini)")
+
+    # Komponen 3: Continuation (D-1 naik besar + vol besar — KEDUANYA wajib)
+    cont_chg = CONFIG.get("ARA_CONTINUATION_CHG_MIN", 8.0)
+    cont_vol = CONFIG.get("ARA_CONTINUATION_VOL_MIN", 3.0)
+    if d1_chg >= cont_chg and d1_vol >= cont_vol:
+        score += 10   # stacks di atas vol spike
+        pos.append(f"Continuation D-1: +{d1_chg:.1f}% vol {d1_vol:.1f}x MA20")
+
+    # Komponen 4: Candle patterns — Silent Accumulation signals
+    wick_min = CONFIG.get("ARA_UPPER_WICK_MIN", 0.35)
+    body_max = CONFIG.get("ARA_BODY_MAX_REJECTION", 0.40)
+    pos_max  = CONFIG.get("ARA_CLOSE_POS_MAX", 0.50)
+
+    if d1_wick >= wick_min:
+        score += 10
+        pos.append(f"Upper wick rejection: {d1_wick:.2f} (smart money absorption)")
+
+    if d1_body <= body_max:
+        score += 8
+        pos.append(f"Body kecil D-1: {d1_body:.2f} (candle akumulasi)")
+
+    if d1_pos <= pos_max:
+        score += 8
+        pos.append(f"Close pos rendah: {d1_pos:.2f} (buyers absorbed selling)")
+
+    # Komponen 5: D-2 momentum
+    if d2_chg >= 5.0 and d2_vol >= 1.5:
+        score += 8
+        pos.append(f"D-2 early signal: +{d2_chg:.1f}% vol {d2_vol:.1f}x")
+    elif d2_chg >= 3.0 and d2_vol >= 2.0:
+        score += 5
+        pos.append(f"D-2 moderate: +{d2_chg:.1f}% vol {d2_vol:.1f}x")
+
+    # Komponen 6: Range expansion
+    if rng_exp >= 2.0:
+        score += 5
+        pos.append(f"Range expansion: {rng_exp:.1f}x avg-5d")
+    elif rng_exp >= 1.5:
+        score += 3
+        pos.append(f"Range expansion moderat: {rng_exp:.1f}x avg-5d")
+
+    # Komponen 7: Context
+    if feat.get("above_ma20"):
+        score += 4
+        pos.append("Harga di atas MA20")
+
+    if 3.0 <= trend5d <= 25.0:
+        score += 4
+        pos.append(f"5d trend sehat: +{trend5d:.1f}%")
+
+    # ==========================================================
+    # MINUTE SCORING (0-20 poin, capped)
+    # Sinyal universalnya: last_15_green >= 10 (22/22 saham ARA)
+    # ==========================================================
+    minute_score = 0
+
+    if m1_green is not None:
+        if m1_green >= 12:
+            minute_score += 10
+            pos.append(f"Closing momentum kuat: {m1_green}/14 bar hijau (sinyal universal ARA)")
+        elif m1_green >= 10:
+            minute_score += 5
+            pos.append(f"Closing momentum OK: {m1_green}/14 bar hijau")
+        else:
+            neg.append(f"Closing momentum lemah: {m1_green}/14 bar hijau")
+
+    if m1_cpos is not None and m1_cpos >= 0.70:
+        minute_score += 5
+        pos.append(f"Close intraday kuat: {m1_cpos:.2f} (mendekati high harian)")
+
+    if m1_vwap is not None:
+        if m1_vwap >= 2.0:
+            minute_score += 5
+            pos.append(f"Close di atas VWAP: +{m1_vwap:.1f}%")
+        elif m1_vwap > 0:
+            minute_score += 2
+            pos.append(f"Close sedikit di atas VWAP: +{m1_vwap:.1f}%")
+        elif m1_vwap < -2.0:
+            neg.append(f"Close di bawah VWAP: {m1_vwap:.1f}%")
+
+    if m1_timing is not None:
+        if m1_timing >= 0.75:
+            minute_score += 5
+            pos.append(f"High intraday di akhir sesi ({m1_timing:.0%})")
+        elif m1_timing <= 0.25:
+            neg.append(f"High intraday di awal sesi ({m1_timing:.0%}) — profit taking sore")
+
+    score += min(20, minute_score)
+
+    # ==========================================================
+    # PENALTIES
+    # ==========================================================
+    if d1_chg <= -5.0 and d1_vol < vol_t1:
+        score -= 20
+        neg.append(f"D-1 turun {d1_chg:.1f}% tanpa volume — kemungkinan dumping")
+
+    if d1_vol < 0.5:
+        score -= 15
+        neg.append(f"Volume D-1 sangat rendah: {d1_vol:.1f}x MA20")
+
+    if up_str >= 5 and d1_vol < 2.0:
+        score -= 8
+        neg.append(f"Naik {up_str} hari berturut tanpa konfirmasi volume")
+
+    if trend5d > 40.0:
+        score -= 5
+        neg.append(f"5d trend terlalu cepat: +{trend5d:.1f}%")
+
+    # ==========================================================
+    # MINIMUM KONFLUENSI GUARD
+    # ==========================================================
+    if len(pos) < 2:
+        score = min(score, 30)
+        neg.append("Kurang konfluensi (min 2 sinyal diperlukan)")
+
+    # ==========================================================
+    # PATTERN TYPE
+    # ==========================================================
+    if d1_chg >= cont_chg and d1_vol >= cont_vol:
+        pattern_type = "CONTINUATION"
+    elif d1_vol >= vol_t1 and d1_wick >= wick_min and d1_body <= body_max:
+        pattern_type = "SILENT_ACCUMULATION"
+    elif d1_vol >= vol_t1:
+        pattern_type = "VOLUME_SPIKE"
+    elif m1_green is not None and m1_green >= 12:
+        pattern_type = "CLOSING_SQUEEZE"
+    else:
+        pattern_type = "OUT_OF_NOWHERE"
+
+    return max(0, min(100, score)), pattern_type, pos, neg
+
+
+def calculate_ara_entry_range(
+    feat: Dict,
+    smc_data: Optional[Dict] = None,
+) -> Dict:
+    """
+    Hitung zona entry ideal untuk calon ARA.
+
+    FILOSOFI: Untuk ARA, tidak ada 'pullback entry'.
+    Masuk saat open atau tidak sama sekali.
+    Zona entry = PDC hingga max 5% di atas PDH D-1.
+
+    entry_lower = PDC  (beli pas open, harga belum bergerak)
+    entry_upper = min(PDH * 1.05, PDC * 1.12)
+    Jika ada OB 1H aktif di zona relevan → gunakan OB high sebagai batas atas.
+    """
+    pdc = feat["d1_close"]
+    pdh = feat["d1_high"]
+
+    entry_lower_raw = pdc
+    entry_upper_raw = min(pdh * 1.05, pdc * 1.12)
+
+    ob_note = ""
+    if smc_data and smc_data.get("ob"):
+        ob = smc_data["ob"]
+        ob_high = float(ob.get("ob_high", 0))
+        if pdc < ob_high < entry_upper_raw:
+            entry_upper_raw = ob_high
+            ob_note = " (batas atas: OB 1H aktif)"
+
+    entry_lower = round_bei(entry_lower_raw)
+    entry_upper = round_bei(entry_upper_raw)
+
+    tick = get_tick_size(pdc)
+    if entry_upper <= entry_lower:
+        entry_upper = round_bei(entry_lower + tick * 5)
+
+    range_pct = (entry_upper - entry_lower) / (pdc + 1e-6) * 100
+
+    entry_note = (
+        f"Beli saat open di {entry_lower:,} atau jika harga masih di area ini. "
+        f"Jangan kejar jika sudah naik di atas {entry_upper:,} "
+        f"(+{range_pct:.0f}% dari PDC){ob_note}."
+    )
+
+    return {
+        "entry_lower":     entry_lower,
+        "entry_upper":     entry_upper,
+        "entry_range":     f"{entry_lower:,} – {entry_upper:,}",
+        "entry_note":      entry_note,
+        "entry_range_pct": round(range_pct, 1),
+    }
+
+
+def calculate_ara_target(feat: Dict) -> Dict:
+    """
+    Hitung estimasi target harga calon ARA secara KONSERVATIF.
+
+    METODOLOGI:
+      Layer 1 — Statistical baseline (n=23 ARA empiris):
+        ARA magnitude: +20% s/d +35%, median +25% dari PDC.
+        Entry bukan di PDC dan tidak semua ARA bisa dieksekusi penuh.
+
+      Layer 2 — Tiered targets dari assumed_entry (PDC * 1.015):
+        Conservative (+8%)  : partial profit, realistis
+        Base (+15%)         : setengah ARA penuh
+        Optimistic (+25%)   : full ARA, hanya jika momentum kuat
+
+      Layer 3 — ATR normalization via D-1 range:
+        Vol_adj = clamp(d1_range_pct / 6%, 0.8, 1.3)
+        Target conservative & base di-scale oleh vol_adj.
+
+    Ditampilkan ke user sebagai "+8% hingga +15%" (konservatif, cegah over-expect).
+    """
+    pdc = feat["d1_close"]
+    pdh = feat["d1_high"]
+    pdl = feat["d1_low"]
+
+    d1_range_pct = (pdh - pdl) / (pdc + 1e-6)
+    assumed_entry = pdc * 1.015   # asumsi entry 1.5% di atas PDC
+
+    vol_adj = min(1.3, max(0.8, d1_range_pct / 0.06))
+
+    target_conservative = round_bei(assumed_entry * (1 + 0.08 * vol_adj))
+    target_base         = round_bei(assumed_entry * (1 + 0.15 * vol_adj))
+    target_optimistic   = round_bei(assumed_entry * 1.25)
+
+    # Pastikan target_conservative > PDH D-1
+    if target_conservative <= pdh:
+        target_conservative = round_bei(pdh * 1.02)
+    if target_base <= target_conservative:
+        target_base = round_bei(target_conservative * 1.07)
+    if target_optimistic <= target_base:
+        target_optimistic = round_bei(target_base * 1.08)
+
+    cons_pct = round((target_conservative - assumed_entry) / (assumed_entry + 1e-6) * 100, 0)
+    base_pct = round((target_base - assumed_entry) / (assumed_entry + 1e-6) * 100, 0)
+    opt_pct  = round((target_optimistic - assumed_entry) / (assumed_entry + 1e-6) * 100, 0)
+
+    return {
+        "target_conservative":     target_conservative,
+        "target_base":             target_base,
+        "target_optimistic":       target_optimistic,
+        "estimated_target_pct":    f"+{int(cons_pct)}% hingga +{int(base_pct)}% dari harga beli",
+        "target_conservative_pct": cons_pct,
+        "target_base_pct":         base_pct,
+        "target_optimistic_pct":   opt_pct,
+        "assumed_entry":           round_bei(assumed_entry),
+        "target_note": (
+            f"Konservatif: {target_conservative:,} (~+{int(cons_pct)}%) | "
+            f"Moderat: {target_base:,} (~+{int(base_pct)}%) | "
+            f"Full ARA: {target_optimistic:,} (~+{int(opt_pct)}%)"
+        ),
+    }
+
+
+def build_ara_reason_beginner(
+    ticker: str,
+    pattern_type: str,
+    feat: Dict,
+    score: int,
+    broker_signal: str,
+) -> str:
+    """
+    Penjelasan ARA dalam bahasa sederhana tanpa jargon berat.
+    Template berbeda per pattern_type.
+    """
+    d1_vol = feat.get("d1_vol_ratio_ma20", 0)
+    d1_chg = feat.get("d1_change", 0)
+
+    if pattern_type == "CONTINUATION":
+        reason = (
+            f"{ticker} sudah naik {d1_chg:.0f}% kemarin dengan volume "
+            f"{d1_vol:.0f}x lebih besar dari biasanya. Ada pembeli besar yang "
+            f"masuk agresif. Jika momentum berlanjut, saham ini bisa naik lebih jauh besok."
+        )
+    elif pattern_type == "SILENT_ACCUMULATION":
+        reason = (
+            f"{ticker} diam-diam banyak ditransaksikan kemarin "
+            f"(volume {d1_vol:.0f}x dari biasanya) meski harga tidak bergerak banyak. "
+            f"Ini pola sebelum harga melonjak tajam — tapi bisa juga tidak terjadi apa-apa "
+            f"jika tidak ada berita pendukung."
+        )
+    elif pattern_type == "VOLUME_SPIKE":
+        reason = (
+            f"{ticker} mengalami lonjakan volume kemarin ({d1_vol:.0f}x dari biasanya) "
+            f"tanpa pola candle yang jelas. Konfirmasi dengan berita atau sinyal broker "
+            f"sebelum masuk."
+        )
+    elif pattern_type == "CLOSING_SQUEEZE":
+        reason = (
+            f"{ticker} menunjukkan tekanan beli di akhir sesi kemarin — "
+            f"harga terus naik di menit-menit terakhir. Sinyal lemah, perlu konfirmasi tambahan."
+        )
+    else:
+        reason = (
+            f"{ticker} tidak menunjukkan sinyal teknikal yang jelas kemarin. "
+            f"Kandidat spekulatif murni — kemungkinan dipicu berita yang belum terlihat. "
+            f"Risiko sangat tinggi."
+        )
+
+    if broker_signal in ("Big Acc", "Acc"):
+        reason += f" ✅ Broker signal: {broker_signal}."
+
+    if score >= 70:
+        reason += " Skor kepercayaan: TINGGI."
+    elif score >= 50:
+        reason += " Skor kepercayaan: SEDANG."
+    else:
+        reason += " Skor kepercayaan: RENDAH — watchlist saja."
+
+    return reason
+
+
+def build_ara_risk_warning(
+    ticker: str,
+    feat: Dict,
+    pattern_type: str,
+    score: int,
+) -> str:
+    """
+    Peringatan risiko spesifik per saham.
+    Dikombinasikan dari: likuiditas, posisi MA, volume, pola, dan skor.
+    """
+    parts = []
+    d1_vol   = feat.get("d1_vol_ratio_ma20", 0)
+    d1_chg   = feat.get("d1_change", 0)
+    d1_value = feat.get("d1_value_rp", 0)
+    above_ma20 = feat.get("above_ma20", True)
+    above_ma50 = feat.get("above_ma50", True)
+
+    if d1_value < 1_000_000_000:
+        parts.append("⚠️ SAHAM KECIL (value <Rp1M/hari) — spread bisa lebar, sulit exit saat panik")
+    elif d1_value < 5_000_000_000:
+        parts.append("⚠️ Likuiditas sedang — batasi posisi")
+
+    if d1_vol < 1.5:
+        parts.append("⚠️ Volume D-1 tidak konfirmasi — risiko false signal sangat tinggi")
+
+    if not above_ma20:
+        parts.append("⚠️ Harga di bawah MA20 — tren jangka pendek masih turun")
+
+    if not above_ma50:
+        parts.append("⚠️ Harga di bawah MA50 — tren jangka menengah masih bearish")
+
+    if pattern_type in ("OUT_OF_NOWHERE", "CLOSING_SQUEEZE"):
+        parts.append("⚠️ SPEKULATIF TINGGI — tidak ada sinyal OHLCV yang kuat")
+
+    if d1_chg < -3.0:
+        parts.append(f"⚠️ Harga turun {d1_chg:.1f}% kemarin — bukan pola akumulasi ideal")
+
+    if score < 50:
+        parts.append("⚠️ Skor rendah — kemungkinan false signal sangat tinggi")
+
+    # Warning universal — selalu ada
+    parts.append(
+        "⚠️ FALSE SIGNAL RATE ~85-90%. "
+        "Konfirmasi dengan broker flow, berita, dan analisis manual sebelum beli."
+    )
+
+    # Batasan posisi
+    if d1_value < 1_000_000_000:
+        max_pos = "max Rp500rb–1jt"
+    elif score >= 70:
+        max_pos = "max 2% dari portofolio"
+    else:
+        max_pos = "max 1% dari portofolio"
+
+    parts.append(f"📌 Batasi posisi: {max_pos}.")
+
+    return " | ".join(parts)
+
+
+def get_minute_data_for_ara(ticker: str, d1_date_str: str) -> Optional[pd.DataFrame]:
+    """
+    Ambil data 1-minute OHLCV untuk tanggal D-1 dari Yahoo Finance.
+    Cache di parquet. Return None jika data tidak cukup (<15 bar).
+    """
+    cache_path = _get_yf_cache_path(ticker, "1m_d1")
+
+    if os.path.exists(cache_path):
+        try:
+            age_days = (time.time() - os.path.getmtime(cache_path)) / 86400
+            if age_days <= CONFIG["YF_CACHE_DAYS"]:
+                df = pd.read_parquet(cache_path)
+                if df is not None and len(df) >= 15:
+                    return df
+        except Exception:
+            pass
+
+    yf_ticker = f"{ticker}.JK" if not ticker.endswith(".JK") else ticker
+    try:
+        df = yf.download(yf_ticker, period="5d", interval="1m",
+                         auto_adjust=True, progress=False)
+        if df is None or (hasattr(df, "empty") and df.empty) or len(df) < 15:
+            return None
+
+        df.reset_index(inplace=True)
+
+        if isinstance(df.columns, pd.MultiIndex):
+            df.columns = [c[0].lower() for c in df.columns]
+        else:
+            df.columns = [c.lower() for c in df.columns]
+
+        if "datetime" in df.columns and "date" not in df.columns:
+            df.rename(columns={"datetime": "date"}, inplace=True)
+
+        for col in ["open", "high", "low", "close", "volume"]:
+            if col not in df.columns:
+                return None
+
+        df = df.dropna(subset=["close", "volume"])
+        df = df[df["volume"] > 0].reset_index(drop=True)
+        df["date"] = pd.to_datetime(df["date"])
+
+        # Filter ke tanggal D-1
+        if d1_date_str:
+            try:
+                target_date = pd.to_datetime(d1_date_str).date()
+                df_d1 = df[df["date"].dt.date == target_date].copy()
+                if len(df_d1) >= 15:
+                    _save_yf_cache(ticker, "1m_d1", df_d1)
+                    return df_d1
+            except Exception:
+                pass
+
+        # Fallback: ambil hari kedua dari belakang
+        dates = sorted(df["date"].dt.date.unique())
+        if len(dates) >= 2:
+            df_d1 = df[df["date"].dt.date == dates[-2]].copy()
+            if len(df_d1) >= 15:
+                _save_yf_cache(ticker, "1m_d1", df_d1)
+                return df_d1
+
+        return None
+
+    except Exception as e:
+        log.debug(f"Minute data gagal {ticker}: {e}")
+        return None
+
+
+def check_ara_liquidity_v2(df: pd.DataFrame) -> Tuple[bool, str]:
+    """
+    Cek liquidity untuk ARA — lebih longgar dari intraday pipeline.
+    Threshold: value avg 5 hari >= Rp 500 juta, harga >= Rp 25, data >= 25 bar.
+    """
+    if df is None or len(df) < 25:
+        n = len(df) if df is not None else 0
+        return False, f"Data hanya {n} bar (butuh ≥25)"
+
+    last_close = float(df["close"].iloc[-1])
+    if last_close < 25:
+        return False, f"Harga terlalu rendah: Rp{last_close:.0f}"
+
+    recent = df.tail(5)
+    values = recent["close"].astype(float) * recent["volume"].astype(float) * 100
+    avg_value = float(values.mean())
+
+    min_val = CONFIG.get("ARA_MIN_VALUE_D1", 500_000_000)
+    if avg_value < min_val:
+        return False, f"Value 5d avg Rp{avg_value/1e9:.3f}B < min Rp{min_val/1e9:.2f}B"
+
+    nonzero = (recent["volume"] > 0).sum()
+    if nonzero < 3:
+        return False, f"Volume 0 di {5 - nonzero} dari 5 hari terakhir"
+
+    return True, "OK"
+
+
+def get_ara_universe_v2(token: Optional[str], mode: str) -> Dict[str, Dict]:
+    """
+    Bangun universe untuk ARA v2.
+
+    Sumber:
+      1. Volume Explosion Screener (3 page) — vol spike kemarin
+      2. Guru 92 — Big Accumulation
+      3. Guru 94 — Bandar Bullish Reversal
+      4. Guru 77 — Foreign Flow Uptrend
+      5. Top Value screener (4 page, ~100 saham teratas by value)
+
+    Return: Dict[ticker -> metadata]
+    """
+    universe: Dict[str, Dict] = {}
+
+    if mode != "FULL_STOCKBIT" or not token:
+        log.warning("ARA universe kosong: butuh FULL_STOCKBIT mode")
+        return universe
+
+    # Sumber 1: Volume Explosion
+    log.info("  [ARA v2 Universe] Screener Volume Explosion (3 page)...")
+    vol_url  = f"{CONFIG['SB_BASE']}/screener/templates"
+    vol_hdrs = _make_sb_headers(token)
+    vol_hdrs["content-type"] = "application/json"
+    vol_base = {
+        "name": "ARA Vol Explosion v2", "description": "",
+        "ordercol": 3, "ordertype": "desc",
+        "filters": json.dumps([
+            {"item1": 12465, "item1_name": "Volume MA 5", "item2": "12469",
+             "item2_name": "Volume", "multiplier": "2", "operator": "<", "type": "compare"},
+            {"item1": 12464, "item1_name": "Volume MA 20", "item2": "12465",
+             "item2_name": "Volume MA 5", "multiplier": "1.5", "operator": "<", "type": "compare"},
+        ]),
+        "universe": json.dumps({"scope": "IHSG", "scopeID": "0", "name": "IHSG"}),
+        "sequence": "12465,12469,12464", "save": "0", "screenerid": "",
+        "type": "TEMPLATE_TYPE_CUSTOM",
+    }
+    seen: set = set()
+    for page in range(1, 4):
+        try:
+            time.sleep(CONFIG["SB_DELAY"])
+            r = requests.post(vol_url, headers=vol_hdrs,
+                              data=json.dumps({**vol_base, "page": page}),
+                              timeout=CONFIG["SB_TIMEOUT"])
+            if r.status_code != 200:
+                break
+            calcs = r.json().get("data", {}).get("calcs", [])
+            if not calcs:
+                break
+            cnt = 0
+            for item in calcs:
+                code = item.get("company", {}).get("symbol", "")
+                if not code or code in seen:
+                    continue
+                seen.add(code)
+                cnt += 1
+                universe[code] = {
+                    "ticker": code,
+                    "name":   item.get("company", {}).get("name", code),
+                    "in_mover_types": ["SCREENER_VOL_EXPLOSION"],
+                }
+            log.info(f"    Vol Explosion page {page}: {cnt} saham baru")
+        except Exception as e:
+            log.warning(f"    Vol Explosion error page {page}: {e}")
+            break
+
+    # Sumber 2-4: Guru Screener
+    for guru_id, guru_label, guru_tag in [
+        (92, "Big Accumulation",       "GURU_92"),
+        (94, "Bandar Bullish Reversal", "GURU_94"),
+        (77, "Foreign Flow Uptrend",   "GURU_77"),
+    ]:
+        log.info(f"  [ARA v2 Universe] Guru {guru_id} ({guru_label})...")
+        data = sb_get(f"/screener/templates/{guru_id}", token,
+                      {"type": "TEMPLATE_TYPE_GURU", "page": 1})
+        if not data:
+            continue
+        calcs = data.get("data", {}).get("calcs", [])
+        cnt = 0
+        for item in calcs:
+            code = item.get("company", {}).get("symbol", "")
+            if not code:
+                continue
+            if code not in universe:
+                universe[code] = {
+                    "ticker": code,
+                    "name":   item.get("company", {}).get("name", code),
+                    "in_mover_types": [guru_tag],
+                }
+                cnt += 1
+            else:
+                if guru_tag not in universe[code]["in_mover_types"]:
+                    universe[code]["in_mover_types"].append(guru_tag)
+        log.info(f"    +{cnt} saham baru (total: {len(universe)})")
+
+    # Sumber 5: Top Value (4 page)
+    log.info("  [ARA v2 Universe] Top Value (4 page)...")
+    tv_hdrs = _make_sb_headers(token)
+    tv_hdrs["content-type"] = "application/json"
+    tv_base = {
+        "name": "ARA Top Value", "description": "",
+        "ordercol": 2, "ordertype": "desc",
+        "filters": json.dumps([
+            {"item1": 13620, "item1_name": "Value", "item2": "1000000000",
+             "item2_name": "", "multiplier": "0", "operator": ">", "type": "basic"}
+        ]),
+        "universe": json.dumps({"scope": "IHSG", "scopeID": "0", "name": "IHSG"}),
+        "sequence": "13620", "save": "0", "screenerid": "undefined",
+        "type": "TEMPLATE_TYPE_CUSTOM",
+    }
+    seen_tv: set = set()
+    for page in range(1, 5):
+        try:
+            time.sleep(CONFIG["SB_DELAY"])
+            r = requests.post(vol_url, headers=tv_hdrs,
+                              data=json.dumps({**tv_base, "page": page}),
+                              timeout=CONFIG["SB_TIMEOUT"])
+            if r.status_code != 200:
+                break
+            calcs = r.json().get("data", {}).get("calcs", [])
+            if not calcs:
+                break
+            cnt = 0
+            for item in calcs:
+                code = item.get("company", {}).get("symbol", "")
+                if not code or code in seen_tv:
+                    continue
+                seen_tv.add(code)
+                if code not in universe:
+                    universe[code] = {
+                        "ticker": code,
+                        "name":   item.get("company", {}).get("name", code),
+                        "in_mover_types": ["SCREENER_TOP_VALUE"],
+                    }
+                    cnt += 1
+                else:
+                    if "SCREENER_TOP_VALUE" not in universe[code]["in_mover_types"]:
+                        universe[code]["in_mover_types"].append("SCREENER_TOP_VALUE")
+            log.info(f"    Top Value page {page}: {cnt} saham baru")
+        except Exception as e:
+            log.warning(f"    Top Value error page {page}: {e}")
+            break
+
+    log.info(f"  ARA v2 Universe final: {len(universe)} saham unik")
+    return universe
+
+
+def run_ara_pipeline_v2(token: Optional[str], mode: str) -> List[Dict]:
+    """
+    Pipeline deteksi calon ARA v2 — FINAL IMPLEMENTATION.
+
+    LANGKAH:
+      1. Bangun universe dari Stockbit API (~20-100 kandidat)
+      2. Download data Daily Yahoo Finance
+      3. Liquidity check (longgar: Rp500jt/hari)
+      4. Feature engineering: Daily (wajib) + Minute/1M (opsional)
+      5. Scoring: Daily (0-70) + Minute (0-20)
+      6. Broker signal bonus dari Stockbit (+0 s/d +10)
+      7. Build output JSON dengan semua field baru
+      8. Sort by score DESC, trim ke ARA_MAX_OUTPUT terbaik
+
+    HANYA berjalan dalam FULL_STOCKBIT mode.
+    Yahoo-only mode: return [] (ARA butuh broker signal Stockbit).
+
+    Returns: List of Dict, max ARA_MAX_OUTPUT items, sorted by score DESC.
+    """
+    if not CONFIG.get("ARA_ENABLED", True):
+        log.info("Pipeline ARA v2 di-skip (ARA_ENABLED=False)")
+        return []
+
+    log.info("\n" + "=" * 70)
+    log.info("🎯 PIPELINE ARA v2 — Dual Timeframe (Daily + Minute)")
+    log.info("   Scoring: Daily(0-70) + Minute(0-20) + Stockbit bonus(0-10)")
+    log.info("=" * 70)
+
+    # Step 1: Universe
+    log.info("[ARA v2 Step 1] Bangun universe...")
+    ara_universe = get_ara_universe_v2(token, mode)
+    if not ara_universe:
+        log.warning("ARA v2 universe kosong — pipeline dihentikan")
+        return []
+
+    candidates = []
+    total = len(ara_universe)
+
+    for idx, (code, stock_info) in enumerate(ara_universe.items()):
+        log.info(f"  [ARA v2 {idx+1}/{total}] {code}...")
+
+        try:
+            # Step 2: Daily data
+            df_daily = get_daily_data(code)
+            if df_daily is None or len(df_daily) < 55:
+                log.debug(f"    {code}: data harian tidak cukup")
+                continue
+
+            # Step 3: Liquidity check
+            liq_ok, liq_msg = check_ara_liquidity_v2(df_daily)
+            if not liq_ok:
+                log.debug(f"    {code}: FAIL liquidity — {liq_msg}")
+                continue
+
+            # Step 4a: Features dari Daily saja (quick pass)
+            feat = compute_ara_features_v2(df_daily, df_minute=None)
+            if feat is None:
+                log.debug(f"    {code}: feature computation gagal")
+                continue
+
+            # Quick pre-filter: jika vol < 1x MA20 DAN tidak ada D-2 signal
+            # → skip sebelum download minute data (hemat waktu)
+            d1_vol_quick = feat.get("d1_vol_ratio_ma20", 0)
+            d2_vol_quick = feat.get("d2_vol_ratio_ma20", 0)
+            if d1_vol_quick < 0.5 and d2_vol_quick < 1.0:
+                log.debug(f"    {code}: pre-filter FAIL (vol D-1={d1_vol_quick:.1f}x, D-2={d2_vol_quick:.1f}x)")
+                continue
+
+            # Step 4b: Minute data untuk D-1 (best-effort, tidak wajib)
+            df_minute_d1 = get_minute_data_for_ara(code, feat.get("d1_date", ""))
+            if df_minute_d1 is not None and len(df_minute_d1) >= 15:
+                feat_full = compute_ara_features_v2(df_daily, df_minute=df_minute_d1)
+                if feat_full is not None:
+                    feat = feat_full
+                    log.debug(f"    {code}: minute data OK ({len(df_minute_d1)} bar)")
+            else:
+                log.debug(f"    {code}: minute data tidak tersedia, Daily-only scoring")
+
+            # Step 5: Scoring
+            score, pattern_type, reasons_pos, reasons_neg = score_ara_candidate_v2(feat)
+
+            if score < CONFIG.get("ARA_SCORE_MIN", 40):
+                log.debug(f"    {code}: score {score} < {CONFIG.get('ARA_SCORE_MIN',40)} — skip")
+                continue
+
+            # Step 6: Broker signal bonus
+            broker_signal = "N/A"
+            if mode == "FULL_STOCKBIT" and token:
+                try:
+                    bs, _ = get_broker_signal(code, token)
+                    broker_signal = bs
+                    if bs == "Big Acc":
+                        score = min(100, score + 10)
+                        reasons_pos.append("Broker signal: Big Accumulation (+10 poin)")
+                    elif bs == "Acc":
+                        score = min(100, score + 5)
+                        reasons_pos.append("Broker signal: Accumulation (+5 poin)")
+                    elif bs in ("Dist", "Big Dist"):
+                        score = max(0, score - 15)
+                        reasons_neg.append(f"Broker signal: {bs} (-15 poin)")
+                except Exception as e_bs:
+                    log.debug(f"    {code}: broker signal error: {e_bs}")
+
+            if score < CONFIG.get("ARA_SCORE_MIN", 40):
+                log.debug(f"    {code}: score {score} setelah broker adj — skip")
+                continue
+
+            # Step 7: Build output fields
+            # SMC context untuk entry range (best-effort)
+            smc_ctx = None
+            try:
+                smc_ok, smc_ctx = check_smc_structure(code)
+            except Exception:
+                pass
+
+            entry_data  = calculate_ara_entry_range(feat, smc_data=smc_ctx)
+            target_data = calculate_ara_target(feat)
+            reason_txt  = build_ara_reason_beginner(code, pattern_type, feat, score, broker_signal)
+            warning_txt = build_ara_risk_warning(code, feat, pattern_type, score)
+
+            score_tier = "STRONG" if score >= CONFIG.get("ARA_SCORE_STRONG", 60) else "MODERATE"
+
+            log.info(
+                f"    ✅ {code}: score={score} ({score_tier}) | "
+                f"{pattern_type} | confluences={len(reasons_pos)} | "
+                f"entry={entry_data['entry_range']} | "
+                f"target={target_data['estimated_target_pct']}"
+            )
+
+            candidates.append({
+                # Identifikasi
+                "ticker":   code,
+                "company":  stock_info.get("name", code),
+                "type":     "CALON_ARA",
+
+                # Scoring
+                "score":            score,
+                "score_tier":       score_tier,
+                "pattern_type":     pattern_type,
+                "confluence_count": len(reasons_pos),
+
+                # ===== FIELD BARU (approved di Prompt 1) =====
+                "entry_range":              entry_data["entry_range"],
+                "entry_lower":              entry_data["entry_lower"],
+                "entry_upper":              entry_data["entry_upper"],
+                "entry_note":               entry_data["entry_note"],
+                "entry_range_pct":          entry_data["entry_range_pct"],
+                "estimated_target_pct":     target_data["estimated_target_pct"],
+                "target_conservative":      target_data["target_conservative"],
+                "target_base":              target_data["target_base"],
+                "target_optimistic":        target_data["target_optimistic"],
+                "target_conservative_pct":  target_data["target_conservative_pct"],
+                "target_base_pct":          target_data["target_base_pct"],
+                "target_optimistic_pct":    target_data["target_optimistic_pct"],
+                "target_note":              target_data["target_note"],
+                "assumed_entry":            target_data["assumed_entry"],
+                "reason_beginner_friendly": reason_txt,
+                "risk_warning":             warning_txt,
+
+                # Broker
+                "broker_signal": broker_signal,
+
+                # ===== FIELD TEKNIKAL (untuk backtest & audit) =====
+                "d1_date":            feat["d1_date"],
+                "d1_close":           feat["d1_close"],
+                "d1_open":            feat["d1_open"],
+                "d1_high":            feat["d1_high"],
+                "d1_low":             feat["d1_low"],
+                "d1_change_pct":      feat["d1_change"],
+                "d1_vol_ratio_ma20":  feat["d1_vol_ratio_ma20"],
+                "d1_vol_ratio_ma5":   feat["d1_vol_ratio_ma5"],
+                "d1_body_pct":        feat["d1_body_pct"],
+                "d1_upper_wick":      feat["d1_upper_wick"],
+                "d1_lower_wick":      feat["d1_lower_wick"],
+                "d1_close_pos":       feat["d1_close_pos"],
+                "d1_bullish":         feat["d1_bullish"],
+                "d1_range_expansion": feat["d1_range_expansion"],
+                "d1_value_rp":        round(feat["d1_value_rp"]),
+                "d2_change_pct":      feat["d2_change"],
+                "d2_body_pct":        feat["d2_body_pct"],
+                "d2_vol_ratio_ma20":  feat["d2_vol_ratio_ma20"],
+
+                # Minute features (None jika tidak tersedia)
+                "m1_last15_green":    feat.get("m1_last15_green"),
+                "m1_close_vs_vwap":   feat.get("m1_close_vs_vwap"),
+                "m1_close_pos_intra": feat.get("m1_close_pos_intra"),
+                "m1_high_timing":     feat.get("m1_high_timing"),
+                "m1_n_bars":          feat.get("m1_n_bars"),
+                "m1_data_available":  feat.get("m1_last15_green") is not None,
+
+                # Context
+                "above_ma20":     feat["above_ma20"],
+                "above_ma50":     feat["above_ma50"],
+                "ma20":           feat["ma20"],
+                "ma50":           feat["ma50"],
+                "up_streak_days": feat["up_streak"],
+                "trend_5d_pct":   feat["trend_5d_pct"],
+
+                # Reasoning (transparan untuk audit)
+                "signals_positive": reasons_pos,
+                "signals_negative": reasons_neg,
+
+                # Sumber universe
+                "universe_sources": stock_info.get("in_mover_types", []),
+
+                # Warning universal
+                "warning": (
+                    "⚠️ FALSE SIGNAL RATE TINGGI (~85-90%). "
+                    "Pipeline ini mendeteksi Tipe 1 (Continuation) dan Tipe 2 (Silent Accumulation). "
+                    "Tipe 3 (Out of Nowhere, ~48% ARA nyata) TIDAK BISA dideteksi dari OHLCV. "
+                    "Gunakan sebagai WATCHLIST saja. "
+                    "Konfirmasi dengan broker flow, news, dan analisis manual sebelum eksekusi."
+                ),
+                "generated_at": datetime.now().strftime("%H:%M WIB"),
+            })
+
+        except Exception as e_loop:
+            log.warning(f"    {code}: error — {e_loop}")
+            continue
+
+        gc.collect()
+
+    # Step 8: Sort & trim
+    candidates.sort(
+        key=lambda x: (
+            x["score"],
+            x["confluence_count"],
+            1 if x.get("m1_data_available") else 0,
+        ),
+        reverse=True,
+    )
+    max_out = CONFIG.get("ARA_MAX_OUTPUT", 5)
+    result  = candidates[:max_out]
+
+    log.info(f"\n✅ ARA v2 selesai: {len(result)} kandidat final (dari {len(candidates)} lolos scoring)")
+    for r in result:
+        log.info(
+            f"   → {r['ticker']}: score={r['score']} | {r['pattern_type']} | "
+            f"entry={r['entry_range']} | target={r['estimated_target_pct']}"
+        )
+    return result
+
+
+def save_combined_output_v2(
+    intraday_results: List[Dict],
+    ara_results: List[Dict],
+    mode: str,
+    market_ctx: Dict,
+    intraday_summary: Dict,
+    session_label: str = "MARKET_DAY",
+):
+    """
+    Simpan output gabungan ke combined_screening.json (v2).
+
+    Struktur JSON output:
+    {
+      "logika_lama_intraday"  : [...],   # pipeline intraday (tidak berubah)
+      "logika_baru_calon_ara" : [...],   # pipeline ARA v2 dengan field baru
+      "meta"                  : {...},   # metadata + disclaimer
+      "market_context"        : {...},
+      "screening_summary"     : {...},   # funnel filter intraday
+      "config_ara"            : {...},   # config ARA yang dipakai saat run
+    }
+
+    Juga simpan dated copy: combined_screening_YYYYMMDD.json
     """
     today     = datetime.now().strftime("%Y-%m-%d")
     today_str = datetime.now().strftime("%Y%m%d")
 
     output = {
-        "logika_lama_intraday": intraday_results,
+        "logika_lama_intraday":  intraday_results,
         "logika_baru_calon_ara": ara_results,
+
         "meta": {
-            "status": "success" if (intraday_results or ara_results) else "no_signal",
-            "generated_at": datetime.now().strftime("%Y-%m-%d %H:%M:%S WIB"),
-            "date": today,
-            "mode": mode,
-            "session_label": session_label,
+            "status":           "success" if (intraday_results or ara_results) else "no_signal",
+            "generated_at":     datetime.now().strftime("%Y-%m-%d %H:%M:%S WIB"),
+            "date":             today,
+            "mode":             mode,
+            "session_label":    session_label,
+            "pipeline_version": "v2.0",
             "session_warning": (
-                "⚠️ Screening dijalankan di akhir pekan — referensi persiapan saja."
+                "⚠️ Screening akhir pekan — referensi persiapan saja, bukan sinyal eksekusi."
                 if "PRE_MARKET_WEEKEND" in session_label else None
             ),
             "mode_warning": (
                 None if mode == "FULL_STOCKBIT"
-                else "⚠️ TOKEN TIDAK TERSEDIA — Data terbatas (Yahoo Finance only)"
+                else "⚠️ TOKEN TIDAK TERSEDIA — ARA pipeline tidak berjalan"
             ),
             "intraday_count": len(intraday_results),
-            "ara_count": len(ara_results),
+            "ara_count":      len(ara_results),
             "ara_disclaimer": (
-                "Pipeline ARA mendeteksi Tipe 1 (Continuation) dan Tipe 2 (Silent Accumulation). "
-                "Tipe 3 (Out of Nowhere, ~60% ARA) tidak bisa dideteksi dari OHLCV. "
-                "Precision perkiraan: 5–15%. Backtest wajib sebelum live trading."
+                "Pipeline ARA v2: deteksi Tipe 1 (Continuation) & Tipe 2 (Silent Accumulation). "
+                "Tipe 3 (Out of Nowhere, ~48% dari ARA nyata) tidak terdeteksi dari OHLCV. "
+                "Precision: 8-15%. Backtest wajib sebelum live trading."
             ),
+            "scoring_breakdown": {
+                "daily_max": 70, "minute_max": 20, "stockbit_bonus": 10, "total_max": 100,
+            },
         },
-        "market_context": market_ctx,
+
+        "market_context":    market_ctx,
         "screening_summary": intraday_summary,
+
         "config_ara": {
-            "vol_ma20_tier1":       CONFIG["ARA_VOL_MA20_TIER1"],
-            "vol_ma20_tier2":       CONFIG["ARA_VOL_MA20_TIER2"],
-            "vol_ma20_d2_min":      CONFIG["ARA_VOL_MA20_D2_MIN"],
-            "upper_wick_min":       CONFIG["ARA_UPPER_WICK_MIN"],
-            "body_max_rejection":   CONFIG["ARA_BODY_MAX_REJECTION"],
-            "close_pos_max":        CONFIG["ARA_CLOSE_POS_MAX"],
-            "continuation_chg_min": CONFIG["ARA_CONTINUATION_CHG_MIN"],
-            "continuation_vol_min": CONFIG["ARA_CONTINUATION_VOL_MIN"],
-            "min_value_d1_rp":      CONFIG["ARA_MIN_VALUE_D1"],
-            "score_min":            CONFIG["ARA_SCORE_MIN"],
-            "score_strong":         CONFIG["ARA_SCORE_STRONG"],
-            "max_output":           CONFIG["ARA_MAX_OUTPUT"],
+            "vol_ma20_tier1":       CONFIG.get("ARA_VOL_MA20_TIER1", 3.0),
+            "vol_ma20_tier2":       CONFIG.get("ARA_VOL_MA20_TIER2", 6.0),
+            "vol_ma20_d2_min":      CONFIG.get("ARA_VOL_MA20_D2_MIN", 1.5),
+            "upper_wick_min":       CONFIG.get("ARA_UPPER_WICK_MIN", 0.35),
+            "body_max_rejection":   CONFIG.get("ARA_BODY_MAX_REJECTION", 0.40),
+            "close_pos_max":        CONFIG.get("ARA_CLOSE_POS_MAX", 0.50),
+            "continuation_chg_min": CONFIG.get("ARA_CONTINUATION_CHG_MIN", 8.0),
+            "continuation_vol_min": CONFIG.get("ARA_CONTINUATION_VOL_MIN", 3.0),
+            "min_value_d1_rp":      CONFIG.get("ARA_MIN_VALUE_D1", 500_000_000),
+            "score_min":            CONFIG.get("ARA_SCORE_MIN", 40),
+            "score_strong":         CONFIG.get("ARA_SCORE_STRONG", 60),
+            "max_output":           CONFIG.get("ARA_MAX_OUTPUT", 5),
+            "minute_data_enabled":  True,
+            "minute_closing_bars":  15,
         },
     }
 
-    # Simpan combined output
-    combined_path = CONFIG["ARA_OUTPUT_FILE"]
+    combined_path = CONFIG.get("ARA_OUTPUT_FILE", "combined_screening.json")
     with open(combined_path, "w", encoding="utf-8") as f:
         json.dump(output, f, indent=2, ensure_ascii=False)
     log.info(f"✅ Tersimpan: {combined_path}")
 
-    # Juga simpan dated version
     dated_path = f"combined_screening_{today_str}.json"
     with open(dated_path, "w", encoding="utf-8") as f:
         json.dump(output, f, indent=2, ensure_ascii=False)
@@ -3666,9 +4369,63 @@ def save_combined_output(
 # =============================================================================
 # ENTRY POINT
 # =============================================================================
+# Cara menjalankan:
+#   python screener.py               # Full pipeline (intraday + ARA v2)
+#   python screener.py --ara-only    # ARA v2 pipeline saja (debug/dev)
+#   python screener.py --no-ara      # Intraday saja, skip ARA
+#
+# Membaca combined_screening.json:
+#   .logika_lama_intraday[]         → sinyal intraday (max 5)
+#   .logika_baru_calon_ara[]        → kandidat ARA dengan:
+#     .entry_range                   → "1000 – 1050" (entry D-0 besok)
+#     .estimated_target_pct          → "+8% hingga +15% dari harga beli"
+#     .reason_beginner_friendly      → penjelasan tanpa jargon
+#     .risk_warning                  → peringatan spesifik
+#     .m1_last15_green               → bar hijau terakhir sesi D-1 (dari 14)
+#     .signals_positive/negative     → reasoning transparan
+# =============================================================================
+
 if __name__ == "__main__":
+    import argparse
+
+    parser = argparse.ArgumentParser(
+        description="Screener Trader Indonesia — Intraday + ARA v2 Pipeline",
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        epilog="""
+Contoh penggunaan:
+  python screener.py               # Full pipeline (default)
+  python screener.py --ara-only    # ARA v2 saja
+  python screener.py --no-ara      # Intraday saja
+        """
+    )
+    parser.add_argument("--ara-only", action="store_true", help="Jalankan ARA v2 pipeline saja")
+    parser.add_argument("--no-ara",   action="store_true", help="Skip ARA, intraday saja")
+    args = parser.parse_args()
+
     try:
-        run_screener()
+        if args.ara_only:
+            log.info("🎯 Mode: ARA v2 Pipeline Only")
+            token_r, mode_r = get_valid_token()
+            market_r = get_ihsg_context()
+            ara_r = run_ara_pipeline_v2(token_r, mode_r)
+            save_combined_output_v2(
+                intraday_results=[],
+                ara_results=ara_r,
+                mode=mode_r,
+                market_ctx=market_r,
+                intraday_summary={},
+                session_label=get_session_label(),
+            )
+            log.info(f"✅ ARA-only selesai: {len(ara_r)} kandidat")
+        else:
+            # Full pipeline — run_screener() menangani intraday lama.
+            # Shim save_combined_output (di atas) sudah redirect ke v2.
+            # Jika --no-ara, patch CONFIG agar ARA_ENABLED=False.
+            if args.no_ara:
+                CONFIG["ARA_ENABLED"] = False
+                log.info("⚙️ Mode: Intraday only (--no-ara)")
+            run_screener()
+
     except KeyboardInterrupt:
         log.info("⏹️  Dihentikan oleh user")
         sys.exit(0)
@@ -3676,9 +4433,12 @@ if __name__ == "__main__":
         log.error(f"💥 ERROR KRITIS: {e}")
         import traceback
         traceback.print_exc()
-        # Jangan crash GitHub Actions tanpa output
         try:
-            save_output([], "ERROR", {"market_safe": False, "warning": str(e)}, {"error": str(e)})
+            save_output(
+                [], "ERROR",
+                {"market_safe": False, "warning": str(e)},
+                {"error": str(e)},
+            )
         except Exception:
             pass
         sys.exit(1)

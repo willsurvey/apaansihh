@@ -30,6 +30,9 @@ jobs:
     name: Run Stock Screener
     runs-on: ubuntu-latest
     timeout-minutes: 45
+    env:                          # ← TAMBAHKAN BLOK INI
+      TZ: Asia/Jakarta            # ← Runner otomatis pakai WIB
+      PYTHONIOENCODING: utf-8
     permissions:
       contents: write  # Untuk commit hasil JSON ke repo
 
