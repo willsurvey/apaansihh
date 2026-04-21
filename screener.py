@@ -228,19 +228,20 @@ os.makedirs(CONFIG["DATA_DIR"], exist_ok=True)
 # =============================================================================
 # STEP 0A: TOKEN MANAGEMENT
 # =============================================================================
-# Strategi login (prioritas):
-#   1. Direct API Login  — STOCKBIT_USERNAME + STOCKBIT_PASSWORD (GitHub Actions secrets)
-#   2. Env var token     — STOCKBIT_BEARER_TOKEN (manual override / CI lama)
-#   3. Session file      — stockbit_session.json (Playwright legacy, lokal)
-#   4. Token file        — stockbit_token.txt (fallback file lokal)
-#   5. YAHOO_ONLY mode   — tanpa Stockbit sama sekali
 #
-# Untuk GitHub Actions: cukup set dua secrets:
-#   STOCKBIT_USERNAME  = email/username Stockbit
-#   STOCKBIT_PASSWORD  = password Stockbit
+# Urutan prioritas (GitHub Actions):
+#   1. Direct API login  — STOCKBIT_USERNAME + STOCKBIT_PASSWORD (UTAMA)
+#   2. Env var token     — STOCKBIT_BEARER_TOKEN (manual override)
+#   3. Session file      — stockbit_session.json (lokal/legacy)
+#   4. Token file        — stockbit_token.txt (lokal fallback)
+#   5. YAHOO_ONLY        — tanpa Stockbit sama sekali
+#
+# Setup di GitHub Actions Secrets:
+#   STOCKBIT_USERNAME  = email atau username akun Stockbit
+#   STOCKBIT_PASSWORD  = password akun Stockbit
 # =============================================================================
 
-# Cache in-memory agar tidak login ulang setiap panggilan dalam satu run
+# Cache in-memory agar tidak login ulang di setiap panggilan dalam satu run
 _api_token_cache: Optional[str] = None
 _api_token_expiry: float = 0.0
 
@@ -271,29 +272,25 @@ def _is_token_valid(token: str) -> bool:
 
 def _login_via_api() -> Optional[str]:
     """
-    Login langsung ke Stockbit API menggunakan username + password dari env vars.
+    Login langsung ke Stockbit API menggunakan username + password.
 
     Endpoint : POST https://exodus.stockbit.com/login/v6/username
     Response : data.login.token_data.access.token
+    Cache    : 23 jam in-memory (token Stockbit berlaku ~24 jam)
 
-    Token berlaku ~24 jam. Cache in-memory selama 23 jam agar tidak
-    melakukan login ulang di setiap pemanggilan dalam satu run screener.
-
-    Env vars yang dibutuhkan (set sebagai GitHub Actions secrets):
-        STOCKBIT_USERNAME  — email atau username akun Stockbit
-        STOCKBIT_PASSWORD  — password akun Stockbit
-        STOCKBIT_PLAYER_ID — opsional, bisa dikosongkan
+    Env vars (set sebagai GitHub Actions Secrets):
+        STOCKBIT_USERNAME  — email atau username Stockbit
+        STOCKBIT_PASSWORD  — password Stockbit
     """
     global _api_token_cache, _api_token_expiry
 
-    # Gunakan cache jika masih valid (hemat request login)
+    # Pakai cache jika masih valid
     if _api_token_cache and time.time() < _api_token_expiry:
-        log.debug("🔑 Pakai token dari cache in-memory")
+        log.debug("🔑 Token dari cache in-memory")
         return _api_token_cache
 
-    username  = os.environ.get("STOCKBIT_USERNAME",  "").strip()
-    password  = os.environ.get("STOCKBIT_PASSWORD",  "").strip()
-    player_id = os.environ.get("STOCKBIT_PLAYER_ID", "").strip()
+    username = os.environ.get("STOCKBIT_USERNAME", "").strip()
+    password = os.environ.get("STOCKBIT_PASSWORD", "").strip()
 
     if not username or not password:
         log.debug("STOCKBIT_USERNAME/PASSWORD tidak diset — skip API login")
@@ -303,13 +300,13 @@ def _login_via_api() -> Optional[str]:
 
     url = "https://exodus.stockbit.com/login/v6/username"
     payload = {
-        "player_id": player_id,
+        "player_id": "",   # opsional — push notification device ID, bisa kosong
         "user":      username,
         "password":  password,
     }
     headers = {
-        "Content-Type":   "application/json",
-        "Accept":         "application/json",
+        "Content-Type":    "application/json",
+        "Accept":          "application/json",
         "Accept-Language": "ID",
         "User-Agent": (
             "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
@@ -323,40 +320,48 @@ def _login_via_api() -> Optional[str]:
         "Referer":      "https://stockbit.com/",
     }
 
-    try:
-        r = requests.post(url, json=payload, headers=headers, timeout=30)
+    for attempt in range(3):
+        try:
+            r = requests.post(url, json=payload, headers=headers, timeout=30)
 
-        if r.status_code == 200:
-            data  = r.json()
-            token = (
-                data.get("data", {})
-                    .get("login", {})
-                    .get("token_data", {})
-                    .get("access", {})
-                    .get("token", "")
-            )
-            if token and _is_token_valid(token):
-                # Cache selama 23 jam
-                _api_token_cache  = token
-                _api_token_expiry = time.time() + (23 * 3600)
-                log.info(f"✅ Login API berhasil — token {len(token)} karakter")
-                return token
+            if r.status_code == 200:
+                data  = r.json()
+                token = (
+                    data.get("data", {})
+                        .get("login", {})
+                        .get("token_data", {})
+                        .get("access", {})
+                        .get("token", "")
+                )
+                if token and _is_token_valid(token):
+                    _api_token_cache  = token
+                    _api_token_expiry = time.time() + (23 * 3600)
+                    log.info(f"✅ Login API berhasil — token {len(token)} karakter")
+                    return token
+                else:
+                    log.warning(f"⚠️  Login API: response OK tapi token tidak valid")
+                    log.debug(f"Response: {r.text[:300]}")
+                    break  # Tidak perlu retry jika response 200 tapi token kosong
+
+            elif r.status_code == 400:
+                log.warning("⚠️  Login API 400 — cek STOCKBIT_USERNAME/PASSWORD di Secrets")
+                break  # Tidak retry jika credentials salah
+
+            elif r.status_code == 429:
+                wait = (attempt + 1) * 10
+                log.warning(f"⚠️  Login API rate-limited (429) — tunggu {wait}s...")
+                time.sleep(wait)
+
             else:
-                log.warning(f"⚠️  Login API: response OK tapi token tidak valid (len={len(token)})")
-                log.debug(f"Response snippet: {r.text[:300]}")
+                log.warning(f"⚠️  Login API HTTP {r.status_code} — {r.text[:150]}")
+                time.sleep(3)
 
-        elif r.status_code == 400:
-            # Biasanya username/password salah
-            log.warning(f"⚠️  Login API gagal: HTTP 400 — cek STOCKBIT_USERNAME/PASSWORD")
-        elif r.status_code == 429:
-            log.warning(f"⚠️  Login API rate-limited (429) — coba lagi nanti")
-        else:
-            log.warning(f"⚠️  Login API gagal: HTTP {r.status_code} — {r.text[:150]}")
-
-    except requests.exceptions.Timeout:
-        log.warning("⚠️  Login API timeout (30s)")
-    except Exception as e:
-        log.warning(f"⚠️  Login API error: {e}")
+        except requests.exceptions.Timeout:
+            log.warning(f"⚠️  Login API timeout (attempt {attempt + 1}/3)")
+            time.sleep(3)
+        except Exception as e:
+            log.warning(f"⚠️  Login API error: {e}")
+            break
 
     return None
 
@@ -364,9 +369,7 @@ def _login_via_api() -> Optional[str]:
 def _extract_token_from_session(session_path: str) -> Optional[str]:
     """
     Ekstrak JWT dari stockbit_session.json (Playwright storage state).
-    Token ada di localStorage["at"]:
-      - Kadang base64-encoded JWT
-      - Kadang langsung JWT string
+    Token ada di localStorage["at"] — bisa base64-encoded atau JWT langsung.
     """
     try:
         with open(session_path, "r", encoding="utf-8") as f:
@@ -402,36 +405,36 @@ def get_valid_token() -> Tuple[Optional[str], str]:
     Ambil token yang valid. Return (token, mode).
     mode: "FULL_STOCKBIT" | "YAHOO_ONLY"
 
-    Urutan prioritas:
-    1. Direct API login (STOCKBIT_USERNAME + STOCKBIT_PASSWORD)  ← UTAMA
-    2. Env var STOCKBIT_BEARER_TOKEN                             ← manual override
-    3. stockbit_session.json                                     ← Playwright legacy
-    4. stockbit_token.txt                                        ← file fallback lokal
+    Prioritas:
+    1. Direct API login  (STOCKBIT_USERNAME + STOCKBIT_PASSWORD) ← UTAMA
+    2. Env var           (STOCKBIT_BEARER_TOKEN)                 ← override manual
+    3. Session file      (stockbit_session.json)                 ← lokal/legacy
+    4. Token file        (stockbit_token.txt)                    ← lokal fallback
     5. YAHOO_ONLY                                                ← tanpa Stockbit
     """
-    # --- 1. Direct API Login (paling andal untuk GitHub Actions) ---
+    # --- 1. Direct API Login ---
     api_token = _login_via_api()
     if api_token:
-        log.info("✅ Mode: FULL STOCKBIT (API login)")
+        log.info("✅ FULL STOCKBIT MODE (API login)")
         return api_token, "FULL_STOCKBIT"
 
-    # --- 2. Env var (manual override atau CI lama) ---
+    # --- 2. Env var token ---
     env_token = os.environ.get("STOCKBIT_BEARER_TOKEN", "").strip()
     if env_token and _is_token_valid(env_token):
-        log.info("✅ Mode: FULL STOCKBIT (env var token)")
+        log.info("✅ FULL STOCKBIT MODE (env var token)")
         return env_token, "FULL_STOCKBIT"
 
-    # --- 3. Session file (Playwright legacy) ---
+    # --- 3. Session file (lokal/legacy) ---
     session_path = CONFIG["SESSION_FILE"]
     if Path(session_path).exists():
         token = _extract_token_from_session(session_path)
         if token and _is_token_valid(token):
-            log.info("✅ Mode: FULL STOCKBIT (session file)")
+            log.info("✅ FULL STOCKBIT MODE (session file)")
             return token, "FULL_STOCKBIT"
         if token:
-            log.info("⚠️  Token session expired — tidak melakukan Playwright refresh")
+            log.info("⚠️  Session file ada tapi token expired")
 
-    # --- 4. Token file (file lokal) ---
+    # --- 4. Token file (lokal fallback) ---
     token_file = CONFIG["TOKEN_FILE"]
     if Path(token_file).exists():
         try:
@@ -440,32 +443,32 @@ def get_valid_token() -> Tuple[Optional[str], str]:
                 line = line.strip()
                 if line and not line.startswith("#"):
                     if _is_token_valid(line):
-                        log.info("✅ Mode: FULL STOCKBIT (token file)")
+                        log.info("✅ FULL STOCKBIT MODE (token file)")
                         return line, "FULL_STOCKBIT"
         except Exception:
             pass
 
     # --- 5. Fallback ---
     log.warning("⚠️  Semua metode auth gagal → YAHOO ONLY MODE")
-    log.warning("    Pastikan STOCKBIT_USERNAME dan STOCKBIT_PASSWORD sudah diset di Secrets.")
+    log.warning("    Pastikan STOCKBIT_USERNAME & STOCKBIT_PASSWORD ada di GitHub Secrets.")
     return None, "YAHOO_ONLY"
 
 
 def _make_sb_headers(token: str) -> Dict:
-    """Header lengkap untuk request ke Stockbit API."""
+    """Header lengkap untuk request ke Stockbit API (mirip browser Chrome)."""
     return {
-        "accept":            "application/json",
-        "accept-language":   "en-US,en;q=0.9",
-        "authorization":     f"Bearer {token}",
-        "origin":            "https://stockbit.com",
-        "priority":          "u=1, i",
-        "referer":           "https://stockbit.com/",
-        "sec-ch-ua":         '"Google Chrome";v="147", "Not.A/Brand";v="8", "Chromium";v="147"',
-        "sec-ch-ua-mobile":  "?0",
+        "accept":             "application/json",
+        "accept-language":    "en-US,en;q=0.9",
+        "authorization":      f"Bearer {token}",
+        "origin":             "https://stockbit.com",
+        "priority":           "u=1, i",
+        "referer":            "https://stockbit.com/",
+        "sec-ch-ua":          '"Google Chrome";v="147", "Not.A/Brand";v="8", "Chromium";v="147"',
+        "sec-ch-ua-mobile":   "?0",
         "sec-ch-ua-platform": '"Windows"',
-        "sec-fetch-dest":    "empty",
-        "sec-fetch-mode":    "cors",
-        "sec-fetch-site":    "same-site",
+        "sec-fetch-dest":     "empty",
+        "sec-fetch-mode":     "cors",
+        "sec-fetch-site":     "same-site",
         "user-agent": (
             "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
             "AppleWebKit/537.36 (KHTML, like Gecko) "
