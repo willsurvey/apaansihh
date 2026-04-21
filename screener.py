@@ -315,8 +315,13 @@ def _login_via_api() -> Optional[str]:
         STOCKBIT_PASSWORD  : password akun Stockbit
         STOCKBIT_PLAYER_ID : device ID (opsional, bisa kosong)
 
+    Retry policy:
+        - 429 Too Many Requests : tunggu 10s lalu coba lagi (max 3x total)
+        - Timeout / network err : coba lagi sekali setelah 3s
+        - 4xx lain (401, 403)   : tidak retry, credentials salah
+
     Returns:
-        JWT access token string jika berhasil, None jika gagal.
+        JWT access token string jika berhasil, None jika semua upaya gagal.
     """
     global _token_cache, _token_cache_expiry
 
@@ -335,69 +340,104 @@ def _login_via_api() -> Optional[str]:
 
     log.info(f"🔑 Login Stockbit API sebagai '{username[:3]}***'...")
 
-    payload = {
+    body = {
         "player_id": player_id or "",
         "user":      username,
         "password":  password,
     }
 
-    try:
-        r = requests.post(
-            _SB_LOGIN_URL,
-            json=payload,
-            headers=_SB_LOGIN_HEADERS,
-            timeout=30,
+    # Retry loop: max 3 attempt, backoff pada 429
+    max_attempts = 3
+    for attempt in range(1, max_attempts + 1):
+        try:
+            r = requests.post(
+                _SB_LOGIN_URL,
+                json=body,
+                headers=_SB_LOGIN_HEADERS,
+                timeout=30,
+            )
+        except requests.exceptions.Timeout:
+            log.warning(f"⚠️  Login API timeout (attempt {attempt}/{max_attempts})")
+            if attempt < max_attempts:
+                time.sleep(3)
+            continue
+        except requests.exceptions.ConnectionError as e:
+            log.warning(f"⚠️  Login API connection error (attempt {attempt}): {e}")
+            if attempt < max_attempts:
+                time.sleep(3)
+            continue
+        except Exception as e:
+            log.warning(f"⚠️  Login API request error (attempt {attempt}): {e}")
+            if attempt < max_attempts:
+                time.sleep(3)
+            continue
+
+        # --- 429: Rate limited — tunggu lalu retry ---
+        if r.status_code == 429:
+            wait = 15 * attempt   # 15s, 30s, 45s
+            log.warning(
+                f"⚠️  Login API 429 rate-limit (attempt {attempt}/{max_attempts}) "
+                f"— tunggu {wait}s..."
+            )
+            if attempt < max_attempts:
+                time.sleep(wait)
+            continue
+
+        # --- 4xx selain 429: credentials salah, tidak perlu retry ---
+        if 400 <= r.status_code < 500:
+            log.warning(f"⚠️  Login API HTTP {r.status_code}: {r.text[:200]}")
+            return None
+
+        # --- 5xx: server error, coba lagi ---
+        if r.status_code >= 500:
+            log.warning(f"⚠️  Login API HTTP {r.status_code} (attempt {attempt}) — retry...")
+            if attempt < max_attempts:
+                time.sleep(5)
+            continue
+
+        # --- 200: parse response ---
+        try:
+            data = r.json()
+        except Exception:
+            log.warning("⚠️  Login API response bukan JSON valid")
+            return None
+
+        # Path token: data → login → token_data → access → token
+        token = (
+            data
+            .get("data", {})
+            .get("login", {})
+            .get("token_data", {})
+            .get("access", {})
+            .get("token", "")
         )
-    except requests.exceptions.Timeout:
-        log.warning("⚠️  Login API timeout (30s)")
-        return None
-    except requests.exceptions.ConnectionError as e:
-        log.warning(f"⚠️  Login API connection error: {e}")
-        return None
-    except Exception as e:
-        log.warning(f"⚠️  Login API request error: {e}")
-        return None
 
-    if r.status_code != 200:
-        log.warning(f"⚠️  Login API HTTP {r.status_code}: {r.text[:200]}")
-        return None
+        if not token:
+            top_keys = list(data.get("data", data).keys())[:8]
+            log.warning(f"⚠️  Token tidak ditemukan di response. Keys: {top_keys}")
+            log.debug(f"   Response (truncated): {r.text[:500]}")
+            return None
 
-    try:
-        data = r.json()
-    except Exception:
-        log.warning("⚠️  Login API response bukan JSON valid")
-        return None
+        if not _is_token_valid(token):
+            log.warning(f"⚠️  Token diterima tapi tidak valid/expired (len={len(token)})")
+            return None
 
-    # Path token di response Stockbit: data → login → token_data → access → token
-    token = (
-        data
-        .get("data", {})
-        .get("login", {})
-        .get("token_data", {})
-        .get("access", {})
-        .get("token", "")
-    )
+        # Hitung sisa waktu token untuk logging
+        exp_ts = _get_token_exp_ts(token)
+        remaining_hours = (exp_ts - time.time()) / 3600
 
-    if not token:
-        top_keys = list(data.get("data", data).keys())[:8]
-        log.warning(f"⚠️  Token tidak ditemukan di response. Keys: {top_keys}")
-        log.debug(f"   Response (truncated): {r.text[:500]}")
-        return None
+        # Cache 23 jam (token Stockbit 24 jam, buffer 1 jam untuk safety)
+        _token_cache        = token
+        _token_cache_expiry = time.time() + (23 * 3600)
 
-    if not _is_token_valid(token):
-        log.warning(f"⚠️  Token diterima tapi tidak valid/expired (len={len(token)})")
-        return None
+        log.info(
+            f"✅ Login API berhasil — token valid {remaining_hours:.1f} jam "
+            f"({len(token)} karakter)"
+        )
+        return token
 
-    # Hitung sisa waktu token untuk logging
-    exp_ts = _get_token_exp_ts(token)
-    remaining_hours = (exp_ts - time.time()) / 3600
-
-    # Cache 23 jam (token Stockbit 24 jam, buffer 1 jam untuk safety)
-    _token_cache        = token
-    _token_cache_expiry = time.time() + (23 * 3600)
-
-    log.info(f"✅ Login API berhasil — token valid {remaining_hours:.1f} jam ({len(token)} karakter)")
-    return token
+    log.warning(f"⚠️  Login API gagal setelah {max_attempts} attempt")
+    return None
 
 
 def invalidate_token_cache():
