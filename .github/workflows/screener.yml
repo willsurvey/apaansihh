@@ -7,10 +7,14 @@
 #           Tidak butuh Playwright, tidak butuh session file.
 # Python  : 3.13 | numpy>=2.2.6,<2.3
 #
-# SETUP SECRETS (Settings → Secrets and variables → Actions):
-#   STOCKBIT_USERNAME  — username/email akun Stockbit
-#   STOCKBIT_PASSWORD  — password akun Stockbit
-#   STOCKBIT_PLAYER_ID — (opsional) device player ID, bisa dikosongkan
+# SETUP SECRETS (Settings -> Secrets and variables -> Actions):
+#   STOCKBIT_USERNAME  -- username/email akun Stockbit
+#   STOCKBIT_PASSWORD  -- password akun Stockbit
+#   STOCKBIT_PLAYER_ID -- (opsional) device player ID, bisa dikosongkan
+#
+# PENTING: Step "Check secrets" TIDAK melakukan HTTP request ke Stockbit.
+# Login sesungguhnya hanya dilakukan SATU KALI oleh screener.py
+# supaya tidak terkena rate-limit 429.
 # ============================================================
 
 name: Stock Screener IDX
@@ -38,10 +42,10 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 45
     env:
-      TZ: Asia/Jakarta        # Runner otomatis pakai WIB
+      TZ: Asia/Jakarta
       PYTHONIOENCODING: utf-8
     permissions:
-      contents: write         # Untuk commit hasil JSON ke repo
+      contents: write
 
     steps:
       # -----------------------------------------------------------
@@ -52,7 +56,6 @@ jobs:
 
       # -----------------------------------------------------------
       # 2. Setup Python 3.13
-      #    pandas-ta >=0.4.71b0 memerlukan Python >=3.12
       # -----------------------------------------------------------
       - name: Set up Python 3.13
         uses: actions/setup-python@v5
@@ -62,7 +65,6 @@ jobs:
 
       # -----------------------------------------------------------
       # 3. Install Python dependencies
-      #    --prefer-binary: cegah build from source (numpy/numba)
       # -----------------------------------------------------------
       - name: Install Python dependencies
         run: |
@@ -70,60 +72,24 @@ jobs:
           pip install --prefer-binary --no-cache-dir -r requirements.txt
 
       # -----------------------------------------------------------
-      # 4. Verifikasi koneksi auth Stockbit sebelum screening
-      #    Gagal di sini = secrets belum diset, bukan bug screener
+      # 4. Cek secrets sudah diset — TANPA HTTP request ke Stockbit
+      #    Login sesungguhnya dilakukan SATU KALI oleh screener.py
+      #    Dua login berurutan dalam hitungan detik = 429 rate-limit
       # -----------------------------------------------------------
-      - name: Verify Stockbit auth
+      - name: Check secrets are set
         env:
-          STOCKBIT_USERNAME:  ${{ secrets.STOCKBIT_USERNAME }}
-          STOCKBIT_PASSWORD:  ${{ secrets.STOCKBIT_PASSWORD }}
-          STOCKBIT_PLAYER_ID: ${{ secrets.STOCKBIT_PLAYER_ID }}
+          STOCKBIT_USERNAME: ${{ secrets.STOCKBIT_USERNAME }}
+          STOCKBIT_PASSWORD: ${{ secrets.STOCKBIT_PASSWORD }}
         run: |
           python - <<'EOF'
-          import os, sys, json, requests, base64, time
-
-          username  = os.environ.get("STOCKBIT_USERNAME", "").strip()
-          password  = os.environ.get("STOCKBIT_PASSWORD", "").strip()
-          player_id = os.environ.get("STOCKBIT_PLAYER_ID", "").strip()
-
-          if not username or not password:
-              print("STOCKBIT_USERNAME/PASSWORD belum diset di Secrets!")
-              print("Pergi ke: Settings -> Secrets and variables -> Actions")
+          import os, sys
+          u = os.environ.get("STOCKBIT_USERNAME", "").strip()
+          p = os.environ.get("STOCKBIT_PASSWORD", "").strip()
+          if not u or not p:
+              print("ERROR: STOCKBIT_USERNAME/PASSWORD belum diset di Secrets!")
+              print("Pergi ke: Settings -> Secrets and variables -> Actions -> New repository secret")
               sys.exit(1)
-
-          print(f"Login sebagai '{username[:3]}***'...")
-
-          r = requests.post(
-              "https://exodus.stockbit.com/login/v6/username",
-              json={"player_id": player_id or "", "user": username, "password": password},
-              headers={
-                  "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/147.0.0.0",
-                  "X-DeviceType": "Google Chrome", "X-Platform": "PC", "X-AppVersion": "3.17.2",
-                  "Content-Type": "application/json", "Accept": "application/json",
-                  "Accept-Language": "ID", "Origin": "https://stockbit.com",
-              },
-              timeout=30,
-          )
-
-          if r.status_code != 200:
-              print(f"Login gagal: HTTP {r.status_code}")
-              print(f"Response: {r.text[:200]}")
-              sys.exit(1)
-
-          token = (r.json().get("data",{}).get("login",{})
-                           .get("token_data",{}).get("access",{}).get("token",""))
-          if not token or len(token) < 100:
-              print(f"Token tidak valid di response (len={len(token)})")
-              sys.exit(1)
-
-          try:
-              parts = token.split(".")
-              payload = json.loads(base64.urlsafe_b64decode(parts[1] + "=="))
-              exp = payload.get("exp", 0)
-              remaining = (exp - time.time()) / 3600
-              print(f"Login berhasil! Token valid {remaining:.1f} jam ({len(token)} chars)")
-          except Exception:
-              print(f"Login berhasil! Token len={len(token)}")
+          print(f"Secrets OK: username='{u[:3]}***', password len={len(p)}")
           EOF
 
       # -----------------------------------------------------------
