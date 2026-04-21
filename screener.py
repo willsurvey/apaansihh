@@ -2937,6 +2937,43 @@ def run_screener():
         ticker = stock_mm["ticker"]
         log.info(f"  [{i+1}/{len(universe)}] {ticker}...")
 
+        # ----------------------------------------------------------------
+        # TOKEN REFRESH — setiap 50 saham untuk menghindari token stale
+        # pada universe besar (hingga 972 saham).
+        #
+        # Cara kerja:
+        #   - i == 0 dilewati (token baru saja diambil di STEP 0)
+        #   - Setiap kelipatan 50 (i=50,100,150,...): invalidate cache
+        #     lalu login ulang. Token baru menggantikan variable lokal
+        #     `token` sehingga semua fungsi downstream (check_liquidity,
+        #     get_broker_signal, calculate_entry_plan) otomatis memakai
+        #     token segar.
+        #   - Jika login gagal (mode menjadi YAHOO_ONLY): pipeline
+        #     dilanjutkan dengan mode yang sudah ter-degradasi —
+        #     tidak abort, konsisten dengan desain awal screener.
+        #   - Logika screener, filter, scoring — tidak diubah sama sekali.
+        # ----------------------------------------------------------------
+        if i > 0 and i % 50 == 0 and mode == "FULL_STOCKBIT":
+            log.info(
+                f"\n{'='*60}\n"
+                f"🔄 TOKEN REFRESH — saham ke-{i+1} dari {len(universe)}\n"
+                f"   Invalidate cache dan login ulang ke Stockbit API...\n"
+                f"{'='*60}"
+            )
+            invalidate_token_cache()
+            new_token, new_mode = get_valid_token()
+            if new_token:
+                token = new_token
+                log.info(f"✅ Token baru diperoleh — lanjut screening (mode={new_mode})")
+            else:
+                log.warning(
+                    f"⚠️  Login ulang GAGAL di iterasi ke-{i+1}. "
+                    f"Melanjutkan dengan mode={new_mode}. "
+                    f"Saham berikutnya akan diproses tanpa Stockbit API."
+                )
+                mode = new_mode
+                token = None
+
         # --- STEP 3: Liquidity ---
         if mode == "FULL_STOCKBIT":
             liq_ok, hist_data = check_liquidity_quality(ticker, token)
