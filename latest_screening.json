@@ -1,28 +1,22 @@
 {
-  "status": "success",
-  "generated_at": "2026-04-22 09:27:16 WIB",
+  "status": "no_signal",
+  "generated_at": "2026-04-22 10:00:43 WIB",
   "date": "2026-04-22",
   "mode": "FULL_STOCKBIT",
   "session_label": "MARKET_DAY",
   "session_warning": null,
   "mode_warning": null,
-  "total_saham": 2,
+  "total_saham": 0,
   "market_context": {
-    "ihsg_close": 7559,
-    "ihsg_change_pct": -0.46,
+    "ihsg_close": 7549,
+    "ihsg_change_pct": -0.13,
     "ihsg_trend": "BEARISH",
     "ihsg_above_ma50": false,
-    "market_safe": true,
-    "warning": null
+    "market_safe": false,
+    "warning": "IHSG turun 3 hari berturut-turut. Tidak ada output hari ini."
   },
   "screening_summary": {
-    "universe": 972,
-    "after_liquidity": 54,
-    "after_accumulation": 17,
-    "after_trend": 8,
-    "after_smc": 6,
-    "after_entry": 2,
-    "final": 2
+    "stopped": "market_unsafe"
   },
   "config": {
     "strategy": "Pre-Market Intraday — Limit Order",
@@ -42,175 +36,5 @@
     "max_output": 5,
     "min_rr": 2.0
   },
-  "data": [
-    {
-      "rank": 1,
-      "ticker": "UNTR",
-      "company": "United Tractors Tbk.",
-      "mode": "FULL_STOCKBIT",
-      "universe_sources": [
-        "GURU_92",
-        "SCREENER_TOP_VALUE"
-      ],
-      "market_data": {
-        "close": 32475,
-        "change_pct": 0,
-        "value_today": 6705370000.0,
-        "frequency_today": 0,
-        "iep": 0,
-        "iep_change_pct": 0
-      },
-      "accumulation": {
-        "broker_signal": "Big Acc",
-        "net_foreign_today": 0,
-        "net_foreign_3d": 0,
-        "acc_score": 40,
-        "score_breakdown": {
-          "broker": 35,
-          "foreign_1d": 0,
-          "foreign_3d": 0,
-          "candle": 10,
-          "volume": -5,
-          "total": 40
-        }
-      },
-      "trend": {
-        "ma50": 29701.0,
-        "gap_from_ma50_pct": 7.66,
-        "ma50_slope": "POSITIVE"
-      },
-      "smc": {
-        "internal_structure": "CHoCH_BULLISH",
-        "swing_trend_bias": "BULLISH",
-        "ob_zone": null,
-        "fvg_zone": null,
-        "strong_low": 30800.0,
-        "weak_high": 31600.0
-      },
-      "entry_plan": {
-        "entry_direction": "MOMENTUM",
-        "entry_direction_label": "➡️ Momentum entry — bisa entry di/dekat PDC",
-        "entry_direction_reason": "Internal BOS/CHoCH bullish 1H",
-        "entry_1": 32475,
-        "entry_1_pct": 20,
-        "entry_1_note": "PDC entry — momentum kuat (Internal BOS/CHoCH bullish 1H)",
-        "entry_2": 32375,
-        "entry_2_pct": 50,
-        "entry_2_note": "Pullback ringan / OB zone",
-        "entry_3": 32300,
-        "entry_3_pct": 30,
-        "entry_3_note": "Deep pullback / PDL area",
-        "average_entry": 32375,
-        "entry_zone": "32300 - 32475",
-        "sl": 32175,
-        "sl_pct_risk": 0.62,
-        "sl_note": "Cut loss wajib jika close harian di bawah ini",
-        "tp1": 32500,
-        "tp1_note": "PDH / Target psikologis intraday",
-        "tp2": 33475,
-        "tp2_note": "Weak High / Supply Zone 1H",
-        "tp3": 34475,
-        "tp3_note": "RR minimum 1:2.0",
-        "rr_ratio": "1:10.5",
-        "risk_pct": 2,
-        "risk_note": "Max 2% dari total portofolio"
-      },
-      "scoring": {
-        "confidence_score": 55,
-        "tier": "MODERATE"
-      },
-      "signals": [
-        "✅ Broker Signal: Big Acc",
-        "✅ Internal CHoCH Bullish (1H)",
-        "✅ Swing Structure: BULLISH"
-      ],
-      "warnings": [],
-      "updated_at": "09.27 WIB"
-    },
-    {
-      "rank": 2,
-      "ticker": "TAPG",
-      "company": "Triputra Agro Persada Tbk",
-      "mode": "FULL_STOCKBIT",
-      "universe_sources": [
-        "GURU_77",
-        "SCREENER_TOP_VALUE"
-      ],
-      "market_data": {
-        "close": 1995,
-        "change_pct": 0,
-        "value_today": 2205831000.0,
-        "frequency_today": 0,
-        "iep": 0,
-        "iep_change_pct": 0
-      },
-      "accumulation": {
-        "broker_signal": "Big Acc",
-        "net_foreign_today": 0,
-        "net_foreign_3d": 0,
-        "acc_score": 40,
-        "score_breakdown": {
-          "broker": 35,
-          "foreign_1d": 0,
-          "foreign_3d": 0,
-          "candle": 10,
-          "volume": -5,
-          "total": 40
-        }
-      },
-      "trend": {
-        "ma50": 1665.0,
-        "gap_from_ma50_pct": 17.99,
-        "ma50_slope": "POSITIVE"
-      },
-      "smc": {
-        "internal_structure": "BOS_BULLISH",
-        "swing_trend_bias": "BULLISH",
-        "ob_zone": null,
-        "fvg_zone": "1895 - 1940",
-        "strong_low": 1685.0,
-        "weak_high": 1910.0
-      },
-      "entry_plan": {
-        "entry_direction": "MOMENTUM",
-        "entry_direction_label": "➡️ Momentum entry — bisa entry di/dekat PDC",
-        "entry_direction_reason": "Internal BOS/CHoCH bullish 1H",
-        "entry_1": 1995,
-        "entry_1_pct": 20,
-        "entry_1_note": "PDC entry — momentum kuat (Internal BOS/CHoCH bullish 1H)",
-        "entry_2": 1985,
-        "entry_2_pct": 50,
-        "entry_2_note": "Pullback ringan / OB zone",
-        "entry_3": 1980,
-        "entry_3_pct": 30,
-        "entry_3_note": "Deep pullback / PDL area",
-        "average_entry": 1985,
-        "entry_zone": "1980 - 1995",
-        "sl": 1960,
-        "sl_pct_risk": 1.26,
-        "sl_note": "Cut loss wajib jika close harian di bawah ini",
-        "tp1": 1995,
-        "tp1_note": "PDH / Target psikologis intraday",
-        "tp2": 2050,
-        "tp2_note": "Weak High / Supply Zone 1H",
-        "tp3": 2110,
-        "tp3_note": "RR minimum 1:2.0",
-        "rr_ratio": "1:5.0",
-        "risk_pct": 2,
-        "risk_note": "Max 2% dari total portofolio"
-      },
-      "scoring": {
-        "confidence_score": 55,
-        "tier": "MODERATE"
-      },
-      "signals": [
-        "✅ Broker Signal: Big Acc",
-        "✅ Internal BOS Bullish (1H)",
-        "✅ Harga di zona FVG aktif",
-        "✅ Swing Structure: BULLISH"
-      ],
-      "warnings": [],
-      "updated_at": "09.27 WIB"
-    }
-  ]
+  "data": []
 }
