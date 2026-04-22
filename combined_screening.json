@@ -35,8 +35,8 @@
         }
       },
       "trend": {
-        "ma50": 29701.0,
-        "gap_from_ma50_pct": 7.66,
+        "ma50": 29830.0,
+        "gap_from_ma50_pct": 8.95,
         "ma50_slope": "POSITIVE"
       },
       "smc": {
@@ -87,7 +87,7 @@
         "✅ Swing Structure: BULLISH"
       ],
       "warnings": [],
-      "updated_at": "01.29 WIB"
+      "updated_at": "02.31 WIB"
     },
     {
       "rank": 2,
@@ -123,8 +123,8 @@
         }
       },
       "trend": {
-        "ma50": 1324.0,
-        "gap_from_ma50_pct": 29.53,
+        "ma50": 1336.0,
+        "gap_from_ma50_pct": 33.56,
         "ma50_slope": "POSITIVE"
       },
       "smc": {
@@ -174,7 +174,7 @@
         "✅ Swing Structure: BULLISH"
       ],
       "warnings": [],
-      "updated_at": "01.29 WIB"
+      "updated_at": "02.31 WIB"
     },
     {
       "rank": 3,
@@ -211,8 +211,8 @@
         }
       },
       "trend": {
-        "ma50": 1306.0,
-        "gap_from_ma50_pct": 1.82,
+        "ma50": 1310.0,
+        "gap_from_ma50_pct": 8.02,
         "ma50_slope": "POSITIVE"
       },
       "smc": {
@@ -259,11 +259,10 @@
         "✅ Broker Signal: Big Acc",
         "✅ Net Foreign Buy hari ini: Rp8.9B",
         "✅ Harga di zona FVG aktif",
-        "✅ Swing Structure: BULLISH",
-        "✅ Pullback ke MA50 (1.8% di atas MA50)"
+        "✅ Swing Structure: BULLISH"
       ],
       "warnings": [],
-      "updated_at": "01.29 WIB"
+      "updated_at": "02.31 WIB"
     }
   ],
   "logika_baru_calon_ara": [
@@ -343,7 +342,86 @@
         "SCREENER_TOP_VALUE"
       ],
       "warning": "⚠️ FALSE SIGNAL RATE TINGGI (~85-90%). Pipeline ini mendeteksi Tipe 1 (Continuation) dan Tipe 2 (Silent Accumulation). Tipe 3 (Out of Nowhere, ~48% ARA nyata) TIDAK BISA dideteksi dari OHLCV. Gunakan sebagai WATCHLIST saja. Konfirmasi dengan broker flow, news, dan analisis manual sebelum eksekusi.",
-      "generated_at": "01:29 WIB"
+      "generated_at": "02:32 WIB"
+    },
+    {
+      "ticker": "SSIA",
+      "company": "Surya Semesta Internusa Tbk.",
+      "type": "CALON_ARA",
+      "score": 94,
+      "score_tier": "STRONG",
+      "pattern_type": "CONTINUATION",
+      "confluence_count": 12,
+      "entry_range": "1,805 – 1,905",
+      "entry_lower": 1805,
+      "entry_upper": 1905,
+      "entry_note": "Beli saat open di 1,805 atau jika harga masih di area ini. Jangan kejar jika sudah naik di atas 1,905 (+6% dari PDC).",
+      "entry_range_pct": 5.5,
+      "estimated_target_pct": "+10% hingga +20% dari harga beli",
+      "target_conservative": 2020,
+      "target_base": 2190,
+      "target_optimistic": 2290,
+      "target_conservative_pct": 10.0,
+      "target_base_pct": 20.0,
+      "target_optimistic_pct": 25.0,
+      "target_note": "Konservatif: 2,020 (~+10%) | Moderat: 2,190 (~+20%) | Full ARA: 2,290 (~+25%)",
+      "assumed_entry": 1830,
+      "reason_beginner_friendly": "SSIA sudah naik 11% kemarin dengan volume 10x lebih besar dari biasanya. Ada pembeli besar yang masuk agresif. Jika momentum berlanjut, saham ini bisa naik lebih jauh besok. ✅ Broker signal: Big Acc. Skor kepercayaan: TINGGI.",
+      "risk_warning": "⚠️ FALSE SIGNAL RATE ~85-90%. Konfirmasi dengan broker flow, berita, dan analisis manual sebelum beli. | 📌 Batasi posisi: max 2% dari portofolio.",
+      "broker_signal": "Big Acc",
+      "d1_date": "2026-04-22",
+      "d1_close": 1805.0,
+      "d1_open": 1670.0,
+      "d1_high": 1815.0,
+      "d1_low": 1615.0,
+      "d1_change_pct": 11.08,
+      "d1_vol_ratio_ma20": 9.82,
+      "d1_vol_ratio_ma5": 11.17,
+      "d1_body_pct": 0.675,
+      "d1_upper_wick": 0.05,
+      "d1_lower_wick": 0.275,
+      "d1_close_pos": 0.95,
+      "d1_bullish": true,
+      "d1_range_expansion": 2.92,
+      "d1_value_rp": 23840927350000,
+      "d2_change_pct": 12.07,
+      "d2_body_pct": 0.8,
+      "d2_vol_ratio_ma20": 4.79,
+      "m1_last15_green": 13,
+      "m1_close_vs_vwap": 3.05,
+      "m1_close_pos_intra": 0.947,
+      "m1_high_timing": 0.93,
+      "m1_n_bars": 330,
+      "m1_data_available": true,
+      "above_ma20": true,
+      "above_ma50": true,
+      "ma20": 1384.0,
+      "ma50": 1367.0,
+      "up_streak_days": 1,
+      "trend_5d_pct": 24.05,
+      "signals_positive": [
+        "Volume D-1 ekstrem: 9.8x MA20 (tier-2 ≥6x)",
+        "Volume D-2 elevated: 4.8x MA20 (akumulasi dini)",
+        "Continuation D-1: +11.1% vol 9.8x MA20",
+        "D-2 early signal: +12.1% vol 4.8x",
+        "Range expansion: 2.9x avg-5d",
+        "Harga di atas MA20",
+        "5d trend sehat: +24.1%",
+        "Closing momentum kuat: 13/14 bar hijau (sinyal universal ARA)",
+        "Close intraday kuat: 0.95 (mendekati high harian)",
+        "Close di atas VWAP: +3.0%",
+        "High intraday di akhir sesi (93%)",
+        "Broker signal: Big Accumulation (+10 poin)"
+      ],
+      "signals_negative": [],
+      "universe_sources": [
+        "SCREENER_VOL_EXPLOSION",
+        "GURU_92",
+        "GURU_77",
+        "SCREENER_TOP_VALUE"
+      ],
+      "warning": "⚠️ FALSE SIGNAL RATE TINGGI (~85-90%). Pipeline ini mendeteksi Tipe 1 (Continuation) dan Tipe 2 (Silent Accumulation). Tipe 3 (Out of Nowhere, ~48% ARA nyata) TIDAK BISA dideteksi dari OHLCV. Gunakan sebagai WATCHLIST saja. Konfirmasi dengan broker flow, news, dan analisis manual sebelum eksekusi.",
+      "generated_at": "02:33 WIB"
     },
     {
       "ticker": "ADCP",
@@ -418,7 +496,7 @@
         "GURU_94"
       ],
       "warning": "⚠️ FALSE SIGNAL RATE TINGGI (~85-90%). Pipeline ini mendeteksi Tipe 1 (Continuation) dan Tipe 2 (Silent Accumulation). Tipe 3 (Out of Nowhere, ~48% ARA nyata) TIDAK BISA dideteksi dari OHLCV. Gunakan sebagai WATCHLIST saja. Konfirmasi dengan broker flow, news, dan analisis manual sebelum eksekusi.",
-      "generated_at": "01:30 WIB"
+      "generated_at": "02:33 WIB"
     },
     {
       "ticker": "ATLA",
@@ -496,7 +574,7 @@
         "SCREENER_TOP_VALUE"
       ],
       "warning": "⚠️ FALSE SIGNAL RATE TINGGI (~85-90%). Pipeline ini mendeteksi Tipe 1 (Continuation) dan Tipe 2 (Silent Accumulation). Tipe 3 (Out of Nowhere, ~48% ARA nyata) TIDAK BISA dideteksi dari OHLCV. Gunakan sebagai WATCHLIST saja. Konfirmasi dengan broker flow, news, dan analisis manual sebelum eksekusi.",
-      "generated_at": "01:29 WIB"
+      "generated_at": "02:31 WIB"
     },
     {
       "ticker": "CTTH",
@@ -573,88 +651,12 @@
         "SCREENER_TOP_VALUE"
       ],
       "warning": "⚠️ FALSE SIGNAL RATE TINGGI (~85-90%). Pipeline ini mendeteksi Tipe 1 (Continuation) dan Tipe 2 (Silent Accumulation). Tipe 3 (Out of Nowhere, ~48% ARA nyata) TIDAK BISA dideteksi dari OHLCV. Gunakan sebagai WATCHLIST saja. Konfirmasi dengan broker flow, news, dan analisis manual sebelum eksekusi.",
-      "generated_at": "01:30 WIB"
-    },
-    {
-      "ticker": "PKPK",
-      "company": "Paragon Karya Perkasa Tbk",
-      "type": "CALON_ARA",
-      "score": 88,
-      "score_tier": "STRONG",
-      "pattern_type": "CONTINUATION",
-      "confluence_count": 10,
-      "entry_range": "3,000 – 3,360",
-      "entry_lower": 3000,
-      "entry_upper": 3360,
-      "entry_note": "Beli saat open di 3,000 atau jika harga masih di area ini. Jangan kejar jika sudah naik di atas 3,360 (+12% dari PDC).",
-      "entry_range_pct": 12.0,
-      "estimated_target_pct": "+10% hingga +20% dari harga beli",
-      "target_conservative": 3360,
-      "target_base": 3640,
-      "target_optimistic": 3810,
-      "target_conservative_pct": 10.0,
-      "target_base_pct": 20.0,
-      "target_optimistic_pct": 25.0,
-      "target_note": "Konservatif: 3,360 (~+10%) | Moderat: 3,640 (~+20%) | Full ARA: 3,810 (~+25%)",
-      "assumed_entry": 3040,
-      "reason_beginner_friendly": "PKPK sudah naik 15% kemarin dengan volume 11x lebih besar dari biasanya. Ada pembeli besar yang masuk agresif. Jika momentum berlanjut, saham ini bisa naik lebih jauh besok. Skor kepercayaan: TINGGI.",
-      "risk_warning": "⚠️ FALSE SIGNAL RATE ~85-90%. Konfirmasi dengan broker flow, berita, dan analisis manual sebelum beli. | 📌 Batasi posisi: max 2% dari portofolio.",
-      "broker_signal": "Small Dist",
-      "d1_date": "2026-04-22",
-      "d1_close": 3000.0,
-      "d1_open": 2740.0,
-      "d1_high": 3260.0,
-      "d1_low": 2620.0,
-      "d1_change_pct": 14.94,
-      "d1_vol_ratio_ma20": 11.06,
-      "d1_vol_ratio_ma5": 9.61,
-      "d1_body_pct": 0.406,
-      "d1_upper_wick": 0.406,
-      "d1_lower_wick": 0.187,
-      "d1_close_pos": 0.594,
-      "d1_bullish": true,
-      "d1_range_expansion": 3.35,
-      "d1_value_rp": 4905180000000,
-      "d2_change_pct": 18.64,
-      "d2_body_pct": 0.578,
-      "d2_vol_ratio_ma20": 5.79,
-      "m1_last15_green": 13,
-      "m1_close_vs_vwap": 2.08,
-      "m1_close_pos_intra": 0.594,
-      "m1_high_timing": 0.461,
-      "m1_n_bars": 304,
-      "m1_data_available": true,
-      "above_ma20": true,
-      "above_ma50": true,
-      "ma20": 1993.0,
-      "ma50": 2004.0,
-      "up_streak_days": 1,
-      "trend_5d_pct": 59.57,
-      "signals_positive": [
-        "Volume D-1 ekstrem: 11.1x MA20 (tier-2 ≥6x)",
-        "Volume D-2 elevated: 5.8x MA20 (akumulasi dini)",
-        "Continuation D-1: +14.9% vol 11.1x MA20",
-        "Upper wick rejection: 0.41 (smart money absorption)",
-        "Body kecil D-1: 0.41 (candle akumulasi)",
-        "D-2 early signal: +18.6% vol 5.8x",
-        "Range expansion: 3.4x avg-5d",
-        "Harga di atas MA20",
-        "Closing momentum kuat: 13/14 bar hijau (sinyal universal ARA)",
-        "Close di atas VWAP: +2.1%"
-      ],
-      "signals_negative": [
-        "5d trend terlalu cepat: +59.6%"
-      ],
-      "universe_sources": [
-        "SCREENER_TOP_VALUE"
-      ],
-      "warning": "⚠️ FALSE SIGNAL RATE TINGGI (~85-90%). Pipeline ini mendeteksi Tipe 1 (Continuation) dan Tipe 2 (Silent Accumulation). Tipe 3 (Out of Nowhere, ~48% ARA nyata) TIDAK BISA dideteksi dari OHLCV. Gunakan sebagai WATCHLIST saja. Konfirmasi dengan broker flow, news, dan analisis manual sebelum eksekusi.",
-      "generated_at": "01:32 WIB"
+      "generated_at": "02:32 WIB"
     }
   ],
   "meta": {
     "status": "success",
-    "generated_at": "2026-04-23 01:32:30 WIB",
+    "generated_at": "2026-04-23 02:34:44 WIB",
     "date": "2026-04-23",
     "mode": "FULL_STOCKBIT",
     "session_label": "MARKET_DAY",
@@ -683,7 +685,7 @@
     "universe": 972,
     "after_liquidity": 130,
     "after_accumulation": 42,
-    "after_trend": 13,
+    "after_trend": 14,
     "after_smc": 4,
     "after_entry": 3,
     "final": 3
