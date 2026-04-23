@@ -3239,22 +3239,22 @@ def compute_ara_features_v2(
     """
     Hitung semua fitur prediktif ARA dari data OHLCV daily + minute (opsional).
 
-    Perspektif: df_daily.iloc[-1] = D-1 (hari sebelum ARA, sudah close).
-    Screener jalan sore/malam sehingga D-1 = hari ini (data sudah final).
+    Perspektif: df_daily.iloc[-1] = D-0 (close hari ini, sudah final jam 18:00 WIB).
+    Screener jalan sore/malam sehingga D-0 = hari ini, D-1 = kemarin.
 
     FITUR DAILY (berdasarkan korelasi empiris n=23 saham ARA):
       d1_close_pos       : median=0.60 (tutup di atas midrange, tapi tidak selalu)
       d1_upper_wick      : median=0.29 (rejection moderat di atas)
       d1_body_pct        : median=0.40 (candle kecil-medium)
       d1_range_expansion : median=0.80 (sering MENYEMPIT sebelum ARA!)
-      d1_vol_ratio_ma20  : median=1.30 (banyak ARA vol spike TIDAK ada di D-1)
+      d1_vol_ratio_ma20  : median=1.30 (banyak ARA vol spike TIDAK ada di D-0)
 
     FITUR MINUTE (satu sinyal universal — 22/22 saham):
-      m1_last15_green >= 10/14 bar hijau di akhir sesi D-1
+      m1_last15_green >= 10/14 bar hijau di akhir sesi D-0
 
     Parameters:
         df_daily  : DataFrame sorted ascending, kolom: date, open, high, low, close, volume
-        df_minute : DataFrame 1-minute OHLCV untuk D-1 (opsional, bisa None)
+        df_minute : DataFrame 1-minute OHLCV untuk D-0 (opsional, bisa None)
 
     Returns:
         Dict fitur atau None jika data tidak cukup (<55 bar daily).
@@ -3263,14 +3263,16 @@ def compute_ara_features_v2(
         return None
 
     n = len(df_daily)
-    i = n - 1   # index D-1 (baris terakhir)
-    d1 = df_daily.iloc[i]
-    d2 = df_daily.iloc[i - 1]
-    d3 = df_daily.iloc[i - 2] if i >= 2 else d2
+    i = n - 1   # index D-0: baris terakhir = close hari ini (sudah final jam 18:00 WIB)
+    d1 = df_daily.iloc[i]       # D-0: hari ini
+    d2 = df_daily.iloc[i - 1]   # D-1: kemarin
+    d3 = df_daily.iloc[i - 2] if i >= 2 else d2  # D-2: 2 hari lalu
 
-    # ---- Volume MA (dihitung SEBELUM D-1, hindari look-ahead bias) ----
+    # ---- Volume MA (dihitung dari bar SEBELUM D-0, hindari look-ahead bias) ----
+    # FIX vol_slice_ma5: end index diperbaiki dari i-1 → i
+    # Sebelumnya :i-1 hanya menghasilkan 4 bar (off-by-one), seharusnya 5 bar (D-1 s/d D-5)
     vol_slice_ma20 = df_daily["volume"].iloc[max(0, i - 21):i]
-    vol_slice_ma5  = df_daily["volume"].iloc[max(0, i - 6):i - 1]
+    vol_slice_ma5  = df_daily["volume"].iloc[max(0, i - 6):i]   # FIX: was :i-1
     vol_ma20_pre = float(vol_slice_ma20.mean()) if len(vol_slice_ma20) >= 5 else 0.0
     vol_ma5_pre  = float(vol_slice_ma5.mean())  if len(vol_slice_ma5)  >= 3 else 0.0
 
@@ -3296,9 +3298,11 @@ def compute_ara_features_v2(
     d1_vol_r_ma5   = d1_v / (vol_ma5_pre + 1e-6)
     d1_value_rp    = d1_c * d1_v * 100   # IDX: lot × 100 lembar
 
-    # ---- Range expansion D-1 vs 5 hari sebelumnya ----
+    # ---- Range expansion D-0 vs 5 hari sebelumnya ----
+    # FIX: end index diperbaiki dari i-1 → i
+    # Sebelumnya range(max(0,i-6), i-1) hanya 4 bar, missing D-1 sepenuhnya
     ranges_5d = []
-    for j in range(max(0, i - 6), i - 1):
+    for j in range(max(0, i - 6), i):   # FIX: was i-1
         r = df_daily.iloc[j]
         rc = float(r["close"])
         if rc > 0:
@@ -3860,7 +3864,7 @@ def build_ara_risk_warning(
 
 def get_minute_data_for_ara(ticker: str, d1_date_str: str) -> Optional[pd.DataFrame]:
     """
-    Ambil data 1-minute OHLCV untuk tanggal D-1 dari Yahoo Finance.
+    Ambil data 1-minute OHLCV untuk tanggal D-0 (hari ini) dari Yahoo Finance.
     Cache di parquet. Return None jika data tidak cukup (<15 bar).
     """
     cache_path = _get_yf_cache_path(ticker, "1m_d1")
@@ -3900,24 +3904,26 @@ def get_minute_data_for_ara(ticker: str, d1_date_str: str) -> Optional[pd.DataFr
         df = df[df["volume"] > 0].reset_index(drop=True)
         df["date"] = pd.to_datetime(df["date"])
 
-        # Filter ke tanggal D-1
+        # Filter ke tanggal D-0 (hari ini)
         if d1_date_str:
             try:
                 target_date = pd.to_datetime(d1_date_str).date()
-                df_d1 = df[df["date"].dt.date == target_date].copy()
-                if len(df_d1) >= 15:
-                    _save_yf_cache(ticker, "1m_d1", df_d1)
-                    return df_d1
+                df_d0 = df[df["date"].dt.date == target_date].copy()
+                if len(df_d0) >= 15:
+                    _save_yf_cache(ticker, "1m_d1", df_d0)
+                    return df_d0
             except Exception:
                 pass
 
-        # Fallback: ambil hari kedua dari belakang
+        # Fallback: ambil hari TERAKHIR yang tersedia (= D-0, hari ini)
+        # FIX: was dates[-2] (kemarin) — seharusnya dates[-1] (hari ini/D-0)
+        # FIX: was len(dates) >= 2 — cukup >= 1 karena kita ambil hari terakhir
         dates = sorted(df["date"].dt.date.unique())
-        if len(dates) >= 2:
-            df_d1 = df[df["date"].dt.date == dates[-2]].copy()
-            if len(df_d1) >= 15:
-                _save_yf_cache(ticker, "1m_d1", df_d1)
-                return df_d1
+        if len(dates) >= 1:                                      # FIX: was >= 2
+            df_d0 = df[df["date"].dt.date == dates[-1]].copy()  # FIX: was dates[-2]
+            if len(df_d0) >= 15:
+                _save_yf_cache(ticker, "1m_d1", df_d0)
+                return df_d0
 
         return None
 
