@@ -1,6 +1,6 @@
 {
   "status": "success",
-  "generated_at": "2026-04-27 12:29:23 WIB",
+  "generated_at": "2026-04-27 13:27:40 WIB",
   "date": "2026-04-27",
   "mode": "FULL_STOCKBIT",
   "session_label": "MARKET_DAY",
@@ -8,8 +8,8 @@
   "mode_warning": null,
   "total_saham": 5,
   "market_context": {
-    "ihsg_close": 7180,
-    "ihsg_change_pct": 0.71,
+    "ihsg_close": 7175,
+    "ihsg_change_pct": 0.65,
     "ihsg_trend": "BEARISH",
     "ihsg_above_ma50": false,
     "market_safe": true,
@@ -127,7 +127,7 @@
         "✅ Swing Structure: BULLISH"
       ],
       "warnings": [],
-      "updated_at": "12.29 WIB"
+      "updated_at": "13.27 WIB"
     },
     {
       "rank": 2,
@@ -213,7 +213,7 @@
         "✅ Swing Structure: BULLISH"
       ],
       "warnings": [],
-      "updated_at": "12.29 WIB"
+      "updated_at": "13.27 WIB"
     },
     {
       "rank": 3,
@@ -298,7 +298,7 @@
         "✅ Swing Structure: BULLISH"
       ],
       "warnings": [],
-      "updated_at": "12.29 WIB"
+      "updated_at": "13.27 WIB"
     },
     {
       "rank": 4,
@@ -337,7 +337,7 @@
       },
       "trend": {
         "ma50": 3946.0,
-        "gap_from_ma50_pct": 5.41,
+        "gap_from_ma50_pct": 4.67,
         "ma50_slope": "POSITIVE"
       },
       "smc": {
@@ -383,10 +383,11 @@
       "signals": [
         "✅ Broker Signal: Big Acc",
         "✅ Net Foreign Buy hari ini: Rp3.1B",
-        "✅ Harga di zona Order Block aktif"
+        "✅ Harga di zona Order Block aktif",
+        "✅ Pullback ke MA50 (4.7% di atas MA50)"
       ],
       "warnings": [],
-      "updated_at": "12.29 WIB"
+      "updated_at": "13.27 WIB"
     },
     {
       "rank": 5,
@@ -423,7 +424,7 @@
       },
       "trend": {
         "ma50": 25706.0,
-        "gap_from_ma50_pct": 0.85,
+        "gap_from_ma50_pct": 0.95,
         "ma50_slope": "POSITIVE"
       },
       "smc": {
@@ -471,12 +472,12 @@
         "✅ Net Foreign Buy hari ini: Rp9.8B",
         "✅ Harga di zona Order Block aktif",
         "✅ Swing Structure: BULLISH",
-        "✅ Pullback ke MA50 (0.8% di atas MA50)"
+        "✅ Pullback ke MA50 (0.9% di atas MA50)"
       ],
       "warnings": [
         "⚠️ Entry 1 DI ATAS close — prediksi gap up. Jika tidak gap, skip entry_1."
       ],
-      "updated_at": "12.29 WIB"
+      "updated_at": "13.27 WIB"
     }
   ]
 }

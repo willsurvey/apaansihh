@@ -84,7 +84,7 @@
         "✅ Swing Structure: BULLISH"
       ],
       "warnings": [],
-      "updated_at": "12.29 WIB"
+      "updated_at": "13.27 WIB"
     },
     {
       "rank": 2,
@@ -170,7 +170,7 @@
         "✅ Swing Structure: BULLISH"
       ],
       "warnings": [],
-      "updated_at": "12.29 WIB"
+      "updated_at": "13.27 WIB"
     },
     {
       "rank": 3,
@@ -255,7 +255,7 @@
         "✅ Swing Structure: BULLISH"
       ],
       "warnings": [],
-      "updated_at": "12.29 WIB"
+      "updated_at": "13.27 WIB"
     },
     {
       "rank": 4,
@@ -294,7 +294,7 @@
       },
       "trend": {
         "ma50": 3946.0,
-        "gap_from_ma50_pct": 5.41,
+        "gap_from_ma50_pct": 4.67,
         "ma50_slope": "POSITIVE"
       },
       "smc": {
@@ -340,10 +340,11 @@
       "signals": [
         "✅ Broker Signal: Big Acc",
         "✅ Net Foreign Buy hari ini: Rp3.1B",
-        "✅ Harga di zona Order Block aktif"
+        "✅ Harga di zona Order Block aktif",
+        "✅ Pullback ke MA50 (4.7% di atas MA50)"
       ],
       "warnings": [],
-      "updated_at": "12.29 WIB"
+      "updated_at": "13.27 WIB"
     },
     {
       "rank": 5,
@@ -380,7 +381,7 @@
       },
       "trend": {
         "ma50": 25706.0,
-        "gap_from_ma50_pct": 0.85,
+        "gap_from_ma50_pct": 0.95,
         "ma50_slope": "POSITIVE"
       },
       "smc": {
@@ -428,12 +429,12 @@
         "✅ Net Foreign Buy hari ini: Rp9.8B",
         "✅ Harga di zona Order Block aktif",
         "✅ Swing Structure: BULLISH",
-        "✅ Pullback ke MA50 (0.8% di atas MA50)"
+        "✅ Pullback ke MA50 (0.9% di atas MA50)"
       ],
       "warnings": [
         "⚠️ Entry 1 DI ATAS close — prediksi gap up. Jika tidak gap, skip entry_1."
       ],
-      "updated_at": "12.29 WIB"
+      "updated_at": "13.27 WIB"
     }
   ],
   "logika_baru_calon_ara": [
@@ -480,11 +481,11 @@
       "d2_change_pct": 34.46,
       "d2_body_pct": 0.867,
       "d2_vol_ratio_ma20": 4.38,
-      "m1_last15_green": 10,
-      "m1_close_vs_vwap": 4.14,
+      "m1_last15_green": 11,
+      "m1_close_vs_vwap": 4.12,
       "m1_close_pos_intra": 0.833,
       "m1_high_timing": 0.017,
-      "m1_n_bars": 177,
+      "m1_n_bars": 178,
       "m1_data_available": true,
       "above_ma20": true,
       "above_ma50": true,
@@ -499,7 +500,7 @@
         "Body kecil D-1: 0.10 (candle akumulasi)",
         "D-2 early signal: +34.5% vol 4.4x",
         "Harga di atas MA20",
-        "Closing momentum OK: 10/14 bar hijau",
+        "Closing momentum OK: 11/14 bar hijau",
         "Close intraday kuat: 0.83 (mendekati high harian)",
         "Close di atas VWAP: +4.1%",
         "Broker signal: Big Accumulation (+10 poin)"
@@ -515,7 +516,7 @@
         "SCREENER_TOP_VALUE"
       ],
       "warning": "⚠️ FALSE SIGNAL RATE TINGGI (~85-90%). Pipeline ini mendeteksi Tipe 1 (Continuation) dan Tipe 2 (Silent Accumulation). Tipe 3 (Out of Nowhere, ~48% ARA nyata) TIDAK BISA dideteksi dari OHLCV. Gunakan sebagai WATCHLIST saja. Konfirmasi dengan broker flow, news, dan analisis manual sebelum eksekusi.",
-      "generated_at": "12:29 WIB"
+      "generated_at": "13:28 WIB"
     },
     {
       "ticker": "LOPI",
@@ -564,7 +565,7 @@
       "m1_close_vs_vwap": -3.12,
       "m1_close_pos_intra": 0.05,
       "m1_high_timing": 0.034,
-      "m1_n_bars": 118,
+      "m1_n_bars": 119,
       "m1_data_available": true,
       "above_ma20": true,
       "above_ma50": true,
@@ -591,7 +592,7 @@
         "SCREENER_VOL_EXPLOSION"
       ],
       "warning": "⚠️ FALSE SIGNAL RATE TINGGI (~85-90%). Pipeline ini mendeteksi Tipe 1 (Continuation) dan Tipe 2 (Silent Accumulation). Tipe 3 (Out of Nowhere, ~48% ARA nyata) TIDAK BISA dideteksi dari OHLCV. Gunakan sebagai WATCHLIST saja. Konfirmasi dengan broker flow, news, dan analisis manual sebelum eksekusi.",
-      "generated_at": "12:30 WIB"
+      "generated_at": "13:29 WIB"
     },
     {
       "ticker": "BNBA",
@@ -666,7 +667,7 @@
         "GURU_94"
       ],
       "warning": "⚠️ FALSE SIGNAL RATE TINGGI (~85-90%). Pipeline ini mendeteksi Tipe 1 (Continuation) dan Tipe 2 (Silent Accumulation). Tipe 3 (Out of Nowhere, ~48% ARA nyata) TIDAK BISA dideteksi dari OHLCV. Gunakan sebagai WATCHLIST saja. Konfirmasi dengan broker flow, news, dan analisis manual sebelum eksekusi.",
-      "generated_at": "12:30 WIB"
+      "generated_at": "13:29 WIB"
     },
     {
       "ticker": "MSIE",
@@ -715,7 +716,7 @@
       "m1_close_vs_vwap": -3.17,
       "m1_close_pos_intra": 0.222,
       "m1_high_timing": 0.0,
-      "m1_n_bars": 150,
+      "m1_n_bars": 151,
       "m1_data_available": true,
       "above_ma20": true,
       "above_ma50": true,
@@ -740,7 +741,7 @@
         "SCREENER_VOL_EXPLOSION"
       ],
       "warning": "⚠️ FALSE SIGNAL RATE TINGGI (~85-90%). Pipeline ini mendeteksi Tipe 1 (Continuation) dan Tipe 2 (Silent Accumulation). Tipe 3 (Out of Nowhere, ~48% ARA nyata) TIDAK BISA dideteksi dari OHLCV. Gunakan sebagai WATCHLIST saja. Konfirmasi dengan broker flow, news, dan analisis manual sebelum eksekusi.",
-      "generated_at": "12:29 WIB"
+      "generated_at": "13:28 WIB"
     },
     {
       "ticker": "DEFI",
@@ -788,8 +789,8 @@
       "m1_last15_green": 11,
       "m1_close_vs_vwap": 2.7,
       "m1_close_pos_intra": 0.759,
-      "m1_high_timing": 0.68,
-      "m1_n_bars": 178,
+      "m1_high_timing": 0.676,
+      "m1_n_bars": 179,
       "m1_data_available": true,
       "above_ma20": true,
       "above_ma50": true,
@@ -812,12 +813,12 @@
         "SCREENER_TOP_VALUE"
       ],
       "warning": "⚠️ FALSE SIGNAL RATE TINGGI (~85-90%). Pipeline ini mendeteksi Tipe 1 (Continuation) dan Tipe 2 (Silent Accumulation). Tipe 3 (Out of Nowhere, ~48% ARA nyata) TIDAK BISA dideteksi dari OHLCV. Gunakan sebagai WATCHLIST saja. Konfirmasi dengan broker flow, news, dan analisis manual sebelum eksekusi.",
-      "generated_at": "12:29 WIB"
+      "generated_at": "13:27 WIB"
     }
   ],
   "meta": {
     "status": "success",
-    "generated_at": "2026-04-27 12:31:12 WIB",
+    "generated_at": "2026-04-27 13:30:06 WIB",
     "date": "2026-04-27",
     "mode": "FULL_STOCKBIT",
     "session_label": "MARKET_DAY",
@@ -835,8 +836,8 @@
     }
   },
   "market_context": {
-    "ihsg_close": 7180,
-    "ihsg_change_pct": 0.71,
+    "ihsg_close": 7175,
+    "ihsg_change_pct": 0.65,
     "ihsg_trend": "BEARISH",
     "ihsg_above_ma50": false,
     "market_safe": true,
