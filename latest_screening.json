@@ -1,6 +1,6 @@
 {
   "status": "success",
-  "generated_at": "2026-04-29 20:30:08 WIB",
+  "generated_at": "2026-04-29 21:30:49 WIB",
   "date": "2026-04-29",
   "mode": "FULL_STOCKBIT",
   "session_label": "MARKET_DAY",
@@ -131,7 +131,7 @@
         "✅ Swing Structure: BULLISH"
       ],
       "warnings": [],
-      "updated_at": "20.30 WIB"
+      "updated_at": "21.30 WIB"
     },
     {
       "rank": 2,
@@ -219,7 +219,7 @@
         "✅ Pullback ke MA50 (1.4% di atas MA50)"
       ],
       "warnings": [],
-      "updated_at": "20.30 WIB"
+      "updated_at": "21.30 WIB"
     },
     {
       "rank": 3,
@@ -308,7 +308,7 @@
         "✅ Pullback ke MA50 (1.0% di atas MA50)"
       ],
       "warnings": [],
-      "updated_at": "20.30 WIB"
+      "updated_at": "21.30 WIB"
     },
     {
       "rank": 4,
@@ -396,7 +396,7 @@
         "✅ Pullback ke MA50 (3.8% di atas MA50)"
       ],
       "warnings": [],
-      "updated_at": "20.30 WIB"
+      "updated_at": "21.30 WIB"
     }
   ]
 }
