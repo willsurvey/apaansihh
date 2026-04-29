@@ -80,8 +80,8 @@ function IntradayCard({ stock, rank }) {
   const trend = stock.trend || {}
   const score = stock.scoring?.confidence_score ?? 0
   const tier = stock.scoring?.tier ?? 'LOW'
+  const bd = acc.score_breakdown || {}
 
-  const dirIcon = { PULLBACK: '↓', MOMENTUM: '→', GAP_UP: '↑' }[ep.entry_direction] || '↓'
   const dirColor = { PULLBACK: 'var(--c-amber)', MOMENTUM: 'var(--c-teal)', GAP_UP: 'var(--c-coral)' }[ep.entry_direction] || 'var(--c-amber)'
 
   return (
@@ -99,67 +99,57 @@ function IntradayCard({ stock, rank }) {
       </div>
 
       <div className={styles.cardBody}>
+        {stock.universe_sources?.length > 0 && (
+          <div className={styles.sourceTags}>
+            {stock.universe_sources.map((s, i) => <span key={i} className={styles.sourceTag}>{s}</span>)}
+          </div>
+        )}
+
         <div className={styles.statsRow}>
-          <div className={styles.stat}>
-            <span className={styles.statLbl}>Close</span>
-            <span className={styles.statVal}>Rp{formatNum(mkt.close)}</span>
-          </div>
-          <div className={styles.stat}>
-            <span className={styles.statLbl}>Perubahan</span>
-            <ChangeBadge val={mkt.change_pct} />
-          </div>
-          <div className={styles.stat}>
-            <span className={styles.statLbl}>Nilai Transaksi</span>
-            <span className={styles.statVal}>{formatRp(mkt.value_today)}</span>
-          </div>
-          <div className={styles.stat}>
-            <span className={styles.statLbl}>Net Foreign</span>
-            <ChangeBadge val={acc.net_foreign_today != null ? (acc.net_foreign_today / 1e9).toFixed(2) : null} suffix=' M' />
-          </div>
+          <div className={styles.stat}><span className={styles.statLbl}>Close</span><span className={styles.statVal}>Rp{formatNum(mkt.close)}</span></div>
+          <div className={styles.stat}><span className={styles.statLbl}>Perubahan</span><ChangeBadge val={mkt.change_pct} /></div>
+          <div className={styles.stat}><span className={styles.statLbl}>Nilai</span><span className={styles.statVal}>{formatRp(mkt.value_today)}</span></div>
+          <div className={styles.stat}><span className={styles.statLbl}>Frekuensi</span><span className={styles.statVal}>{formatNum(mkt.frequency_today)}x</span></div>
+          <div className={styles.stat}><span className={styles.statLbl}>Net Foreign</span><ChangeBadge val={acc.net_foreign_today != null ? (acc.net_foreign_today / 1e9).toFixed(2) : null} suffix='B' /></div>
+          <div className={styles.stat}><span className={styles.statLbl}>For 3D</span><span className={styles.statVal}>{acc.net_foreign_3d > 0 ? `${acc.net_foreign_3d}d ✅` : '-'}</span></div>
         </div>
 
         <div className={styles.twoCol}>
           <div className={styles.colBlock}>
             <span className={styles.blockTitle}>Broker & Akumulasi</span>
             <BrokerBadge signal={acc.broker_signal} />
+            <div className={styles.miniRow}><span>Skor Acc</span><strong>{acc.acc_score ?? '-'}</strong></div>
+            {bd.total != null && (
+              <div className={styles.breakdownGrid}>
+                {[['Broker', bd.broker], ['For 1D', bd.foreign_1d], ['For 3D', bd.foreign_3d], ['Candle', bd.candle], ['Vol', bd.volume]].map(([lbl, v]) =>
+                  v != null && (
+                    <div key={lbl} className={styles.breakdownItem}>
+                      <span>{lbl}</span>
+                      <strong style={{ color: v >= 0 ? 'var(--c-teal)' : 'var(--c-coral)' }}>{v > 0 ? `+${v}` : v}</strong>
+                    </div>
+                  )
+                )}
+              </div>
+            )}
+            <div className={styles.miniRow}><span>MA50</span><strong>Rp{formatNum(trend.ma50)}</strong></div>
+            <div className={styles.miniRow}><span>Gap MA50</span><ChangeBadge val={trend.gap_from_ma50_pct} /></div>
             <div className={styles.miniRow}>
-              <span>Skor Akumulasi</span>
-              <strong>{acc.acc_score ?? '-'}</strong>
-            </div>
-            <div className={styles.miniRow}>
-              <span>MA50</span>
-              <strong>Rp{formatNum(trend.ma50)}</strong>
-            </div>
-            <div className={styles.miniRow}>
-              <span>Gap MA50</span>
-              <ChangeBadge val={trend.gap_from_ma50_pct} />
+              <span>MA50 Slope</span>
+              <strong style={{ color: trend.ma50_slope === 'POSITIVE' ? 'var(--c-teal)' : trend.ma50_slope === 'NEGATIVE' ? 'var(--c-coral)' : '' }}>{trend.ma50_slope || '-'}</strong>
             </div>
           </div>
           <div className={styles.colBlock}>
             <span className={styles.blockTitle}>SMC Structure</span>
             <div className={styles.smcGrid}>
-              <div className={styles.smcItem}>
-                <span className={styles.smcLbl}>Internal</span>
-                <span className={styles.smcVal}>{smc.internal_structure || 'NONE'}</span>
-              </div>
+              <div className={styles.smcItem}><span className={styles.smcLbl}>Internal</span><span className={styles.smcVal}>{smc.internal_structure || 'NONE'}</span></div>
               <div className={styles.smcItem}>
                 <span className={styles.smcLbl}>Swing Bias</span>
-                <span className={`${styles.smcVal} ${smc.swing_trend_bias === 'BULLISH' ? styles.up : smc.swing_trend_bias === 'BEARISH' ? styles.down : ''}`}>
-                  {smc.swing_trend_bias || 'NEUTRAL'}
-                </span>
+                <span className={`${styles.smcVal} ${smc.swing_trend_bias === 'BULLISH' ? styles.up : smc.swing_trend_bias === 'BEARISH' ? styles.down : ''}`}>{smc.swing_trend_bias || 'NEUTRAL'}</span>
               </div>
-              {smc.ob_zone && (
-                <div className={styles.smcItem}>
-                  <span className={styles.smcLbl}>OB Zone</span>
-                  <span className={styles.smcVal}>{smc.ob_zone}</span>
-                </div>
-              )}
-              {smc.fvg_zone && (
-                <div className={styles.smcItem}>
-                  <span className={styles.smcLbl}>FVG Zone</span>
-                  <span className={styles.smcVal}>{smc.fvg_zone}</span>
-                </div>
-              )}
+              {smc.ob_zone && <div className={styles.smcItem}><span className={styles.smcLbl}>OB Zone</span><span className={styles.smcVal}>{smc.ob_zone}</span></div>}
+              {smc.fvg_zone && <div className={styles.smcItem}><span className={styles.smcLbl}>FVG Zone</span><span className={styles.smcVal}>{smc.fvg_zone}</span></div>}
+              {smc.strong_low != null && <div className={styles.smcItem}><span className={styles.smcLbl}>Strong Low</span><span className={styles.smcVal}>Rp{formatNum(smc.strong_low)}</span></div>}
+              {smc.weak_high != null && <div className={styles.smcItem}><span className={styles.smcLbl}>Weak High</span><span className={styles.smcVal}>Rp{formatNum(smc.weak_high)}</span></div>}
             </div>
           </div>
         </div>
@@ -167,18 +157,15 @@ function IntradayCard({ stock, rank }) {
         <div className={styles.entrySection}>
           <div className={styles.entryHeader}>
             <span className={styles.blockTitle}>Entry Plan</span>
-            <span className={styles.directionTag} style={{ color: dirColor }}>
-              {dirIcon} {ep.entry_direction || 'PULLBACK'}
-            </span>
+            <span className={styles.directionTag} style={{ color: dirColor }}>{ep.entry_direction_label || ep.entry_direction || 'PULLBACK'}</span>
           </div>
+          {ep.entry_direction_reason && <div className={styles.entryReason}>{ep.entry_direction_reason}</div>}
+          {ep.entry_zone && <div className={styles.miniRow}><span>Entry Zone</span><strong>Rp{ep.entry_zone}</strong></div>}
           <div className={styles.entryList}>
             <EntryRow label="Entry 1" price={ep.entry_1} pct={ep.entry_1_pct} note={ep.entry_1_note} />
             <EntryRow label="Entry 2" price={ep.entry_2} pct={ep.entry_2_pct} note={ep.entry_2_note} />
             <EntryRow label="Entry 3" price={ep.entry_3} pct={ep.entry_3_pct} note={ep.entry_3_note} />
-            <div className={styles.avgEntryRow}>
-              <span>Avg Entry</span>
-              <strong>Rp{formatNum(ep.average_entry)}</strong>
-            </div>
+            <div className={styles.avgEntryRow}><span>Avg Entry</span><strong>Rp{formatNum(ep.average_entry)}</strong></div>
           </div>
         </div>
 
@@ -187,22 +174,27 @@ function IntradayCard({ stock, rank }) {
             <span className={styles.slLbl}>Stop Loss</span>
             <span className={styles.slVal}>Rp{formatNum(ep.sl)}</span>
             <span className={styles.slPct}>-{fmt2(ep.sl_pct_risk)}%</span>
+            {ep.sl_note && <span className={styles.tpNote}>{ep.sl_note}</span>}
           </div>
           <div className={styles.tpBox}>
             <span className={styles.tpLbl}>TP 1</span>
             <span className={styles.tpVal}>Rp{formatNum(ep.tp1)}</span>
+            {ep.tp1_note && <span className={styles.tpNote}>{ep.tp1_note}</span>}
           </div>
           <div className={styles.tpBox}>
             <span className={styles.tpLbl}>TP 2</span>
             <span className={styles.tpVal}>Rp{formatNum(ep.tp2)}</span>
+            {ep.tp2_note && <span className={styles.tpNote}>{ep.tp2_note}</span>}
           </div>
           <div className={styles.tpBox}>
             <span className={styles.tpLbl}>TP 3</span>
             <span className={styles.tpVal}>Rp{formatNum(ep.tp3)}</span>
+            {ep.tp3_note && <span className={styles.tpNote}>{ep.tp3_note}</span>}
           </div>
           <div className={styles.rrBox}>
             <span className={styles.rrLbl}>R/R</span>
             <span className={styles.rrVal}>{ep.rr_ratio || '-'}</span>
+            {ep.risk_pct != null && <span className={styles.tpNote}>Max {ep.risk_pct}% porto</span>}
           </div>
         </div>
 
@@ -244,56 +236,79 @@ function AraCard({ stock }) {
       </div>
 
       <div className={styles.cardBody}>
+        {stock.universe_sources?.length > 0 && (
+          <div className={styles.sourceTags}>
+            {stock.universe_sources.map((src, i) => <span key={i} className={styles.sourceTag}>{src}</span>)}
+          </div>
+        )}
+
         <div className={styles.araPattern}>
           <span className={styles.patternBadge}>{stock.pattern_type}</span>
           <BrokerBadge signal={stock.broker_signal} />
+          {stock.confluence_count != null && <span className={styles.confluenceBadge}>{stock.confluence_count} sinyal</span>}
         </div>
 
+        {stock.reason_beginner_friendly && (
+          <div className={styles.reasonBox}>{stock.reason_beginner_friendly}</div>
+        )}
+
         <div className={styles.statsRow}>
-          <div className={styles.stat}>
-            <span className={styles.statLbl}>Close D-1</span>
-            <span className={styles.statVal}>Rp{formatNum(stock.d1_close)}</span>
-          </div>
-          <div className={styles.stat}>
-            <span className={styles.statLbl}>Change D-1</span>
-            <ChangeBadge val={stock.d1_change_pct} />
-          </div>
-          <div className={styles.stat}>
-            <span className={styles.statLbl}>Vol/MA20</span>
-            <span className={styles.statVal}>{fmt2(stock.d1_vol_ratio_ma20)}x</span>
-          </div>
-          <div className={styles.stat}>
-            <span className={styles.statLbl}>Vol/MA5</span>
-            <span className={styles.statVal}>{fmt2(stock.d1_vol_ratio_ma5)}x</span>
-          </div>
+          <div className={styles.stat}><span className={styles.statLbl}>Close D-1</span><span className={styles.statVal}>Rp{formatNum(stock.d1_close)}</span></div>
+          <div className={styles.stat}><span className={styles.statLbl}>Change D-1</span><ChangeBadge val={stock.d1_change_pct} /></div>
+          <div className={styles.stat}><span className={styles.statLbl}>Vol/MA20</span><span className={styles.statVal}>{fmt2(stock.d1_vol_ratio_ma20)}x</span></div>
+          <div className={styles.stat}><span className={styles.statLbl}>Vol/MA5</span><span className={styles.statVal}>{fmt2(stock.d1_vol_ratio_ma5)}x</span></div>
         </div>
 
         <div className={styles.araMetrics}>
-          <div className={styles.metricItem}>
-            <span className={styles.metricLbl}>Upper Wick</span>
-            <span className={styles.metricVal}>{fmt2(stock.d1_upper_wick)}</span>
-          </div>
-          <div className={styles.metricItem}>
-            <span className={styles.metricLbl}>Body Pct</span>
-            <span className={styles.metricVal}>{fmt2(stock.d1_body_pct)}</span>
-          </div>
-          <div className={styles.metricItem}>
-            <span className={styles.metricLbl}>Close Pos</span>
-            <span className={styles.metricVal}>{fmt2(stock.d1_close_pos)}</span>
-          </div>
-          <div className={styles.metricItem}>
-            <span className={styles.metricLbl}>Range Exp</span>
-            <span className={styles.metricVal}>{fmt2(stock.d1_range_expansion)}x</span>
-          </div>
-          <div className={styles.metricItem}>
-            <span className={styles.metricLbl}>MA20</span>
-            <span className={styles.metricVal}>Rp{formatNum(stock.ma20)}</span>
-          </div>
-          <div className={styles.metricItem}>
-            <span className={styles.metricLbl}>MA50</span>
-            <span className={styles.metricVal}>Rp{formatNum(stock.ma50)}</span>
-          </div>
+          <div className={styles.metricItem}><span className={styles.metricLbl}>Open D-1</span><span className={styles.metricVal}>Rp{formatNum(stock.d1_open)}</span></div>
+          <div className={styles.metricItem}><span className={styles.metricLbl}>High D-1</span><span className={styles.metricVal}>Rp{formatNum(stock.d1_high)}</span></div>
+          <div className={styles.metricItem}><span className={styles.metricLbl}>Low D-1</span><span className={styles.metricVal}>Rp{formatNum(stock.d1_low)}</span></div>
+          <div className={styles.metricItem}><span className={styles.metricLbl}>Nilai D-1</span><span className={styles.metricVal}>{formatRp(stock.d1_value_rp)}</span></div>
+          <div className={styles.metricItem}><span className={styles.metricLbl}>Upper Wick</span><span className={styles.metricVal}>{fmt2(stock.d1_upper_wick)}</span></div>
+          <div className={styles.metricItem}><span className={styles.metricLbl}>Body Pct</span><span className={styles.metricVal}>{fmt2(stock.d1_body_pct)}</span></div>
+          <div className={styles.metricItem}><span className={styles.metricLbl}>Close Pos</span><span className={styles.metricVal}>{fmt2(stock.d1_close_pos)}</span></div>
+          <div className={styles.metricItem}><span className={styles.metricLbl}>Range Exp</span><span className={styles.metricVal}>{fmt2(stock.d1_range_expansion)}x</span></div>
+          <div className={styles.metricItem}><span className={styles.metricLbl}>MA20</span><span className={styles.metricVal}>Rp{formatNum(stock.ma20)}</span></div>
+          <div className={styles.metricItem}><span className={styles.metricLbl}>MA50</span><span className={styles.metricVal}>Rp{formatNum(stock.ma50)}</span></div>
+          <div className={styles.metricItem}><span className={styles.metricLbl}>5D Trend</span><span className={styles.metricVal} style={{ color: (stock.trend_5d_pct ?? 0) >= 0 ? 'var(--c-teal)' : 'var(--c-coral)' }}>{stock.trend_5d_pct != null ? `+${fmt2(stock.trend_5d_pct)}%` : '-'}</span></div>
+          <div className={styles.metricItem}><span className={styles.metricLbl}>Di atas MA</span><span className={styles.metricVal} style={{ color: 'var(--c-teal)' }}>{[stock.above_ma20 && 'MA20', stock.above_ma50 && 'MA50'].filter(Boolean).join(' ') || '-'}</span></div>
         </div>
+
+        {(stock.d2_change_pct != null || stock.d2_vol_ratio_ma20 != null) && (
+          <div className={styles.d2Row}>
+            <span className={styles.blockTitle}>D-2</span>
+            <ChangeBadge val={stock.d2_change_pct} />
+            {stock.d2_body_pct != null && <span>Body {fmt2(stock.d2_body_pct)}</span>}
+            {stock.d2_vol_ratio_ma20 != null && <span>Vol {fmt2(stock.d2_vol_ratio_ma20)}x MA20</span>}
+          </div>
+        )}
+
+        {stock.m1_data_available && (
+          <div className={styles.m1Row}>
+            <span className={styles.blockTitle}>Intraday M1</span>
+            <div className={styles.araMetrics} style={{ marginTop: '0.25rem' }}>
+              <div className={styles.metricItem}><span className={styles.metricLbl}>Bar Hijau</span><span className={styles.metricVal}>{stock.m1_last15_green}/14</span></div>
+              <div className={styles.metricItem}><span className={styles.metricLbl}>vs VWAP</span><span className={styles.metricVal} style={{ color: (stock.m1_close_vs_vwap ?? 0) >= 0 ? 'var(--c-teal)' : 'var(--c-coral)' }}>{stock.m1_close_vs_vwap != null ? `${stock.m1_close_vs_vwap > 0 ? '+' : ''}${fmt2(stock.m1_close_vs_vwap)}%` : '-'}</span></div>
+              <div className={styles.metricItem}><span className={styles.metricLbl}>Close Pos</span><span className={styles.metricVal}>{fmt2(stock.m1_close_pos_intra)}</span></div>
+              <div className={styles.metricItem}><span className={styles.metricLbl}>High Timing</span><span className={styles.metricVal}>{stock.m1_high_timing != null ? `${Math.round(stock.m1_high_timing * 100)}%` : '-'}</span></div>
+            </div>
+          </div>
+        )}
+
+        <div className={styles.araEntrySection}>
+          <span className={styles.blockTitle}>Entry Plan ARA</span>
+          <div className={styles.miniRow}><span>Range Entry</span><strong>Rp{stock.entry_range}</strong></div>
+          <div className={styles.miniRow}><span>Assumed Entry</span><strong>Rp{formatNum(stock.assumed_entry)}</strong></div>
+          <div className={styles.miniRow}><span>Target Est.</span><strong>{stock.estimated_target_pct}</strong></div>
+          {stock.entry_note && <div className={styles.entryNoteBox}>{stock.entry_note}</div>}
+        </div>
+
+        <div className={styles.targetGrid}>
+          <div className={styles.targetItem}><span className={styles.targetLbl}>Konservatif</span><span className={styles.targetVal}>Rp{formatNum(stock.target_conservative)}</span><span className={styles.targetPct}>+{stock.target_conservative_pct}%</span></div>
+          <div className={styles.targetItem}><span className={styles.targetLbl}>Moderat</span><span className={styles.targetVal}>Rp{formatNum(stock.target_base)}</span><span className={styles.targetPct}>+{stock.target_base_pct}%</span></div>
+          <div className={styles.targetItem}><span className={styles.targetLbl}>Full ARA</span><span className={styles.targetVal}>Rp{formatNum(stock.target_optimistic)}</span><span className={styles.targetPct}>+{stock.target_optimistic_pct}%</span></div>
+        </div>
+        {stock.target_note && <div className={styles.targetNote}>{stock.target_note}</div>}
 
         {stock.signals_positive?.length > 0 && (
           <div className={styles.signalBox}>
@@ -305,7 +320,11 @@ function AraCard({ stock }) {
             {stock.signals_negative.map((s, i) => <div key={i} className={styles.warningItem}>- {s}</div>)}
           </div>
         )}
-
+        {stock.risk_warning && (
+          <div className={styles.warningBox}>
+            <span className={styles.warningItem}>{stock.risk_warning}</span>
+          </div>
+        )}
         <div className={`${styles.warningBox} ${styles.araWarning}`}>
           <span className={styles.warningItem}>{stock.warning}</span>
         </div>
@@ -334,6 +353,7 @@ function FilterBar({ search, onSearch, sortKey, onSort, filterTier, onFilterTier
         <option value="score_desc">Urut: Skor ↓</option>
         <option value="change_desc">Urut: Change ↓</option>
         <option value="value_desc">Urut: Nilai ↓</option>
+        <option value="freq_desc">Urut: Frekuensi ↓</option>
         <option value="rr_desc">Urut: R/R ↓</option>
       </select>
       <select value={filterTier} onChange={e => onFilterTier(e.target.value)} className={styles.selectInput}>
@@ -493,6 +513,7 @@ export default function Home({ initialData, loadError }) {
       case 'score_desc': list.sort((a, b) => (b.scoring?.confidence_score ?? 0) - (a.scoring?.confidence_score ?? 0)); break
       case 'change_desc': list.sort((a, b) => (b.market_data?.change_pct ?? 0) - (a.market_data?.change_pct ?? 0)); break
       case 'value_desc': list.sort((a, b) => (b.market_data?.value_today ?? 0) - (a.market_data?.value_today ?? 0)); break
+      case 'freq_desc': list.sort((a, b) => (b.market_data?.frequency_today ?? 0) - (a.market_data?.frequency_today ?? 0)); break
       case 'rr_desc': {
         const rrNum = s => parseFloat((s.entry_plan?.rr_ratio ?? '0').replace('1:', '')) || 0
         list.sort((a, b) => rrNum(b) - rrNum(a))
