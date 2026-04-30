@@ -34,8 +34,8 @@
         }
       },
       "trend": {
-        "ma50": 8368.0,
-        "gap_from_ma50_pct": 8.46,
+        "ma50": 8367.0,
+        "gap_from_ma50_pct": 8.16,
         "ma50_slope": "POSITIVE"
       },
       "smc": {
@@ -88,7 +88,7 @@
         "⚠️ Potensi GAP UP 5.0% — entry_1 disesuaikan ke IEP",
         "⚠️ Entry 1 DI ATAS close — prediksi gap up. Jika tidak gap, skip entry_1."
       ],
-      "updated_at": "12.29 WIB"
+      "updated_at": "13.29 WIB"
     },
     {
       "rank": 2,
@@ -124,8 +124,8 @@
         }
       },
       "trend": {
-        "ma50": 6437.0,
-        "gap_from_ma50_pct": 6.03,
+        "ma50": 6436.0,
+        "gap_from_ma50_pct": 5.27,
         "ma50_slope": "POSITIVE"
       },
       "smc": {
@@ -176,7 +176,7 @@
       "warnings": [
         "⚠️ Entry 1 DI ATAS close — prediksi gap up. Jika tidak gap, skip entry_1."
       ],
-      "updated_at": "12.29 WIB"
+      "updated_at": "13.29 WIB"
     }
   ],
   "logika_baru_calon_ara": [
@@ -224,10 +224,10 @@
       "d2_body_pct": 0.379,
       "d2_vol_ratio_ma20": 12.51,
       "m1_last15_green": 11,
-      "m1_close_vs_vwap": -2.97,
-      "m1_close_pos_intra": 0.154,
+      "m1_close_vs_vwap": -3.68,
+      "m1_close_pos_intra": 0.077,
       "m1_high_timing": 0.0,
-      "m1_n_bars": 126,
+      "m1_n_bars": 127,
       "m1_data_available": true,
       "above_ma20": true,
       "above_ma50": true,
@@ -248,14 +248,14 @@
         "Broker signal: Big Accumulation (+10 poin)"
       ],
       "signals_negative": [
-        "Close di bawah VWAP: -3.0%",
+        "Close di bawah VWAP: -3.7%",
         "High intraday di awal sesi (0%) — profit taking sore"
       ],
       "universe_sources": [
         "GURU_94"
       ],
       "warning": "⚠️ FALSE SIGNAL RATE TINGGI (~85-90%). Pipeline ini mendeteksi Tipe 1 (Continuation) dan Tipe 2 (Silent Accumulation). Tipe 3 (Out of Nowhere, ~48% ARA nyata) TIDAK BISA dideteksi dari OHLCV. Gunakan sebagai WATCHLIST saja. Konfirmasi dengan broker flow, news, dan analisis manual sebelum eksekusi.",
-      "generated_at": "12:30 WIB"
+      "generated_at": "13:30 WIB"
     },
     {
       "ticker": "TOOL",
@@ -332,7 +332,7 @@
         "SCREENER_TOP_VALUE"
       ],
       "warning": "⚠️ FALSE SIGNAL RATE TINGGI (~85-90%). Pipeline ini mendeteksi Tipe 1 (Continuation) dan Tipe 2 (Silent Accumulation). Tipe 3 (Out of Nowhere, ~48% ARA nyata) TIDAK BISA dideteksi dari OHLCV. Gunakan sebagai WATCHLIST saja. Konfirmasi dengan broker flow, news, dan analisis manual sebelum eksekusi.",
-      "generated_at": "12:29 WIB"
+      "generated_at": "13:29 WIB"
     },
     {
       "ticker": "UVCR",
@@ -409,7 +409,7 @@
         "SCREENER_TOP_VALUE"
       ],
       "warning": "⚠️ FALSE SIGNAL RATE TINGGI (~85-90%). Pipeline ini mendeteksi Tipe 1 (Continuation) dan Tipe 2 (Silent Accumulation). Tipe 3 (Out of Nowhere, ~48% ARA nyata) TIDAK BISA dideteksi dari OHLCV. Gunakan sebagai WATCHLIST saja. Konfirmasi dengan broker flow, news, dan analisis manual sebelum eksekusi.",
-      "generated_at": "12:30 WIB"
+      "generated_at": "13:30 WIB"
     },
     {
       "ticker": "MOLI",
@@ -483,7 +483,7 @@
         "SCREENER_VOL_EXPLOSION"
       ],
       "warning": "⚠️ FALSE SIGNAL RATE TINGGI (~85-90%). Pipeline ini mendeteksi Tipe 1 (Continuation) dan Tipe 2 (Silent Accumulation). Tipe 3 (Out of Nowhere, ~48% ARA nyata) TIDAK BISA dideteksi dari OHLCV. Gunakan sebagai WATCHLIST saja. Konfirmasi dengan broker flow, news, dan analisis manual sebelum eksekusi.",
-      "generated_at": "12:30 WIB"
+      "generated_at": "13:30 WIB"
     },
     {
       "ticker": "CSIS",
@@ -532,7 +532,7 @@
       "m1_close_vs_vwap": -3.66,
       "m1_close_pos_intra": 0.182,
       "m1_high_timing": 0.0,
-      "m1_n_bars": 155,
+      "m1_n_bars": 156,
       "m1_data_available": true,
       "above_ma20": true,
       "above_ma50": false,
@@ -558,12 +558,12 @@
         "SCREENER_VOL_EXPLOSION"
       ],
       "warning": "⚠️ FALSE SIGNAL RATE TINGGI (~85-90%). Pipeline ini mendeteksi Tipe 1 (Continuation) dan Tipe 2 (Silent Accumulation). Tipe 3 (Out of Nowhere, ~48% ARA nyata) TIDAK BISA dideteksi dari OHLCV. Gunakan sebagai WATCHLIST saja. Konfirmasi dengan broker flow, news, dan analisis manual sebelum eksekusi.",
-      "generated_at": "12:30 WIB"
+      "generated_at": "13:30 WIB"
     }
   ],
   "meta": {
     "status": "success",
-    "generated_at": "2026-04-30 12:31:29 WIB",
+    "generated_at": "2026-04-30 13:31:08 WIB",
     "date": "2026-04-30",
     "mode": "FULL_STOCKBIT",
     "session_label": "MARKET_DAY",
@@ -581,8 +581,8 @@
     }
   },
   "market_context": {
-    "ihsg_close": 6927,
-    "ihsg_change_pct": -2.45,
+    "ihsg_close": 6926,
+    "ihsg_change_pct": -2.46,
     "ihsg_trend": "BEARISH",
     "ihsg_above_ma50": false,
     "market_safe": true,
