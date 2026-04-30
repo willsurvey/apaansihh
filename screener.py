@@ -202,8 +202,9 @@ CONFIG = {
     # Saham ARA sering kecil/illikuid sebelum meledak
     "ARA_MIN_VALUE_D1":  500_000_000,    # Rp 500 Juta (vs Rp 3M di intraday)
 
-    # Volume spike thresholds — berdasarkan distribusi 10 saham ARA
+    # Volume spike thresholds — berdasarkan distribusi empiris 29 saham ARA
     # Tier1: perlu konfluensi lain. Tier2: cukup kuat berdiri sendiri.
+    # DIPERTAHANKAN: tidak diturunkan, ini filter precision yang baik.
     "ARA_VOL_MA20_TIER1": 3.0,           # >= 3x MA20 (moderate)
     "ARA_VOL_MA20_TIER2": 6.0,           # >= 6x MA20 (kuat)
     "ARA_VOL_MA20_D2_MIN": 1.5,          # D-2 juga ada aktivitas
@@ -217,9 +218,23 @@ CONFIG = {
     "ARA_CONTINUATION_CHG_MIN": 8.0,     # D-1 naik minimal 8%
     "ARA_CONTINUATION_VOL_MIN": 3.0,     # dengan volume minimal 3x MA20
 
-    # Score thresholds
-    "ARA_SCORE_MIN":    40,              # Minimum masuk output
-    "ARA_SCORE_STRONG": 60,             # Tier STRONG
+    # VCP Squeeze parameters (v2.1 — range kontraksi = tekanan terpendam)
+    "ARA_SQUEEZE_STRONG": 0.70,          # range_exp < 0.70 → bonus kuat
+    "ARA_SQUEEZE_MILD":   0.90,          # range_exp < 0.90 → bonus moderat
+
+    # Mandatory Anchor Gate — minimal 2 dari 3 sinyal jangkar wajib terpenuhi
+    # sebelum masuk ke scoring. Ini filter utama untuk menaikkan win-rate.
+    "ARA_ANCHOR_MIN": 2,                 # min 2 anchor dari 3 yang tersedia
+    "ARA_ANCHOR_VOL_MIN": 3.0,           # Anchor 1: Vol D-1 >= 3x
+    "ARA_ANCHOR_GREEN_MIN": 12,          # Anchor 2: m1_last15_green >= 12
+    # Anchor 3: broker_signal in ["Big Acc", "Acc"] — dicek setelah fetch broker
+
+    # Score thresholds — DINAIKAN dari 40/60 untuk meningkatkan win-rate
+    "ARA_SCORE_MIN":    55,              # Naik dari 40 → 55 (lebih selektif)
+    "ARA_SCORE_STRONG": 70,             # Naik dari 60 → 70 (tier STRONG lebih eksklusif)
+
+    # Confluence guard — minimum sinyal positif
+    "ARA_CONFLUENCE_MIN": 3,             # Naik dari 2 → 3 sinyal positif wajib
 }
 
 os.makedirs(CONFIG["DATA_DIR"], exist_ok=True)
@@ -3531,13 +3546,25 @@ def score_ara_candidate_v2(feat: Dict) -> Tuple[int, str, List[str], List[str]]:
         score += 5
         pos.append(f"D-2 moderate: +{d2_chg:.1f}% vol {d2_vol:.1f}x")
 
-    # Komponen 6: Range expansion
+    # Komponen 6: Range expansion DAN Squeeze (VCP pattern)
+    # Squeeze (kontraksi) diberi bonus karena empiris 44.8% ARA punya range_exp < 0.8
+    # Bonus squeeze HANYA menambah, bukan menggantikan sinyal utama (precision-first)
+    squeeze_strong = CONFIG.get("ARA_SQUEEZE_STRONG", 0.70)
+    squeeze_mild   = CONFIG.get("ARA_SQUEEZE_MILD",   0.90)
     if rng_exp >= 2.0:
         score += 5
         pos.append(f"Range expansion: {rng_exp:.1f}x avg-5d")
     elif rng_exp >= 1.5:
         score += 3
         pos.append(f"Range expansion moderat: {rng_exp:.1f}x avg-5d")
+    elif rng_exp < squeeze_strong:
+        # VCP Squeeze kuat — harga terjepit sebelum ledakan
+        score += 8
+        pos.append(f"VCP Squeeze kuat D-1: {rng_exp:.2f}x (coiling — tekanan terpendam)")
+    elif rng_exp < squeeze_mild:
+        # Squeeze moderat
+        score += 4
+        pos.append(f"VCP Squeeze moderat D-1: {rng_exp:.2f}x (range menyempit)")
 
     # Komponen 7: Context
     if feat.get("above_ma20"):
@@ -3550,7 +3577,7 @@ def score_ara_candidate_v2(feat: Dict) -> Tuple[int, str, List[str], List[str]]:
 
     # ==========================================================
     # MINUTE SCORING (0-20 poin, capped)
-    # Sinyal universalnya: last_15_green >= 10 (22/22 saham ARA)
+    # Sinyal universalnya: last_15_green >= 12 (n=22 saham ARA)
     # ==========================================================
     minute_score = 0
 
@@ -3563,6 +3590,9 @@ def score_ara_candidate_v2(feat: Dict) -> Tuple[int, str, List[str], List[str]]:
             pos.append(f"Closing momentum OK: {m1_green}/14 bar hijau")
         else:
             neg.append(f"Closing momentum lemah: {m1_green}/14 bar hijau")
+    else:
+        # Tidak ada data menit — catat sebagai kekurangan sinyal
+        neg.append("Data menit tidak tersedia — sinyal universal ARA tidak terkonfirmasi")
 
     if m1_cpos is not None and m1_cpos >= 0.70:
         minute_score += 5
@@ -3588,15 +3618,17 @@ def score_ara_candidate_v2(feat: Dict) -> Tuple[int, str, List[str], List[str]]:
     score += min(20, minute_score)
 
     # ==========================================================
-    # PENALTIES
+    # PENALTIES (v2.1 — diperbaiki untuk hindari membuang pola shakeout)
     # ==========================================================
-    if d1_chg <= -5.0 and d1_vol < vol_t1:
+    # PERBAIKAN: Hanya penalti jika harga TURUN DAN volume TINGGI sekaligus.
+    # Harga turun + vol rendah = shakeout/manipulasi bandar, BUKAN dumping.
+    # Harga turun + vol tinggi = distribusi nyata = bahaya nyata.
+    if d1_chg <= -5.0 and d1_vol >= vol_t1:
         score -= 20
-        neg.append(f"D-1 turun {d1_chg:.1f}% tanpa volume — kemungkinan dumping")
-
-    if d1_vol < 0.5:
-        score -= 15
-        neg.append(f"Volume D-1 sangat rendah: {d1_vol:.1f}x MA20")
+        neg.append(f"Dumping nyata: D-1 turun {d1_chg:.1f}% disertai volume {d1_vol:.1f}x — distribusi bandar")
+    elif d1_chg <= -5.0 and d1_vol < vol_t1:
+        # Ini shakeout — catat tapi tidak penalti besar
+        neg.append(f"Pola shakeout: D-1 turun {d1_chg:.1f}% tanpa volume (mungkin manipulasi sebelum ARA)")
 
     if up_str >= 5 and d1_vol < 2.0:
         score -= 8
@@ -3607,11 +3639,12 @@ def score_ara_candidate_v2(feat: Dict) -> Tuple[int, str, List[str], List[str]]:
         neg.append(f"5d trend terlalu cepat: +{trend5d:.1f}%")
 
     # ==========================================================
-    # MINIMUM KONFLUENSI GUARD
+    # MINIMUM KONFLUENSI GUARD (v2.1 — dinaikkan dari 2 ke 3)
     # ==========================================================
-    if len(pos) < 2:
-        score = min(score, 30)
-        neg.append("Kurang konfluensi (min 2 sinyal diperlukan)")
+    confluence_min = CONFIG.get("ARA_CONFLUENCE_MIN", 3)
+    if len(pos) < confluence_min:
+        score = min(score, 40)
+        neg.append(f"Kurang konfluensi (min {confluence_min} sinyal diperlukan, dapat {len(pos)})")
 
     # ==========================================================
     # PATTERN TYPE
@@ -4026,11 +4059,14 @@ def get_ara_universe_v2(token: Optional[str], mode: str) -> Dict[str, Dict]:
             log.warning(f"    Vol Explosion error page {page}: {e}")
             break
 
-    # Sumber 2-4: Guru Screener
+    # Sumber 2-5: Guru Screener
+    # TAMBAH: Guru 97 (Frequency Spike) — frekuensi transaksi meledak adalah
+    # tanda ritel FOMO atau bandar akumulasi diam-diam tanpa perlu vol besar.
     for guru_id, guru_label, guru_tag in [
         (92, "Big Accumulation",       "GURU_92"),
         (94, "Bandar Bullish Reversal", "GURU_94"),
         (77, "Foreign Flow Uptrend",   "GURU_77"),
+        (97, "Frequency Spike",        "GURU_97"),  # v2.1: tambah sinyal frekuensi
     ]:
         log.info(f"  [ARA v2 Universe] Guru {guru_id} ({guru_label})...")
         data = sb_get(f"/screener/templates/{guru_id}", token,
@@ -4167,12 +4203,21 @@ def run_ara_pipeline_v2(token: Optional[str], mode: str) -> List[Dict]:
                 log.debug(f"    {code}: feature computation gagal")
                 continue
 
-            # Quick pre-filter: jika vol < 1x MA20 DAN tidak ada D-2 signal
-            # → skip sebelum download minute data (hemat waktu)
+            # Quick pre-filter v2.1 — lebih cerdas dari sekadar cek vol
+            # Logika baru: skip HANYA jika vol D-1 DAN D-2 benar-benar mati
+            # DAN tidak ada indikasi aktivitas lain yang perlu dicek minute-nya.
+            # Tujuan: hindari membuang pola shakeout atau Out-of-Nowhere yang berpotensi
+            # dikonfirmasi oleh closing squeeze di data menit.
             d1_vol_quick = feat.get("d1_vol_ratio_ma20", 0)
             d2_vol_quick = feat.get("d2_vol_ratio_ma20", 0)
-            if d1_vol_quick < 0.5 and d2_vol_quick < 1.0:
-                log.debug(f"    {code}: pre-filter FAIL (vol D-1={d1_vol_quick:.1f}x, D-2={d2_vol_quick:.1f}x)")
+            d3_vol_quick = feat.get("d2_vol_ratio_ma20", 0)  # proxy D-3 (fallback)
+            # Hanya skip jika benar-benar mati total: D-1 < 0.5x DAN D-2 < 0.7x
+            # (lebih ketat dari sebelumnya: dulu D-2 < 1.0x, sekarang 0.7x)
+            if d1_vol_quick < 0.5 and d2_vol_quick < 0.7:
+                log.debug(
+                    f"    {code}: pre-filter skip — vol benar-benar mati "
+                    f"(D-1={d1_vol_quick:.2f}x, D-2={d2_vol_quick:.2f}x)"
+                )
                 continue
 
             # Step 4b: Minute data untuk D-1 (best-effort, tidak wajib)
@@ -4188,12 +4233,13 @@ def run_ara_pipeline_v2(token: Optional[str], mode: str) -> List[Dict]:
             # Step 5: Scoring
             score, pattern_type, reasons_pos, reasons_neg = score_ara_candidate_v2(feat)
 
-            if score < CONFIG.get("ARA_SCORE_MIN", 40):
-                log.debug(f"    {code}: score {score} < {CONFIG.get('ARA_SCORE_MIN',40)} — skip")
+            if score < CONFIG.get("ARA_SCORE_MIN", 55):
+                log.debug(f"    {code}: score {score} < {CONFIG.get('ARA_SCORE_MIN',55)} — skip")
                 continue
 
-            # Step 6: Broker signal bonus
+            # Step 6: Broker signal bonus + Anchor Gate check
             broker_signal = "N/A"
+            anchor_bandar  = False  # Anchor 3: broker signal
             if mode == "FULL_STOCKBIT" and token:
                 try:
                     bs, _ = get_broker_signal(code, token)
@@ -4201,16 +4247,48 @@ def run_ara_pipeline_v2(token: Optional[str], mode: str) -> List[Dict]:
                     if bs == "Big Acc":
                         score = min(100, score + 10)
                         reasons_pos.append("Broker signal: Big Accumulation (+10 poin)")
+                        anchor_bandar = True
                     elif bs == "Acc":
                         score = min(100, score + 5)
                         reasons_pos.append("Broker signal: Accumulation (+5 poin)")
+                        anchor_bandar = True
                     elif bs in ("Dist", "Big Dist"):
                         score = max(0, score - 15)
                         reasons_neg.append(f"Broker signal: {bs} (-15 poin)")
                 except Exception as e_bs:
                     log.debug(f"    {code}: broker signal error: {e_bs}")
 
-            if score < CONFIG.get("ARA_SCORE_MIN", 40):
+            # ================================================================
+            # MANDATORY ANCHOR GATE (v2.1 — kunci utama peningkatan win-rate)
+            # Kandidat WAJIB memenuhi minimal 2 dari 3 sinyal jangkar:
+            #   Anchor 1 — Volume D-1 >= 3x MA20 (vol spike kuat)
+            #   Anchor 2 — Closing momentum >= 12/14 bar hijau (sinyal universal)
+            #   Anchor 3 — Broker signal = Acc atau Big Acc (konfirmasi bandar)
+            # Tanpa 2 anchor, saham dibuang meski score cukup.
+            # Ini secara sengaja melepas Tipe 3 tanpa konfirmasi bandar.
+            # ================================================================
+            anchor_vol     = feat.get("d1_vol_ratio_ma20", 0) >= CONFIG.get("ARA_ANCHOR_VOL_MIN", 3.0)
+            anchor_closing = (
+                feat.get("m1_last15_green") is not None
+                and feat.get("m1_last15_green") >= CONFIG.get("ARA_ANCHOR_GREEN_MIN", 12)
+            )
+            anchors_met = sum([anchor_vol, anchor_closing, anchor_bandar])
+            anchor_min  = CONFIG.get("ARA_ANCHOR_MIN", 2)
+
+            if anchors_met < anchor_min:
+                log.debug(
+                    f"    {code}: FAIL Anchor Gate "
+                    f"({anchors_met}/{anchor_min} anchor terpenuhi: "
+                    f"vol={anchor_vol}, closing={anchor_closing}, bandar={anchor_bandar})"
+                )
+                continue
+
+            log.debug(
+                f"    {code}: PASS Anchor Gate "
+                f"({anchors_met}/3: vol={anchor_vol}, closing={anchor_closing}, bandar={anchor_bandar})"
+            )
+
+            if score < CONFIG.get("ARA_SCORE_MIN", 55):
                 log.debug(f"    {code}: score {score} setelah broker adj — skip")
                 continue
 
