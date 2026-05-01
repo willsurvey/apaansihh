@@ -1,6 +1,6 @@
 {
   "status": "success",
-  "generated_at": "2026-05-01 10:29:11 WIB",
+  "generated_at": "2026-05-01 11:28:38 WIB",
   "date": "2026-05-01",
   "mode": "FULL_STOCKBIT",
   "session_label": "MARKET_DAY",
@@ -78,8 +78,8 @@
         }
       },
       "trend": {
-        "ma50": 25940.0,
-        "gap_from_ma50_pct": 2.74,
+        "ma50": 24990.0,
+        "gap_from_ma50_pct": 6.64,
         "ma50_slope": "POSITIVE"
       },
       "smc": {
@@ -127,11 +127,10 @@
         "✅ Net Foreign Buy hari ini: Rp17.4B",
         "✅ Net Foreign Buy 3 hari berturut",
         "✅ Harga di zona FVG aktif",
-        "✅ Swing Structure: BULLISH",
-        "✅ Pullback ke MA50 (2.7% di atas MA50)"
+        "✅ Swing Structure: BULLISH"
       ],
       "warnings": [],
-      "updated_at": "10.29 WIB"
+      "updated_at": "11.28 WIB"
     },
     {
       "rank": 2,
@@ -168,8 +167,8 @@
         }
       },
       "trend": {
-        "ma50": 2430.0,
-        "gap_from_ma50_pct": 3.72,
+        "ma50": 2322.0,
+        "gap_from_ma50_pct": 8.52,
         "ma50_slope": "POSITIVE"
       },
       "smc": {
@@ -216,11 +215,10 @@
         "✅ Broker Signal: Big Acc",
         "✅ Net Foreign Buy hari ini: Rp107.8B",
         "✅ Harga di zona FVG aktif",
-        "✅ Swing Structure: BULLISH",
-        "✅ Pullback ke MA50 (3.7% di atas MA50)"
+        "✅ Swing Structure: BULLISH"
       ],
       "warnings": [],
-      "updated_at": "10.29 WIB"
+      "updated_at": "11.28 WIB"
     },
     {
       "rank": 3,
@@ -308,7 +306,7 @@
         "✅ Harga di zona Order Block aktif"
       ],
       "warnings": [],
-      "updated_at": "10.29 WIB"
+      "updated_at": "11.28 WIB"
     },
     {
       "rank": 4,
@@ -395,7 +393,7 @@
         "✅ Swing Structure: BULLISH"
       ],
       "warnings": [],
-      "updated_at": "10.29 WIB"
+      "updated_at": "11.28 WIB"
     },
     {
       "rank": 5,
@@ -479,7 +477,7 @@
         "✅ Pullback ke MA50 (3.5% di atas MA50)"
       ],
       "warnings": [],
-      "updated_at": "10.29 WIB"
+      "updated_at": "11.28 WIB"
     }
   ]
 }
