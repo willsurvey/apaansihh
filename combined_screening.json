@@ -87,7 +87,7 @@
         "✅ Swing Structure: BULLISH"
       ],
       "warnings": [],
-      "updated_at": "12.28 WIB"
+      "updated_at": "13.29 WIB"
     },
     {
       "rank": 2,
@@ -175,7 +175,7 @@
         "✅ Swing Structure: BULLISH"
       ],
       "warnings": [],
-      "updated_at": "12.28 WIB"
+      "updated_at": "13.29 WIB"
     },
     {
       "rank": 3,
@@ -263,7 +263,7 @@
         "✅ Harga di zona Order Block aktif"
       ],
       "warnings": [],
-      "updated_at": "12.28 WIB"
+      "updated_at": "13.29 WIB"
     },
     {
       "rank": 4,
@@ -350,7 +350,7 @@
         "✅ Swing Structure: BULLISH"
       ],
       "warnings": [],
-      "updated_at": "12.28 WIB"
+      "updated_at": "13.29 WIB"
     },
     {
       "rank": 5,
@@ -434,7 +434,7 @@
         "✅ Pullback ke MA50 (3.5% di atas MA50)"
       ],
       "warnings": [],
-      "updated_at": "12.28 WIB"
+      "updated_at": "13.29 WIB"
     }
   ],
   "logika_baru_calon_ara": [
@@ -516,7 +516,7 @@
         "SCREENER_TOP_VALUE"
       ],
       "warning": "⚠️ FALSE SIGNAL RATE TINGGI (~85-90%). Pipeline ini mendeteksi Tipe 1 (Continuation) dan Tipe 2 (Silent Accumulation). Tipe 3 (Out of Nowhere, ~48% ARA nyata) TIDAK BISA dideteksi dari OHLCV. Gunakan sebagai WATCHLIST saja. Konfirmasi dengan broker flow, news, dan analisis manual sebelum eksekusi.",
-      "generated_at": "12:28 WIB"
+      "generated_at": "13:29 WIB"
     },
     {
       "ticker": "UVCR",
@@ -592,7 +592,7 @@
         "SCREENER_VOL_EXPLOSION"
       ],
       "warning": "⚠️ FALSE SIGNAL RATE TINGGI (~85-90%). Pipeline ini mendeteksi Tipe 1 (Continuation) dan Tipe 2 (Silent Accumulation). Tipe 3 (Out of Nowhere, ~48% ARA nyata) TIDAK BISA dideteksi dari OHLCV. Gunakan sebagai WATCHLIST saja. Konfirmasi dengan broker flow, news, dan analisis manual sebelum eksekusi.",
-      "generated_at": "12:29 WIB"
+      "generated_at": "13:30 WIB"
     },
     {
       "ticker": "NIKL",
@@ -668,7 +668,7 @@
         "GURU_94"
       ],
       "warning": "⚠️ FALSE SIGNAL RATE TINGGI (~85-90%). Pipeline ini mendeteksi Tipe 1 (Continuation) dan Tipe 2 (Silent Accumulation). Tipe 3 (Out of Nowhere, ~48% ARA nyata) TIDAK BISA dideteksi dari OHLCV. Gunakan sebagai WATCHLIST saja. Konfirmasi dengan broker flow, news, dan analisis manual sebelum eksekusi.",
-      "generated_at": "12:30 WIB"
+      "generated_at": "13:30 WIB"
     },
     {
       "ticker": "WEGE",
@@ -742,7 +742,7 @@
         "SCREENER_VOL_EXPLOSION"
       ],
       "warning": "⚠️ FALSE SIGNAL RATE TINGGI (~85-90%). Pipeline ini mendeteksi Tipe 1 (Continuation) dan Tipe 2 (Silent Accumulation). Tipe 3 (Out of Nowhere, ~48% ARA nyata) TIDAK BISA dideteksi dari OHLCV. Gunakan sebagai WATCHLIST saja. Konfirmasi dengan broker flow, news, dan analisis manual sebelum eksekusi.",
-      "generated_at": "12:29 WIB"
+      "generated_at": "13:30 WIB"
     },
     {
       "ticker": "SDMU",
@@ -788,7 +788,7 @@
       "d2_body_pct": 0.444,
       "d2_vol_ratio_ma20": 4.76,
       "m1_last15_green": 13,
-      "m1_close_vs_vwap": 4.7,
+      "m1_close_vs_vwap": 5.51,
       "m1_close_pos_intra": 0.861,
       "m1_high_timing": 0.846,
       "m1_n_bars": 305,
@@ -807,7 +807,7 @@
         "Harga di atas MA20",
         "Closing momentum kuat: 13/14 bar hijau (sinyal universal ARA)",
         "Close intraday kuat: 0.86 (mendekati high harian)",
-        "Close di atas VWAP: +4.7%",
+        "Close di atas VWAP: +5.5%",
         "High intraday di akhir sesi (85%)"
       ],
       "signals_negative": [],
@@ -817,12 +817,12 @@
         "SCREENER_TOP_VALUE"
       ],
       "warning": "⚠️ FALSE SIGNAL RATE TINGGI (~85-90%). Pipeline ini mendeteksi Tipe 1 (Continuation) dan Tipe 2 (Silent Accumulation). Tipe 3 (Out of Nowhere, ~48% ARA nyata) TIDAK BISA dideteksi dari OHLCV. Gunakan sebagai WATCHLIST saja. Konfirmasi dengan broker flow, news, dan analisis manual sebelum eksekusi.",
-      "generated_at": "12:29 WIB"
+      "generated_at": "13:29 WIB"
     }
   ],
   "meta": {
     "status": "success",
-    "generated_at": "2026-05-02 12:31:00 WIB",
+    "generated_at": "2026-05-02 13:31:12 WIB",
     "date": "2026-05-02",
     "mode": "FULL_STOCKBIT",
     "session_label": "PRE_MARKET_WEEKEND (Saturday)",
