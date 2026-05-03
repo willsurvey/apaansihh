@@ -87,7 +87,7 @@
         "✅ Swing Structure: BULLISH"
       ],
       "warnings": [],
-      "updated_at": "20.29 WIB"
+      "updated_at": "21.29 WIB"
     },
     {
       "rank": 2,
@@ -175,7 +175,7 @@
         "✅ Swing Structure: BULLISH"
       ],
       "warnings": [],
-      "updated_at": "20.29 WIB"
+      "updated_at": "21.29 WIB"
     },
     {
       "rank": 3,
@@ -263,7 +263,7 @@
         "✅ Harga di zona Order Block aktif"
       ],
       "warnings": [],
-      "updated_at": "20.29 WIB"
+      "updated_at": "21.29 WIB"
     },
     {
       "rank": 4,
@@ -350,7 +350,7 @@
         "✅ Swing Structure: BULLISH"
       ],
       "warnings": [],
-      "updated_at": "20.29 WIB"
+      "updated_at": "21.29 WIB"
     },
     {
       "rank": 5,
@@ -434,7 +434,7 @@
         "✅ Pullback ke MA50 (3.5% di atas MA50)"
       ],
       "warnings": [],
-      "updated_at": "20.29 WIB"
+      "updated_at": "21.29 WIB"
     }
   ],
   "logika_baru_calon_ara": [
@@ -516,7 +516,7 @@
         "SCREENER_TOP_VALUE"
       ],
       "warning": "⚠️ FALSE SIGNAL RATE TINGGI (~85-90%). Pipeline ini mendeteksi Tipe 1 (Continuation) dan Tipe 2 (Silent Accumulation). Tipe 3 (Out of Nowhere, ~48% ARA nyata) TIDAK BISA dideteksi dari OHLCV. Gunakan sebagai WATCHLIST saja. Konfirmasi dengan broker flow, news, dan analisis manual sebelum eksekusi.",
-      "generated_at": "20:29 WIB"
+      "generated_at": "21:29 WIB"
     },
     {
       "ticker": "UVCR",
@@ -592,7 +592,7 @@
         "SCREENER_VOL_EXPLOSION"
       ],
       "warning": "⚠️ FALSE SIGNAL RATE TINGGI (~85-90%). Pipeline ini mendeteksi Tipe 1 (Continuation) dan Tipe 2 (Silent Accumulation). Tipe 3 (Out of Nowhere, ~48% ARA nyata) TIDAK BISA dideteksi dari OHLCV. Gunakan sebagai WATCHLIST saja. Konfirmasi dengan broker flow, news, dan analisis manual sebelum eksekusi.",
-      "generated_at": "20:30 WIB"
+      "generated_at": "21:30 WIB"
     },
     {
       "ticker": "NIKL",
@@ -668,7 +668,7 @@
         "GURU_94"
       ],
       "warning": "⚠️ FALSE SIGNAL RATE TINGGI (~85-90%). Pipeline ini mendeteksi Tipe 1 (Continuation) dan Tipe 2 (Silent Accumulation). Tipe 3 (Out of Nowhere, ~48% ARA nyata) TIDAK BISA dideteksi dari OHLCV. Gunakan sebagai WATCHLIST saja. Konfirmasi dengan broker flow, news, dan analisis manual sebelum eksekusi.",
-      "generated_at": "20:30 WIB"
+      "generated_at": "21:30 WIB"
     },
     {
       "ticker": "WEGE",
@@ -742,7 +742,7 @@
         "SCREENER_VOL_EXPLOSION"
       ],
       "warning": "⚠️ FALSE SIGNAL RATE TINGGI (~85-90%). Pipeline ini mendeteksi Tipe 1 (Continuation) dan Tipe 2 (Silent Accumulation). Tipe 3 (Out of Nowhere, ~48% ARA nyata) TIDAK BISA dideteksi dari OHLCV. Gunakan sebagai WATCHLIST saja. Konfirmasi dengan broker flow, news, dan analisis manual sebelum eksekusi.",
-      "generated_at": "20:30 WIB"
+      "generated_at": "21:30 WIB"
     },
     {
       "ticker": "SDMU",
@@ -817,12 +817,12 @@
         "SCREENER_TOP_VALUE"
       ],
       "warning": "⚠️ FALSE SIGNAL RATE TINGGI (~85-90%). Pipeline ini mendeteksi Tipe 1 (Continuation) dan Tipe 2 (Silent Accumulation). Tipe 3 (Out of Nowhere, ~48% ARA nyata) TIDAK BISA dideteksi dari OHLCV. Gunakan sebagai WATCHLIST saja. Konfirmasi dengan broker flow, news, dan analisis manual sebelum eksekusi.",
-      "generated_at": "20:29 WIB"
+      "generated_at": "21:29 WIB"
     }
   ],
   "meta": {
     "status": "success",
-    "generated_at": "2026-05-03 20:31:06 WIB",
+    "generated_at": "2026-05-03 21:30:56 WIB",
     "date": "2026-05-03",
     "mode": "FULL_STOCKBIT",
     "session_label": "PRE_MARKET_WEEKEND (Sunday)",
