@@ -1,6 +1,6 @@
 {
   "status": "success",
-  "generated_at": "2026-05-05 01:29:48 WIB",
+  "generated_at": "2026-05-05 02:31:00 WIB",
   "date": "2026-05-05",
   "mode": "FULL_STOCKBIT",
   "session_label": "MARKET_DAY",
@@ -19,9 +19,9 @@
     "universe": 972,
     "after_liquidity": 126,
     "after_accumulation": 29,
-    "after_trend": 7,
-    "after_smc": 3,
-    "after_entry": 3,
+    "after_trend": 10,
+    "after_smc": 6,
+    "after_entry": 6,
     "final": 3
   },
   "config": {
@@ -76,8 +76,8 @@
         }
       },
       "trend": {
-        "ma50": 2859.0,
-        "gap_from_ma50_pct": 0.38,
+        "ma50": 2867.0,
+        "gap_from_ma50_pct": 2.91,
         "ma50_slope": "POSITIVE"
       },
       "smc": {
@@ -126,10 +126,10 @@
         "✅ Net Foreign Buy 3 hari berturut",
         "✅ Harga di zona FVG aktif",
         "✅ Swing Structure: BULLISH",
-        "✅ Pullback ke MA50 (0.4% di atas MA50)"
+        "✅ Pullback ke MA50 (2.9% di atas MA50)"
       ],
       "warnings": [],
-      "updated_at": "01.29 WIB"
+      "updated_at": "02.31 WIB"
     },
     {
       "rank": 2,
@@ -165,8 +165,8 @@
         }
       },
       "trend": {
-        "ma50": 7412.0,
-        "gap_from_ma50_pct": 9.28,
+        "ma50": 7433.0,
+        "gap_from_ma50_pct": 11.33,
         "ma50_slope": "POSITIVE"
       },
       "smc": {
@@ -216,7 +216,7 @@
         "✅ Swing Structure: BULLISH"
       ],
       "warnings": [],
-      "updated_at": "01.29 WIB"
+      "updated_at": "02.31 WIB"
     },
     {
       "rank": 3,
@@ -251,8 +251,8 @@
         }
       },
       "trend": {
-        "ma50": 1108.0,
-        "gap_from_ma50_pct": 7.85,
+        "ma50": 1111.0,
+        "gap_from_ma50_pct": 8.05,
         "ma50_slope": "POSITIVE"
       },
       "smc": {
@@ -301,7 +301,7 @@
         "✅ Swing Structure: BULLISH"
       ],
       "warnings": [],
-      "updated_at": "01.29 WIB"
+      "updated_at": "02.31 WIB"
     }
   ]
 }
