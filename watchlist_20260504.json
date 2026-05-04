@@ -1,15 +1,15 @@
 {
-  "status": "success",
-  "generated_at": "2026-05-04 14:29:54 WIB",
+  "status": "no_signal",
+  "generated_at": "2026-05-04 15:29:06 WIB",
   "date": "2026-05-04",
   "mode": "FULL_STOCKBIT",
   "session_label": "MARKET_DAY",
   "session_warning": null,
   "mode_warning": null,
-  "total_saham": 1,
+  "total_saham": 0,
   "market_context": {
-    "ihsg_close": 6963,
-    "ihsg_change_pct": 0.1,
+    "ihsg_close": 6971,
+    "ihsg_change_pct": 0.21,
     "ihsg_trend": "BEARISH",
     "ihsg_above_ma50": false,
     "market_safe": true,
@@ -17,12 +17,12 @@
   },
   "screening_summary": {
     "universe": 972,
-    "after_liquidity": 117,
+    "after_liquidity": 123,
     "after_accumulation": 16,
     "after_trend": 8,
     "after_smc": 2,
-    "after_entry": 1,
-    "final": 1
+    "after_entry": 0,
+    "final": 0
   },
   "config": {
     "strategy": "Pre-Market Intraday — Limit Order",
@@ -42,94 +42,5 @@
     "max_output": 5,
     "min_rr": 2.0
   },
-  "data": [
-    {
-      "rank": 1,
-      "ticker": "INCO",
-      "company": "Vale Indonesia Tbk.",
-      "mode": "FULL_STOCKBIT",
-      "universe_sources": [
-        "MOVER_TYPE_NET_FOREIGN_BUY",
-        "GURU_92_Big Accumula",
-        "SCREENER_TOP_VALUE"
-      ],
-      "market_data": {
-        "close": 6800,
-        "change_pct": -0.73,
-        "value_today": 24524217500,
-        "frequency_today": 2790,
-        "iep": 6975,
-        "iep_change_pct": 2.57
-      },
-      "accumulation": {
-        "broker_signal": "Big Acc",
-        "net_foreign_today": 33609427500,
-        "net_foreign_3d": 0,
-        "acc_score": 25,
-        "score_breakdown": {
-          "broker": 35,
-          "foreign_1d": 0,
-          "foreign_3d": 0,
-          "candle": -5,
-          "volume": -5,
-          "total": 25
-        }
-      },
-      "trend": {
-        "ma50": 6447.0,
-        "gap_from_ma50_pct": 5.86,
-        "ma50_slope": "POSITIVE"
-      },
-      "smc": {
-        "internal_structure": "NONE",
-        "swing_trend_bias": "BEARISH",
-        "ob_zone": "6650 - 6750",
-        "fvg_zone": null,
-        "strong_low": 6650.0,
-        "weak_high": 6950.0
-      },
-      "entry_plan": {
-        "entry_direction": "GAP_UP",
-        "entry_direction_label": "⬆️ Gap Up entry — entry di atas PDC jika gap terkonfirmasi",
-        "entry_direction_reason": "IEP gap up 2.6%",
-        "entry_1": 6975,
-        "entry_1_pct": 20,
-        "entry_1_note": "Gap up entry (IEP +2.6%)",
-        "entry_2": 6875,
-        "entry_2_pct": 50,
-        "entry_2_note": "PDC / Bid Wall — antisipasi flat open",
-        "entry_3": 6825,
-        "entry_3_pct": 30,
-        "entry_3_note": "Pullback fallback / OB zone",
-        "average_entry": 6875,
-        "entry_zone": "6825 - 6975",
-        "sl": 6775,
-        "sl_pct_risk": 1.45,
-        "sl_note": "Cut loss wajib jika close harian di bawah ini",
-        "tp1": 6975,
-        "tp1_note": "PDH / Target psikologis intraday",
-        "tp2": 7175,
-        "tp2_note": "Weak High / Supply Zone 1H",
-        "tp3": 7400,
-        "tp3_note": "RR minimum 1:2.0",
-        "rr_ratio": "1:5.2",
-        "risk_pct": 2,
-        "risk_note": "Max 2% dari total portofolio"
-      },
-      "scoring": {
-        "confidence_score": 40,
-        "tier": "MODERATE"
-      },
-      "signals": [
-        "✅ Broker Signal: Big Acc",
-        "✅ Net Foreign Buy hari ini: Rp33.6B",
-        "✅ Harga di zona Order Block aktif"
-      ],
-      "warnings": [
-        "⚠️ Potensi GAP UP 2.6% — entry_1 disesuaikan ke IEP",
-        "⚠️ Entry 1 DI ATAS close — prediksi gap up. Jika tidak gap, skip entry_1."
-      ],
-      "updated_at": "14.29 WIB"
-    }
-  ]
+  "data": []
 }
