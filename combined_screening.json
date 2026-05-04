@@ -86,7 +86,7 @@
         "✅ Pullback ke MA50 (2.9% di atas MA50)"
       ],
       "warnings": [],
-      "updated_at": "02.31 WIB"
+      "updated_at": "03.30 WIB"
     },
     {
       "rank": 2,
@@ -173,7 +173,7 @@
         "✅ Swing Structure: BULLISH"
       ],
       "warnings": [],
-      "updated_at": "02.31 WIB"
+      "updated_at": "03.30 WIB"
     },
     {
       "rank": 3,
@@ -258,7 +258,7 @@
         "✅ Swing Structure: BULLISH"
       ],
       "warnings": [],
-      "updated_at": "02.31 WIB"
+      "updated_at": "03.30 WIB"
     }
   ],
   "logika_baru_calon_ara": [
@@ -306,7 +306,7 @@
       "d2_body_pct": 0.429,
       "d2_vol_ratio_ma20": 5.06,
       "m1_last15_green": 12,
-      "m1_close_vs_vwap": 0.05,
+      "m1_close_vs_vwap": 0.11,
       "m1_close_pos_intra": 0.5,
       "m1_high_timing": 0.618,
       "m1_n_bars": 319,
@@ -336,7 +336,80 @@
         "SCREENER_TOP_VALUE"
       ],
       "warning": "⚠️ FALSE SIGNAL RATE TINGGI (~85-90%). Pipeline ini mendeteksi Tipe 1 (Continuation) dan Tipe 2 (Silent Accumulation). Tipe 3 (Out of Nowhere, ~48% ARA nyata) TIDAK BISA dideteksi dari OHLCV. Gunakan sebagai WATCHLIST saja. Konfirmasi dengan broker flow, news, dan analisis manual sebelum eksekusi.",
-      "generated_at": "02:31 WIB"
+      "generated_at": "03:31 WIB"
+    },
+    {
+      "ticker": "JKON",
+      "company": "Jaya Konstruksi Manggala Pratama Tbk.",
+      "type": "CALON_ARA",
+      "score": 79,
+      "score_tier": "STRONG",
+      "pattern_type": "SILENT_ACCUMULATION",
+      "confluence_count": 9,
+      "entry_range": "79 – 88",
+      "entry_lower": 79,
+      "entry_upper": 88,
+      "entry_note": "Beli saat open di 79 atau jika harga masih di area ini. Jangan kejar jika sudah naik di atas 88 (+11% dari PDC).",
+      "entry_range_pct": 11.4,
+      "estimated_target_pct": "+11% hingga +20% dari harga beli",
+      "target_conservative": 89,
+      "target_base": 96,
+      "target_optimistic": 100,
+      "target_conservative_pct": 11.0,
+      "target_base_pct": 20.0,
+      "target_optimistic_pct": 25.0,
+      "target_note": "Konservatif: 89 (~+11%) | Moderat: 96 (~+20%) | Full ARA: 100 (~+25%)",
+      "assumed_entry": 80,
+      "reason_beginner_friendly": "JKON diam-diam banyak ditransaksikan kemarin (volume 8x dari biasanya) meski harga tidak bergerak banyak. Ini pola sebelum harga melonjak tajam — tapi bisa juga tidak terjadi apa-apa jika tidak ada berita pendukung. Skor kepercayaan: TINGGI.",
+      "risk_warning": "⚠️ FALSE SIGNAL RATE ~85-90%. Konfirmasi dengan broker flow, berita, dan analisis manual sebelum beli. | 📌 Batasi posisi: max 2% dari portofolio.",
+      "broker_signal": "Normal Acc",
+      "d1_date": "2026-05-04",
+      "d1_close": 79.0,
+      "d1_open": 78.0,
+      "d1_high": 84.0,
+      "d1_low": 77.0,
+      "d1_change_pct": 2.6,
+      "d1_vol_ratio_ma20": 8.08,
+      "d1_vol_ratio_ma5": 4.62,
+      "d1_body_pct": 0.143,
+      "d1_upper_wick": 0.714,
+      "d1_lower_wick": 0.143,
+      "d1_close_pos": 0.286,
+      "d1_bullish": true,
+      "d1_range_expansion": 1.44,
+      "d1_value_rp": 948058460000,
+      "d2_change_pct": 0.0,
+      "d2_body_pct": 0.0,
+      "d2_vol_ratio_ma20": 1.63,
+      "m1_last15_green": 12,
+      "m1_close_vs_vwap": 0.12,
+      "m1_close_pos_intra": 0.286,
+      "m1_high_timing": 0.328,
+      "m1_n_bars": 204,
+      "m1_data_available": true,
+      "above_ma20": true,
+      "above_ma50": true,
+      "ma20": 75.0,
+      "ma50": 76.0,
+      "up_streak_days": 0,
+      "trend_5d_pct": 5.33,
+      "signals_positive": [
+        "Volume D-1 ekstrem: 8.1x MA20 (tier-2 ≥6x)",
+        "Volume D-2 elevated: 1.6x MA20 (akumulasi dini)",
+        "Upper wick rejection: 0.71 (smart money absorption)",
+        "Body kecil D-1: 0.14 (candle akumulasi)",
+        "Close pos rendah: 0.29 (buyers absorbed selling)",
+        "Harga di atas MA20",
+        "5d trend sehat: +5.3%",
+        "Closing momentum kuat: 12/14 bar hijau (sinyal universal ARA)",
+        "Close sedikit di atas VWAP: +0.1%"
+      ],
+      "signals_negative": [],
+      "universe_sources": [
+        "SCREENER_VOL_EXPLOSION"
+      ],
+      "warning": "⚠️ FALSE SIGNAL RATE TINGGI (~85-90%). Pipeline ini mendeteksi Tipe 1 (Continuation) dan Tipe 2 (Silent Accumulation). Tipe 3 (Out of Nowhere, ~48% ARA nyata) TIDAK BISA dideteksi dari OHLCV. Gunakan sebagai WATCHLIST saja. Konfirmasi dengan broker flow, news, dan analisis manual sebelum eksekusi.",
+      "generated_at": "03:31 WIB"
     },
     {
       "ticker": "GSMF",
@@ -382,7 +455,7 @@
       "d2_body_pct": 0.667,
       "d2_vol_ratio_ma20": 0.09,
       "m1_last15_green": 13,
-      "m1_close_vs_vwap": -0.98,
+      "m1_close_vs_vwap": -0.63,
       "m1_close_pos_intra": 0.586,
       "m1_high_timing": 0.626,
       "m1_n_bars": 257,
@@ -411,7 +484,7 @@
         "SCREENER_TOP_VALUE"
       ],
       "warning": "⚠️ FALSE SIGNAL RATE TINGGI (~85-90%). Pipeline ini mendeteksi Tipe 1 (Continuation) dan Tipe 2 (Silent Accumulation). Tipe 3 (Out of Nowhere, ~48% ARA nyata) TIDAK BISA dideteksi dari OHLCV. Gunakan sebagai WATCHLIST saja. Konfirmasi dengan broker flow, news, dan analisis manual sebelum eksekusi.",
-      "generated_at": "02:31 WIB"
+      "generated_at": "03:31 WIB"
     },
     {
       "ticker": "HERO",
@@ -487,79 +560,7 @@
         "GURU_94"
       ],
       "warning": "⚠️ FALSE SIGNAL RATE TINGGI (~85-90%). Pipeline ini mendeteksi Tipe 1 (Continuation) dan Tipe 2 (Silent Accumulation). Tipe 3 (Out of Nowhere, ~48% ARA nyata) TIDAK BISA dideteksi dari OHLCV. Gunakan sebagai WATCHLIST saja. Konfirmasi dengan broker flow, news, dan analisis manual sebelum eksekusi.",
-      "generated_at": "02:32 WIB"
-    },
-    {
-      "ticker": "JKON",
-      "company": "Jaya Konstruksi Manggala Pratama Tbk.",
-      "type": "CALON_ARA",
-      "score": 77,
-      "score_tier": "STRONG",
-      "pattern_type": "SILENT_ACCUMULATION",
-      "confluence_count": 8,
-      "entry_range": "79 – 88",
-      "entry_lower": 79,
-      "entry_upper": 88,
-      "entry_note": "Beli saat open di 79 atau jika harga masih di area ini. Jangan kejar jika sudah naik di atas 88 (+11% dari PDC).",
-      "entry_range_pct": 11.4,
-      "estimated_target_pct": "+11% hingga +20% dari harga beli",
-      "target_conservative": 89,
-      "target_base": 96,
-      "target_optimistic": 100,
-      "target_conservative_pct": 11.0,
-      "target_base_pct": 20.0,
-      "target_optimistic_pct": 25.0,
-      "target_note": "Konservatif: 89 (~+11%) | Moderat: 96 (~+20%) | Full ARA: 100 (~+25%)",
-      "assumed_entry": 80,
-      "reason_beginner_friendly": "JKON diam-diam banyak ditransaksikan kemarin (volume 8x dari biasanya) meski harga tidak bergerak banyak. Ini pola sebelum harga melonjak tajam — tapi bisa juga tidak terjadi apa-apa jika tidak ada berita pendukung. Skor kepercayaan: TINGGI.",
-      "risk_warning": "⚠️ FALSE SIGNAL RATE ~85-90%. Konfirmasi dengan broker flow, berita, dan analisis manual sebelum beli. | 📌 Batasi posisi: max 2% dari portofolio.",
-      "broker_signal": "Normal Acc",
-      "d1_date": "2026-05-04",
-      "d1_close": 79.0,
-      "d1_open": 78.0,
-      "d1_high": 84.0,
-      "d1_low": 77.0,
-      "d1_change_pct": 2.6,
-      "d1_vol_ratio_ma20": 8.08,
-      "d1_vol_ratio_ma5": 4.62,
-      "d1_body_pct": 0.143,
-      "d1_upper_wick": 0.714,
-      "d1_lower_wick": 0.143,
-      "d1_close_pos": 0.286,
-      "d1_bullish": true,
-      "d1_range_expansion": 1.44,
-      "d1_value_rp": 948058460000,
-      "d2_change_pct": 0.0,
-      "d2_body_pct": 0.0,
-      "d2_vol_ratio_ma20": 1.63,
-      "m1_last15_green": 12,
-      "m1_close_vs_vwap": -0.71,
-      "m1_close_pos_intra": 0.286,
-      "m1_high_timing": 0.322,
-      "m1_n_bars": 202,
-      "m1_data_available": true,
-      "above_ma20": true,
-      "above_ma50": true,
-      "ma20": 75.0,
-      "ma50": 76.0,
-      "up_streak_days": 0,
-      "trend_5d_pct": 5.33,
-      "signals_positive": [
-        "Volume D-1 ekstrem: 8.1x MA20 (tier-2 ≥6x)",
-        "Volume D-2 elevated: 1.6x MA20 (akumulasi dini)",
-        "Upper wick rejection: 0.71 (smart money absorption)",
-        "Body kecil D-1: 0.14 (candle akumulasi)",
-        "Close pos rendah: 0.29 (buyers absorbed selling)",
-        "Harga di atas MA20",
-        "5d trend sehat: +5.3%",
-        "Closing momentum kuat: 12/14 bar hijau (sinyal universal ARA)"
-      ],
-      "signals_negative": [],
-      "universe_sources": [
-        "SCREENER_VOL_EXPLOSION"
-      ],
-      "warning": "⚠️ FALSE SIGNAL RATE TINGGI (~85-90%). Pipeline ini mendeteksi Tipe 1 (Continuation) dan Tipe 2 (Silent Accumulation). Tipe 3 (Out of Nowhere, ~48% ARA nyata) TIDAK BISA dideteksi dari OHLCV. Gunakan sebagai WATCHLIST saja. Konfirmasi dengan broker flow, news, dan analisis manual sebelum eksekusi.",
-      "generated_at": "02:32 WIB"
+      "generated_at": "03:32 WIB"
     },
     {
       "ticker": "UVCR",
@@ -605,7 +606,7 @@
       "d2_body_pct": 0.222,
       "d2_vol_ratio_ma20": 4.89,
       "m1_last15_green": 14,
-      "m1_close_vs_vwap": 1.06,
+      "m1_close_vs_vwap": 1.93,
       "m1_close_pos_intra": 0.8,
       "m1_high_timing": 0.409,
       "m1_n_bars": 313,
@@ -626,7 +627,7 @@
         "5d trend sehat: +24.9%",
         "Closing momentum kuat: 14/14 bar hijau (sinyal universal ARA)",
         "Close intraday kuat: 0.80 (mendekati high harian)",
-        "Close sedikit di atas VWAP: +1.1%"
+        "Close sedikit di atas VWAP: +1.9%"
       ],
       "signals_negative": [],
       "universe_sources": [
@@ -635,12 +636,12 @@
         "SCREENER_TOP_VALUE"
       ],
       "warning": "⚠️ FALSE SIGNAL RATE TINGGI (~85-90%). Pipeline ini mendeteksi Tipe 1 (Continuation) dan Tipe 2 (Silent Accumulation). Tipe 3 (Out of Nowhere, ~48% ARA nyata) TIDAK BISA dideteksi dari OHLCV. Gunakan sebagai WATCHLIST saja. Konfirmasi dengan broker flow, news, dan analisis manual sebelum eksekusi.",
-      "generated_at": "02:31 WIB"
+      "generated_at": "03:31 WIB"
     }
   ],
   "meta": {
     "status": "success",
-    "generated_at": "2026-05-05 02:33:21 WIB",
+    "generated_at": "2026-05-05 03:32:51 WIB",
     "date": "2026-05-05",
     "mode": "FULL_STOCKBIT",
     "session_label": "MARKET_DAY",
