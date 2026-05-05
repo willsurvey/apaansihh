@@ -1,6 +1,6 @@
 {
   "status": "success",
-  "generated_at": "2026-05-06 01:30:33 WIB",
+  "generated_at": "2026-05-06 02:30:04 WIB",
   "date": "2026-05-06",
   "mode": "FULL_STOCKBIT",
   "session_label": "MARKET_DAY",
@@ -19,7 +19,7 @@
     "universe": 972,
     "after_liquidity": 124,
     "after_accumulation": 40,
-    "after_trend": 14,
+    "after_trend": 17,
     "after_smc": 7,
     "after_entry": 6,
     "final": 4
@@ -79,8 +79,8 @@
         }
       },
       "trend": {
-        "ma50": 1417.0,
-        "gap_from_ma50_pct": 21.73,
+        "ma50": 1424.0,
+        "gap_from_ma50_pct": 31.31,
         "ma50_slope": "POSITIVE"
       },
       "smc": {
@@ -131,7 +131,7 @@
         "✅ Swing Structure: BULLISH"
       ],
       "warnings": [],
-      "updated_at": "01.30 WIB"
+      "updated_at": "02.30 WIB"
     },
     {
       "rank": 2,
@@ -166,8 +166,8 @@
         }
       },
       "trend": {
-        "ma50": 849.0,
-        "gap_from_ma50_pct": 7.21,
+        "ma50": 850.0,
+        "gap_from_ma50_pct": 12.34,
         "ma50_slope": "POSITIVE"
       },
       "smc": {
@@ -217,7 +217,7 @@
         "✅ Swing Structure: BULLISH"
       ],
       "warnings": [],
-      "updated_at": "01.30 WIB"
+      "updated_at": "02.30 WIB"
     },
     {
       "rank": 3,
@@ -252,8 +252,8 @@
         }
       },
       "trend": {
-        "ma50": 749.0,
-        "gap_from_ma50_pct": 4.11,
+        "ma50": 751.0,
+        "gap_from_ma50_pct": 7.18,
         "ma50_slope": "POSITIVE"
       },
       "smc": {
@@ -301,11 +301,10 @@
         "✅ Net Foreign Buy hari ini: Rp1.9B",
         "✅ Harga di zona Order Block aktif",
         "✅ Harga di zona FVG aktif",
-        "✅ Swing Structure: BULLISH",
-        "✅ Pullback ke MA50 (4.1% di atas MA50)"
+        "✅ Swing Structure: BULLISH"
       ],
       "warnings": [],
-      "updated_at": "01.30 WIB"
+      "updated_at": "02.30 WIB"
     },
     {
       "rank": 4,
@@ -340,8 +339,8 @@
         }
       },
       "trend": {
-        "ma50": 206.0,
-        "gap_from_ma50_pct": 1.7,
+        "ma50": 207.0,
+        "gap_from_ma50_pct": 10.34,
         "ma50_slope": "POSITIVE"
       },
       "smc": {
@@ -387,13 +386,12 @@
       "signals": [
         "✅ Broker Signal: Big Acc",
         "✅ Net Foreign Buy hari ini: Rp0.2B",
-        "✅ Harga di zona FVG aktif",
-        "✅ Pullback ke MA50 (1.7% di atas MA50)"
+        "✅ Harga di zona FVG aktif"
       ],
       "warnings": [
         "⚠️ Sumber: Top Gainer hari ini. Pastikan ada konfirmasi teknikal sebelum entry."
       ],
-      "updated_at": "01.30 WIB"
+      "updated_at": "02.30 WIB"
     }
   ]
 }
