@@ -1,12 +1,12 @@
 {
   "status": "success",
-  "generated_at": "2026-05-05 18:29:27 WIB",
+  "generated_at": "2026-05-05 19:14:14 WIB",
   "date": "2026-05-05",
   "mode": "FULL_STOCKBIT",
   "session_label": "MARKET_DAY",
   "session_warning": null,
   "mode_warning": null,
-  "total_saham": 4,
+  "total_saham": 1,
   "market_context": {
     "ihsg_close": 7057,
     "ihsg_change_pct": 1.22,
@@ -16,13 +16,13 @@
     "warning": null
   },
   "screening_summary": {
-    "universe": 972,
-    "after_liquidity": 124,
-    "after_accumulation": 40,
-    "after_trend": 17,
-    "after_smc": 7,
-    "after_entry": 6,
-    "final": 4
+    "universe": 443,
+    "after_liquidity": 26,
+    "after_accumulation": 6,
+    "after_trend": 4,
+    "after_smc": 1,
+    "after_entry": 1,
+    "final": 1
   },
   "config": {
     "strategy": "Pre-Market Intraday — Limit Order",
@@ -45,274 +45,12 @@
   "data": [
     {
       "rank": 1,
-      "ticker": "SSIA",
-      "company": "Surya Semesta Internusa Tbk.",
-      "mode": "FULL_STOCKBIT",
-      "universe_sources": [
-        "MOVER_TYPE_TOP_VALUE",
-        "MOVER_TYPE_TOP_GAINER",
-        "SCREENER_VOLUME_EXPLOSION",
-        "GURU_72_IHSG Short-t",
-        "SCREENER_TOP_VALUE"
-      ],
-      "market_data": {
-        "close": 1870,
-        "change_pct": 8.41,
-        "value_today": 77285704000,
-        "frequency_today": 9269,
-        "iep": 0,
-        "iep_change_pct": 0
-      },
-      "accumulation": {
-        "broker_signal": "Big Acc",
-        "net_foreign_today": -11603433500,
-        "net_foreign_3d": 0,
-        "acc_score": 60,
-        "score_breakdown": {
-          "broker": 35,
-          "foreign_1d": 15,
-          "foreign_3d": 0,
-          "candle": 10,
-          "volume": 0,
-          "total": 60
-        }
-      },
-      "trend": {
-        "ma50": 1424.0,
-        "gap_from_ma50_pct": 31.31,
-        "ma50_slope": "POSITIVE"
-      },
-      "smc": {
-        "internal_structure": "BOS_BULLISH",
-        "swing_trend_bias": "BULLISH",
-        "ob_zone": null,
-        "fvg_zone": "1830 - 1870",
-        "strong_low": 1425.0,
-        "weak_high": 1825.0
-      },
-      "entry_plan": {
-        "entry_direction": "MOMENTUM",
-        "entry_direction_label": "➡️ Momentum entry — bisa entry di/dekat PDC",
-        "entry_direction_reason": "Internal BOS/CHoCH bullish 1H",
-        "entry_1": 1870,
-        "entry_1_pct": 20,
-        "entry_1_note": "PDC entry — momentum kuat (Internal BOS/CHoCH bullish 1H)",
-        "entry_2": 1830,
-        "entry_2_pct": 50,
-        "entry_2_note": "Pullback ringan / OB zone",
-        "entry_3": 1800,
-        "entry_3_pct": 30,
-        "entry_3_note": "Deep pullback / PDL area",
-        "average_entry": 1830,
-        "entry_zone": "1800 - 1870",
-        "sl": 1775,
-        "sl_pct_risk": 3.01,
-        "sl_note": "Cut loss wajib jika close harian di bawah ini",
-        "tp1": 1870,
-        "tp1_note": "PDH / Target psikologis intraday",
-        "tp2": 1925,
-        "tp2_note": "Weak High / Supply Zone 1H",
-        "tp3": 1985,
-        "tp3_note": "RR minimum 1:2.0",
-        "rr_ratio": "1:2.8",
-        "risk_pct": 2,
-        "risk_note": "Max 2% dari total portofolio"
-      },
-      "scoring": {
-        "confidence_score": 75,
-        "tier": "HIGH"
-      },
-      "signals": [
-        "✅ Broker Signal: Big Acc",
-        "✅ Net Foreign Buy kemarin",
-        "✅ Internal BOS Bullish (1H)",
-        "✅ Harga di zona FVG aktif",
-        "✅ Swing Structure: BULLISH"
-      ],
-      "warnings": [],
-      "updated_at": "18.29 WIB"
-    },
-    {
-      "rank": 2,
-      "ticker": "CBRE",
-      "company": "Cakra Buana Resources Energi Tbk.",
-      "mode": "FULL_STOCKBIT",
-      "universe_sources": [
-        "MOVER_TYPE_NET_FOREIGN_BUY",
-        "GURU_72_IHSG Short-t",
-        "SCREENER_TOP_VALUE"
-      ],
-      "market_data": {
-        "close": 955,
-        "change_pct": 4.95,
-        "value_today": 25165922500,
-        "frequency_today": 5010,
-        "iep": 0,
-        "iep_change_pct": 0
-      },
-      "accumulation": {
-        "broker_signal": "Big Acc",
-        "net_foreign_today": 1467551000,
-        "net_foreign_3d": 0,
-        "acc_score": 60,
-        "score_breakdown": {
-          "broker": 35,
-          "foreign_1d": 15,
-          "foreign_3d": 0,
-          "candle": 10,
-          "volume": 0,
-          "total": 60
-        }
-      },
-      "trend": {
-        "ma50": 850.0,
-        "gap_from_ma50_pct": 12.34,
-        "ma50_slope": "POSITIVE"
-      },
-      "smc": {
-        "internal_structure": "NONE",
-        "swing_trend_bias": "BULLISH",
-        "ob_zone": null,
-        "fvg_zone": "910 - 945",
-        "strong_low": 845.0,
-        "weak_high": 940.0
-      },
-      "entry_plan": {
-        "entry_direction": "PULLBACK",
-        "entry_direction_label": "⬇️ Pullback entry — tunggu harga turun ke zona entry",
-        "entry_direction_reason": "",
-        "entry_1": 945,
-        "entry_1_pct": 20,
-        "entry_1_note": "Pullback ringan / Bid Wall area",
-        "entry_2": 910,
-        "entry_2_pct": 50,
-        "entry_2_note": "Area OB / FVG / Support",
-        "entry_3": 905,
-        "entry_3_pct": 30,
-        "entry_3_note": "Deep pullback / PDL area",
-        "average_entry": 915,
-        "entry_zone": "905 - 945",
-        "sl": 895,
-        "sl_pct_risk": 2.19,
-        "sl_note": "Cut loss wajib jika close harian di bawah ini",
-        "tp1": 980,
-        "tp1_note": "PDH / Target psikologis intraday",
-        "tp2": 1010,
-        "tp2_note": "Weak High / Supply Zone 1H",
-        "tp3": 1040,
-        "tp3_note": "RR minimum 1:2.0",
-        "rr_ratio": "1:6.2",
-        "risk_pct": 2,
-        "risk_note": "Max 2% dari total portofolio"
-      },
-      "scoring": {
-        "confidence_score": 65,
-        "tier": "MODERATE"
-      },
-      "signals": [
-        "✅ Broker Signal: Big Acc",
-        "✅ Net Foreign Buy hari ini: Rp1.5B",
-        "✅ Harga di zona FVG aktif",
-        "✅ Swing Structure: BULLISH"
-      ],
-      "warnings": [],
-      "updated_at": "18.29 WIB"
-    },
-    {
-      "rank": 3,
-      "ticker": "BFIN",
-      "company": "BFI Finance Indonesia Tbk.",
-      "mode": "FULL_STOCKBIT",
-      "universe_sources": [
-        "GURU_72",
-        "SCREENER_TOP_VALUE"
-      ],
-      "market_data": {
-        "close": 805,
-        "change_pct": 0,
-        "value_today": 13340583000.0,
-        "frequency_today": 0,
-        "iep": 0,
-        "iep_change_pct": 0
-      },
-      "accumulation": {
-        "broker_signal": "Big Acc",
-        "net_foreign_today": 0,
-        "net_foreign_3d": 0,
-        "acc_score": 55,
-        "score_breakdown": {
-          "broker": 35,
-          "foreign_1d": 15,
-          "foreign_3d": 0,
-          "candle": 10,
-          "volume": -5,
-          "total": 55
-        }
-      },
-      "trend": {
-        "ma50": 751.0,
-        "gap_from_ma50_pct": 7.18,
-        "ma50_slope": "POSITIVE"
-      },
-      "smc": {
-        "internal_structure": "NONE",
-        "swing_trend_bias": "BULLISH",
-        "ob_zone": "765 - 825",
-        "fvg_zone": "780 - 800",
-        "strong_low": 775.0,
-        "weak_high": 860.0
-      },
-      "entry_plan": {
-        "entry_direction": "PULLBACK",
-        "entry_direction_label": "⬇️ Pullback entry — tunggu harga turun ke zona entry",
-        "entry_direction_reason": "",
-        "entry_1": 800,
-        "entry_1_pct": 20,
-        "entry_1_note": "Pullback ringan / Bid Wall area",
-        "entry_2": 795,
-        "entry_2_pct": 50,
-        "entry_2_note": "Area OB / FVG / Support",
-        "entry_3": 785,
-        "entry_3_pct": 30,
-        "entry_3_note": "Deep pullback / PDL area",
-        "average_entry": 795,
-        "entry_zone": "785 - 800",
-        "sl": 775,
-        "sl_pct_risk": 2.52,
-        "sl_note": "Cut loss wajib jika close harian di bawah ini",
-        "tp1": 815,
-        "tp1_note": "PDH / Target psikologis intraday",
-        "tp2": 860,
-        "tp2_note": "Weak High / Supply Zone 1H",
-        "tp3": 885,
-        "tp3_note": "RR minimum 1:2.0",
-        "rr_ratio": "1:4.5",
-        "risk_pct": 2,
-        "risk_note": "Max 2% dari total portofolio"
-      },
-      "scoring": {
-        "confidence_score": 65,
-        "tier": "MODERATE"
-      },
-      "signals": [
-        "✅ Broker Signal: Big Acc",
-        "✅ Net Foreign Buy kemarin",
-        "✅ Harga di zona Order Block aktif",
-        "✅ Harga di zona FVG aktif",
-        "✅ Swing Structure: BULLISH"
-      ],
-      "warnings": [],
-      "updated_at": "18.29 WIB"
-    },
-    {
-      "rank": 4,
       "ticker": "GZCO",
       "company": "Gozco Plantations Tbk.",
       "mode": "FULL_STOCKBIT",
       "universe_sources": [
         "MOVER_TYPE_TOP_GAINER",
-        "GURU_72_IHSG Short-t",
-        "SCREENER_TOP_VALUE"
+        "GURU_92_Big Accumula"
       ],
       "market_data": {
         "close": 228,
@@ -389,7 +127,7 @@
       "warnings": [
         "⚠️ Sumber: Top Gainer hari ini. Pastikan ada konfirmasi teknikal sebelum entry."
       ],
-      "updated_at": "18.29 WIB"
+      "updated_at": "19.14 WIB"
     }
   ]
 }
