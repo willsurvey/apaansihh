@@ -88,7 +88,7 @@
         "✅ Swing Structure: BULLISH"
       ],
       "warnings": [],
-      "updated_at": "04.30 WIB"
+      "updated_at": "05.29 WIB"
     },
     {
       "rank": 2,
@@ -174,7 +174,7 @@
         "✅ Swing Structure: BULLISH"
       ],
       "warnings": [],
-      "updated_at": "04.30 WIB"
+      "updated_at": "05.29 WIB"
     },
     {
       "rank": 3,
@@ -261,7 +261,7 @@
         "✅ Swing Structure: BULLISH"
       ],
       "warnings": [],
-      "updated_at": "04.30 WIB"
+      "updated_at": "05.29 WIB"
     },
     {
       "rank": 4,
@@ -348,7 +348,7 @@
       "warnings": [
         "⚠️ Sumber: Top Gainer hari ini. Pastikan ada konfirmasi teknikal sebelum entry."
       ],
-      "updated_at": "04.30 WIB"
+      "updated_at": "05.29 WIB"
     }
   ],
   "logika_baru_calon_ara": [
@@ -396,7 +396,7 @@
       "d2_body_pct": 0.5,
       "d2_vol_ratio_ma20": 0.19,
       "m1_last15_green": 14,
-      "m1_close_vs_vwap": -3.72,
+      "m1_close_vs_vwap": -1.62,
       "m1_close_pos_intra": 0.486,
       "m1_high_timing": 0.291,
       "m1_n_bars": 327,
@@ -417,16 +417,14 @@
         "5d trend sehat: +17.5%",
         "Closing momentum kuat: 14/14 bar hijau (sinyal universal ARA)"
       ],
-      "signals_negative": [
-        "Close di bawah VWAP: -3.7%"
-      ],
+      "signals_negative": [],
       "universe_sources": [
         "SCREENER_VOL_EXPLOSION",
         "GURU_94",
         "SCREENER_TOP_VALUE"
       ],
       "warning": "⚠️ FALSE SIGNAL RATE TINGGI (~85-90%). Pipeline ini mendeteksi Tipe 1 (Continuation) dan Tipe 2 (Silent Accumulation). Tipe 3 (Out of Nowhere, ~48% ARA nyata) TIDAK BISA dideteksi dari OHLCV. Gunakan sebagai WATCHLIST saja. Konfirmasi dengan broker flow, news, dan analisis manual sebelum eksekusi.",
-      "generated_at": "04:30 WIB"
+      "generated_at": "05:30 WIB"
     },
     {
       "ticker": "ENZO",
@@ -472,7 +470,7 @@
       "d2_body_pct": 0.4,
       "d2_vol_ratio_ma20": 0.23,
       "m1_last15_green": 14,
-      "m1_close_vs_vwap": 4.8,
+      "m1_close_vs_vwap": 4.24,
       "m1_close_pos_intra": 1.0,
       "m1_high_timing": 0.314,
       "m1_n_bars": 261,
@@ -490,7 +488,7 @@
         "Harga di atas MA20",
         "Closing momentum kuat: 14/14 bar hijau (sinyal universal ARA)",
         "Close intraday kuat: 1.00 (mendekati high harian)",
-        "Close di atas VWAP: +4.8%",
+        "Close di atas VWAP: +4.2%",
         "Broker signal: Big Accumulation (+10 poin)"
       ],
       "signals_negative": [],
@@ -500,7 +498,7 @@
         "SCREENER_TOP_VALUE"
       ],
       "warning": "⚠️ FALSE SIGNAL RATE TINGGI (~85-90%). Pipeline ini mendeteksi Tipe 1 (Continuation) dan Tipe 2 (Silent Accumulation). Tipe 3 (Out of Nowhere, ~48% ARA nyata) TIDAK BISA dideteksi dari OHLCV. Gunakan sebagai WATCHLIST saja. Konfirmasi dengan broker flow, news, dan analisis manual sebelum eksekusi.",
-      "generated_at": "04:30 WIB"
+      "generated_at": "05:30 WIB"
     },
     {
       "ticker": "KBLI",
@@ -546,10 +544,10 @@
       "d2_body_pct": 0.333,
       "d2_vol_ratio_ma20": 2.11,
       "m1_last15_green": 12,
-      "m1_close_vs_vwap": -2.06,
+      "m1_close_vs_vwap": -2.53,
       "m1_close_pos_intra": 0.105,
-      "m1_high_timing": 0.192,
-      "m1_n_bars": 125,
+      "m1_high_timing": 0.19,
+      "m1_n_bars": 126,
       "m1_data_available": true,
       "above_ma20": false,
       "above_ma50": false,
@@ -567,14 +565,14 @@
         "Closing momentum kuat: 12/14 bar hijau (sinyal universal ARA)"
       ],
       "signals_negative": [
-        "Close di bawah VWAP: -2.1%",
+        "Close di bawah VWAP: -2.5%",
         "High intraday di awal sesi (19%) — profit taking sore"
       ],
       "universe_sources": [
         "GURU_94"
       ],
       "warning": "⚠️ FALSE SIGNAL RATE TINGGI (~85-90%). Pipeline ini mendeteksi Tipe 1 (Continuation) dan Tipe 2 (Silent Accumulation). Tipe 3 (Out of Nowhere, ~48% ARA nyata) TIDAK BISA dideteksi dari OHLCV. Gunakan sebagai WATCHLIST saja. Konfirmasi dengan broker flow, news, dan analisis manual sebelum eksekusi.",
-      "generated_at": "04:31 WIB"
+      "generated_at": "05:31 WIB"
     },
     {
       "ticker": "NIKL",
@@ -620,7 +618,7 @@
       "d2_body_pct": 0.333,
       "d2_vol_ratio_ma20": 1.92,
       "m1_last15_green": 13,
-      "m1_close_vs_vwap": 5.7,
+      "m1_close_vs_vwap": 6.14,
       "m1_close_pos_intra": 1.0,
       "m1_high_timing": 0.952,
       "m1_n_bars": 227,
@@ -639,7 +637,7 @@
         "Harga di atas MA20",
         "Closing momentum kuat: 13/14 bar hijau (sinyal universal ARA)",
         "Close intraday kuat: 1.00 (mendekati high harian)",
-        "Close di atas VWAP: +5.7%",
+        "Close di atas VWAP: +6.1%",
         "High intraday di akhir sesi (95%)"
       ],
       "signals_negative": [],
@@ -648,7 +646,7 @@
         "SCREENER_TOP_VALUE"
       ],
       "warning": "⚠️ FALSE SIGNAL RATE TINGGI (~85-90%). Pipeline ini mendeteksi Tipe 1 (Continuation) dan Tipe 2 (Silent Accumulation). Tipe 3 (Out of Nowhere, ~48% ARA nyata) TIDAK BISA dideteksi dari OHLCV. Gunakan sebagai WATCHLIST saja. Konfirmasi dengan broker flow, news, dan analisis manual sebelum eksekusi.",
-      "generated_at": "04:31 WIB"
+      "generated_at": "05:30 WIB"
     },
     {
       "ticker": "BCIP",
@@ -694,7 +692,7 @@
       "d2_body_pct": 0.692,
       "d2_vol_ratio_ma20": 11.57,
       "m1_last15_green": 14,
-      "m1_close_vs_vwap": -10.9,
+      "m1_close_vs_vwap": -10.42,
       "m1_close_pos_intra": 0.231,
       "m1_high_timing": 0.039,
       "m1_n_bars": 330,
@@ -716,7 +714,7 @@
         "Closing momentum kuat: 14/14 bar hijau (sinyal universal ARA)"
       ],
       "signals_negative": [
-        "Close di bawah VWAP: -10.9%",
+        "Close di bawah VWAP: -10.4%",
         "High intraday di awal sesi (4%) — profit taking sore"
       ],
       "universe_sources": [
@@ -724,12 +722,12 @@
         "SCREENER_TOP_VALUE"
       ],
       "warning": "⚠️ FALSE SIGNAL RATE TINGGI (~85-90%). Pipeline ini mendeteksi Tipe 1 (Continuation) dan Tipe 2 (Silent Accumulation). Tipe 3 (Out of Nowhere, ~48% ARA nyata) TIDAK BISA dideteksi dari OHLCV. Gunakan sebagai WATCHLIST saja. Konfirmasi dengan broker flow, news, dan analisis manual sebelum eksekusi.",
-      "generated_at": "04:30 WIB"
+      "generated_at": "05:30 WIB"
     }
   ],
   "meta": {
     "status": "success",
-    "generated_at": "2026-05-06 04:32:30 WIB",
+    "generated_at": "2026-05-06 05:31:33 WIB",
     "date": "2026-05-06",
     "mode": "FULL_STOCKBIT",
     "session_label": "MARKET_DAY",
