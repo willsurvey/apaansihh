@@ -88,7 +88,7 @@
         "✅ Swing Structure: BULLISH"
       ],
       "warnings": [],
-      "updated_at": "05.29 WIB"
+      "updated_at": "06.29 WIB"
     },
     {
       "rank": 2,
@@ -174,7 +174,7 @@
         "✅ Swing Structure: BULLISH"
       ],
       "warnings": [],
-      "updated_at": "05.29 WIB"
+      "updated_at": "06.29 WIB"
     },
     {
       "rank": 3,
@@ -261,7 +261,7 @@
         "✅ Swing Structure: BULLISH"
       ],
       "warnings": [],
-      "updated_at": "05.29 WIB"
+      "updated_at": "06.29 WIB"
     },
     {
       "rank": 4,
@@ -348,7 +348,7 @@
       "warnings": [
         "⚠️ Sumber: Top Gainer hari ini. Pastikan ada konfirmasi teknikal sebelum entry."
       ],
-      "updated_at": "05.29 WIB"
+      "updated_at": "06.29 WIB"
     }
   ],
   "logika_baru_calon_ara": [
@@ -424,7 +424,7 @@
         "SCREENER_TOP_VALUE"
       ],
       "warning": "⚠️ FALSE SIGNAL RATE TINGGI (~85-90%). Pipeline ini mendeteksi Tipe 1 (Continuation) dan Tipe 2 (Silent Accumulation). Tipe 3 (Out of Nowhere, ~48% ARA nyata) TIDAK BISA dideteksi dari OHLCV. Gunakan sebagai WATCHLIST saja. Konfirmasi dengan broker flow, news, dan analisis manual sebelum eksekusi.",
-      "generated_at": "05:30 WIB"
+      "generated_at": "06:29 WIB"
     },
     {
       "ticker": "ENZO",
@@ -498,7 +498,7 @@
         "SCREENER_TOP_VALUE"
       ],
       "warning": "⚠️ FALSE SIGNAL RATE TINGGI (~85-90%). Pipeline ini mendeteksi Tipe 1 (Continuation) dan Tipe 2 (Silent Accumulation). Tipe 3 (Out of Nowhere, ~48% ARA nyata) TIDAK BISA dideteksi dari OHLCV. Gunakan sebagai WATCHLIST saja. Konfirmasi dengan broker flow, news, dan analisis manual sebelum eksekusi.",
-      "generated_at": "05:30 WIB"
+      "generated_at": "06:29 WIB"
     },
     {
       "ticker": "KBLI",
@@ -544,10 +544,10 @@
       "d2_body_pct": 0.333,
       "d2_vol_ratio_ma20": 2.11,
       "m1_last15_green": 12,
-      "m1_close_vs_vwap": -2.53,
+      "m1_close_vs_vwap": -2.06,
       "m1_close_pos_intra": 0.105,
-      "m1_high_timing": 0.19,
-      "m1_n_bars": 126,
+      "m1_high_timing": 0.192,
+      "m1_n_bars": 125,
       "m1_data_available": true,
       "above_ma20": false,
       "above_ma50": false,
@@ -565,14 +565,14 @@
         "Closing momentum kuat: 12/14 bar hijau (sinyal universal ARA)"
       ],
       "signals_negative": [
-        "Close di bawah VWAP: -2.5%",
+        "Close di bawah VWAP: -2.1%",
         "High intraday di awal sesi (19%) — profit taking sore"
       ],
       "universe_sources": [
         "GURU_94"
       ],
       "warning": "⚠️ FALSE SIGNAL RATE TINGGI (~85-90%). Pipeline ini mendeteksi Tipe 1 (Continuation) dan Tipe 2 (Silent Accumulation). Tipe 3 (Out of Nowhere, ~48% ARA nyata) TIDAK BISA dideteksi dari OHLCV. Gunakan sebagai WATCHLIST saja. Konfirmasi dengan broker flow, news, dan analisis manual sebelum eksekusi.",
-      "generated_at": "05:31 WIB"
+      "generated_at": "06:30 WIB"
     },
     {
       "ticker": "NIKL",
@@ -646,7 +646,7 @@
         "SCREENER_TOP_VALUE"
       ],
       "warning": "⚠️ FALSE SIGNAL RATE TINGGI (~85-90%). Pipeline ini mendeteksi Tipe 1 (Continuation) dan Tipe 2 (Silent Accumulation). Tipe 3 (Out of Nowhere, ~48% ARA nyata) TIDAK BISA dideteksi dari OHLCV. Gunakan sebagai WATCHLIST saja. Konfirmasi dengan broker flow, news, dan analisis manual sebelum eksekusi.",
-      "generated_at": "05:30 WIB"
+      "generated_at": "06:30 WIB"
     },
     {
       "ticker": "BCIP",
@@ -722,12 +722,12 @@
         "SCREENER_TOP_VALUE"
       ],
       "warning": "⚠️ FALSE SIGNAL RATE TINGGI (~85-90%). Pipeline ini mendeteksi Tipe 1 (Continuation) dan Tipe 2 (Silent Accumulation). Tipe 3 (Out of Nowhere, ~48% ARA nyata) TIDAK BISA dideteksi dari OHLCV. Gunakan sebagai WATCHLIST saja. Konfirmasi dengan broker flow, news, dan analisis manual sebelum eksekusi.",
-      "generated_at": "05:30 WIB"
+      "generated_at": "06:29 WIB"
     }
   ],
   "meta": {
     "status": "success",
-    "generated_at": "2026-05-06 05:31:33 WIB",
+    "generated_at": "2026-05-06 06:30:54 WIB",
     "date": "2026-05-06",
     "mode": "FULL_STOCKBIT",
     "session_label": "MARKET_DAY",
