@@ -88,7 +88,7 @@
         "✅ Swing Structure: BULLISH"
       ],
       "warnings": [],
-      "updated_at": "03.30 WIB"
+      "updated_at": "04.30 WIB"
     },
     {
       "rank": 2,
@@ -174,7 +174,7 @@
         "✅ Swing Structure: BULLISH"
       ],
       "warnings": [],
-      "updated_at": "03.30 WIB"
+      "updated_at": "04.30 WIB"
     },
     {
       "rank": 3,
@@ -261,7 +261,7 @@
         "✅ Swing Structure: BULLISH"
       ],
       "warnings": [],
-      "updated_at": "03.30 WIB"
+      "updated_at": "04.30 WIB"
     },
     {
       "rank": 4,
@@ -348,7 +348,7 @@
       "warnings": [
         "⚠️ Sumber: Top Gainer hari ini. Pastikan ada konfirmasi teknikal sebelum entry."
       ],
-      "updated_at": "03.30 WIB"
+      "updated_at": "04.30 WIB"
     }
   ],
   "logika_baru_calon_ara": [
@@ -426,7 +426,7 @@
         "SCREENER_TOP_VALUE"
       ],
       "warning": "⚠️ FALSE SIGNAL RATE TINGGI (~85-90%). Pipeline ini mendeteksi Tipe 1 (Continuation) dan Tipe 2 (Silent Accumulation). Tipe 3 (Out of Nowhere, ~48% ARA nyata) TIDAK BISA dideteksi dari OHLCV. Gunakan sebagai WATCHLIST saja. Konfirmasi dengan broker flow, news, dan analisis manual sebelum eksekusi.",
-      "generated_at": "03:31 WIB"
+      "generated_at": "04:30 WIB"
     },
     {
       "ticker": "ENZO",
@@ -500,7 +500,7 @@
         "SCREENER_TOP_VALUE"
       ],
       "warning": "⚠️ FALSE SIGNAL RATE TINGGI (~85-90%). Pipeline ini mendeteksi Tipe 1 (Continuation) dan Tipe 2 (Silent Accumulation). Tipe 3 (Out of Nowhere, ~48% ARA nyata) TIDAK BISA dideteksi dari OHLCV. Gunakan sebagai WATCHLIST saja. Konfirmasi dengan broker flow, news, dan analisis manual sebelum eksekusi.",
-      "generated_at": "03:31 WIB"
+      "generated_at": "04:30 WIB"
     },
     {
       "ticker": "KBLI",
@@ -574,7 +574,7 @@
         "GURU_94"
       ],
       "warning": "⚠️ FALSE SIGNAL RATE TINGGI (~85-90%). Pipeline ini mendeteksi Tipe 1 (Continuation) dan Tipe 2 (Silent Accumulation). Tipe 3 (Out of Nowhere, ~48% ARA nyata) TIDAK BISA dideteksi dari OHLCV. Gunakan sebagai WATCHLIST saja. Konfirmasi dengan broker flow, news, dan analisis manual sebelum eksekusi.",
-      "generated_at": "03:31 WIB"
+      "generated_at": "04:31 WIB"
     },
     {
       "ticker": "NIKL",
@@ -648,7 +648,7 @@
         "SCREENER_TOP_VALUE"
       ],
       "warning": "⚠️ FALSE SIGNAL RATE TINGGI (~85-90%). Pipeline ini mendeteksi Tipe 1 (Continuation) dan Tipe 2 (Silent Accumulation). Tipe 3 (Out of Nowhere, ~48% ARA nyata) TIDAK BISA dideteksi dari OHLCV. Gunakan sebagai WATCHLIST saja. Konfirmasi dengan broker flow, news, dan analisis manual sebelum eksekusi.",
-      "generated_at": "03:31 WIB"
+      "generated_at": "04:31 WIB"
     },
     {
       "ticker": "BCIP",
@@ -724,12 +724,12 @@
         "SCREENER_TOP_VALUE"
       ],
       "warning": "⚠️ FALSE SIGNAL RATE TINGGI (~85-90%). Pipeline ini mendeteksi Tipe 1 (Continuation) dan Tipe 2 (Silent Accumulation). Tipe 3 (Out of Nowhere, ~48% ARA nyata) TIDAK BISA dideteksi dari OHLCV. Gunakan sebagai WATCHLIST saja. Konfirmasi dengan broker flow, news, dan analisis manual sebelum eksekusi.",
-      "generated_at": "03:30 WIB"
+      "generated_at": "04:30 WIB"
     }
   ],
   "meta": {
     "status": "success",
-    "generated_at": "2026-05-06 03:32:19 WIB",
+    "generated_at": "2026-05-06 04:32:30 WIB",
     "date": "2026-05-06",
     "mode": "FULL_STOCKBIT",
     "session_label": "MARKET_DAY",

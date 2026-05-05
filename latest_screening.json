@@ -1,6 +1,6 @@
 {
   "status": "success",
-  "generated_at": "2026-05-06 03:30:39 WIB",
+  "generated_at": "2026-05-06 04:30:17 WIB",
   "date": "2026-05-06",
   "mode": "FULL_STOCKBIT",
   "session_label": "MARKET_DAY",
@@ -131,7 +131,7 @@
         "✅ Swing Structure: BULLISH"
       ],
       "warnings": [],
-      "updated_at": "03.30 WIB"
+      "updated_at": "04.30 WIB"
     },
     {
       "rank": 2,
@@ -217,7 +217,7 @@
         "✅ Swing Structure: BULLISH"
       ],
       "warnings": [],
-      "updated_at": "03.30 WIB"
+      "updated_at": "04.30 WIB"
     },
     {
       "rank": 3,
@@ -304,7 +304,7 @@
         "✅ Swing Structure: BULLISH"
       ],
       "warnings": [],
-      "updated_at": "03.30 WIB"
+      "updated_at": "04.30 WIB"
     },
     {
       "rank": 4,
@@ -391,7 +391,7 @@
       "warnings": [
         "⚠️ Sumber: Top Gainer hari ini. Pastikan ada konfirmasi teknikal sebelum entry."
       ],
-      "updated_at": "03.30 WIB"
+      "updated_at": "04.30 WIB"
     }
   ]
 }
