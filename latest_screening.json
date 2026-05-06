@@ -1,6 +1,6 @@
 {
   "status": "success",
-  "generated_at": "2026-05-06 12:31:05 WIB",
+  "generated_at": "2026-05-06 13:27:36 WIB",
   "date": "2026-05-06",
   "mode": "FULL_STOCKBIT",
   "session_label": "MARKET_DAY",
@@ -8,8 +8,8 @@
   "mode_warning": null,
   "total_saham": 2,
   "market_context": {
-    "ihsg_close": 7111,
-    "ihsg_change_pct": 0.78,
+    "ihsg_close": 7102,
+    "ihsg_change_pct": 0.65,
     "ihsg_trend": "BEARISH",
     "ihsg_above_ma50": false,
     "market_safe": true,
@@ -133,7 +133,7 @@
         "⚠️ Potensi GAP UP 3.3% — entry_1 disesuaikan ke IEP",
         "⚠️ Entry 1 DI ATAS close — prediksi gap up. Jika tidak gap, skip entry_1."
       ],
-      "updated_at": "12.31 WIB"
+      "updated_at": "13.27 WIB"
     },
     {
       "rank": 2,
@@ -222,7 +222,7 @@
         "⚠️ Potensi GAP UP 2.1% — entry_1 disesuaikan ke IEP",
         "⚠️ Entry 1 DI ATAS close — prediksi gap up. Jika tidak gap, skip entry_1."
       ],
-      "updated_at": "12.31 WIB"
+      "updated_at": "13.27 WIB"
     }
   ]
 }
