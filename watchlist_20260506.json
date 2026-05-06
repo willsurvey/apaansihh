@@ -1,6 +1,6 @@
 {
   "status": "success",
-  "generated_at": "2026-05-06 18:34:05 WIB",
+  "generated_at": "2026-05-06 19:30:02 WIB",
   "date": "2026-05-06",
   "mode": "FULL_STOCKBIT",
   "session_label": "MARKET_DAY",
@@ -17,7 +17,7 @@
   },
   "screening_summary": {
     "universe": 972,
-    "after_liquidity": 129,
+    "after_liquidity": 125,
     "after_accumulation": 36,
     "after_trend": 11,
     "after_smc": 6,
@@ -51,7 +51,7 @@
       "universe_sources": [
         "MOVER_TYPE_NET_FOREIGN_BUY",
         "SCREENER_VOLUME_EXPLOSION",
-        "GURU_72_IHSG Short-t",
+        "GURU_92_Big Accumula",
         "SCREENER_TOP_VALUE"
       ],
       "market_data": {
@@ -129,7 +129,7 @@
         "✅ Swing Structure: BULLISH"
       ],
       "warnings": [],
-      "updated_at": "18.34 WIB"
+      "updated_at": "19.30 WIB"
     },
     {
       "rank": 2,
@@ -140,7 +140,7 @@
         "MOVER_TYPE_TOP_VOLUME",
         "MOVER_TYPE_NET_FOREIGN_BUY",
         "SCREENER_VOLUME_EXPLOSION",
-        "GURU_63_High Volume ",
+        "GURU_92_Big Accumula",
         "SCREENER_TOP_VALUE"
       ],
       "market_data": {
@@ -217,7 +217,7 @@
         "✅ Swing Structure: BULLISH"
       ],
       "warnings": [],
-      "updated_at": "18.34 WIB"
+      "updated_at": "19.30 WIB"
     },
     {
       "rank": 3,
@@ -306,7 +306,7 @@
         "✅ Swing Structure: BULLISH"
       ],
       "warnings": [],
-      "updated_at": "18.34 WIB"
+      "updated_at": "19.30 WIB"
     },
     {
       "rank": 4,
@@ -317,7 +317,7 @@
         "MOVER_TYPE_NET_FOREIGN_BUY",
         "MOVER_TYPE_TOP_GAINER",
         "SCREENER_VOLUME_EXPLOSION",
-        "GURU_72_IHSG Short-t",
+        "GURU_92_Big Accumula",
         "SCREENER_TOP_VALUE"
       ],
       "market_data": {
@@ -393,7 +393,7 @@
         "✅ Harga di zona FVG aktif"
       ],
       "warnings": [],
-      "updated_at": "18.34 WIB"
+      "updated_at": "19.30 WIB"
     },
     {
       "rank": 5,
@@ -479,7 +479,7 @@
         "✅ Harga di zona FVG aktif"
       ],
       "warnings": [],
-      "updated_at": "18.34 WIB"
+      "updated_at": "19.30 WIB"
     }
   ]
 }
