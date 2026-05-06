@@ -1,6 +1,6 @@
 {
   "status": "success",
-  "generated_at": "2026-05-06 16:29:19 WIB",
+  "generated_at": "2026-05-06 17:32:48 WIB",
   "date": "2026-05-06",
   "mode": "FULL_STOCKBIT",
   "session_label": "MARKET_DAY",
@@ -8,8 +8,8 @@
   "mode_warning": null,
   "total_saham": 2,
   "market_context": {
-    "ihsg_close": 7080,
-    "ihsg_change_pct": 0.33,
+    "ihsg_close": 7092,
+    "ihsg_change_pct": 0.5,
     "ihsg_trend": "BEARISH",
     "ihsg_above_ma50": false,
     "market_safe": true,
@@ -18,10 +18,10 @@
   "screening_summary": {
     "universe": 972,
     "after_liquidity": 129,
-    "after_accumulation": 31,
-    "after_trend": 13,
-    "after_smc": 5,
-    "after_entry": 2,
+    "after_accumulation": 37,
+    "after_trend": 10,
+    "after_smc": 4,
+    "after_entry": 3,
     "final": 2
   },
   "config": {
@@ -59,8 +59,8 @@
       "market_data": {
         "close": 1840,
         "change_pct": 5.14,
-        "value_today": 284710550500,
-        "frequency_today": 28790,
+        "value_today": 287816654500,
+        "frequency_today": 29005,
         "iep": 1840,
         "iep_change_pct": 0
       },
@@ -79,8 +79,8 @@
         }
       },
       "trend": {
-        "ma50": 1704.0,
-        "gap_from_ma50_pct": 8.6,
+        "ma50": 1703.0,
+        "gap_from_ma50_pct": 8.03,
         "ma50_slope": "POSITIVE"
       },
       "smc": {
@@ -130,95 +130,93 @@
         "✅ Swing Structure: BULLISH"
       ],
       "warnings": [],
-      "updated_at": "16.29 WIB"
+      "updated_at": "17.32 WIB"
     },
     {
       "rank": 2,
-      "ticker": "SSIA",
-      "company": "Surya Semesta Internusa Tbk.",
+      "ticker": "INDF",
+      "company": "Indofood Sukses Makmur Tbk.",
       "mode": "FULL_STOCKBIT",
       "universe_sources": [
         "MOVER_TYPE_NET_FOREIGN_BUY",
-        "MOVER_TYPE_TOP_LOSER",
         "SCREENER_VOLUME_EXPLOSION",
-        "GURU_92_Big Accumula",
+        "GURU_77_Foreign Flow",
         "SCREENER_TOP_VALUE"
       ],
       "market_data": {
-        "close": 1805,
-        "change_pct": -3.48,
-        "value_today": 59124971000,
-        "frequency_today": 8836,
-        "iep": 1805,
+        "close": 7050,
+        "change_pct": 1.44,
+        "value_today": 57529042500,
+        "frequency_today": 4454,
+        "iep": 7050,
         "iep_change_pct": 0
       },
       "accumulation": {
-        "broker_signal": "Big Acc",
-        "net_foreign_today": 8029230500,
-        "net_foreign_3d": 0,
-        "acc_score": 30,
+        "broker_signal": "Neutral",
+        "net_foreign_today": 16000710000,
+        "net_foreign_3d": 10,
+        "acc_score": 35,
         "score_breakdown": {
-          "broker": 35,
-          "foreign_1d": 0,
-          "foreign_3d": 0,
-          "candle": -5,
-          "volume": 0,
-          "total": 30
+          "broker": 5,
+          "foreign_1d": 15,
+          "foreign_3d": 10,
+          "candle": 10,
+          "volume": -5,
+          "total": 35
         }
       },
       "trend": {
-        "ma50": 1431.0,
-        "gap_from_ma50_pct": 26.51,
+        "ma50": 6546.0,
+        "gap_from_ma50_pct": 7.69,
         "ma50_slope": "POSITIVE"
       },
       "smc": {
-        "internal_structure": "BOS_BULLISH",
-        "swing_trend_bias": "BULLISH",
+        "internal_structure": "NONE",
+        "swing_trend_bias": "NEUTRAL",
         "ob_zone": null,
-        "fvg_zone": null,
-        "strong_low": 1595.0,
-        "weak_high": 1825.0
+        "fvg_zone": "7000 - 7050",
+        "strong_low": 6825.0,
+        "weak_high": 7025.0
       },
       "entry_plan": {
-        "entry_direction": "MOMENTUM",
-        "entry_direction_label": "➡️ Momentum entry — bisa entry di/dekat PDC",
-        "entry_direction_reason": "Internal BOS/CHoCH bullish 1H",
-        "entry_1": 1825,
+        "entry_direction": "PULLBACK",
+        "entry_direction_label": "⬇️ Pullback entry — tunggu harga turun ke zona entry",
+        "entry_direction_reason": "",
+        "entry_1": 7025,
         "entry_1_pct": 20,
-        "entry_1_note": "PDC entry — momentum kuat (Internal BOS/CHoCH bullish 1H)",
-        "entry_2": 1815,
+        "entry_1_note": "Pullback ringan / Bid Wall area",
+        "entry_2": 7000,
         "entry_2_pct": 50,
-        "entry_2_note": "Pullback ringan / OB zone",
-        "entry_3": 1805,
+        "entry_2_note": "Area OB / FVG / Support",
+        "entry_3": 6950,
         "entry_3_pct": 30,
         "entry_3_note": "Deep pullback / PDL area",
-        "average_entry": 1815,
-        "entry_zone": "1805 - 1825",
-        "sl": 1795,
-        "sl_pct_risk": 1.1,
+        "average_entry": 7000,
+        "entry_zone": "6950 - 7025",
+        "sl": 6900,
+        "sl_pct_risk": 1.43,
         "sl_note": "Cut loss wajib jika close harian di bawah ini",
-        "tp1": 1870,
+        "tp1": 7050,
         "tp1_note": "PDH / Target psikologis intraday",
-        "tp2": 1925,
+        "tp2": 7250,
         "tp2_note": "Weak High / Supply Zone 1H",
-        "tp3": 1985,
+        "tp3": 7475,
         "tp3_note": "RR minimum 1:2.0",
-        "rr_ratio": "1:8.5",
+        "rr_ratio": "1:4.8",
         "risk_pct": 2,
         "risk_note": "Max 2% dari total portofolio"
       },
       "scoring": {
-        "confidence_score": 45,
+        "confidence_score": 40,
         "tier": "MODERATE"
       },
       "signals": [
-        "✅ Broker Signal: Big Acc",
-        "✅ Net Foreign Buy hari ini: Rp8.0B",
-        "✅ Internal BOS Bullish (1H)",
-        "✅ Swing Structure: BULLISH"
+        "✅ Net Foreign Buy hari ini: Rp16.0B",
+        "✅ Net Foreign Buy 3 hari berturut",
+        "✅ Harga di zona FVG aktif"
       ],
       "warnings": [],
-      "updated_at": "16.29 WIB"
+      "updated_at": "17.32 WIB"
     }
   ]
 }
