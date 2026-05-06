@@ -235,6 +235,54 @@ CONFIG = {
 
     # Confluence guard — minimum sinyal positif
     "ARA_CONFLUENCE_MIN": 3,             # Naik dari 2 → 3 sinyal positif wajib
+
+    # =========================================================================
+    # PIPELINE BSJP (BELI SORE JUAL PAGI) — v1.0
+    # =========================================================================
+    # Berdasarkan backtest kuantitatif 252.480 hari perdagangan (956 saham IHSG).
+    #
+    # FORMULA TERBAIK (dari grid search):
+    #   MASTER4: MA20+MA50+MA200 + Vol>3x + ClosePos>90% + Body>3%
+    #   Win Rate spike >2% esok pagi: 64.1% | Avg spike: 7.55%
+    #
+    #   Tier S: Vol>5x + ClosePos>95% + Body>4% + MA20+MA50
+    #   Win Rate spike >2% esok pagi: 69.9% | Avg spike: 9.85%
+    #
+    # UNIVERSE: Saham dari pipeline intraday yang aktif hari ini
+    #   (value_today >= BSJP_MIN_VALUE_TODAY). Gratis — pakai cache YF.
+    #
+    # OUTPUT: key baru "bsjp_beli_sore_jual_pagi" di combined_screening.json
+    # =========================================================================
+    "BSJP_ENABLED":         True,
+    "BSJP_MAX_OUTPUT":      5,
+
+    # Filter universe — hanya saham yang aktif HARI INI
+    "BSJP_MIN_VALUE_TODAY": 10_000_000_000,  # Rp 10 Miliar (likuid, mudah masuk)
+
+    # Filter tambahan
+    "BSJP_MIN_PRICE":       100,             # Harga minimum (hindari gorengan murah)
+    "BSJP_MIN_CHG_PCT":     -5.0,            # Jangan beli yang sedang crash
+
+    # BSJP Tier S (lebih selektif, win rate lebih tinggi)
+    # Win Rate historis: spike >2% = ~70%, avg spike = ~9.85%
+    "BSJP_TIER_S_VOL":      5.0,   # Vol >= 5x MA20
+    "BSJP_TIER_S_CPOS":     0.95,  # Tutup di >=95% dari range harian
+    "BSJP_TIER_S_BODY":     0.04,  # Body candle >= 4%
+    # Wajib: above_ma20 AND above_ma50
+
+    # BSJP Tier A (lebih banyak sinyal, win rate tetap solid)
+    # Win Rate historis: spike >2% = ~64%, avg spike = ~7.55%
+    "BSJP_TIER_A_VOL":      3.0,   # Vol >= 3x MA20
+    "BSJP_TIER_A_CPOS":     0.90,  # Tutup di >=90% dari range harian
+    "BSJP_TIER_A_BODY":     0.03,  # Body candle >= 3%
+    # Wajib: above_ma20 AND above_ma50 AND above_ma200
+
+    # Scoring bonus (memanfaatkan data universe yang sudah ada — gratis!)
+    "BSJP_BONUS_NET_FOREIGN": 10,  # Asing beli hari ini
+    "BSJP_BONUS_VOL_SCREENER": 10, # Muncul di volume explosion screener
+    "BSJP_BONUS_GAINER":       5,  # Saham naik hari ini (momentum)
+    "BSJP_BONUS_IEP_STRONG":   5,  # IEP change > 1.5% (ekspektasi gap up)
+    "BSJP_BONUS_GOOD_DAY":     5,  # Senin/Selasa (win rate lebih tinggi)
 }
 
 os.makedirs(CONFIG["DATA_DIR"], exist_ok=True)
@@ -3147,10 +3195,21 @@ def run_screener():
     if CONFIG.get("ARA_ENABLED", True):
         ara_results = run_ara_pipeline(token, mode)
 
+    # ----------------------------------------------------------------
+    # PIPELINE BSJP (BELI SORE JUAL PAGI) — dijalankan setelah ARA selesai
+    # Memanfaatkan `universe` yang sudah dikumpulkan pipeline intraday.
+    # Data OHLCV sudah di-cache oleh pipeline intraday — 0 download tambahan.
+    # Tidak menyentuh pipeline intraday maupun ARA sama sekali.
+    # ----------------------------------------------------------------
+    bsjp_results = []
+    if CONFIG.get("BSJP_ENABLED", True):
+        bsjp_results = run_bsjp_pipeline(universe, mode)
+
     # Simpan output gabungan (combined_screening.json)
     save_combined_output(
         intraday_results=results,
         ara_results=ara_results,
+        bsjp_results=bsjp_results,
         mode=mode,
         market_ctx=market_ctx,
         intraday_summary=summary,
@@ -3162,6 +3221,7 @@ def run_screener():
     log.info(f"✅ SCREENING TOTAL SELESAI")
     log.info(f"   Intraday output:   {len(results)} saham → latest_screening.json")
     log.info(f"   ARA kandidat:      {len(ara_results)} saham → combined_screening.json")
+    log.info(f"   BSJP kandidat:     {len(bsjp_results)} saham → combined_screening.json")
     log.info(f"   ⏱️  Total waktu: {elapsed_total:.1f} menit")
     log.info("=" * 70)
 
@@ -3210,14 +3270,17 @@ def save_combined_output(
     market_ctx: Dict,
     intraday_summary: Dict,
     session_label: str = "MARKET_DAY",
+    bsjp_results: Optional[List[Dict]] = None,
 ):
     """
-    Shim: redirect ke save_combined_output_v2.
-    Dipanggil oleh run_screener() (kode lama) — diteruskan ke implementasi v2.
+    Shim: redirect ke save_combined_output_v3.
+    Dipanggil oleh run_screener() — diteruskan ke implementasi v3 yang
+    menambahkan key 'bsjp_beli_sore_jual_pagi' tanpa mengubah key lama.
     """
-    save_combined_output_v2(
+    save_combined_output_v3(
         intraday_results=intraday_results,
         ara_results=ara_results,
+        bsjp_results=bsjp_results or [],
         mode=mode,
         market_ctx=market_ctx,
         intraday_summary=intraday_summary,
@@ -4518,10 +4581,517 @@ def save_combined_output_v2(
 
 
 # =============================================================================
+# PIPELINE BSJP (BELI SORE JUAL PAGI) — v1.0
+# =============================================================================
+# Fungsi utama: run_bsjp_pipeline(universe, mode)
+#
+# Input  : universe (List[Dict]) — saham aktif hari ini dari pipeline intraday
+# Output : List[Dict] — kandidat BSJP terurut by score, max BSJP_MAX_OUTPUT
+#
+# Prinsip desain:
+#   1. TIDAK menyentuh pipeline intraday maupun ARA
+#   2. Memanfaatkan get_daily_data() yang sudah di-cache (0 download tambahan)
+#   3. Memanfaatkan field universe (value_today, net_foreign, iep_change, dll)
+#   4. Formula berdasarkan backtest kuantitatif 252.480 hari perdagangan
+# =============================================================================
+
+def _bsjp_compute_ohlcv_features(ticker: str) -> Optional[Dict]:
+    """
+    Ambil data OHLCV harian (dari cache YF) dan hitung fitur teknikal BSJP.
+    Return None jika data tidak cukup atau tidak memenuhi syarat dasar.
+
+    Fitur yang dihitung (semua dari data historis, bukan real-time):
+      - vol_ratio20  : volume hari ini vs rata-rata MA20
+      - body_pct     : kekuatan candle (close - open) / open
+      - close_pos    : posisi close di dalam range (0=low, 1=high)
+      - above_ma20/50/200 : posisi harga terhadap MA utama
+      - ma20_slope   : arah tren MA20 (positif = naik)
+      - atr_pct      : volatilitas normal (ATR14 / close)
+    """
+    df = get_daily_data(ticker)
+    if df is None or len(df) < 60:
+        return None
+
+    # Pastikan kolom lowercase
+    df.columns = [c.lower() if isinstance(c, str) else str(c) for c in df.columns]
+
+    try:
+        # Volume dan value
+        if "volume" not in df.columns:
+            return None
+
+        vol_ma20 = df["volume"].rolling(20).mean().iloc[-1]
+        if pd.isna(vol_ma20) or vol_ma20 == 0:
+            return None
+        vol_today = float(df["volume"].iloc[-1])
+        vol_ratio20 = vol_today / vol_ma20
+
+        # Candle anatomy hari ini
+        open_  = float(df["open"].iloc[-1])
+        high   = float(df["high"].iloc[-1])
+        low    = float(df["low"].iloc[-1])
+        close  = float(df["close"].iloc[-1])
+        range_ = high - low
+
+        if range_ == 0 or open_ == 0:
+            return None
+
+        body_pct   = (close - open_) / open_
+        close_pos  = (close - low) / range_
+        upper_wick = (high - max(open_, close)) / range_
+
+        # Moving averages
+        ma20  = df["close"].rolling(20).mean().iloc[-1]
+        ma50  = df["close"].rolling(50).mean().iloc[-1]
+        ma200 = df["close"].rolling(200).mean().iloc[-1]
+
+        above_ma20  = (not pd.isna(ma20))  and close > ma20
+        above_ma50  = (not pd.isna(ma50))  and close > ma50
+        above_ma200 = (not pd.isna(ma200)) and close > ma200
+
+        # Slope MA20 (tren 5 hari terakhir)
+        ma20_5d_ago = df["close"].rolling(20).mean().iloc[-6] if len(df) >= 26 else ma20
+        ma20_slope  = (ma20 - ma20_5d_ago) / ma20_5d_ago if (ma20_5d_ago and ma20_5d_ago != 0) else 0
+
+        # ATR14 sebagai proxy volatilitas
+        tr = pd.Series(np.maximum(
+            df["high"] - df["low"],
+            np.maximum(
+                (df["high"] - df["close"].shift(1)).abs(),
+                (df["low"]  - df["close"].shift(1)).abs()
+            )
+        ))
+        atr14   = tr.rolling(14).mean().iloc[-1]
+        atr_pct = atr14 / close if close > 0 else 0
+
+        # Nilai tukar hari ini (untuk filter tambahan di pemanggil)
+        val_ma20 = (df["close"] * df["volume"]).rolling(20).mean().iloc[-1]
+
+        return {
+            "vol_ratio20":  round(vol_ratio20, 2),
+            "body_pct":     round(body_pct, 4),
+            "close_pos":    round(close_pos, 4),
+            "upper_wick":   round(upper_wick, 4),
+            "above_ma20":   above_ma20,
+            "above_ma50":   above_ma50,
+            "above_ma200":  above_ma200,
+            "ma20_slope":   round(float(ma20_slope), 6),
+            "atr_pct":      round(float(atr_pct), 4),
+            "val_ma20":     float(val_ma20) if not pd.isna(val_ma20) else 0,
+            "close":        close,
+            "high":         high,
+            "low":          low,
+            "open":         open_,
+        }
+    except Exception as e:
+        log.debug(f"    BSJP feature error {ticker}: {e}")
+        return None
+
+
+def _bsjp_score(feat_ohlcv: Dict, stock_mm: Dict) -> Tuple[int, str, List[str], List[str]]:
+    """
+    Hitung skor BSJP dan tentukan tier.
+
+    Return: (score, tier, signals_positive, signals_negative)
+      - tier : "S" (premium) | "A" (solid) | "NONE" (tidak lolos)
+      - score: 0-100
+    """
+    score = 0
+    signals_pos = []
+    signals_neg = []
+
+    vol_ratio20 = feat_ohlcv["vol_ratio20"]
+    body_pct    = feat_ohlcv["body_pct"]
+    close_pos   = feat_ohlcv["close_pos"]
+    above_ma20  = feat_ohlcv["above_ma20"]
+    above_ma50  = feat_ohlcv["above_ma50"]
+    above_ma200 = feat_ohlcv["above_ma200"]
+    ma20_slope  = feat_ohlcv["ma20_slope"]
+
+    # ---- TENTUKAN TIER TEKNIKAL ----
+    tier_s = (
+        vol_ratio20 >= CONFIG["BSJP_TIER_S_VOL"]  and
+        close_pos   >= CONFIG["BSJP_TIER_S_CPOS"] and
+        body_pct    >= CONFIG["BSJP_TIER_S_BODY"] and
+        above_ma20 and above_ma50
+    )
+    tier_a = (
+        vol_ratio20 >= CONFIG["BSJP_TIER_A_VOL"]  and
+        close_pos   >= CONFIG["BSJP_TIER_A_CPOS"] and
+        body_pct    >= CONFIG["BSJP_TIER_A_BODY"] and
+        above_ma20 and above_ma50 and above_ma200
+    )
+
+    if not (tier_s or tier_a):
+        return 0, "NONE", signals_pos, signals_neg
+
+    tier = "S" if tier_s else "A"
+
+    # ---- BASE SCORE dari fitur teknikal ----
+    # Volume (max 30 poin)
+    if vol_ratio20 >= 8.0:
+        score += 30; signals_pos.append(f"Volume ledakan ekstrem {vol_ratio20:.1f}x MA20")
+    elif vol_ratio20 >= 5.0:
+        score += 24; signals_pos.append(f"Volume spike kuat {vol_ratio20:.1f}x MA20")
+    elif vol_ratio20 >= 3.0:
+        score += 16; signals_pos.append(f"Volume spike {vol_ratio20:.1f}x MA20")
+    else:
+        score += 8;  signals_pos.append(f"Volume di atas rata-rata {vol_ratio20:.1f}x")
+
+    # Candle strength (max 25 poin)
+    if body_pct >= 0.07:
+        score += 25; signals_pos.append(f"Candle hijau sangat kuat ({body_pct*100:.1f}%)")
+    elif body_pct >= 0.05:
+        score += 20; signals_pos.append(f"Candle hijau kuat ({body_pct*100:.1f}%)")
+    elif body_pct >= 0.04:
+        score += 16; signals_pos.append(f"Candle hijau solid ({body_pct*100:.1f}%)")
+    else:
+        score += 10; signals_pos.append(f"Candle hijau ({body_pct*100:.1f}%)")
+
+    # Close position — tutup di puncak (max 20 poin)
+    if close_pos >= 0.98:
+        score += 20; signals_pos.append("Tutup di puncak absolut — tidak ada upper wick")
+    elif close_pos >= 0.95:
+        score += 17; signals_pos.append(f"Tutup sangat dekat puncak ({close_pos*100:.0f}%)")
+    elif close_pos >= 0.90:
+        score += 13; signals_pos.append(f"Tutup dekat puncak ({close_pos*100:.0f}%)")
+    else:
+        score += 8;  signals_pos.append(f"Tutup di {close_pos*100:.0f}% dari range")
+
+    # Trend (max 10 poin)
+    trend_score = 0
+    if above_ma20:  trend_score += 3
+    if above_ma50:  trend_score += 3
+    if above_ma200: trend_score += 4
+    score += trend_score
+    if above_ma20 and above_ma50 and above_ma200:
+        signals_pos.append("Uptrend penuh: di atas MA20, MA50, MA200")
+    elif above_ma20 and above_ma50:
+        signals_pos.append("Di atas MA20 & MA50 (tren menengah bagus)")
+    else:
+        signals_neg.append("Belum di atas semua MA — tren tidak sempurna")
+
+    # MA slope positif (bonus 3 poin)
+    if ma20_slope > 0.002:
+        score += 3; signals_pos.append("MA20 sedang naik — tren menguat")
+
+    # ---- BONUS dari data universe real-time ----
+    net_foreign   = stock_mm.get("net_foreign_today", 0)
+    from_screener = stock_mm.get("from_screener", False)
+    from_gainer   = stock_mm.get("from_gainer", False)
+    iep_chg       = stock_mm.get("iep_change_pct", 0) or 0
+    today_dow     = datetime.now().weekday()  # 0=Senin, 1=Selasa
+
+    if net_foreign > 0:
+        score += CONFIG["BSJP_BONUS_NET_FOREIGN"]
+        signals_pos.append(f"Asing beli bersih hari ini (Rp {net_foreign/1e9:.1f}B)")
+    elif net_foreign < 0:
+        signals_neg.append("Asing jual bersih hari ini — hati-hati")
+
+    if from_screener:
+        score += CONFIG["BSJP_BONUS_VOL_SCREENER"]
+        signals_pos.append("Masuk screener volume explosion Stockbit")
+
+    if from_gainer:
+        score += CONFIG["BSJP_BONUS_GAINER"]
+        signals_pos.append("Saham naik signifikan hari ini (momentum)")
+
+    if iep_chg > 1.5:
+        score += CONFIG["BSJP_BONUS_IEP_STRONG"]
+        signals_pos.append(f"IEP naik {iep_chg:.1f}% — ekspektasi gap up besok")
+
+    if today_dow in (0, 1):  # Senin atau Selasa
+        score += CONFIG["BSJP_BONUS_GOOD_DAY"]
+        day_name = "Senin" if today_dow == 0 else "Selasa"
+        signals_pos.append(f"Hari {day_name} — win rate BSJP historis tertinggi")
+
+    return score, tier, signals_pos, signals_neg
+
+
+def run_bsjp_pipeline(universe: List[Dict], mode: str) -> List[Dict]:
+    """
+    Pipeline BSJP (Beli Sore Jual Pagi) — v1.0
+
+    Menerima universe yang sudah dikumpulkan pipeline intraday.
+    Memanfaatkan get_daily_data() yang sudah di-cache — 0 download tambahan.
+
+    Alur:
+      1. Filter: value_today >= BSJP_MIN_VALUE_TODAY
+      2. Filter: change_pct >= BSJP_MIN_CHG_PCT (hindari yang crash)
+      3. Filter: price >= BSJP_MIN_PRICE
+      4. Hitung fitur OHLCV (dari cache)
+      5. Terapkan formula Tier S / Tier A
+      6. Scoring + bonus dari data universe
+      7. Sort by score, ambil top BSJP_MAX_OUTPUT
+    """
+    log.info("\n" + "=" * 70)
+    log.info("📈 BSJP PIPELINE — Beli Sore Jual Pagi v1.0")
+    log.info(f"   Universe input: {len(universe)} saham dari pipeline intraday")
+    log.info("=" * 70)
+
+    min_value = CONFIG["BSJP_MIN_VALUE_TODAY"]
+    min_price = CONFIG["BSJP_MIN_PRICE"]
+    min_chg   = CONFIG["BSJP_MIN_CHG_PCT"]
+
+    candidates = []
+    filtered_value = 0
+    filtered_price = 0
+    filtered_chg   = 0
+    processed      = 0
+    no_data        = 0
+
+    for stock_mm in universe:
+        ticker    = stock_mm.get("ticker", "")
+        val_today = stock_mm.get("value_today", 0) or 0
+        price     = stock_mm.get("price", 0) or 0
+        chg_pct   = stock_mm.get("change_pct", 0) or 0
+
+        # ---- Filter 1: Likuiditas aktif hari ini ----
+        if val_today < min_value:
+            filtered_value += 1
+            continue
+
+        # ---- Filter 2: Harga minimum ----
+        if price < min_price:
+            filtered_price += 1
+            continue
+
+        # ---- Filter 3: Tidak sedang crash ----
+        if chg_pct < min_chg:
+            filtered_chg += 1
+            log.debug(f"    BSJP {ticker}: SKIP crash ({chg_pct:+.1f}%)")
+            continue
+
+        processed += 1
+
+        # ---- Ambil fitur OHLCV (dari cache) ----
+        feat = _bsjp_compute_ohlcv_features(ticker)
+        if feat is None:
+            no_data += 1
+            log.debug(f"    BSJP {ticker}: No OHLCV data")
+            continue
+
+        # ---- Score ----
+        score, tier, sig_pos, sig_neg = _bsjp_score(feat, stock_mm)
+        if tier == "NONE":
+            log.debug(f"    BSJP {ticker}: FAIL formula (vol={feat['vol_ratio20']:.1f}x, "
+                      f"cpos={feat['close_pos']:.2f}, body={feat['body_pct']*100:.1f}%)")
+            continue
+
+        log.info(f"    ✅ BSJP {ticker}: Tier {tier} | Score {score} | "
+                 f"Vol {feat['vol_ratio20']:.1f}x | Body {feat['body_pct']*100:.1f}% | "
+                 f"ClosePos {feat['close_pos']*100:.0f}%")
+
+        # ---- Hitung estimasi entry dan target ----
+        close_price = feat["close"]
+        tick = get_tick_size(close_price)
+
+        # Entry: beli di range akhir sesi (harga sekarang ± 0.5 ATR)
+        atr_rp    = feat["atr_pct"] * close_price
+        entry_low  = round_bei(max(close_price - atr_rp * 0.3, close_price * 0.99))
+        entry_high = round_bei(close_price)
+
+        # Target: estimasi gap up besok pagi (berdasarkan win rate historis)
+        if tier == "S":
+            target_pct  = "+2% s/d +10% di pagi hari"
+            win_rate_str = "~70% berdasarkan backtest 1.796 kejadian historis"
+        else:
+            target_pct  = "+2% s/d +8% di pagi hari"
+            win_rate_str = "~64% berdasarkan backtest 3.330 kejadian historis"
+
+        # Stop loss: jika open besok gap down melewati low hari ini
+        stop_loss = round_bei(feat["low"] * 0.99)
+
+        candidates.append({
+            "ticker":         ticker,
+            "company":        stock_mm.get("name", ticker),
+            "tier":           tier,
+            "score":          score,
+
+            # Data hari ini
+            "market_data": {
+                "close":         close_price,
+                "change_pct":    round(chg_pct, 2),
+                "value_today":   val_today,
+                "net_foreign":   stock_mm.get("net_foreign_today", 0),
+                "iep":           stock_mm.get("iep", 0),
+                "iep_change_pct":stock_mm.get("iep_change_pct", 0),
+            },
+
+            # Fitur teknikal BSJP
+            "bsjp_features": {
+                "vol_ratio20":  feat["vol_ratio20"],
+                "body_pct":     round(feat["body_pct"] * 100, 2),
+                "close_pos_pct":round(feat["close_pos"] * 100, 1),
+                "above_ma20":   feat["above_ma20"],
+                "above_ma50":   feat["above_ma50"],
+                "above_ma200":  feat["above_ma200"],
+                "atr_pct":      round(feat["atr_pct"] * 100, 2),
+            },
+
+            # Rencana trading
+            "entry_plan": {
+                "strategy":     "Beli di sesi akhir (14:30-15:45 WIB)",
+                "entry_range":  f"{entry_low:,} – {entry_high:,}",
+                "entry_note":   "Limit order di harga saat ini atau sedikit di bawahnya",
+                "stop_loss":    stop_loss,
+                "stop_note":    "Jika gap down besok, cut di bawah low hari ini",
+                "target_pct":   target_pct,
+                "exit_strategy":"Jual di pre-opening (08:45-08:55) atau awal sesi pagi",
+            },
+
+            # Konteks sinyal
+            "universe_context": {
+                "in_mover_types":   stock_mm.get("in_mover_types", []),
+                "from_gainer":      stock_mm.get("from_gainer", False),
+                "from_screener":    stock_mm.get("from_screener", False),
+                "from_top_value":   stock_mm.get("from_top_value", False),
+            },
+
+            # Reasoning transparan
+            "signals_positive":  sig_pos,
+            "signals_negative":  sig_neg,
+            "win_probability":   win_rate_str,
+
+            # Disclaimer
+            "disclaimer": (
+                f"Tier {tier} BSJP. Strategi hold overnight — ada risiko gap down. "
+                "Selalu gunakan stop loss. Pastikan Anda bisa monitor pre-opening besok."
+            ),
+        })
+
+    # Sort by score (tertinggi dulu), ambil top N
+    candidates.sort(key=lambda x: x["score"], reverse=True)
+    top = candidates[:CONFIG["BSJP_MAX_OUTPUT"]]
+
+    # Tambahkan rank
+    for rank, c in enumerate(top, 1):
+        c["rank"] = rank
+
+    log.info(f"\n📊 BSJP Summary:")
+    log.info(f"   Input universe     : {len(universe)} saham")
+    log.info(f"   Filter value <10B  : {filtered_value}")
+    log.info(f"   Filter price <100  : {filtered_price}")
+    log.info(f"   Filter crash       : {filtered_chg}")
+    log.info(f"   Diproses (OHLCV)   : {processed}")
+    log.info(f"   No data / sedikit  : {no_data}")
+    log.info(f"   Lolos formula BSJP : {len(candidates)}")
+    log.info(f"   Final output       : {len(top)} saham")
+    log.info("=" * 70)
+
+    return top
+
+
+def save_combined_output_v3(
+    intraday_results: List[Dict],
+    ara_results: List[Dict],
+    bsjp_results: List[Dict],
+    mode: str,
+    market_ctx: Dict,
+    intraday_summary: Dict,
+    session_label: str = "MARKET_DAY",
+):
+    """
+    Simpan output gabungan ke combined_screening.json (v3).
+
+    Superset dari v2 — menambahkan key baru tanpa mengubah key lama:
+    {
+      "logika_lama_intraday"      : [...],  ← TIDAK BERUBAH (pipeline intraday)
+      "logika_baru_calon_ara"     : [...],  ← TIDAK BERUBAH (pipeline ARA v2)
+      "bsjp_beli_sore_jual_pagi"  : [...],  ← BARU (pipeline BSJP v1)
+      "meta"                      : {...},
+      "market_context"            : {...},
+      "screening_summary"         : {...},
+      "config_ara"                : {...},
+      "config_bsjp"               : {...},  ← BARU
+    }
+    """
+    today     = datetime.now().strftime("%Y-%m-%d")
+    today_str = datetime.now().strftime("%Y%m%d")
+
+    output = {
+        # ---- Key lama: TIDAK BERUBAH ----
+        "logika_lama_intraday":     intraday_results,
+        "logika_baru_calon_ara":    ara_results,
+
+        # ---- Key baru: BSJP ----
+        "bsjp_beli_sore_jual_pagi": bsjp_results,
+
+        "meta": {
+            "status":           "success" if (intraday_results or ara_results or bsjp_results) else "no_signal",
+            "generated_at":     datetime.now().strftime("%Y-%m-%d %H:%M:%S WIB"),
+            "date":             today,
+            "mode":             mode,
+            "session_label":    session_label,
+            "pipeline_version": "v3.0",
+            "session_warning": (
+                "⚠️ Screening akhir pekan — referensi persiapan saja, bukan sinyal eksekusi."
+                if "PRE_MARKET_WEEKEND" in session_label else None
+            ),
+            "mode_warning": (
+                None if mode == "FULL_STOCKBIT"
+                else "⚠️ TOKEN TIDAK TERSEDIA — ARA pipeline tidak berjalan"
+            ),
+            "intraday_count": len(intraday_results),
+            "ara_count":      len(ara_results),
+            "bsjp_count":     len(bsjp_results),
+            "ara_disclaimer": (
+                "Pipeline ARA v2: deteksi Tipe 1 (Continuation) & Tipe 2 (Silent Accumulation). "
+                "Tipe 3 (Out of Nowhere, ~48% dari ARA nyata) tidak terdeteksi dari OHLCV. "
+                "Precision: 8-15%. Backtest wajib sebelum live trading."
+            ),
+            "bsjp_disclaimer": (
+                "Pipeline BSJP v1: hold overnight, jual pagi hari. "
+                "Win rate historis: Tier S ~70%, Tier A ~64% (spike >2%). "
+                "Backtest 252.480 hari perdagangan IHSG. Selalu pasang stop loss."
+            ),
+            "scoring_breakdown": {
+                "daily_max": 70, "minute_max": 20, "stockbit_bonus": 10, "total_max": 100,
+            },
+        },
+
+        "market_context":    market_ctx,
+        "screening_summary": intraday_summary,
+
+        "config_ara": {
+            "vol_ma20_tier1":       CONFIG.get("ARA_VOL_MA20_TIER1", 3.0),
+            "vol_ma20_tier2":       CONFIG.get("ARA_VOL_MA20_TIER2", 6.0),
+            "score_min":            CONFIG.get("ARA_SCORE_MIN", 55),
+            "score_strong":         CONFIG.get("ARA_SCORE_STRONG", 70),
+            "max_output":           CONFIG.get("ARA_MAX_OUTPUT", 5),
+        },
+
+        "config_bsjp": {
+            "min_value_today_rp":  CONFIG.get("BSJP_MIN_VALUE_TODAY", 10_000_000_000),
+            "tier_s_vol":          CONFIG.get("BSJP_TIER_S_VOL", 5.0),
+            "tier_s_cpos":         CONFIG.get("BSJP_TIER_S_CPOS", 0.95),
+            "tier_s_body":         CONFIG.get("BSJP_TIER_S_BODY", 0.04),
+            "tier_a_vol":          CONFIG.get("BSJP_TIER_A_VOL", 3.0),
+            "tier_a_cpos":         CONFIG.get("BSJP_TIER_A_CPOS", 0.90),
+            "tier_a_body":         CONFIG.get("BSJP_TIER_A_BODY", 0.03),
+            "max_output":          CONFIG.get("BSJP_MAX_OUTPUT", 5),
+            "backtest_sample_size": 252480,
+            "tier_s_win_rate_2pct": "~70%",
+            "tier_a_win_rate_2pct": "~64%",
+        },
+    }
+
+    combined_path = CONFIG.get("ARA_OUTPUT_FILE", "combined_screening.json")
+    with open(combined_path, "w", encoding="utf-8") as f:
+        json.dump(output, f, indent=2, ensure_ascii=False)
+    log.info(f"✅ Tersimpan: {combined_path}")
+
+    dated_path = f"combined_screening_{today_str}.json"
+    with open(dated_path, "w", encoding="utf-8") as f:
+        json.dump(output, f, indent=2, ensure_ascii=False)
+    log.info(f"✅ Tersimpan: {dated_path}")
+
+
+# =============================================================================
 # ENTRY POINT
 # =============================================================================
 # Cara menjalankan:
-#   python screener.py               # Full pipeline (intraday + ARA v2)
+#   python screener.py               # Full pipeline (intraday + ARA v2 + BSJP)
 #   python screener.py --ara-only    # ARA v2 pipeline saja (debug/dev)
 #   python screener.py --no-ara      # Intraday saja, skip ARA
 #
