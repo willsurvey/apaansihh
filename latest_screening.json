@@ -1,6 +1,6 @@
 {
   "status": "success",
-  "generated_at": "2026-05-06 10:26:45 WIB",
+  "generated_at": "2026-05-06 11:26:32 WIB",
   "date": "2026-05-06",
   "mode": "FULL_STOCKBIT",
   "session_label": "MARKET_DAY",
@@ -8,8 +8,8 @@
   "mode_warning": null,
   "total_saham": 2,
   "market_context": {
-    "ihsg_close": 7083,
-    "ihsg_change_pct": 0.37,
+    "ihsg_close": 7107,
+    "ihsg_change_pct": 0.71,
     "ihsg_trend": "BEARISH",
     "ihsg_above_ma50": false,
     "market_safe": true,
@@ -17,10 +17,10 @@
   },
   "screening_summary": {
     "universe": 972,
-    "after_liquidity": 94,
-    "after_accumulation": 21,
-    "after_trend": 9,
-    "after_smc": 3,
+    "after_liquidity": 107,
+    "after_accumulation": 26,
+    "after_trend": 11,
+    "after_smc": 5,
     "after_entry": 2,
     "final": 2
   },
@@ -57,12 +57,12 @@
         "SCREENER_TOP_VALUE"
       ],
       "market_data": {
-        "close": 1805,
-        "change_pct": -3.21,
-        "value_today": 28099160500,
-        "frequency_today": 4638,
+        "close": 1800,
+        "change_pct": -3.74,
+        "value_today": 37625943000,
+        "frequency_today": 6079,
         "iep": 1870,
-        "iep_change_pct": 3.31
+        "iep_change_pct": 3.6
       },
       "accumulation": {
         "broker_signal": "Big Acc",
@@ -80,7 +80,7 @@
       },
       "trend": {
         "ma50": 1431.0,
-        "gap_from_ma50_pct": 26.85,
+        "gap_from_ma50_pct": 26.51,
         "ma50_slope": "POSITIVE"
       },
       "smc": {
@@ -94,20 +94,20 @@
       "entry_plan": {
         "entry_direction": "GAP_UP",
         "entry_direction_label": "⬆️ Gap Up entry — entry di atas PDC jika gap terkonfirmasi",
-        "entry_direction_reason": "IEP gap up 3.3%",
+        "entry_direction_reason": "IEP gap up 3.6%",
         "entry_1": 1870,
         "entry_1_pct": 20,
-        "entry_1_note": "Gap up entry (IEP +3.3%)",
-        "entry_2": 1820,
+        "entry_1_note": "Gap up entry (IEP +3.6%)",
+        "entry_2": 1815,
         "entry_2_pct": 50,
         "entry_2_note": "PDC / Bid Wall — antisipasi flat open",
-        "entry_3": 1810,
+        "entry_3": 1805,
         "entry_3_pct": 30,
         "entry_3_note": "Pullback fallback / OB zone",
         "average_entry": 1825,
-        "entry_zone": "1810 - 1870",
-        "sl": 1800,
-        "sl_pct_risk": 1.37,
+        "entry_zone": "1805 - 1870",
+        "sl": 1795,
+        "sl_pct_risk": 1.64,
         "sl_note": "Cut loss wajib jika close harian di bawah ini",
         "tp1": 1870,
         "tp1_note": "PDH / Target psikologis intraday",
@@ -115,7 +115,7 @@
         "tp2_note": "Weak High / Supply Zone 1H",
         "tp3": 1985,
         "tp3_note": "RR minimum 1:2.0",
-        "rr_ratio": "1:6.4",
+        "rr_ratio": "1:5.3",
         "risk_pct": 2,
         "risk_note": "Max 2% dari total portofolio"
       },
@@ -130,10 +130,10 @@
         "✅ Swing Structure: BULLISH"
       ],
       "warnings": [
-        "⚠️ Potensi GAP UP 3.3% — entry_1 disesuaikan ke IEP",
+        "⚠️ Potensi GAP UP 3.6% — entry_1 disesuaikan ke IEP",
         "⚠️ Entry 1 DI ATAS close — prediksi gap up. Jika tidak gap, skip entry_1."
       ],
-      "updated_at": "10.26 WIB"
+      "updated_at": "11.26 WIB"
     },
     {
       "rank": 2,
@@ -141,29 +141,30 @@
       "company": "Cakra Buana Resources Energi Tbk.",
       "mode": "FULL_STOCKBIT",
       "universe_sources": [
-        "GURU_92",
+        "MOVER_TYPE_NET_FOREIGN_BUY",
+        "GURU_92_Big Accumula",
         "SCREENER_TOP_VALUE"
       ],
       "market_data": {
-        "close": 950,
-        "change_pct": 0,
-        "value_today": 3850497500.0,
-        "frequency_today": 0,
-        "iep": 0,
-        "iep_change_pct": 0
+        "close": 940,
+        "change_pct": -1.57,
+        "value_today": 5243085500,
+        "frequency_today": 1680,
+        "iep": 960,
+        "iep_change_pct": 2.13
       },
       "accumulation": {
         "broker_signal": "Big Acc",
-        "net_foreign_today": 0,
+        "net_foreign_today": 6147630000,
         "net_foreign_3d": 0,
-        "acc_score": 30,
+        "acc_score": 25,
         "score_breakdown": {
           "broker": 35,
           "foreign_1d": 0,
           "foreign_3d": 0,
-          "candle": 0,
+          "candle": -5,
           "volume": -5,
-          "total": 30
+          "total": 25
         }
       },
       "trend": {
@@ -180,20 +181,20 @@
         "weak_high": 940.0
       },
       "entry_plan": {
-        "entry_direction": "MOMENTUM",
-        "entry_direction_label": "➡️ Momentum entry — bisa entry di/dekat PDC",
-        "entry_direction_reason": "Internal BOS/CHoCH bullish 1H",
-        "entry_1": 950,
+        "entry_direction": "GAP_UP",
+        "entry_direction_label": "⬆️ Gap Up entry — entry di atas PDC jika gap terkonfirmasi",
+        "entry_direction_reason": "IEP gap up 2.1%",
+        "entry_1": 960,
         "entry_1_pct": 20,
-        "entry_1_note": "PDC entry — momentum kuat (Internal BOS/CHoCH bullish 1H)",
+        "entry_1_note": "Gap up entry (IEP +2.1%)",
         "entry_2": 940,
         "entry_2_pct": 50,
-        "entry_2_note": "Pullback ringan / OB zone",
+        "entry_2_note": "PDC / Bid Wall — antisipasi flat open",
         "entry_3": 935,
         "entry_3_pct": 30,
-        "entry_3_note": "Deep pullback / PDL area",
+        "entry_3_note": "Pullback fallback / OB zone",
         "average_entry": 940,
-        "entry_zone": "935 - 950",
+        "entry_zone": "935 - 960",
         "sl": 925,
         "sl_pct_risk": 1.6,
         "sl_note": "Cut loss wajib jika close harian di bawah ini",
@@ -213,11 +214,15 @@
       },
       "signals": [
         "✅ Broker Signal: Big Acc",
+        "✅ Net Foreign Buy hari ini: Rp6.1B",
         "✅ Internal BOS Bullish (1H)",
         "✅ Swing Structure: BULLISH"
       ],
-      "warnings": [],
-      "updated_at": "10.26 WIB"
+      "warnings": [
+        "⚠️ Potensi GAP UP 2.1% — entry_1 disesuaikan ke IEP",
+        "⚠️ Entry 1 DI ATAS close — prediksi gap up. Jika tidak gap, skip entry_1."
+      ],
+      "updated_at": "11.26 WIB"
     }
   ]
 }
