@@ -283,6 +283,63 @@ CONFIG = {
     "BSJP_BONUS_GAINER":       5,  # Saham naik hari ini (momentum)
     "BSJP_BONUS_IEP_STRONG":   5,  # IEP change > 1.5% (ekspektasi gap up)
     "BSJP_BONUS_GOOD_DAY":     5,  # Senin/Selasa (win rate lebih tinggi)
+
+    # =========================================================================
+    # PIPELINE BPJS (BELI PAGI JUAL SORE) — v1.0
+    # =========================================================================
+    # Berdasarkan backtest forward-looking 789.792 hari trading (956 saham IHSG).
+    #
+    # REALITA DATA:
+    #   Baseline IHSG: Win Rate beli-pagi-jual-sore hanya 30.3% tanpa filter.
+    #   Tidak ada formula OHLCV D-1 yang menghasilkan WR > 50% secara konsisten.
+    #
+    # DESAIN HYBRID: Pipeline ini menghasilkan WATCHLIST berbasis D-1 pattern,
+    #   yang WAJIB dikonfirmasi secara real-time di pagi hari sebelum eksekusi.
+    #   Tanpa konfirmasi morning, sinyal ini BUKAN perintah beli.
+    #
+    # FORMULA TERBAIK (dari grid search 100 kombinasi):
+    #   1. Reversal Bounce: D-1 merah + vol sepi + close bawah + >MA50
+    #      WR=38.6% | Profit Factor 0.90x | BUTUH morning confirmation
+    #   2. Quiet Continuation: D-1 hijau solid + vol mati + close tengah
+    #      WR=49.8% | Profit Factor 1.04x | Paling mendekati edge positif
+    #
+    # CATATAN KRITIS:
+    #   Gap Down >2% di pagi hari justru sweet spot (WR 30.2%, tapi
+    #   upside +3.75% vs drawdown -0.88% = risk/reward terbaik).
+    #   Gap Up >5% HARUS DIHINDARI (WR hanya 11.8%, DD -6.67%).
+    #
+    # UNIVERSE: Sama dengan BSJP (saham aktif hari ini dari pipeline intraday)
+    # OUTPUT: key baru "bpjs_beli_pagi_jual_sore" di combined_screening.json
+    # =========================================================================
+    "BPJS_ENABLED":         True,
+    "BPJS_MAX_OUTPUT":      5,
+
+    # Filter universe
+    "BPJS_MIN_VALUE_TODAY": 10_000_000_000,  # Rp 10 Miliar (likuid)
+    "BPJS_MIN_PRICE":       100,
+    "BPJS_MIN_CHG_PCT":     -10.0,           # Lebih longgar: kita INCAR yang turun
+
+    # Formula 1: Reversal Bounce
+    # D-1 merah + vol sepi + close bawah + trend masih ok (>MA50)
+    "BPJS_REV_BODY_MAX":    -0.02,  # Body D-1 <= -2% (merah)
+    "BPJS_REV_VOL_MAX":     1.0,    # Volume D-1 < 1x MA20 (sepi)
+    "BPJS_REV_CPOS_MAX":    0.30,   # Close position <= 30% (bawah)
+
+    # Formula 2: Quiet Continuation
+    # D-1 hijau solid + vol mati + close tengah + uptrend
+    "BPJS_QC_BODY_MIN":     0.01,   # Body D-1 >= 1% (hijau tipis-solid)
+    "BPJS_QC_BODY_MAX":     0.08,   # Body D-1 <= 8% (tidak terlalu gila)
+    "BPJS_QC_VOL_MAX":      0.5,    # Volume D-1 <= 0.5x MA20 (mati)
+    "BPJS_QC_CPOS_MIN":     0.30,   # Close pos >= 30%
+    "BPJS_QC_CPOS_MAX":     0.70,   # Close pos <= 70% (tengah)
+
+    # Scoring bonus
+    "BPJS_BONUS_ABOVE_MA20":  5,
+    "BPJS_BONUS_ABOVE_MA50":  5,
+    "BPJS_BONUS_ABOVE_MA200": 5,
+    "BPJS_BONUS_NET_FOREIGN": 5,
+    "BPJS_BONUS_VOL_SCREENER":5,
+    "BPJS_BONUS_LOW_RANGE":   5,   # Range D-1 kecil (volatilitas rendah)
 }
 
 os.makedirs(CONFIG["DATA_DIR"], exist_ok=True)
@@ -3205,11 +3262,23 @@ def run_screener():
     if CONFIG.get("BSJP_ENABLED", True):
         bsjp_results = run_bsjp_pipeline(universe, mode)
 
+    # ----------------------------------------------------------------
+    # PIPELINE BPJS (BELI PAGI JUAL SORE) — dijalankan setelah BSJP selesai
+    # Memanfaatkan `universe` yang sudah dikumpulkan pipeline intraday.
+    # Data OHLCV sudah di-cache — 0 download tambahan.
+    # Menghasilkan WATCHLIST, bukan sinyal eksekusi langsung.
+    # Tidak menyentuh pipeline intraday, ARA, maupun BSJP.
+    # ----------------------------------------------------------------
+    bpjs_results = []
+    if CONFIG.get("BPJS_ENABLED", True):
+        bpjs_results = run_bpjs_pipeline(universe, mode)
+
     # Simpan output gabungan (combined_screening.json)
     save_combined_output(
         intraday_results=results,
         ara_results=ara_results,
         bsjp_results=bsjp_results,
+        bpjs_results=bpjs_results,
         mode=mode,
         market_ctx=market_ctx,
         intraday_summary=summary,
@@ -3222,6 +3291,7 @@ def run_screener():
     log.info(f"   Intraday output:   {len(results)} saham → latest_screening.json")
     log.info(f"   ARA kandidat:      {len(ara_results)} saham → combined_screening.json")
     log.info(f"   BSJP kandidat:     {len(bsjp_results)} saham → combined_screening.json")
+    log.info(f"   BPJS watchlist:    {len(bpjs_results)} saham → combined_screening.json")
     log.info(f"   ⏱️  Total waktu: {elapsed_total:.1f} menit")
     log.info("=" * 70)
 
@@ -3271,16 +3341,19 @@ def save_combined_output(
     intraday_summary: Dict,
     session_label: str = "MARKET_DAY",
     bsjp_results: Optional[List[Dict]] = None,
+    bpjs_results: Optional[List[Dict]] = None,
 ):
     """
     Shim: redirect ke save_combined_output_v3.
     Dipanggil oleh run_screener() — diteruskan ke implementasi v3 yang
-    menambahkan key 'bsjp_beli_sore_jual_pagi' tanpa mengubah key lama.
+    menambahkan key 'bsjp_beli_sore_jual_pagi' dan 'bpjs_beli_pagi_jual_sore'
+    tanpa mengubah key lama.
     """
     save_combined_output_v3(
         intraday_results=intraday_results,
         ara_results=ara_results,
         bsjp_results=bsjp_results or [],
+        bpjs_results=bpjs_results or [],
         mode=mode,
         market_ctx=market_ctx,
         intraday_summary=intraday_summary,
@@ -5061,10 +5134,478 @@ def run_bsjp_pipeline(universe: List[Dict], mode: str) -> List[Dict]:
     return top
 
 
+# =============================================================================
+# PIPELINE BPJS (BELI PAGI JUAL SORE) — v1.0
+# =============================================================================
+# Fungsi utama: run_bpjs_pipeline(universe, mode)
+#
+# Input  : universe (List[Dict]) — saham aktif hari ini dari pipeline intraday
+# Output : List[Dict] — WATCHLIST BPJS terurut by score, max BPJS_MAX_OUTPUT
+#
+# Prinsip desain:
+#   1. TIDAK menyentuh pipeline intraday, ARA, maupun BSJP
+#   2. Memanfaatkan get_daily_data() yang sudah di-cache (0 download tambahan)
+#   3. Menghasilkan WATCHLIST (bukan sinyal eksekusi langsung)
+#   4. Formula berdasarkan grid search 100 kombinasi pada 789.792 hari trading
+#   5. WAJIB dikonfirmasi secara real-time pagi hari sebelum eksekusi
+# =============================================================================
+
+def _bpjs_compute_d1_features(ticker: str) -> Optional[Dict]:
+    """
+    Ambil data OHLCV harian (dari cache YF) dan hitung fitur D-1 untuk BPJS.
+    Return None jika data tidak cukup.
+
+    Fitur yang dihitung:
+      - d1_body    : kekuatan candle D-1 (close - open) / open
+      - d1_cpos    : posisi close D-1 di dalam range (0=low, 1=high)
+      - d1_vol_r   : volume D-1 vs rata-rata MA20
+      - d1_chg     : perubahan harga D-1 vs D-2
+      - d1_range_pct : range D-1 / close (ukuran volatilitas)
+      - d1_uwick   : upper wick ratio
+      - above_ma20/50/200 : posisi harga terhadap MA utama
+      - d2_chg     : perubahan harga D-2 vs D-3
+      - atr_pct    : ATR14 / close (volatilitas normal)
+    """
+    df = get_daily_data(ticker)
+    if df is None or len(df) < 60:
+        return None
+
+    df.columns = [c.lower() if isinstance(c, str) else str(c) for c in df.columns]
+
+    try:
+        if "volume" not in df.columns:
+            return None
+
+        # Ambil 3 baris terakhir: D-2, D-1, D-0 (hari ini)
+        # Tapi karena pipeline berjalan setelah market close,
+        # baris terakhir df = D-0 (hari ini), baris[-2] = D-1
+        if len(df) < 3:
+            return None
+
+        d0 = df.iloc[-1]   # Hari ini (D-0)
+        d1 = df.iloc[-2]   # Kemarin (D-1)
+        d2 = df.iloc[-3]   # 2 hari lalu (D-2)
+
+        # Volume MA20
+        vol_ma20 = df["volume"].rolling(20).mean().iloc[-2]  # MA20 pada D-1
+        if pd.isna(vol_ma20) or vol_ma20 == 0:
+            return None
+
+        # D-1 features
+        d1_o = float(d1["open"])
+        d1_h = float(d1["high"])
+        d1_l = float(d1["low"])
+        d1_c = float(d1["close"])
+        d1_v = float(d1["volume"])
+        d1_range = d1_h - d1_l
+
+        if d1_range <= 0 or d1_o <= 0:
+            return None
+
+        d1_body    = (d1_c - d1_o) / d1_o
+        d1_cpos    = (d1_c - d1_l) / d1_range
+        d1_vol_r   = d1_v / vol_ma20
+        d1_uwick   = (d1_h - max(d1_o, d1_c)) / d1_range
+        d1_lwick   = (min(d1_o, d1_c) - d1_l) / d1_range
+        d1_range_pct = d1_range / d1_c
+
+        # D-1 change vs D-2
+        d2_c = float(d2["close"])
+        d1_chg = (d1_c - d2_c) / d2_c if d2_c > 0 else 0
+
+        # D-2 change vs D-3
+        if len(df) >= 4:
+            d3_c = float(df.iloc[-4]["close"])
+            d2_chg = (d2_c - d3_c) / d3_c if d3_c > 0 else 0
+        else:
+            d2_chg = 0
+
+        # Moving averages (dihitung pada D-1)
+        ma20  = df["close"].rolling(20).mean().iloc[-2]
+        ma50  = df["close"].rolling(50).mean().iloc[-2]
+        ma200 = df["close"].rolling(200).mean().iloc[-2] if len(df) >= 200 else np.nan
+
+        above_ma20  = (not pd.isna(ma20))  and d1_c > ma20
+        above_ma50  = (not pd.isna(ma50))  and d1_c > ma50
+        above_ma200 = (not pd.isna(ma200)) and d1_c > ma200
+
+        # ATR14 sebagai proxy volatilitas
+        tr = pd.Series(np.maximum(
+            df["high"] - df["low"],
+            np.maximum(
+                (df["high"] - df["close"].shift(1)).abs(),
+                (df["low"]  - df["close"].shift(1)).abs()
+            )
+        ))
+        atr14   = tr.rolling(14).mean().iloc[-2]  # ATR14 pada D-1
+        atr_pct = float(atr14) / d1_c if (not pd.isna(atr14) and d1_c > 0) else 0
+
+        # Value MA20 (untuk validasi likuiditas historis)
+        val_ma20 = (df["close"] * df["volume"]).rolling(20).mean().iloc[-2]
+
+        return {
+            "d1_body":       round(d1_body, 4),
+            "d1_cpos":       round(d1_cpos, 4),
+            "d1_vol_r":      round(d1_vol_r, 2),
+            "d1_chg":        round(d1_chg, 4),
+            "d1_uwick":      round(d1_uwick, 4),
+            "d1_lwick":      round(d1_lwick, 4),
+            "d1_range_pct":  round(d1_range_pct, 4),
+            "d2_chg":        round(d2_chg, 4),
+            "above_ma20":    above_ma20,
+            "above_ma50":    above_ma50,
+            "above_ma200":   above_ma200,
+            "atr_pct":       round(float(atr_pct), 4),
+            "val_ma20":      float(val_ma20) if not pd.isna(val_ma20) else 0,
+            "d1_close":      d1_c,
+            "d1_high":       d1_h,
+            "d1_low":        d1_l,
+            "d1_open":       d1_o,
+        }
+    except Exception as e:
+        log.debug(f"    BPJS feature error {ticker}: {e}")
+        return None
+
+
+def _bpjs_score(feat: Dict, stock_mm: Dict) -> Tuple[int, str, List[str], List[str]]:
+    """
+    Hitung skor BPJS dan tentukan formula yang cocok.
+
+    Return: (score, formula_type, signals_positive, signals_negative)
+      - formula_type: "REVERSAL_BOUNCE" | "QUIET_CONTINUATION" | "NONE"
+      - score: 0-100
+
+    Berdasarkan grid search 100 kombinasi pada 789.792 hari trading.
+    """
+    score = 0
+    sig_pos = []
+    sig_neg = []
+
+    d1_body    = feat["d1_body"]
+    d1_cpos    = feat["d1_cpos"]
+    d1_vol_r   = feat["d1_vol_r"]
+    d1_chg     = feat["d1_chg"]
+    d1_range_pct = feat["d1_range_pct"]
+    above_ma20 = feat["above_ma20"]
+    above_ma50 = feat["above_ma50"]
+    above_ma200 = feat["above_ma200"]
+
+    # ---- CEK FORMULA 1: Reversal Bounce ----
+    # D-1 merah + vol sepi + close bawah + trend masih ok
+    # Backtest: WR 38.6%, n=31.924 hari, Profit Factor 0.90x
+    is_reversal = (
+        d1_body  <= CONFIG["BPJS_REV_BODY_MAX"] and
+        d1_vol_r <= CONFIG["BPJS_REV_VOL_MAX"]  and
+        d1_cpos  <= CONFIG["BPJS_REV_CPOS_MAX"] and
+        above_ma50  # Trend masih ok meski D-1 merah
+    )
+
+    # ---- CEK FORMULA 2: Quiet Continuation ----
+    # D-1 hijau solid/tipis + vol mati + close tengah + uptrend
+    # Backtest: WR 49.8%, n=1.371 hari, Profit Factor 1.04x
+    is_quiet = (
+        CONFIG["BPJS_QC_BODY_MIN"] <= d1_body <= CONFIG["BPJS_QC_BODY_MAX"] and
+        d1_vol_r <= CONFIG["BPJS_QC_VOL_MAX"]  and
+        CONFIG["BPJS_QC_CPOS_MIN"] <= d1_cpos <= CONFIG["BPJS_QC_CPOS_MAX"] and
+        above_ma20  # Harus di atas MA20 untuk uptrend
+    )
+
+    if not (is_reversal or is_quiet):
+        return 0, "NONE", sig_pos, sig_neg
+
+    # Prioritaskan Quiet Continuation (WR lebih tinggi)
+    if is_quiet:
+        formula = "QUIET_CONTINUATION"
+        score += 40  # Base score lebih tinggi karena WR lebih baik
+        sig_pos.append(
+            f"Formula: Quiet Continuation — D-1 hijau tipis ({d1_body*100:+.1f}%), "
+            f"volume mati ({d1_vol_r:.2f}x MA20), close tengah ({d1_cpos*100:.0f}%). "
+            f"WR historis: 49.8% (n=1.371)"
+        )
+    else:
+        formula = "REVERSAL_BOUNCE"
+        score += 30  # Base score lebih rendah, butuh konfirmasi lebih kuat
+        sig_pos.append(
+            f"Formula: Reversal Bounce — D-1 merah ({d1_body*100:+.1f}%), "
+            f"volume sepi ({d1_vol_r:.2f}x MA20), close bawah ({d1_cpos*100:.0f}%). "
+            f"WR historis: 38.6% (n=31.924)"
+        )
+
+    # ---- SCORING BONUS DARI FITUR TEKNIKAL ----
+
+    # Bonus MA positioning
+    if above_ma20:
+        score += CONFIG["BPJS_BONUS_ABOVE_MA20"]
+        sig_pos.append("Di atas MA20 — support jangka pendek")
+    else:
+        sig_neg.append("Di bawah MA20 — tekanan jangka pendek")
+
+    if above_ma50:
+        score += CONFIG["BPJS_BONUS_ABOVE_MA50"]
+        sig_pos.append("Di atas MA50 — tren menengah masih ok")
+
+    if above_ma200:
+        score += CONFIG["BPJS_BONUS_ABOVE_MA200"]
+        sig_pos.append("Di atas MA200 — tren utama masih bullish")
+
+    # Bonus range kecil (volatilitas rendah = noise rendah di pagi hari)
+    if d1_range_pct <= 0.03:
+        score += CONFIG["BPJS_BONUS_LOW_RANGE"]
+        sig_pos.append(f"Range D-1 kecil ({d1_range_pct*100:.1f}%) — noise rendah besok")
+
+    # Penalty: upper wick besar (ada tekanan jual D-1)
+    if feat["d1_uwick"] >= 0.40:
+        score -= 10
+        sig_neg.append(f"Upper wick besar ({feat['d1_uwick']*100:.0f}%) — tekanan jual D-1")
+
+    # ---- SCORING BONUS DARI DATA UNIVERSE REAL-TIME ----
+    net_foreign   = stock_mm.get("net_foreign_today", 0) or 0
+    from_screener = stock_mm.get("from_screener", False)
+
+    if net_foreign > 0:
+        score += CONFIG["BPJS_BONUS_NET_FOREIGN"]
+        sig_pos.append(f"Asing beli bersih hari ini (Rp {net_foreign/1e9:.1f}B)")
+    elif net_foreign < -1_000_000_000:
+        score -= 5
+        sig_neg.append("Asing jual bersih besar — hati-hati gap down")
+
+    if from_screener:
+        score += CONFIG["BPJS_BONUS_VOL_SCREENER"]
+        sig_pos.append("Masuk screener volume Stockbit — ada perhatian pasar")
+
+    return max(0, score), formula, sig_pos, sig_neg
+
+
+def run_bpjs_pipeline(universe: List[Dict], mode: str) -> List[Dict]:
+    """
+    Pipeline BPJS (Beli Pagi Jual Sore) — v1.0
+
+    Menerima universe yang sudah dikumpulkan pipeline intraday.
+    Memanfaatkan get_daily_data() yang sudah di-cache — 0 download tambahan.
+
+    PENTING: Output dari pipeline ini adalah WATCHLIST, bukan sinyal eksekusi.
+    Setiap kandidat dilengkapi dengan `morning_confirmation_criteria` yang HARUS
+    dicek secara real-time pagi hari sebelum membeli.
+
+    Alur:
+      1. Filter: value_today >= BPJS_MIN_VALUE_TODAY
+      2. Filter: price >= BPJS_MIN_PRICE
+      3. Filter: change_pct >= BPJS_MIN_CHG_PCT
+      4. Hitung fitur D-1 (dari cache OHLCV)
+      5. Cek formula Reversal Bounce / Quiet Continuation
+      6. Scoring + bonus dari data universe
+      7. Sort by score, ambil top BPJS_MAX_OUTPUT
+    """
+    log.info("\n" + "=" * 70)
+    log.info("🌅 BPJS PIPELINE — Beli Pagi Jual Sore v1.0 (WATCHLIST)")
+    log.info(f"   Universe input: {len(universe)} saham dari pipeline intraday")
+    log.info("   ⚠️  Output = WATCHLIST, bukan sinyal eksekusi langsung")
+    log.info("=" * 70)
+
+    min_value = CONFIG["BPJS_MIN_VALUE_TODAY"]
+    min_price = CONFIG["BPJS_MIN_PRICE"]
+    min_chg   = CONFIG["BPJS_MIN_CHG_PCT"]
+
+    candidates = []
+    filtered_value = 0
+    filtered_price = 0
+    filtered_chg   = 0
+    processed      = 0
+    no_data        = 0
+
+    for stock_mm in universe:
+        ticker    = stock_mm.get("ticker", "")
+        val_today = stock_mm.get("value_today", 0) or 0
+        price     = stock_mm.get("price", 0) or 0
+        chg_pct   = stock_mm.get("change_pct", 0) or 0
+
+        # ---- Filter 1: Likuiditas ----
+        if val_today < min_value:
+            filtered_value += 1
+            continue
+
+        # ---- Filter 2: Harga minimum ----
+        if price < min_price:
+            filtered_price += 1
+            continue
+
+        # ---- Filter 3: Batas crash ----
+        if chg_pct < min_chg:
+            filtered_chg += 1
+            continue
+
+        processed += 1
+
+        # ---- Ambil fitur D-1 (dari cache) ----
+        feat = _bpjs_compute_d1_features(ticker)
+        if feat is None:
+            no_data += 1
+            log.debug(f"    BPJS {ticker}: No D-1 data")
+            continue
+
+        # ---- Score ----
+        score, formula, sig_pos, sig_neg = _bpjs_score(feat, stock_mm)
+        if formula == "NONE":
+            log.debug(
+                f"    BPJS {ticker}: Tidak cocok formula manapun "
+                f"(body={feat['d1_body']*100:+.1f}%, vol={feat['d1_vol_r']:.2f}x, "
+                f"cpos={feat['d1_cpos']*100:.0f}%)"
+            )
+            continue
+
+        log.info(
+            f"    ✅ BPJS {ticker}: {formula} | Score {score} | "
+            f"Body {feat['d1_body']*100:+.1f}% | Vol {feat['d1_vol_r']:.2f}x | "
+            f"CPos {feat['d1_cpos']*100:.0f}%"
+        )
+
+        # ---- Hitung estimasi entry dan stop loss ----
+        d1_close = feat["d1_close"]
+        d1_low   = feat["d1_low"]
+        tick     = get_tick_size(d1_close)
+        atr_rp   = feat["atr_pct"] * d1_close
+
+        # Entry: beli di harga open pagi besok (kita tidak tahu pastinya)
+        # Estimasi entry range berdasarkan ATR
+        entry_low  = round_bei(max(d1_close - atr_rp * 0.5, d1_low * 0.99))
+        entry_high = round_bei(d1_close * 1.02)  # max 2% di atas PDC
+
+        # Stop loss: jika turun lebih dari 1 ATR dari entry
+        stop_loss = round_bei(entry_low - atr_rp)
+
+        # Target: berdasarkan backtest (median intraday gain ~2-3% untuk formula yang lolos)
+        target_modest   = round_bei(d1_close * 1.02)  # +2%
+        target_moderate = round_bei(d1_close * 1.04)  # +4%
+
+        # Morning confirmation criteria — INI YANG MEMBEDAKAN BPJS dari BSJP/ARA
+        if formula == "REVERSAL_BOUNCE":
+            morning_criteria = [
+                "✅ Gap Down ≤2% dari PDC (sweet spot: gap down lalu diborong)",
+                "✅ Volume 15 menit pertama ≥ 1.5x rata-rata (ada minat beli)",
+                "✅ Harga rebound dari Low dalam 15 menit pertama",
+                "❌ JANGAN beli jika Gap Up >5% (WR hanya 11.8%, DD -6.67%)",
+                "❌ JANGAN beli jika volume 15 menit pertama sangat sepi",
+            ]
+            timing_guide = (
+                "Pantau 09:00-09:15. Jika saham gap down lalu diborong (volume naik, "
+                "harga rebound dari low), BELI. Target jual: 14:30-15:30 WIB."
+            )
+        else:  # QUIET_CONTINUATION
+            morning_criteria = [
+                "✅ Open flat atau gap up kecil (0-2% dari PDC)",
+                "✅ Volume 15 menit pertama normal atau naik tipis",
+                "✅ Harga bertahan di atas VWAP 15 menit",
+                "❌ JANGAN beli jika Gap Up >3% (euforia terlalu tinggi)",
+                "❌ JANGAN beli jika langsung dump ke bawah PDC",
+            ]
+            timing_guide = (
+                "Pantau 09:00-09:30. Jika saham open flat dan volume stabil, "
+                "BELI. Target jual: sesi sore 14:30-15:30 WIB."
+            )
+
+        candidates.append({
+            "ticker":         ticker,
+            "company":        stock_mm.get("name", ticker),
+            "type":           "WATCHLIST_BPJS",
+            "formula":        formula,
+            "score":          score,
+
+            # Data hari ini (D-0 = hari saat screener dijalankan)
+            "market_data": {
+                "close":         d1_close,
+                "change_pct":    round(chg_pct, 2),
+                "value_today":   val_today,
+                "net_foreign":   stock_mm.get("net_foreign_today", 0),
+            },
+
+            # Fitur teknikal D-1
+            "d1_features": {
+                "body_pct":      round(feat["d1_body"] * 100, 2),
+                "close_pos_pct": round(feat["d1_cpos"] * 100, 1),
+                "vol_ratio":     feat["d1_vol_r"],
+                "change_pct":    round(feat["d1_chg"] * 100, 2),
+                "range_pct":     round(feat["d1_range_pct"] * 100, 2),
+                "upper_wick":    round(feat["d1_uwick"] * 100, 1),
+                "above_ma20":    feat["above_ma20"],
+                "above_ma50":    feat["above_ma50"],
+                "above_ma200":   feat["above_ma200"],
+                "atr_pct":       round(feat["atr_pct"] * 100, 2),
+            },
+
+            # Rencana trading
+            "trading_plan": {
+                "strategy":      "Beli di pagi hari (09:00-09:30), jual sore (14:30-15:30)",
+                "entry_range":   f"{entry_low:,} – {entry_high:,}",
+                "entry_note":    "JANGAN beli langsung. Konfirmasi dulu kriteria pagi hari.",
+                "stop_loss":     stop_loss,
+                "stop_note":     f"Cut loss jika turun di bawah {stop_loss:,} (1 ATR dari entry)",
+                "target_modest":   target_modest,
+                "target_moderate": target_moderate,
+                "exit_strategy":   "Jual di sesi sore (14:30-15:30 WIB) tanpa menunggu close",
+            },
+
+            # KUNCI: Morning confirmation criteria
+            "morning_confirmation_criteria": morning_criteria,
+            "timing_guide":    timing_guide,
+
+            # Konteks
+            "universe_context": {
+                "in_mover_types": stock_mm.get("in_mover_types", []),
+                "from_gainer":    stock_mm.get("from_gainer", False),
+                "from_screener":  stock_mm.get("from_screener", False),
+            },
+
+            # Reasoning transparan
+            "signals_positive": sig_pos,
+            "signals_negative": sig_neg,
+
+            # Backtest stats
+            "backtest_stats": {
+                "formula":          formula,
+                "win_rate":         "49.8%" if formula == "QUIET_CONTINUATION" else "38.6%",
+                "sample_size":      "n=1.371" if formula == "QUIET_CONTINUATION" else "n=31.924",
+                "profit_factor":    "1.04x" if formula == "QUIET_CONTINUATION" else "0.90x",
+                "total_backtest":   "789.792 hari trading IHSG (956 saham)",
+                "gap_down_sweet_spot": "Gap Down >2%: WR 30.2%, upside +3.75%, DD -0.88%",
+                "gap_up_danger":    "Gap Up >5%: WR 11.8%, DD -6.67% — HINDARI",
+            },
+
+            # Disclaimer tegas
+            "disclaimer": (
+                f"⚠️ INI WATCHLIST, BUKAN SINYAL BELI. "
+                f"Formula {formula} dari backtest forward-looking 789.792 hari trading IHSG. "
+                f"WAJIB konfirmasi real-time pagi hari (lihat morning_confirmation_criteria). "
+                f"Tanpa konfirmasi, JANGAN eksekusi."
+            ),
+        })
+
+    # Sort by score (tertinggi dulu), ambil top N
+    candidates.sort(key=lambda x: x["score"], reverse=True)
+    top = candidates[:CONFIG["BPJS_MAX_OUTPUT"]]
+
+    # Tambahkan rank
+    for rank, c in enumerate(top, 1):
+        c["rank"] = rank
+
+    log.info(f"\n📊 BPJS Summary:")
+    log.info(f"   Input universe           : {len(universe)} saham")
+    log.info(f"   Filter value <10B        : {filtered_value}")
+    log.info(f"   Filter price <100        : {filtered_price}")
+    log.info(f"   Filter crash             : {filtered_chg}")
+    log.info(f"   Diproses (D-1 features)  : {processed}")
+    log.info(f"   No data / sedikit        : {no_data}")
+    log.info(f"   Lolos formula BPJS       : {len(candidates)}")
+    log.info(f"   Final watchlist output   : {len(top)} saham")
+    log.info("=" * 70)
+
+    return top
+
+
 def save_combined_output_v3(
     intraday_results: List[Dict],
     ara_results: List[Dict],
     bsjp_results: List[Dict],
+    bpjs_results: List[Dict],
     mode: str,
     market_ctx: Dict,
     intraday_summary: Dict,
@@ -5075,34 +5616,41 @@ def save_combined_output_v3(
 
     Superset dari v2 — menambahkan key baru tanpa mengubah key lama:
     {
-      "logika_lama_intraday"      : [...],  ← TIDAK BERUBAH (pipeline intraday)
-      "logika_baru_calon_ara"     : [...],  ← TIDAK BERUBAH (pipeline ARA v2)
-      "bsjp_beli_sore_jual_pagi"  : [...],  ← BARU (pipeline BSJP v1)
+      "logika_lama_intraday"      : [...],  <- TIDAK BERUBAH (pipeline intraday)
+      "logika_baru_calon_ara"     : [...],  <- TIDAK BERUBAH (pipeline ARA v2)
+      "bsjp_beli_sore_jual_pagi"  : [...],  <- pipeline BSJP v1
+      "bpjs_beli_pagi_jual_sore"  : [...],  <- BARU (pipeline BPJS v1)
       "meta"                      : {...},
       "market_context"            : {...},
       "screening_summary"         : {...},
       "config_ara"                : {...},
-      "config_bsjp"               : {...},  ← BARU
+      "config_bsjp"               : {...},
+      "config_bpjs"               : {...},  <- BARU
     }
     """
     today     = datetime.now().strftime("%Y-%m-%d")
     today_str = datetime.now().strftime("%Y%m%d")
+
+    any_signal = intraday_results or ara_results or bsjp_results or bpjs_results
 
     output = {
         # ---- Key lama: TIDAK BERUBAH ----
         "logika_lama_intraday":     intraday_results,
         "logika_baru_calon_ara":    ara_results,
 
-        # ---- Key baru: BSJP ----
+        # ---- Key BSJP ----
         "bsjp_beli_sore_jual_pagi": bsjp_results,
 
+        # ---- Key baru: BPJS ----
+        "bpjs_beli_pagi_jual_sore": bpjs_results,
+
         "meta": {
-            "status":           "success" if (intraday_results or ara_results or bsjp_results) else "no_signal",
+            "status":           "success" if any_signal else "no_signal",
             "generated_at":     datetime.now().strftime("%Y-%m-%d %H:%M:%S WIB"),
             "date":             today,
             "mode":             mode,
             "session_label":    session_label,
-            "pipeline_version": "v3.0",
+            "pipeline_version": "v4.0",
             "session_warning": (
                 "⚠️ Screening akhir pekan — referensi persiapan saja, bukan sinyal eksekusi."
                 if "PRE_MARKET_WEEKEND" in session_label else None
@@ -5114,6 +5662,7 @@ def save_combined_output_v3(
             "intraday_count": len(intraday_results),
             "ara_count":      len(ara_results),
             "bsjp_count":     len(bsjp_results),
+            "bpjs_count":     len(bpjs_results),
             "ara_disclaimer": (
                 "Pipeline ARA v2: deteksi Tipe 1 (Continuation) & Tipe 2 (Silent Accumulation). "
                 "Tipe 3 (Out of Nowhere, ~48% dari ARA nyata) tidak terdeteksi dari OHLCV. "
@@ -5123,6 +5672,13 @@ def save_combined_output_v3(
                 "Pipeline BSJP v1: hold overnight, jual pagi hari. "
                 "Win rate historis: Tier S ~70%, Tier A ~64% (spike >2%). "
                 "Backtest 252.480 hari perdagangan IHSG. Selalu pasang stop loss."
+            ),
+            "bpjs_disclaimer": (
+                "Pipeline BPJS v1: WATCHLIST, bukan sinyal langsung. "
+                "Win rate OHLCV D-1 saja: 38-50% (belum cukup). "
+                "WAJIB dikonfirmasi real-time pagi hari (gap absorb, vol 15m, broker flow). "
+                "Backtest forward-looking 789.792 hari trading IHSG. "
+                "Gap Up >5% DIHINDARI (WR 11.8%). Gap Down >2% = sweet spot."
             ),
             "scoring_breakdown": {
                 "daily_max": 70, "minute_max": 20, "stockbit_bonus": 10, "total_max": 100,
@@ -5152,6 +5708,18 @@ def save_combined_output_v3(
             "backtest_sample_size": 252480,
             "tier_s_win_rate_2pct": "~70%",
             "tier_a_win_rate_2pct": "~64%",
+        },
+
+        "config_bpjs": {
+            "min_value_today_rp":   CONFIG.get("BPJS_MIN_VALUE_TODAY", 10_000_000_000),
+            "rev_body_max":         CONFIG.get("BPJS_REV_BODY_MAX", -0.02),
+            "rev_vol_max":          CONFIG.get("BPJS_REV_VOL_MAX", 1.0),
+            "rev_cpos_max":         CONFIG.get("BPJS_REV_CPOS_MAX", 0.30),
+            "qc_body_range":        f"{CONFIG.get('BPJS_QC_BODY_MIN', 0.01)}-{CONFIG.get('BPJS_QC_BODY_MAX', 0.08)}",
+            "qc_vol_max":           CONFIG.get("BPJS_QC_VOL_MAX", 0.5),
+            "max_output":           CONFIG.get("BPJS_MAX_OUTPUT", 5),
+            "backtest_sample_size": 789792,
+            "note":                 "Watchlist hybrid: D-1 scoring + morning confirmation wajib",
         },
     }
 
