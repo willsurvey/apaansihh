@@ -1,7 +1,8 @@
 // pages/index.js
-import { useState, useEffect, useMemo, useCallback } from 'react'
+import { useState, useEffect, useMemo, useCallback, useContext } from 'react'
 import Head from 'next/head'
 import styles from '../styles/Home.module.css'
+import { ThemeContext } from './_app'
 
 const formatRp = (val) => {
   if (val == null || isNaN(val)) return '-'
@@ -338,6 +339,121 @@ function AraCard({ stock }) {
   )
 }
 
+function BsjpCard({ stock }) {
+  const ep = stock.entry_plan || {}
+  return (
+    <div className={`${styles.card} ${styles.bsjpCard}`}>
+      <div className={styles.cardHead}>
+        <div className={styles.cardHeadLeft}>
+          <div>
+            <span className={styles.tickerText}>{stock.ticker}</span>
+            <span className={styles.companyText}>{stock.company || 'BSJP Candidate'}</span>
+          </div>
+          <span className={styles.tierBadge} style={{background: 'var(--c-blue)', color: '#fff', borderColor: 'var(--c-blue)'}}>BSJP</span>
+        </div>
+      </div>
+      <div className={styles.cardBody}>
+        <div className={styles.statsRow}>
+          <div className={styles.stat}><span className={styles.statLbl}>Close</span><span className={styles.statVal}>Rp{formatNum(stock.close)}</span></div>
+          <div className={styles.stat}><span className={styles.statLbl}>Change</span><ChangeBadge val={stock.change_pct} /></div>
+          <div className={styles.stat}><span className={styles.statLbl}>Gap Target</span><ChangeBadge val={stock.target_gap_pct} /></div>
+        </div>
+        <div className={styles.entrySection}>
+          <span className={styles.blockTitle}>Rencana BSJP</span>
+          <div className={styles.miniRow}><span>Win Rate Hist.</span><strong>{(stock.win_rate * 100).toFixed(1)}%</strong></div>
+          <div className={styles.miniRow}><span>Avg Spike</span><strong>+{stock.avg_spike_pct}%</strong></div>
+          <div className={styles.entryList} style={{marginTop: '12px'}}>
+             <EntryRow label="Entry (Sore)" price={stock.close} />
+             <EntryRow label="TP (Gap Up/Pagi)" price={ep.tp1} pct={ep.tp1_pct} note="Jual pagi hari" />
+             <EntryRow label="SL" price={ep.sl} pct={ep.sl_pct_risk} color="var(--c-coral)" />
+          </div>
+        </div>
+        <div className={styles.signalBox}>
+          {stock.reasons?.map((r, i) => <div key={i} className={styles.signalItem}>+ {r}</div>)}
+        </div>
+      </div>
+    </div>
+  )
+}
+
+function BpjsCard({ stock }) {
+  const ep = stock.entry_plan || {}
+  return (
+    <div className={`${styles.card} ${styles.bpjsCard}`}>
+      <div className={styles.cardHead}>
+        <div className={styles.cardHeadLeft}>
+          <div>
+            <span className={styles.tickerText}>{stock.ticker}</span>
+            <span className={styles.companyText}>{stock.company || 'BPJS Candidate'}</span>
+          </div>
+          <span className={styles.tierBadge} style={{background: 'var(--c-teal)', color: '#fff', borderColor: 'var(--c-teal)'}}>BPJS</span>
+        </div>
+      </div>
+      <div className={styles.cardBody}>
+        <div className={styles.statsRow}>
+          <div className={styles.stat}><span className={styles.statLbl}>Close</span><span className={styles.statVal}>Rp{formatNum(stock.close)}</span></div>
+          <div className={styles.stat}><span className={styles.statLbl}>Target</span><ChangeBadge val={stock.target_pct} /></div>
+          <div className={styles.stat}><span className={styles.statLbl}>Type</span><span className={styles.statVal}>{stock.momentum_type}</span></div>
+        </div>
+        <div className={styles.entrySection}>
+          <span className={styles.blockTitle}>Rencana BPJS</span>
+          <div className={styles.entryList}>
+             <EntryRow label="Entry (Pagi)" price={stock.close} note={ep.entry_note} />
+             <EntryRow label="TP (Sore)" price={ep.tp1} pct={ep.tp1_pct} note="Jual sebelum tutup" />
+             <EntryRow label="SL (Ketat)" price={ep.sl} pct={ep.sl_pct_risk} color="var(--c-coral)" />
+          </div>
+        </div>
+        <div className={styles.signalBox}>
+          {stock.reasons?.map((r, i) => <div key={i} className={styles.signalItem}>+ {r}</div>)}
+        </div>
+      </div>
+    </div>
+  )
+}
+
+function SwingCard({ stock }) {
+  const ep = stock.entry_plan || {}
+  return (
+    <div className={`${styles.card} ${styles.swingCard}`}>
+      <div className={styles.cardHead}>
+        <div className={styles.cardHeadLeft}>
+          <div>
+            <span className={styles.tickerText}>{stock.ticker}</span>
+            <span className={styles.companyText}>{stock.company || 'SWING Candidate'}</span>
+          </div>
+          <span className={styles.swingStage}>STAGE 2</span>
+        </div>
+      </div>
+      <div className={styles.cardBody}>
+        <div className={styles.statsRow}>
+          <div className={styles.stat}><span className={styles.statLbl}>Close</span><span className={styles.statVal}>Rp{formatNum(stock.close)}</span></div>
+          <div className={styles.stat}><span className={styles.statLbl}>Trend 20D</span><ChangeBadge val={stock.trend_20d_pct} /></div>
+          <div className={styles.stat}><span className={styles.statLbl}>VCP</span><span className={styles.statVal}>{stock.vcp_detected ? 'Ya ✅' : 'Tidak'}</span></div>
+        </div>
+        
+        {stock.vcp_detected && (
+          <div className={styles.miniRow} style={{padding: '8px', background: 'rgba(128,128,128,0.05)', borderRadius: '6px', marginBottom: '8px'}}>
+            <span>Contraction</span>
+            <strong>{formatNum(stock.vcp_contraction_pct, 2)}%</strong>
+          </div>
+        )}
+
+        <div className={styles.entrySection}>
+          <span className={styles.blockTitle}>Swing Plan (1-2 Minggu)</span>
+          <div className={styles.entryList}>
+             <EntryRow label="Entry Range" price={ep.entry_1} note={`Max Rp${ep.entry_2}`} />
+             <EntryRow label="Target (+10%)" price={ep.tp1} pct={ep.tp1_pct} color="var(--c-blue)" />
+             <EntryRow label="Stop Loss" price={ep.sl} pct={ep.sl_pct_risk} color="var(--c-coral)" />
+          </div>
+        </div>
+        <div className={styles.signalBox}>
+          {stock.reasons?.map((r, i) => <div key={i} className={styles.signalItem}>+ {r}</div>)}
+        </div>
+      </div>
+    </div>
+  )
+}
+
 function FilterBar({ search, onSearch, sortKey, onSort, filterTier, onFilterTier }) {
   return (
     <div className={styles.filterBar}>
@@ -414,19 +530,20 @@ function SummaryFunnel({ summary }) {
 function TabBar({ active, onChange, counts }) {
   return (
     <div className={styles.tabBar}>
-      <button
-        className={`${styles.tab} ${active === 'intraday' ? styles.tabActive : ''}`}
-        onClick={() => onChange('intraday')}
-      >
-        Intraday Screening
-        <span className={styles.tabCount}>{counts.intraday}</span>
+      <button className={`${styles.tab} ${active === 'intraday' ? styles.tabActive : ''}`} onClick={() => onChange('intraday')}>
+        Intraday <span className={styles.tabCount}>{counts.intraday || 0}</span>
       </button>
-      <button
-        className={`${styles.tab} ${active === 'ara' ? styles.tabActive : ''}`}
-        onClick={() => onChange('ara')}
-      >
-        Calon ARA
-        <span className={styles.tabCount}>{counts.ara}</span>
+      <button className={`${styles.tab} ${active === 'ara' ? styles.tabActive : ''}`} onClick={() => onChange('ara')}>
+        Calon ARA <span className={styles.tabCount}>{counts.ara || 0}</span>
+      </button>
+      <button className={`${styles.tab} ${active === 'bsjp' ? styles.tabActive : ''}`} onClick={() => onChange('bsjp')}>
+        BSJP <span className={styles.tabCount}>{counts.bsjp || 0}</span>
+      </button>
+      <button className={`${styles.tab} ${active === 'bpjs' ? styles.tabActive : ''}`} onClick={() => onChange('bpjs')}>
+        BPJS <span className={styles.tabCount}>{counts.bpjs || 0}</span>
+      </button>
+      <button className={`${styles.tab} ${active === 'swing' ? styles.tabActive : ''}`} onClick={() => onChange('swing')}>
+        Swing <span className={styles.tabCount}>{counts.swing || 0}</span>
       </button>
     </div>
   )
@@ -461,6 +578,7 @@ function IhsgBanner({ ctx }) {
 }
 
 export default function Home({ initialData, loadError }) {
+  const { theme, toggleTheme } = useContext(ThemeContext)
   const [data, setData] = useState(initialData)
   const [error, setError] = useState(loadError || null)
   const [loading, setLoading] = useState(false)
@@ -537,6 +655,10 @@ export default function Home({ initialData, loadError }) {
     return list
   }, [data, araSearch, araFilterPattern])
 
+  const bsjpStocks = data?.bsjp_candidates ?? []
+  const bpjsStocks = data?.bpjs_candidates ?? []
+  const swingStocks = data?.swing_trading ?? []
+
   const meta = data?.meta || {}
   const ctx = data?.market_context || null
   const summary = data?.screening_summary || null
@@ -556,11 +678,14 @@ export default function Home({ initialData, loadError }) {
             <div className={styles.logoBox}>IDX</div>
             <div>
               <h1 className={styles.siteTitle}>Screener IDX</h1>
-              <p className={styles.siteSub}>Pre-Market Intraday · SMC · Broker Accumulation · ARA Detector</p>
+              <p className={styles.siteSub}>Multi-Pipeline Trading Intelligence</p>
             </div>
           </div>
           <div className={styles.headerActions}>
-            {lastRefresh && <span className={styles.refreshTime}>Refresh: {lastRefresh}</span>}
+            {lastRefresh && <span className={styles.refreshTime}>{lastRefresh}</span>}
+            <button className={styles.themeToggle} onClick={toggleTheme} title="Toggle Theme">
+              {theme === 'dark' ? '☀️' : '🌙'}
+            </button>
             <button className={styles.btn} onClick={fetchData} disabled={loading}>
               {loading ? '⏳' : '↺'} Refresh
             </button>
@@ -607,7 +732,13 @@ export default function Home({ initialData, loadError }) {
             <TabBar
               active={activeTab}
               onChange={setActiveTab}
-              counts={{ intraday: data.logika_lama_intraday?.length ?? 0, ara: data.logika_baru_calon_ara?.length ?? 0 }}
+              counts={{ 
+                intraday: data.logika_lama_intraday?.length ?? 0, 
+                ara: data.logika_baru_calon_ara?.length ?? 0,
+                bsjp: data.bsjp_candidates?.length ?? 0,
+                bpjs: data.bpjs_candidates?.length ?? 0,
+                swing: data.swing_trading?.length ?? 0
+              }}
             />
 
             {activeTab === 'intraday' && (
@@ -657,6 +788,23 @@ export default function Home({ initialData, loadError }) {
                   </div>
                 )}
               </>
+            )}
+            {activeTab === 'bsjp' && (
+              <div className={styles.cardGrid}>
+                {bsjpStocks.length > 0 ? bsjpStocks.map((s) => <BsjpCard key={s.ticker} stock={s} />) : <div className={styles.stateBox}><p>Tidak ada kandidat BSJP saat ini.</p></div>}
+              </div>
+            )}
+
+            {activeTab === 'bpjs' && (
+              <div className={styles.cardGrid}>
+                {bpjsStocks.length > 0 ? bpjsStocks.map((s) => <BpjsCard key={s.ticker} stock={s} />) : <div className={styles.stateBox}><p>Tidak ada kandidat BPJS saat ini.</p></div>}
+              </div>
+            )}
+
+            {activeTab === 'swing' && (
+              <div className={styles.cardGrid}>
+                {swingStocks.length > 0 ? swingStocks.map((s) => <SwingCard key={s.ticker} stock={s} />) : <div className={styles.stateBox}><p>Tidak ada setup Swing Stage 2 saat ini.</p></div>}
+              </div>
             )}
           </>
         )}
