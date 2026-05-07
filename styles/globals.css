@@ -9,6 +9,20 @@ html {
   font-size: 16px;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+<<<<<<< HEAD
+=======
+}
+
+:root {
+  --c-teal: #1D9E75;
+  --c-amber: #BA7517;
+  --c-coral: #D85A30;
+  --c-blue: #378ADD;
+  --c-red: #E24B4A;
+  --c-green: #639922;
+  --c-purple: #7F77DD;
+  --c-gray: #888780;
+>>>>>>> 1c96849 (feat: deskripsi update)
 }
 
 :root {
@@ -42,6 +56,13 @@ button, input, select, textarea {
 
 button {
   cursor: pointer;
+<<<<<<< HEAD
+}
+
+input[type="search"]::-webkit-search-cancel-button {
+  -webkit-appearance: none;
+=======
+>>>>>>> 1c96849 (feat: deskripsi update)
 }
 
 input[type="search"]::-webkit-search-cancel-button {

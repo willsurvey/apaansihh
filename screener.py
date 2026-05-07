@@ -340,6 +340,64 @@ CONFIG = {
     "BPJS_BONUS_NET_FOREIGN": 5,
     "BPJS_BONUS_VOL_SCREENER":5,
     "BPJS_BONUS_LOW_RANGE":   5,   # Range D-1 kecil (volatilitas rendah)
+
+    # =========================================================================
+    # PIPELINE SWING TRADING — v1.0
+    # =========================================================================
+    # Berdasarkan backtest forward-looking 467.390 hari trading (956 saham IHSG).
+    #
+    # GOLDEN SETUP (dari grid search pada Strong Uptrend):
+    #   Sedikit di atas MA20 (+3% s/d +8%) + Ultra Tight Squeeze
+    #   (Range 5d < 35% Range 20d) + Volume Kering (Vol 5d < 50% MA20)
+    #   PF=1.60x | EV=+2.14% per trade | WR=48.8% | DD=-5.5%
+    #   P(sentuh +10% dalam 10 hari) = 38.7%
+    #
+    # KILL SWITCH: Jika IHSG < MA200, pipeline WAJIB mati total.
+    #   Setup momentum TIDAK bekerja di bear market (2019: PF 0.77x,
+    #   2024: PF 0.92x, 2026: PF 0.35x).
+    #
+    # RSI BOOST: RSI 65-80 meningkatkan PF dari 1.38x ke 1.81x.
+    #
+    # HOLD OPTIMAL: 10-15 hari. PF plateau setelah 15 hari.
+    # EXIT: Target +10-15% (trailing stop setelah +5%), SL -6% keras.
+    #
+    # OUTPUT: key baru "swing_trading" di combined_screening.json
+    # =========================================================================
+    "SWING_ENABLED":          True,
+    "SWING_MAX_OUTPUT":       5,
+
+    # Filter universe
+    "SWING_MIN_VALUE_20D":    5_000_000_000,   # Val MA20 > Rp 5 Miliar
+    "SWING_MIN_PRICE":        100,
+
+    # Stage 2 Uptrend (wajib)
+    "SWING_MA50_SLOPE_MIN":   0.01,  # MA50 naik >1% per 10 hari
+
+    # Golden Setup: Posisi vs MA20
+    "SWING_DIST_MA20_MIN":    0.03,  # +3% di atas MA20
+    "SWING_DIST_MA20_MAX":    0.08,  # +8% di atas MA20 (tidak overextended)
+
+    # Golden Setup: Volatility Contraction
+    "SWING_SQUEEZE_MAX":      0.35,  # Range 5d < 35% dari Range 20d
+
+    # Golden Setup: Volume Dryness
+    "SWING_VOL_5D_MAX":       0.50,  # Vol rata-rata 5d < 50% MA20
+
+    # RSI filter
+    "SWING_RSI_MIN":          55,    # RSI minimum (bukan oversold)
+    "SWING_RSI_MAX":          80,    # RSI max (tidak terlalu overbought)
+
+    # Exit parameters
+    "SWING_TARGET_PCT":       0.10,  # Target +10%
+    "SWING_STOP_LOSS_PCT":    0.06,  # Stop loss -6% (keras)
+    "SWING_MAX_HOLD_DAYS":    15,    # Jual berapapun setelah 15 hari
+
+    # Scoring bonus
+    "SWING_BONUS_ABOVE_MA200":  5,
+    "SWING_BONUS_RSI_SWEET":    5,   # RSI 65-80 (momentum sweet spot)
+    "SWING_BONUS_TIGHT_ATR":    5,   # ATR < 3% (volatilitas rendah)
+    "SWING_BONUS_NET_FOREIGN":  5,
+    "SWING_BONUS_NEAR_52W_HIGH":5,   # Dekat 52-week high (<10%)
 }
 
 os.makedirs(CONFIG["DATA_DIR"], exist_ok=True)
@@ -3273,12 +3331,24 @@ def run_screener():
     if CONFIG.get("BPJS_ENABLED", True):
         bpjs_results = run_bpjs_pipeline(universe, mode)
 
+    # ----------------------------------------------------------------
+    # PIPELINE SWING TRADING — dijalankan setelah BPJS selesai
+    # Memanfaatkan `universe` dan cache OHLCV yang sudah ada.
+    # Mencari setup VCP (Volatility Contraction) pada Stage 2 Uptrend.
+    # Kill switch: otomatis mati jika IHSG < MA200.
+    # Tidak menyentuh pipeline intraday, ARA, BSJP, maupun BPJS.
+    # ----------------------------------------------------------------
+    swing_results = []
+    if CONFIG.get("SWING_ENABLED", True):
+        swing_results = run_swing_pipeline(universe, mode, market_ctx)
+
     # Simpan output gabungan (combined_screening.json)
     save_combined_output(
         intraday_results=results,
         ara_results=ara_results,
         bsjp_results=bsjp_results,
         bpjs_results=bpjs_results,
+        swing_results=swing_results,
         mode=mode,
         market_ctx=market_ctx,
         intraday_summary=summary,
@@ -3292,6 +3362,7 @@ def run_screener():
     log.info(f"   ARA kandidat:      {len(ara_results)} saham → combined_screening.json")
     log.info(f"   BSJP kandidat:     {len(bsjp_results)} saham → combined_screening.json")
     log.info(f"   BPJS watchlist:    {len(bpjs_results)} saham → combined_screening.json")
+    log.info(f"   SWING watchlist:   {len(swing_results)} saham → combined_screening.json")
     log.info(f"   ⏱️  Total waktu: {elapsed_total:.1f} menit")
     log.info("=" * 70)
 
@@ -3342,18 +3413,19 @@ def save_combined_output(
     session_label: str = "MARKET_DAY",
     bsjp_results: Optional[List[Dict]] = None,
     bpjs_results: Optional[List[Dict]] = None,
+    swing_results: Optional[List[Dict]] = None,
 ):
     """
     Shim: redirect ke save_combined_output_v3.
     Dipanggil oleh run_screener() — diteruskan ke implementasi v3 yang
-    menambahkan key 'bsjp_beli_sore_jual_pagi' dan 'bpjs_beli_pagi_jual_sore'
-    tanpa mengubah key lama.
+    menambahkan semua pipeline keys tanpa mengubah key lama.
     """
     save_combined_output_v3(
         intraday_results=intraday_results,
         ara_results=ara_results,
         bsjp_results=bsjp_results or [],
         bpjs_results=bpjs_results or [],
+        swing_results=swing_results or [],
         mode=mode,
         market_ctx=market_ctx,
         intraday_summary=intraday_summary,
@@ -5601,48 +5673,348 @@ def run_bpjs_pipeline(universe: List[Dict], mode: str) -> List[Dict]:
     return top
 
 
+# =============================================================================
+# PIPELINE SWING TRADING — v1.0 (VCP + Stage 2 Uptrend)
+# =============================================================================
+# Berdasarkan backtest forward-looking 467.390 hari trading (956 saham IHSG).
+# Golden Setup: Sedikit di atas MA20 + Ultra Tight Squeeze + Volume Kering
+# PF=1.60x | EV=+2.14% per trade | WR=48.8% | DD=-5.5%
+# KILL SWITCH: Pipeline mati total jika IHSG < MA200.
+# =============================================================================
+
+def _swing_compute_rsi(series: pd.Series, period: int = 14) -> pd.Series:
+    """Compute RSI dari pd.Series close."""
+    delta = series.diff()
+    gain = delta.where(delta > 0, 0.0)
+    loss = -delta.where(delta < 0, 0.0)
+    avg_gain = gain.rolling(period).mean()
+    avg_loss = loss.rolling(period).mean()
+    rs = avg_gain / (avg_loss + 1e-10)
+    return 100 - (100 / (1 + rs))
+
+
+def _swing_compute_features(ticker: str) -> Optional[Dict]:
+    """
+    Hitung fitur Swing Trading dari cache OHLCV harian.
+    Return None jika data tidak cukup (butuh minimal 200 hari untuk MA200).
+    """
+    df = get_daily_data(ticker)
+    if df is None or len(df) < 210:
+        return None
+
+    df.columns = [c.lower() if isinstance(c, str) else str(c) for c in df.columns]
+    try:
+        if "volume" not in df.columns:
+            return None
+
+        c = df["close"].astype(float)
+        h = df["high"].astype(float)
+        l = df["low"].astype(float)
+        v = df["volume"].astype(float)
+
+        ma20  = c.rolling(20).mean()
+        ma50  = c.rolling(50).mean()
+        ma200 = c.rolling(200).mean()
+
+        curr_c    = float(c.iloc[-1])
+        curr_ma20 = float(ma20.iloc[-1])
+        curr_ma50 = float(ma50.iloc[-1])
+        curr_ma200= float(ma200.iloc[-1])
+
+        if any(pd.isna(x) for x in [curr_ma20, curr_ma50, curr_ma200]):
+            return None
+        if curr_ma50 == 0 or curr_ma200 == 0:
+            return None
+
+        is_stage2 = (curr_c > curr_ma50) and (curr_ma50 > curr_ma200)
+        ma50_prev = float(ma50.iloc[-11]) if len(ma50) > 10 else curr_ma50
+        ma50_slope = (curr_ma50 - ma50_prev) / (ma50_prev + 1e-10)
+        dist_ma20 = (curr_c - curr_ma20) / curr_ma20
+
+        h5  = h.rolling(5).max().iloc[-1]
+        l5  = l.rolling(5).min().iloc[-1]
+        h20 = h.rolling(20).max().iloc[-1]
+        l20 = l.rolling(20).min().iloc[-1]
+        range_5  = (h5 - l5) / curr_c
+        range_20 = (h20 - l20) / curr_c
+        squeeze = range_5 / range_20 if range_20 > 0 else 1.0
+
+        v5  = float(v.rolling(5).mean().iloc[-1])
+        v20 = float(v.rolling(20).mean().iloc[-1])
+        vol_ratio = v5 / v20 if v20 > 0 else 1.0
+
+        rsi = float(_swing_compute_rsi(c, 14).iloc[-1])
+
+        tr = pd.concat([
+            h - l, (h - c.shift(1)).abs(), (l - c.shift(1)).abs()
+        ], axis=1).max(axis=1)
+        atr14 = float(tr.rolling(14).mean().iloc[-1])
+        atr_pct = atr14 / curr_c if curr_c > 0 else 0
+
+        val_ma20 = float((c * v).rolling(20).mean().iloc[-1])
+
+        if len(h) >= 252:
+            high_52w = float(h.iloc[-252:].max())
+        else:
+            high_52w = float(h.max())
+        dist_52w = (curr_c - high_52w) / high_52w if high_52w > 0 else -1
+
+        return {
+            "is_stage2": is_stage2, "ma50_slope": round(ma50_slope, 4),
+            "dist_ma20": round(dist_ma20, 4), "squeeze": round(squeeze, 4),
+            "vol_ratio": round(vol_ratio, 4), "rsi": round(rsi, 1),
+            "atr_pct": round(atr_pct, 4), "val_ma20": val_ma20,
+            "dist_52w": round(dist_52w, 4), "close": curr_c,
+            "ma20": round(curr_ma20, 2), "ma50": round(curr_ma50, 2),
+            "ma200": round(curr_ma200, 2), "above_ma200": curr_c > curr_ma200,
+        }
+    except Exception as e:
+        log.debug(f"    SWING feature error {ticker}: {e}")
+        return None
+
+
+def _swing_score(feat: Dict, stock_mm: Dict) -> Tuple[int, List[str], List[str]]:
+    """Hitung skor Swing Trading berdasarkan Golden Setup VCP."""
+    score = 0
+    sig_pos = []
+    sig_neg = []
+
+    if not feat["is_stage2"]:
+        return 0, [], ["Bukan Stage 2 Uptrend"]
+    if feat["ma50_slope"] < CONFIG["SWING_MA50_SLOPE_MIN"]:
+        return 0, [], [f"MA50 slope terlalu flat ({feat['ma50_slope']*100:.1f}%)"]
+
+    score += 25
+    sig_pos.append(
+        f"Stage 2 Uptrend: Harga > MA50 > MA200, "
+        f"MA50 slope +{feat['ma50_slope']*100:.1f}%/10d"
+    )
+
+    d = feat["dist_ma20"]
+    d_min = CONFIG["SWING_DIST_MA20_MIN"]
+    d_max = CONFIG["SWING_DIST_MA20_MAX"]
+    if d_min <= d <= d_max:
+        score += 20
+        sig_pos.append(f"Posisi ideal: +{d*100:.1f}% di atas MA20")
+    elif d < d_min:
+        score += 10
+        sig_neg.append(f"Terlalu dekat MA20 (+{d*100:.1f}%)")
+    else:
+        sig_neg.append(f"Overextended (+{d*100:.1f}% di atas MA20)")
+
+    sqz = feat["squeeze"]
+    if sqz <= CONFIG["SWING_SQUEEZE_MAX"]:
+        score += 20
+        sig_pos.append(f"Ultra Tight Squeeze: {sqz*100:.0f}%")
+    elif sqz <= 0.60:
+        score += 10
+        sig_pos.append(f"Squeeze moderat ({sqz*100:.0f}%)")
+    else:
+        sig_neg.append(f"Belum squeeze ({sqz*100:.0f}%)")
+
+    vr = feat["vol_ratio"]
+    if vr <= CONFIG["SWING_VOL_5D_MAX"]:
+        score += 15
+        sig_pos.append(f"Volume kering: {vr*100:.0f}% dari MA20")
+    elif vr <= 0.90:
+        score += 5
+    else:
+        sig_neg.append(f"Volume belum kering ({vr*100:.0f}%)")
+
+    rsi = feat["rsi"]
+    if CONFIG["SWING_RSI_MIN"] <= rsi <= CONFIG["SWING_RSI_MAX"]:
+        if 65 <= rsi <= 80:
+            score += CONFIG["SWING_BONUS_RSI_SWEET"]
+            sig_pos.append(f"RSI sweet spot ({rsi:.0f}) — PF 1.81x")
+        else:
+            sig_pos.append(f"RSI netral ({rsi:.0f})")
+    elif rsi < CONFIG["SWING_RSI_MIN"]:
+        score -= 10
+        sig_neg.append(f"RSI terlalu rendah ({rsi:.0f})")
+    else:
+        sig_neg.append(f"RSI overbought ({rsi:.0f})")
+
+    if feat["above_ma200"]:
+        score += CONFIG["SWING_BONUS_ABOVE_MA200"]
+        sig_pos.append("Di atas MA200 — tren primer bullish")
+    if feat["atr_pct"] <= 0.03:
+        score += CONFIG["SWING_BONUS_TIGHT_ATR"]
+        sig_pos.append(f"ATR rendah ({feat['atr_pct']*100:.1f}%)")
+    if feat["dist_52w"] >= -0.10:
+        score += CONFIG["SWING_BONUS_NEAR_52W_HIGH"]
+        sig_pos.append(f"Dekat 52w high ({feat['dist_52w']*100:+.1f}%)")
+
+    nf = stock_mm.get("net_foreign_today", 0) or 0
+    if nf > 0:
+        score += CONFIG["SWING_BONUS_NET_FOREIGN"]
+        sig_pos.append(f"Asing beli bersih (Rp {nf/1e9:.1f}B)")
+
+    return max(0, score), sig_pos, sig_neg
+
+
+def run_swing_pipeline(
+    universe: List[Dict], mode: str, market_ctx: Dict
+) -> List[Dict]:
+    """Pipeline Swing Trading v1.0 — VCP + Stage 2. Kill switch jika IHSG < MA200."""
+    log.info("\n" + "=" * 70)
+    log.info("📈 SWING PIPELINE — VCP Stage 2 Uptrend v1.0")
+    log.info(f"   Universe input: {len(universe)} saham")
+    log.info("=" * 70)
+
+    # KILL SWITCH: Cek IHSG > MA200
+    ihsg_above_ma200 = True
+    try:
+        ihsg_df = get_daily_data("^JKSE")
+        if ihsg_df is not None and len(ihsg_df) >= 200:
+            ihsg_cols = [c.lower() if isinstance(c, str) else str(c)
+                         for c in ihsg_df.columns]
+            ihsg_df.columns = ihsg_cols
+            ihsg_c = ihsg_df["close"].astype(float)
+            ihsg_ma200 = float(ihsg_c.rolling(200).mean().iloc[-1])
+            ihsg_last  = float(ihsg_c.iloc[-1])
+            ihsg_above_ma200 = ihsg_last > ihsg_ma200
+            status = "DI ATAS ✅" if ihsg_above_ma200 else "DI BAWAH ❌"
+            log.info(f"   IHSG: {ihsg_last:,.0f} | MA200: {ihsg_ma200:,.0f} | {status}")
+    except Exception as e:
+        log.warning(f"   IHSG data error: {e} — skip kill switch")
+
+    if not ihsg_above_ma200:
+        log.warning("   ⛔ KILL SWITCH: IHSG < MA200. Pipeline SWING mati.")
+        log.info("=" * 70)
+        return []
+
+    target_pct = CONFIG["SWING_TARGET_PCT"]
+    sl_pct = CONFIG["SWING_STOP_LOSS_PCT"]
+    max_hold = CONFIG["SWING_MAX_HOLD_DAYS"]
+
+    candidates = []
+    filtered_val = 0
+    filtered_price = 0
+    processed = 0
+    no_data = 0
+    no_stage2 = 0
+
+    for stock_mm in universe:
+        ticker = stock_mm.get("ticker", "")
+        price  = stock_mm.get("price", 0) or 0
+
+        if price < CONFIG["SWING_MIN_PRICE"]:
+            filtered_price += 1
+            continue
+
+        processed += 1
+        feat = _swing_compute_features(ticker)
+        if feat is None:
+            no_data += 1
+            continue
+        if feat["val_ma20"] < CONFIG["SWING_MIN_VALUE_20D"]:
+            filtered_val += 1
+            continue
+
+        score, sig_pos, sig_neg = _swing_score(feat, stock_mm)
+        if score < 40:
+            if not feat["is_stage2"]:
+                no_stage2 += 1
+            continue
+
+        log.info(
+            f"    ✅ SWING {ticker}: Score {score} | "
+            f"Dist +{feat['dist_ma20']*100:.1f}% | "
+            f"Sqz {feat['squeeze']*100:.0f}% | "
+            f"Vol {feat['vol_ratio']*100:.0f}% | RSI {feat['rsi']:.0f}"
+        )
+
+        entry = round_bei(feat["close"])
+        target = round_bei(entry * (1 + target_pct))
+        stop_loss = round_bei(entry * (1 - sl_pct))
+
+        candidates.append({
+            "ticker": ticker, "company": stock_mm.get("name", ticker),
+            "type": "WATCHLIST_SWING", "score": score,
+            "market_data": {
+                "close": feat["close"],
+                "value_today": stock_mm.get("value_today", 0),
+                "net_foreign": stock_mm.get("net_foreign_today", 0),
+            },
+            "technical": {
+                "stage2": True, "ma50_slope": f"+{feat['ma50_slope']*100:.1f}%/10d",
+                "dist_ma20": f"+{feat['dist_ma20']*100:.1f}%",
+                "squeeze": f"{feat['squeeze']*100:.0f}%",
+                "vol_ratio": f"{feat['vol_ratio']*100:.0f}%",
+                "rsi": feat["rsi"], "atr_pct": f"{feat['atr_pct']*100:.1f}%",
+                "dist_52w_high": f"{feat['dist_52w']*100:+.1f}%",
+                "ma20": feat["ma20"], "ma50": feat["ma50"], "ma200": feat["ma200"],
+            },
+            "trading_plan": {
+                "strategy": f"Beli sekarang, hold max {max_hold} hari",
+                "entry": entry, "target": target,
+                "target_pct": f"+{target_pct*100:.0f}%",
+                "stop_loss": stop_loss,
+                "stop_loss_pct": f"-{sl_pct*100:.0f}%",
+                "max_hold_days": max_hold,
+                "exit_rule": (
+                    f"Jual jika sentuh {target:,} (+{target_pct*100:.0f}%), "
+                    f"ATAU cut loss di {stop_loss:,} (-{sl_pct*100:.0f}%), "
+                    f"ATAU jual di hari ke-{max_hold}."
+                ),
+                "trailing_stop": "Aktifkan trailing stop setelah profit +5%",
+            },
+            "signals_positive": sig_pos, "signals_negative": sig_neg,
+            "backtest_stats": {
+                "golden_setup_pf": "1.60x", "golden_setup_ev": "+2.14%",
+                "golden_setup_wr": "48.8%", "golden_setup_dd": "-5.5%",
+                "total_backtest": "467.390 hari (956 saham IHSG)",
+                "bear_market_warning": "GAGAL di 2019, 2024, 2026",
+            },
+            "disclaimer": (
+                f"⚠️ SWING WATCHLIST. PF=1.60x, EV=+2.14%. "
+                f"SL -{sl_pct*100:.0f}% KERAS. "
+                f"GAGAL di bear market — kill switch IHSG<MA200 aktif."
+            ),
+        })
+
+    candidates.sort(key=lambda x: x["score"], reverse=True)
+    top = candidates[:CONFIG["SWING_MAX_OUTPUT"]]
+    for rank, c in enumerate(top, 1):
+        c["rank"] = rank
+
+    log.info(f"\n📊 SWING Summary:")
+    log.info(f"   Input universe         : {len(universe)} saham")
+    log.info(f"   Filter price <100      : {filtered_price}")
+    log.info(f"   Diproses               : {processed}")
+    log.info(f"   No data                : {no_data}")
+    log.info(f"   Filter val <5B         : {filtered_val}")
+    log.info(f"   Bukan Stage 2          : {no_stage2}")
+    log.info(f"   Lolos Golden Setup     : {len(candidates)}")
+    log.info(f"   Final output           : {len(top)} saham")
+    log.info("=" * 70)
+
+    return top
+
+
 def save_combined_output_v3(
     intraday_results: List[Dict],
     ara_results: List[Dict],
     bsjp_results: List[Dict],
     bpjs_results: List[Dict],
+    swing_results: List[Dict],
     mode: str,
     market_ctx: Dict,
     intraday_summary: Dict,
     session_label: str = "MARKET_DAY",
 ):
-    """
-    Simpan output gabungan ke combined_screening.json (v3).
-
-    Superset dari v2 — menambahkan key baru tanpa mengubah key lama:
-    {
-      "logika_lama_intraday"      : [...],  <- TIDAK BERUBAH (pipeline intraday)
-      "logika_baru_calon_ara"     : [...],  <- TIDAK BERUBAH (pipeline ARA v2)
-      "bsjp_beli_sore_jual_pagi"  : [...],  <- pipeline BSJP v1
-      "bpjs_beli_pagi_jual_sore"  : [...],  <- BARU (pipeline BPJS v1)
-      "meta"                      : {...},
-      "market_context"            : {...},
-      "screening_summary"         : {...},
-      "config_ara"                : {...},
-      "config_bsjp"               : {...},
-      "config_bpjs"               : {...},  <- BARU
-    }
-    """
+    """Simpan output gabungan ke combined_screening.json (v5 — 5 pipeline)."""
     today     = datetime.now().strftime("%Y-%m-%d")
     today_str = datetime.now().strftime("%Y%m%d")
 
-    any_signal = intraday_results or ara_results or bsjp_results or bpjs_results
+    any_signal = intraday_results or ara_results or bsjp_results or bpjs_results or swing_results
 
     output = {
-        # ---- Key lama: TIDAK BERUBAH ----
         "logika_lama_intraday":     intraday_results,
         "logika_baru_calon_ara":    ara_results,
-
-        # ---- Key BSJP ----
         "bsjp_beli_sore_jual_pagi": bsjp_results,
-
-        # ---- Key baru: BPJS ----
         "bpjs_beli_pagi_jual_sore": bpjs_results,
+        "swing_trading":            swing_results,
 
         "meta": {
             "status":           "success" if any_signal else "no_signal",
@@ -5650,19 +6022,20 @@ def save_combined_output_v3(
             "date":             today,
             "mode":             mode,
             "session_label":    session_label,
-            "pipeline_version": "v4.0",
+            "pipeline_version": "v5.0",
             "session_warning": (
-                "⚠️ Screening akhir pekan — referensi persiapan saja, bukan sinyal eksekusi."
+                "\u26a0\ufe0f Screening akhir pekan \u2014 referensi persiapan saja, bukan sinyal eksekusi."
                 if "PRE_MARKET_WEEKEND" in session_label else None
             ),
             "mode_warning": (
                 None if mode == "FULL_STOCKBIT"
-                else "⚠️ TOKEN TIDAK TERSEDIA — ARA pipeline tidak berjalan"
+                else "\u26a0\ufe0f TOKEN TIDAK TERSEDIA \u2014 ARA pipeline tidak berjalan"
             ),
             "intraday_count": len(intraday_results),
             "ara_count":      len(ara_results),
             "bsjp_count":     len(bsjp_results),
             "bpjs_count":     len(bpjs_results),
+            "swing_count":    len(swing_results),
             "ara_disclaimer": (
                 "Pipeline ARA v2: deteksi Tipe 1 (Continuation) & Tipe 2 (Silent Accumulation). "
                 "Tipe 3 (Out of Nowhere, ~48% dari ARA nyata) tidak terdeteksi dari OHLCV. "
@@ -5676,9 +6049,14 @@ def save_combined_output_v3(
             "bpjs_disclaimer": (
                 "Pipeline BPJS v1: WATCHLIST, bukan sinyal langsung. "
                 "Win rate OHLCV D-1 saja: 38-50% (belum cukup). "
-                "WAJIB dikonfirmasi real-time pagi hari (gap absorb, vol 15m, broker flow). "
-                "Backtest forward-looking 789.792 hari trading IHSG. "
-                "Gap Up >5% DIHINDARI (WR 11.8%). Gap Down >2% = sweet spot."
+                "WAJIB dikonfirmasi real-time pagi hari. "
+                "Backtest forward-looking 789.792 hari trading IHSG."
+            ),
+            "swing_disclaimer": (
+                "Pipeline SWING v1: VCP setup pada Stage 2 Uptrend. "
+                "PF=1.60x, EV=+2.14% per trade (n=2.077). Hold 10-15 hari. "
+                "KILL SWITCH aktif jika IHSG < MA200 (bear market). "
+                "Backtest 467.390 hari trading IHSG. SL -6% keras."
             ),
             "scoring_breakdown": {
                 "daily_max": 70, "minute_max": 20, "stockbit_bonus": 10, "total_max": 100,
@@ -5695,31 +6073,31 @@ def save_combined_output_v3(
             "score_strong":         CONFIG.get("ARA_SCORE_STRONG", 70),
             "max_output":           CONFIG.get("ARA_MAX_OUTPUT", 5),
         },
-
         "config_bsjp": {
             "min_value_today_rp":  CONFIG.get("BSJP_MIN_VALUE_TODAY", 10_000_000_000),
             "tier_s_vol":          CONFIG.get("BSJP_TIER_S_VOL", 5.0),
-            "tier_s_cpos":         CONFIG.get("BSJP_TIER_S_CPOS", 0.95),
-            "tier_s_body":         CONFIG.get("BSJP_TIER_S_BODY", 0.04),
             "tier_a_vol":          CONFIG.get("BSJP_TIER_A_VOL", 3.0),
-            "tier_a_cpos":         CONFIG.get("BSJP_TIER_A_CPOS", 0.90),
-            "tier_a_body":         CONFIG.get("BSJP_TIER_A_BODY", 0.03),
             "max_output":          CONFIG.get("BSJP_MAX_OUTPUT", 5),
             "backtest_sample_size": 252480,
-            "tier_s_win_rate_2pct": "~70%",
-            "tier_a_win_rate_2pct": "~64%",
         },
-
         "config_bpjs": {
             "min_value_today_rp":   CONFIG.get("BPJS_MIN_VALUE_TODAY", 10_000_000_000),
-            "rev_body_max":         CONFIG.get("BPJS_REV_BODY_MAX", -0.02),
-            "rev_vol_max":          CONFIG.get("BPJS_REV_VOL_MAX", 1.0),
-            "rev_cpos_max":         CONFIG.get("BPJS_REV_CPOS_MAX", 0.30),
-            "qc_body_range":        f"{CONFIG.get('BPJS_QC_BODY_MIN', 0.01)}-{CONFIG.get('BPJS_QC_BODY_MAX', 0.08)}",
-            "qc_vol_max":           CONFIG.get("BPJS_QC_VOL_MAX", 0.5),
             "max_output":           CONFIG.get("BPJS_MAX_OUTPUT", 5),
             "backtest_sample_size": 789792,
-            "note":                 "Watchlist hybrid: D-1 scoring + morning confirmation wajib",
+        },
+        "config_swing": {
+            "min_value_20d_rp":     CONFIG.get("SWING_MIN_VALUE_20D", 5_000_000_000),
+            "dist_ma20_range":      f"{CONFIG.get('SWING_DIST_MA20_MIN', 0.03)}-{CONFIG.get('SWING_DIST_MA20_MAX', 0.08)}",
+            "squeeze_max":          CONFIG.get("SWING_SQUEEZE_MAX", 0.35),
+            "vol_5d_max":           CONFIG.get("SWING_VOL_5D_MAX", 0.50),
+            "rsi_range":            f"{CONFIG.get('SWING_RSI_MIN', 55)}-{CONFIG.get('SWING_RSI_MAX', 80)}",
+            "target_pct":           CONFIG.get("SWING_TARGET_PCT", 0.10),
+            "stop_loss_pct":        CONFIG.get("SWING_STOP_LOSS_PCT", 0.06),
+            "max_hold_days":        CONFIG.get("SWING_MAX_HOLD_DAYS", 15),
+            "max_output":           CONFIG.get("SWING_MAX_OUTPUT", 5),
+            "backtest_sample_size": 467390,
+            "golden_setup_pf":      "1.60x",
+            "golden_setup_ev":      "+2.14% per trade",
         },
     }
 
