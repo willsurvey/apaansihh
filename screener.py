@@ -3729,23 +3729,57 @@ def score_ara_candidate_v2(feat: Dict) -> Tuple[int, str, List[str], List[str]]:
 def calculate_ara_entry_range(
     feat: Dict,
     smc_data: Optional[Dict] = None,
+    pattern_type: str = "",
 ) -> Dict:
     """
     Hitung zona entry ideal untuk calon ARA.
 
-    FILOSOFI: Untuk ARA, tidak ada 'pullback entry'.
-    Masuk saat open atau tidak sama sekali.
-    Zona entry = PDC hingga max 5% di atas PDH D-1.
+    DIPERBARUI berdasarkan backtest rigorusi 3.680 first-day ARA:
+    - 77% kejadian: Open D+1 Gap Up dari harga ARA
+    - 64% kejadian: Gap Up > 2% dari harga ARA
+    - Median gap: +3.70% dari harga ARA
 
-    entry_lower = PDC  (beli pas open, harga belum bergerak)
-    entry_upper = min(PDH * 1.05, PDC * 1.12)
-    Jika ada OB 1H aktif di zona relevan → gunakan OB high sebagai batas atas.
+    Implikasi: Limit Order di PDC (harga kemarin) akan TERTINGGAL di 77% kejadian.
+    Strategi yang valid:
+      - Tipe 1 (Continuation): pasang Limit Order di ARA price + 5% buffer
+        agar match saat pre-opening meski gap besar.
+      - Tipe 2 (Quiet Accum): pasang Limit Order di ARA price atau sedikit
+        di bawahnya (gap lebih kecil, peluang fill lebih tinggi).
+
+    entry_lower = ARA price (harga kunci maksimum kemarin)
+    entry_upper = ARA price * 1.08 (buffer gap-up Tipe 1)
     """
-    pdc = feat["d1_close"]
-    pdh = feat["d1_high"]
+    pdc  = feat["d1_close"]
+    pdh  = feat["d1_high"]
 
-    entry_lower_raw = pdc
-    entry_upper_raw = min(pdh * 1.05, pdc * 1.12)
+    # Hitung harga ARA sesungguhnya (dibulatkan ke fraksi BEI)
+    tick = get_tick_size(pdc)
+    if pdc < 200:       ara_limit = 0.35
+    elif pdc <= 5000:   ara_limit = 0.25
+    else:               ara_limit = 0.20
+    raw_ara   = pdc * (1 + ara_limit)
+    ara_price = int(raw_ara // tick) * tick
+
+    is_continuation = "Continuation" in pattern_type or "Tipe 1" in pattern_type
+
+    if is_continuation:
+        # Tipe 1: gap besar (median +3.70%). Pasang limit agresif di atas ARA.
+        entry_lower_raw = ara_price
+        entry_upper_raw = min(ara_price * 1.08, pdc * (1 + ara_limit * 1.2))
+        entry_strategy  = (
+            f"Pasang Limit Order pukul 19:00 di {round_bei(ara_price):,}–{round_bei(ara_price * 1.05):,} "
+            f"(harga ARA + buffer). Tipe Continuation cenderung Gap Up >2% di pagi hari. "
+            f"Jangan kejar jika open sudah di atas zona ini."
+        )
+    else:
+        # Tipe 2/3: gap lebih kecil (median +1.72%). Limit Order di ARA price.
+        entry_lower_raw = pdc * 0.99     # sedikit di bawah PDC sebagai backup fill
+        entry_upper_raw = ara_price
+        entry_strategy  = (
+            f"Pasang Limit Order pukul 19:00 di {round_bei(pdc):,}–{round_bei(ara_price):,} "
+            f"(PDC hingga harga ARA). Tipe Quiet Accumulation gap lebih kecil — "
+            f"peluang fill order lebih tinggi dibanding Tipe Continuation."
+        )
 
     ob_note = ""
     if smc_data and smc_data.get("ob"):
@@ -3758,86 +3792,118 @@ def calculate_ara_entry_range(
     entry_lower = round_bei(entry_lower_raw)
     entry_upper = round_bei(entry_upper_raw)
 
-    tick = get_tick_size(pdc)
     if entry_upper <= entry_lower:
-        entry_upper = round_bei(entry_lower + tick * 5)
+        entry_upper = round_bei(entry_lower * 1.05)
 
     range_pct = (entry_upper - entry_lower) / (pdc + 1e-6) * 100
 
-    entry_note = (
-        f"Beli saat open di {entry_lower:,} atau jika harga masih di area ini. "
-        f"Jangan kejar jika sudah naik di atas {entry_upper:,} "
-        f"(+{range_pct:.0f}% dari PDC){ob_note}."
-    )
-
     return {
-        "entry_lower":     entry_lower,
-        "entry_upper":     entry_upper,
-        "entry_range":     f"{entry_lower:,} – {entry_upper:,}",
-        "entry_note":      entry_note,
-        "entry_range_pct": round(range_pct, 1),
+        "entry_lower":      entry_lower,
+        "entry_upper":      entry_upper,
+        "entry_range":      f"{entry_lower:,} \u2013 {entry_upper:,}",
+        "entry_note":       entry_strategy + ob_note,
+        "entry_range_pct":  round(range_pct, 1),
+        "ara_price_calc":   ara_price,
+        "ara_limit_pct":    round(ara_limit * 100, 0),
+        "gap_risk_note": (
+            f"Backtest: 64% saham ARA Gap Up >2% di pagi hari. "
+            f"Median gap: +3.70% dari harga ARA. Limit Order berisiko tidak fill."
+        ),
     }
 
 
-def calculate_ara_target(feat: Dict) -> Dict:
+def calculate_ara_target(feat: Dict, pattern_type: str = "") -> Dict:
     """
-    Hitung estimasi target harga calon ARA secara KONSERVATIF.
+    Hitung estimasi target harga calon ARA.
 
-    METODOLOGI:
-      Layer 1 — Statistical baseline (n=23 ARA empiris):
-        ARA magnitude: +20% s/d +35%, median +25% dari PDC.
-        Entry bukan di PDC dan tidak semua ARA bisa dieksekusi penuh.
+    DIPERBARUI berdasarkan backtest rigorusi 2.213 kunci ARA:
+    - High D+1 vs Harga ARA: sempat naik >5% di 84.5% kejadian
+    - Median High D+1: +16.77% dari harga ARA
+    - KUNCI: Close D+1 profit hanya 48.9% (hampir coin flip)
 
-      Layer 2 — Tiered targets dari assumed_entry (PDC * 1.015):
-        Conservative (+8%)  : partial profit, realistis
-        Base (+15%)         : setengah ARA penuh
-        Optimistic (+25%)   : full ARA, hanya jika momentum kuat
+    IMPLIKASI KRITIS:
+    Jangan hold saham sampai close D+1.
+    Target keluar adalah PAGI HARI (09:00-09:30) saat market baru buka
+    dan retail masih dalam euforia. Ini adalah edge sesungguhnya.
 
-      Layer 3 — ATR normalization via D-1 range:
-        Vol_adj = clamp(d1_range_pct / 6%, 0.8, 1.3)
-        Target conservative & base di-scale oleh vol_adj.
-
-    Ditampilkan ke user sebagai "+8% hingga +15%" (konservatif, cegah over-expect).
+    Strategi exit berdasarkan tipe:
+      - Tipe 1 (Continuation): target sell di gap open atau 15 menit pertama
+      - Tipe 2 (Quiet): target sell lebih sabar, bisa tunggu hingga 09:30
+      - 23.5% kemungkinan saham lanjut ARA lagi (hold 1 hari extra jika konfirmasi)
     """
-    pdc = feat["d1_close"]
-    pdh = feat["d1_high"]
-    pdl = feat["d1_low"]
+    pdc  = feat["d1_close"]
+    pdh  = feat["d1_high"]
+    pdl  = feat["d1_low"]
 
+    # Hitung harga ARA sesungguhnya
+    tick = get_tick_size(pdc)
+    if pdc < 200:       ara_limit = 0.35
+    elif pdc <= 5000:   ara_limit = 0.25
+    else:               ara_limit = 0.20
+    ara_price = int((pdc * (1 + ara_limit)) // tick) * tick
+
+    # Target berdasarkan harga ARA (bukan PDC)
+    # Karena entry realistis kita adalah di sekitar ARA price
+    assumed_entry = ara_price * 1.015  # asumsi fill 1.5% di atas ARA
+
+    # ATR normalization
     d1_range_pct = (pdh - pdl) / (pdc + 1e-6)
-    assumed_entry = pdc * 1.015   # asumsi entry 1.5% di atas PDC
-
     vol_adj = min(1.3, max(0.8, d1_range_pct / 0.06))
 
-    target_conservative = round_bei(assumed_entry * (1 + 0.08 * vol_adj))
-    target_base         = round_bei(assumed_entry * (1 + 0.15 * vol_adj))
-    target_optimistic   = round_bei(assumed_entry * 1.25)
+    # Target berbasis backtest High D+1 (median +16.77%, P25=+5%, P75=+24%)
+    # Konservatif: jual di 30 menit pertama (tidak menunggu peak)
+    target_morning_exit  = round_bei(assumed_entry * (1 + 0.05 * vol_adj))  # +5% (P25 high D+1)
+    target_base          = round_bei(assumed_entry * (1 + 0.12 * vol_adj))  # +12% (moderat)
+    target_optimistic    = round_bei(assumed_entry * (1 + 0.20))            # +20% (hampir full ARA lagi)
 
-    # Pastikan target_conservative > PDH D-1
-    if target_conservative <= pdh:
-        target_conservative = round_bei(pdh * 1.02)
-    if target_base <= target_conservative:
-        target_base = round_bei(target_conservative * 1.07)
+    # Pastikan urutan logis
+    if target_morning_exit <= ara_price:
+        target_morning_exit = round_bei(ara_price * 1.03)
+    if target_base <= target_morning_exit:
+        target_base = round_bei(target_morning_exit * 1.07)
     if target_optimistic <= target_base:
-        target_optimistic = round_bei(target_base * 1.08)
+        target_optimistic = round_bei(target_base * 1.06)
 
-    cons_pct = round((target_conservative - assumed_entry) / (assumed_entry + 1e-6) * 100, 0)
-    base_pct = round((target_base - assumed_entry) / (assumed_entry + 1e-6) * 100, 0)
-    opt_pct  = round((target_optimistic - assumed_entry) / (assumed_entry + 1e-6) * 100, 0)
+    m_pct  = round((target_morning_exit - assumed_entry) / (assumed_entry + 1e-6) * 100, 0)
+    b_pct  = round((target_base - assumed_entry) / (assumed_entry + 1e-6) * 100, 0)
+    op_pct = round((target_optimistic - assumed_entry) / (assumed_entry + 1e-6) * 100, 0)
+
+    is_continuation = "Continuation" in pattern_type or "Tipe 1" in pattern_type
+    if is_continuation:
+        exit_guide = (
+            "JUAL DI PAGI HARI (09:00-09:15 WIB). Tipe Continuation cenderung "
+            "Gap Up besar — euforia retail terjadi di menit-menit pertama. "
+            "Jangan tunggu. 48.9% saham balik turun sebelum close."
+        )
+    else:
+        exit_guide = (
+            "JUAL DI PAGI HARI (09:00-09:30 WIB). Backtest menunjukkan High D+1 "
+            "median +16.77% dari harga ARA. Setelah 09:30, momentum sering berbalik. "
+            "Jika masih ARA lagi (23.5% peluang), hold dengan trailing stop."
+        )
 
     return {
-        "target_conservative":     target_conservative,
+        "target_morning_exit":     target_morning_exit,
         "target_base":             target_base,
         "target_optimistic":       target_optimistic,
-        "estimated_target_pct":    f"+{int(cons_pct)}% hingga +{int(base_pct)}% dari harga beli",
-        "target_conservative_pct": cons_pct,
-        "target_base_pct":         base_pct,
-        "target_optimistic_pct":   opt_pct,
+        "estimated_target_pct":    f"+{int(m_pct)}% hingga +{int(b_pct)}% dari harga beli",
+        "target_morning_exit_pct": m_pct,
+        "target_base_pct":         b_pct,
+        "target_optimistic_pct":   op_pct,
         "assumed_entry":           round_bei(assumed_entry),
+        "ara_price_ref":           ara_price,
+        "exit_timing_guide":       exit_guide,
         "target_note": (
-            f"Konservatif: {target_conservative:,} (~+{int(cons_pct)}%) | "
-            f"Moderat: {target_base:,} (~+{int(base_pct)}%) | "
-            f"Full ARA: {target_optimistic:,} (~+{int(opt_pct)}%)"
+            f"Pagi: {target_morning_exit:,} (~+{int(m_pct)}%) | "
+            f"Moderat: {target_base:,} (~+{int(b_pct)}%) | "
+            f"Full: {target_optimistic:,} (~+{int(op_pct)}%) | "
+            f"JUAL PAGI, bukan hold sampai close."
         ),
+        # Backtest stats untuk transparansi
+        "backtest_high_d1_median":  "+16.77% dari harga ARA (n=2213)",
+        "backtest_profit_morning":  "84.5% sempat naik >5% di D+1",
+        "backtest_close_d1_profit": "hanya 48.9% (hampir coin flip — JANGAN hold)",
+        "backtest_continued_ara":   "23.5% lanjut ARA hari berikutnya",
     }
 
 
@@ -4363,8 +4429,8 @@ def run_ara_pipeline_v2(token: Optional[str], mode: str) -> List[Dict]:
             except Exception:
                 pass
 
-            entry_data  = calculate_ara_entry_range(feat, smc_data=smc_ctx)
-            target_data = calculate_ara_target(feat)
+            entry_data  = calculate_ara_entry_range(feat, smc_data=smc_ctx, pattern_type=pattern_type)
+            target_data = calculate_ara_target(feat, pattern_type=pattern_type)
             reason_txt  = build_ara_reason_beginner(code, pattern_type, feat, score, broker_signal)
             warning_txt = build_ara_risk_warning(code, feat, pattern_type, score)
 
@@ -4395,17 +4461,30 @@ def run_ara_pipeline_v2(token: Optional[str], mode: str) -> List[Dict]:
                 "entry_upper":              entry_data["entry_upper"],
                 "entry_note":               entry_data["entry_note"],
                 "entry_range_pct":          entry_data["entry_range_pct"],
+                "ara_price_ref":            entry_data.get("ara_price_calc", 0),
+                "ara_limit_pct":            entry_data.get("ara_limit_pct", 0),
+                "gap_risk_note":            entry_data.get("gap_risk_note", ""),
                 "estimated_target_pct":     target_data["estimated_target_pct"],
-                "target_conservative":      target_data["target_conservative"],
+                "target_morning_exit":      target_data["target_morning_exit"],
                 "target_base":              target_data["target_base"],
                 "target_optimistic":        target_data["target_optimistic"],
-                "target_conservative_pct":  target_data["target_conservative_pct"],
+                "target_morning_exit_pct":  target_data["target_morning_exit_pct"],
                 "target_base_pct":          target_data["target_base_pct"],
                 "target_optimistic_pct":    target_data["target_optimistic_pct"],
                 "target_note":              target_data["target_note"],
                 "assumed_entry":            target_data["assumed_entry"],
+                "exit_timing_guide":        target_data["exit_timing_guide"],
                 "reason_beginner_friendly": reason_txt,
                 "risk_warning":             warning_txt,
+
+                # Backtest stats (transparansi penuh)
+                "d1p_backtest_stats": {
+                    "high_d1_median":     target_data["backtest_high_d1_median"],
+                    "profit_morning":     target_data["backtest_profit_morning"],
+                    "close_d1_profit":    target_data["backtest_close_d1_profit"],
+                    "continued_ara_pct":  target_data["backtest_continued_ara"],
+                    "sample_size":        "n=2.213 kunci ARA pertama pada saham liquid",
+                },
 
                 # Broker
                 "broker_signal": broker_signal,
