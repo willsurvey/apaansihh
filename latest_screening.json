@@ -1,6 +1,6 @@
 {
   "status": "success",
-  "generated_at": "2026-05-08 01:32:11 WIB",
+  "generated_at": "2026-05-08 02:34:31 WIB",
   "date": "2026-05-08",
   "mode": "FULL_STOCKBIT",
   "session_label": "MARKET_DAY",
@@ -19,7 +19,7 @@
     "universe": 972,
     "after_liquidity": 128,
     "after_accumulation": 42,
-    "after_trend": 8,
+    "after_trend": 9,
     "after_smc": 4,
     "after_entry": 2,
     "final": 1
@@ -77,8 +77,8 @@
         }
       },
       "trend": {
-        "ma50": 6546.0,
-        "gap_from_ma50_pct": 7.69,
+        "ma50": 6556.0,
+        "gap_from_ma50_pct": 8.69,
         "ma50_slope": "POSITIVE"
       },
       "smc": {
@@ -128,7 +128,7 @@
         "✅ Harga di zona FVG aktif"
       ],
       "warnings": [],
-      "updated_at": "01.32 WIB"
+      "updated_at": "02.34 WIB"
     }
   ]
 }

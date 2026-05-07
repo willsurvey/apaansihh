@@ -34,8 +34,8 @@
         }
       },
       "trend": {
-        "ma50": 6546.0,
-        "gap_from_ma50_pct": 7.69,
+        "ma50": 6556.0,
+        "gap_from_ma50_pct": 8.69,
         "ma50_slope": "POSITIVE"
       },
       "smc": {
@@ -85,7 +85,7 @@
         "✅ Harga di zona FVG aktif"
       ],
       "warnings": [],
-      "updated_at": "01.32 WIB"
+      "updated_at": "02.34 WIB"
     }
   ],
   "logika_baru_calon_ara": [
@@ -174,7 +174,7 @@
         "SCREENER_TOP_VALUE"
       ],
       "warning": "⚠️ FALSE SIGNAL RATE TINGGI (~85-90%). Pipeline ini mendeteksi Tipe 1 (Continuation) dan Tipe 2 (Silent Accumulation). Tipe 3 (Out of Nowhere, ~48% ARA nyata) TIDAK BISA dideteksi dari OHLCV. Gunakan sebagai WATCHLIST saja. Konfirmasi dengan broker flow, news, dan analisis manual sebelum eksekusi.",
-      "generated_at": "01:32 WIB"
+      "generated_at": "02:35 WIB"
     },
     {
       "ticker": "CGAS",
@@ -261,7 +261,7 @@
         "GURU_94"
       ],
       "warning": "⚠️ FALSE SIGNAL RATE TINGGI (~85-90%). Pipeline ini mendeteksi Tipe 1 (Continuation) dan Tipe 2 (Silent Accumulation). Tipe 3 (Out of Nowhere, ~48% ARA nyata) TIDAK BISA dideteksi dari OHLCV. Gunakan sebagai WATCHLIST saja. Konfirmasi dengan broker flow, news, dan analisis manual sebelum eksekusi.",
-      "generated_at": "01:33 WIB"
+      "generated_at": "02:35 WIB"
     },
     {
       "ticker": "NIKL",
@@ -350,7 +350,7 @@
         "SCREENER_TOP_VALUE"
       ],
       "warning": "⚠️ FALSE SIGNAL RATE TINGGI (~85-90%). Pipeline ini mendeteksi Tipe 1 (Continuation) dan Tipe 2 (Silent Accumulation). Tipe 3 (Out of Nowhere, ~48% ARA nyata) TIDAK BISA dideteksi dari OHLCV. Gunakan sebagai WATCHLIST saja. Konfirmasi dengan broker flow, news, dan analisis manual sebelum eksekusi.",
-      "generated_at": "01:32 WIB"
+      "generated_at": "02:35 WIB"
     },
     {
       "ticker": "MDLA",
@@ -435,36 +435,36 @@
         "GURU_94"
       ],
       "warning": "⚠️ FALSE SIGNAL RATE TINGGI (~85-90%). Pipeline ini mendeteksi Tipe 1 (Continuation) dan Tipe 2 (Silent Accumulation). Tipe 3 (Out of Nowhere, ~48% ARA nyata) TIDAK BISA dideteksi dari OHLCV. Gunakan sebagai WATCHLIST saja. Konfirmasi dengan broker flow, news, dan analisis manual sebelum eksekusi.",
-      "generated_at": "01:33 WIB"
+      "generated_at": "02:36 WIB"
     },
     {
-      "ticker": "UNVR",
-      "company": "Unilever Indonesia Tbk.",
+      "ticker": "DMAS",
+      "company": "Puradelta Lestari Tbk",
       "type": "CALON_ARA",
-      "score": 79,
+      "score": 75,
       "score_tier": "STRONG",
-      "pattern_type": "CONTINUATION",
-      "confluence_count": 12,
-      "entry_range": "1,785 – 2,260",
-      "entry_lower": 1785,
-      "entry_upper": 2260,
-      "entry_note": "Pasang Limit Order pukul 19:00 di 1,805–2,260 (PDC hingga harga ARA). Tipe Quiet Accumulation gap lebih kecil — peluang fill order lebih tinggi dibanding Tipe Continuation.",
-      "entry_range_pct": 26.3,
-      "ara_price_ref": 2255,
-      "ara_limit_pct": 25.0,
+      "pattern_type": "CLOSING_SQUEEZE",
+      "confluence_count": 10,
+      "entry_range": "149 – 204",
+      "entry_lower": 149,
+      "entry_upper": 204,
+      "entry_note": "Pasang Limit Order pukul 19:00 di 151–204 (PDC hingga harga ARA). Tipe Quiet Accumulation gap lebih kecil — peluang fill order lebih tinggi dibanding Tipe Continuation.",
+      "entry_range_pct": 36.4,
+      "ara_price_ref": 203,
+      "ara_limit_pct": 35.0,
       "gap_risk_note": "Backtest: 64% saham ARA Gap Up >2% di pagi hari. Median gap: +3.70% dari harga ARA. Limit Order berisiko tidak fill.",
-      "estimated_target_pct": "+7% hingga +16% dari harga beli",
-      "target_morning_exit": 2440,
-      "target_base": 2650,
-      "target_optimistic": 2750,
-      "target_morning_exit_pct": 7.0,
-      "target_base_pct": 16.0,
+      "estimated_target_pct": "+4% hingga +10% dari harga beli",
+      "target_morning_exit": 214,
+      "target_base": 226,
+      "target_optimistic": 248,
+      "target_morning_exit_pct": 4.0,
+      "target_base_pct": 10.0,
       "target_optimistic_pct": 20.0,
-      "target_note": "Pagi: 2,440 (~+7%) | Moderat: 2,650 (~+16%) | Full: 2,750 (~+20%) | JUAL PAGI, bukan hold sampai close.",
-      "assumed_entry": 2290,
+      "target_note": "Pagi: 214 (~+4%) | Moderat: 226 (~+10%) | Full: 248 (~+20%) | JUAL PAGI, bukan hold sampai close.",
+      "assumed_entry": 206,
       "exit_timing_guide": "JUAL DI PAGI HARI (09:00-09:30 WIB). Backtest menunjukkan High D+1 median +16.77% dari harga ARA. Setelah 09:30, momentum sering berbalik. Jika masih ARA lagi (23.5% peluang), hold dengan trailing stop.",
-      "reason_beginner_friendly": "UNVR sudah naik 10% kemarin dengan volume 3x lebih besar dari biasanya. Ada pembeli besar yang masuk agresif. Jika momentum berlanjut, saham ini bisa naik lebih jauh besok. ✅ Broker signal: Big Acc. Skor kepercayaan: TINGGI.",
-      "risk_warning": "⚠️ Harga di bawah MA50 — tren jangka menengah masih bearish | ⚠️ FALSE SIGNAL RATE ~85-90%. Konfirmasi dengan broker flow, berita, dan analisis manual sebelum beli. | 📌 Batasi posisi: max 2% dari portofolio.",
+      "reason_beginner_friendly": "DMAS menunjukkan tekanan beli di akhir sesi kemarin — harga terus naik di menit-menit terakhir. Sinyal lemah, perlu konfirmasi tambahan. ✅ Broker signal: Big Acc. Skor kepercayaan: TINGGI.",
+      "risk_warning": "⚠️ SPEKULATIF TINGGI — tidak ada sinyal OHLCV yang kuat | ⚠️ FALSE SIGNAL RATE ~85-90%. Konfirmasi dengan broker flow, berita, dan analisis manual sebelum beli. | 📌 Batasi posisi: max 2% dari portofolio.",
       "d1p_backtest_stats": {
         "high_d1_median": "+16.77% dari harga ARA (n=2213)",
         "profit_morning": "84.5% sempat naik >5% di D+1",
@@ -473,56 +473,58 @@
         "sample_size": "n=2.213 kunci ARA pertama pada saham liquid"
       },
       "broker_signal": "Big Acc",
-      "d1_date": "2026-05-06",
-      "d1_close": 1805.0,
-      "d1_open": 1655.0,
-      "d1_high": 1810.0,
-      "d1_low": 1655.0,
-      "d1_change_pct": 10.06,
-      "d1_vol_ratio_ma20": 3.33,
-      "d1_vol_ratio_ma5": 1.82,
-      "d1_body_pct": 0.968,
-      "d1_upper_wick": 0.032,
+      "d1_date": "2026-05-07",
+      "d1_close": 151.0,
+      "d1_open": 151.0,
+      "d1_high": 154.0,
+      "d1_low": 151.0,
+      "d1_change_pct": 0.0,
+      "d1_vol_ratio_ma20": 2.2,
+      "d1_vol_ratio_ma5": 0.95,
+      "d1_body_pct": 0.0,
+      "d1_upper_wick": 1.0,
       "d1_lower_wick": 0.0,
-      "d1_close_pos": 0.968,
-      "d1_bullish": true,
-      "d1_range_expansion": 1.6,
-      "d1_value_rp": 13713866550000,
-      "d2_change_pct": 5.13,
-      "d2_body_pct": 0.586,
-      "d2_vol_ratio_ma20": 1.85,
-      "m1_last15_green": 14,
-      "m1_close_vs_vwap": 2.46,
-      "m1_close_pos_intra": 0.964,
-      "m1_high_timing": 0.807,
-      "m1_n_bars": 322,
+      "d1_close_pos": 0.0,
+      "d1_bullish": false,
+      "d1_range_expansion": 0.54,
+      "d1_value_rp": 2574174010000,
+      "d2_change_pct": 3.42,
+      "d2_body_pct": 0.571,
+      "d2_vol_ratio_ma20": 2.98,
+      "m1_last15_green": 13,
+      "m1_close_vs_vwap": -0.78,
+      "m1_close_pos_intra": 0.0,
+      "m1_high_timing": 0.009,
+      "m1_n_bars": 319,
       "m1_data_available": true,
       "above_ma20": true,
-      "above_ma50": false,
-      "ma20": 1762.0,
-      "ma50": 1945.0,
-      "up_streak_days": 2,
-      "trend_5d_pct": 21.55,
+      "above_ma50": true,
+      "ma20": 138.0,
+      "ma50": 135.0,
+      "up_streak_days": 1,
+      "trend_5d_pct": 10.22,
       "signals_positive": [
-        "Volume D-1 spike: 3.3x MA20 (tier-1 ≥3x)",
-        "Volume D-2 elevated: 1.9x MA20 (akumulasi dini)",
-        "Continuation D-1: +10.1% vol 3.3x MA20",
-        "D-2 early signal: +5.1% vol 1.9x",
-        "Range expansion moderat: 1.6x avg-5d",
+        "Volume D-2 elevated: 3.0x MA20 (akumulasi dini)",
+        "Upper wick rejection: 1.00 (smart money absorption)",
+        "Body kecil D-1: 0.00 (candle akumulasi)",
+        "Close pos rendah: 0.00 (buyers absorbed selling)",
+        "D-2 moderate: +3.4% vol 3.0x",
+        "VCP Squeeze kuat D-1: 0.54x (coiling — tekanan terpendam)",
         "Harga di atas MA20",
-        "5d trend sehat: +21.6%",
-        "Closing momentum kuat: 14/14 bar hijau (sinyal universal ARA)",
-        "Close intraday kuat: 0.96 (mendekati high harian)",
-        "Close di atas VWAP: +2.5%",
-        "High intraday di akhir sesi (81%)",
+        "5d trend sehat: +10.2%",
+        "Closing momentum kuat: 13/14 bar hijau (sinyal universal ARA)",
         "Broker signal: Big Accumulation (+10 poin)"
       ],
-      "signals_negative": [],
+      "signals_negative": [
+        "High intraday di awal sesi (1%) — profit taking sore"
+      ],
       "universe_sources": [
+        "SCREENER_VOL_EXPLOSION",
+        "GURU_92",
         "SCREENER_TOP_VALUE"
       ],
       "warning": "⚠️ FALSE SIGNAL RATE TINGGI (~85-90%). Pipeline ini mendeteksi Tipe 1 (Continuation) dan Tipe 2 (Silent Accumulation). Tipe 3 (Out of Nowhere, ~48% ARA nyata) TIDAK BISA dideteksi dari OHLCV. Gunakan sebagai WATCHLIST saja. Konfirmasi dengan broker flow, news, dan analisis manual sebelum eksekusi.",
-      "generated_at": "01:33 WIB"
+      "generated_at": "02:35 WIB"
     }
   ],
   "bsjp_beli_sore_jual_pagi": [
@@ -775,79 +777,6 @@
       "rank": 1
     },
     {
-      "ticker": "AKRA",
-      "company": "AKR Corporindo Tbk.",
-      "type": "WATCHLIST_BPJS",
-      "formula": "REVERSAL_BOUNCE",
-      "score": 55,
-      "market_data": {
-        "close": 1471.2821044921875,
-        "change_pct": -1.28,
-        "value_today": 23016106500,
-        "net_foreign": 9919948500
-      },
-      "d1_features": {
-        "body_pct": -3.18,
-        "close_pos_pct": 0.0,
-        "vol_ratio": 0.77,
-        "change_pct": -3.18,
-        "range_pct": 4.93,
-        "upper_wick": 33.3,
-        "above_ma20": true,
-        "above_ma50": true,
-        "above_ma200": true,
-        "atr_pct": 3.71
-      },
-      "trading_plan": {
-        "strategy": "Beli di pagi hari (09:00-09:30), jual sore (14:30-15:30)",
-        "entry_range": "1,455 – 1,500",
-        "entry_note": "JANGAN beli langsung. Konfirmasi dulu kriteria pagi hari.",
-        "stop_loss": 1400,
-        "stop_note": "Cut loss jika turun di bawah 1,400 (1 ATR dari entry)",
-        "target_modest": 1500,
-        "target_moderate": 1530,
-        "exit_strategy": "Jual di sesi sore (14:30-15:30 WIB) tanpa menunggu close"
-      },
-      "morning_confirmation_criteria": [
-        "✅ Gap Down ≤2% dari PDC (sweet spot: gap down lalu diborong)",
-        "✅ Volume 15 menit pertama ≥ 1.5x rata-rata (ada minat beli)",
-        "✅ Harga rebound dari Low dalam 15 menit pertama",
-        "❌ JANGAN beli jika Gap Up >5% (WR hanya 11.8%, DD -6.67%)",
-        "❌ JANGAN beli jika volume 15 menit pertama sangat sepi"
-      ],
-      "timing_guide": "Pantau 09:00-09:15. Jika saham gap down lalu diborong (volume naik, harga rebound dari low), BELI. Target jual: 14:30-15:30 WIB.",
-      "universe_context": {
-        "in_mover_types": [
-          "MOVER_TYPE_NET_FOREIGN_BUY",
-          "SCREENER_VOLUME_EXPLOSION",
-          "GURU_92_Big Accumula",
-          "SCREENER_TOP_VALUE"
-        ],
-        "from_gainer": false,
-        "from_screener": true
-      },
-      "signals_positive": [
-        "Formula: Reversal Bounce — D-1 merah (-3.2%), volume sepi (0.77x MA20), close bawah (0%). WR historis: 38.6% (n=31.924)",
-        "Di atas MA20 — support jangka pendek",
-        "Di atas MA50 — tren menengah masih ok",
-        "Di atas MA200 — tren utama masih bullish",
-        "Asing beli bersih hari ini (Rp 9.9B)",
-        "Masuk screener volume Stockbit — ada perhatian pasar"
-      ],
-      "signals_negative": [],
-      "backtest_stats": {
-        "formula": "REVERSAL_BOUNCE",
-        "win_rate": "38.6%",
-        "sample_size": "n=31.924",
-        "profit_factor": "0.90x",
-        "total_backtest": "789.792 hari trading IHSG (956 saham)",
-        "gap_down_sweet_spot": "Gap Down >2%: WR 30.2%, upside +3.75%, DD -0.88%",
-        "gap_up_danger": "Gap Up >5%: WR 11.8%, DD -6.67% — HINDARI"
-      },
-      "disclaimer": "⚠️ INI WATCHLIST, BUKAN SINYAL BELI. Formula REVERSAL_BOUNCE dari backtest forward-looking 789.792 hari trading IHSG. WAJIB konfirmasi real-time pagi hari (lihat morning_confirmation_criteria). Tanpa konfirmasi, JANGAN eksekusi.",
-      "rank": 2
-    },
-    {
       "ticker": "SDMU",
       "company": "Sidomulyo Selaras Tbk.",
       "type": "WATCHLIST_BPJS",
@@ -918,7 +847,7 @@
         "gap_up_danger": "Gap Up >5%: WR 11.8%, DD -6.67% — HINDARI"
       },
       "disclaimer": "⚠️ INI WATCHLIST, BUKAN SINYAL BELI. Formula REVERSAL_BOUNCE dari backtest forward-looking 789.792 hari trading IHSG. WAJIB konfirmasi real-time pagi hari (lihat morning_confirmation_criteria). Tanpa konfirmasi, JANGAN eksekusi.",
-      "rank": 3
+      "rank": 2
     },
     {
       "ticker": "PTRO",
@@ -992,7 +921,7 @@
         "gap_up_danger": "Gap Up >5%: WR 11.8%, DD -6.67% — HINDARI"
       },
       "disclaimer": "⚠️ INI WATCHLIST, BUKAN SINYAL BELI. Formula REVERSAL_BOUNCE dari backtest forward-looking 789.792 hari trading IHSG. WAJIB konfirmasi real-time pagi hari (lihat morning_confirmation_criteria). Tanpa konfirmasi, JANGAN eksekusi.",
-      "rank": 4
+      "rank": 3
     },
     {
       "ticker": "RAJA",
@@ -1064,13 +993,13 @@
         "gap_up_danger": "Gap Up >5%: WR 11.8%, DD -6.67% — HINDARI"
       },
       "disclaimer": "⚠️ INI WATCHLIST, BUKAN SINYAL BELI. Formula REVERSAL_BOUNCE dari backtest forward-looking 789.792 hari trading IHSG. WAJIB konfirmasi real-time pagi hari (lihat morning_confirmation_criteria). Tanpa konfirmasi, JANGAN eksekusi.",
-      "rank": 5
+      "rank": 4
     }
   ],
   "swing_trading": [],
   "meta": {
     "status": "success",
-    "generated_at": "2026-05-08 01:34:04 WIB",
+    "generated_at": "2026-05-08 02:37:00 WIB",
     "date": "2026-05-08",
     "mode": "FULL_STOCKBIT",
     "session_label": "MARKET_DAY",
@@ -1080,7 +1009,7 @@
     "intraday_count": 1,
     "ara_count": 5,
     "bsjp_count": 3,
-    "bpjs_count": 5,
+    "bpjs_count": 4,
     "swing_count": 0,
     "ara_disclaimer": "Pipeline ARA v2: deteksi Tipe 1 (Continuation) & Tipe 2 (Silent Accumulation). Tipe 3 (Out of Nowhere, ~48% dari ARA nyata) tidak terdeteksi dari OHLCV. Precision: 8-15%. Backtest wajib sebelum live trading.",
     "bsjp_disclaimer": "Pipeline BSJP v1: hold overnight, jual pagi hari. Win rate historis: Tier S ~70%, Tier A ~64% (spike >2%). Backtest 252.480 hari perdagangan IHSG. Selalu pasang stop loss.",
@@ -1105,7 +1034,7 @@
     "universe": 972,
     "after_liquidity": 128,
     "after_accumulation": 42,
-    "after_trend": 8,
+    "after_trend": 9,
     "after_smc": 4,
     "after_entry": 2,
     "final": 1
