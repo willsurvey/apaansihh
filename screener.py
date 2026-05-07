@@ -155,10 +155,22 @@ CONFIG = {
     "MIN_RR": 2.0,                   # Minimum Risk:Reward 1:2
 
     # --- Entry Direction Detection ---
-    # Jika ada signal momentum kuat (gap up, IEP tinggi, atau BOS bullish baru),
-    # entry_1 boleh di atas atau sama dengan PDC (antisipasi langsung naik)
+    # [BACKTEST FINDING v2 — 2026-05-07]
+    # BOS Daily tanpa OB confirmation: WR 25.9%, PF 0.78x (MERUGI)
+    # MOMENTUM direction di Mode B: WR 36.6%, PF 0.99x (MERUGI)
+    # PULLBACK direction: WR 58.7%, PF 1.67x (MENGUNTUNGKAN)
+    # → ENTRY_MOMENTUM_BOS_BONUS hanya aktif di FULL_STOCKBIT.
+    # → Di Mode B (Yahoo Only): selalu PULLBACK kecuali ada IEP gap up.
+    # → BOS tanpa OB Zone tidak mengubah direction (guard baru).
     "ENTRY_GAP_UP_THRESHOLD": 1.5,   # IEP change > 1.5% → prediksi gap up → entry di atas PDC
-    "ENTRY_MOMENTUM_BOS_BONUS": True, # Jika ada internal BOS bullish → entry lebih agresif ke atas
+    "ENTRY_MOMENTUM_BOS_BONUS": True, # Hanya dipakai di FULL_STOCKBIT mode
+    "ENTRY_BOS_REQUIRE_OB": True,     # BOS harus dikonfirmasi OB Zone untuk upgrade MOMENTUM
+
+    # --- Intraday Quality Filters (dari backtest forward-looking 1.159 sinyal) ---
+    # Candle D-1 body_pos < 0.40 → bearish ringan → skip (backtest: WR 38.9%, PF 0.73x)
+    "INTRADAY_CANDLE_BODY_MIN": 0.40,
+    # Score minimum: 50 (backtest: score>=50 WR 60%, score>=40 WR 57.9%)
+    "INTRADAY_MIN_SCORE": 50,
 
     # --- Yahoo Finance ---
     "YF_PERIOD_DAILY": "max",
@@ -2495,23 +2507,35 @@ def calculate_entry_plan(
     entry_direction = "PULLBACK"  # default
     entry_direction_reason = ""
 
-    # Signal 1: IEP gap up
+    # Signal 1: IEP gap up (berlaku semua mode)
     gap_up_threshold = CONFIG.get("ENTRY_GAP_UP_THRESHOLD", 1.5)
     if mode == "FULL_STOCKBIT" and iep > 0 and iep_change_pct > gap_up_threshold:
         entry_direction = "GAP_UP"
         entry_direction_reason = f"IEP gap up {iep_change_pct:.1f}%"
 
     # Signal 2: Internal BOS bullish baru (momentum sedang dalam)
-    if (CONFIG.get("ENTRY_MOMENTUM_BOS_BONUS", True)
+    # [OPTIMASI v2] Hanya aktif di FULL_STOCKBIT.
+    # Di Mode B: BOS dari Daily sering terlambat dan mengakibatkan masuk di puncak.
+    # Backtest 1.159 sinyal: MOMENTUM WR=36.6% vs PULLBACK WR=58.7%.
+    # Tambahan guard: BOS tanpa OB Zone tidak mengubah direction (WR BOS-saja=25.9%).
+    bos_require_ob = CONFIG.get("ENTRY_BOS_REQUIRE_OB", True)
+    bos_has_ob = smc_data.get("in_ob_zone", False) if smc_data else False
+    bos_ok = (not bos_require_ob) or bos_has_ob  # BOS boleh tanpa OB hanya jika guard dimatikan
+    if (mode == "FULL_STOCKBIT"
+            and CONFIG.get("ENTRY_MOMENTUM_BOS_BONUS", True)
             and smc_data
+            and bos_ok
             and (smc_data.get("internal_bos_bullish") or smc_data.get("internal_choch_bullish"))):
         if entry_direction == "PULLBACK":  # Hanya upgrade jika belum GAP_UP
             entry_direction = "MOMENTUM"
-            entry_direction_reason = "Internal BOS/CHoCH bullish 1H"
+            entry_direction_reason = "Internal BOS/CHoCH bullish 1H + OB confirmed"
 
-    # Signal 3: Top gainer kuat (> 10%) hari ini
+    # Signal 3: Top gainer kuat (> 10%) hari ini — hanya FULL_STOCKBIT
+    # [OPTIMASI v2] Mode B tidak punya data real-time gainer yang akurat.
     change_pct_today = stock_mm.get("change_pct", 0)
-    if stock_mm.get("from_gainer") and change_pct_today > 10:
+    if (mode == "FULL_STOCKBIT"
+            and stock_mm.get("from_gainer")
+            and change_pct_today > 10):
         if entry_direction == "PULLBACK":
             entry_direction = "MOMENTUM"
             entry_direction_reason = f"Top Gainer +{change_pct_today:.1f}% hari ini"
@@ -3215,6 +3239,22 @@ def run_screener():
             log.debug(f"    {ticker}: FAIL trend — gap {gap_pct:.1f}% terlalu jauh")
             continue
 
+        # [OPTIMASI v2] Filter candle quality D-1 sebelum masuk SMC.
+        # Candle bearish ringan (body_pos < 0.40): backtest WR=38.9%, PF=0.73x (merugi).
+        # Menggunakan data hist_data yang sudah ada (0 overhead).
+        _body_min = CONFIG.get("INTRADAY_CANDLE_BODY_MIN", 0.40)
+        _pdh = hist_data.get("pdh", 0)
+        _pdl = hist_data.get("pdl", 0)
+        _pdc = hist_data.get("pdc", 0)
+        if _pdh > _pdl > 0 and _pdc > 0:
+            _body_pos = (_pdc - _pdl) / (_pdh - _pdl)
+            if _body_pos < _body_min:
+                log.debug(
+                    f"    {ticker}: FAIL candle quality "
+                    f"(body_pos={_body_pos:.2f} < {_body_min})"
+                )
+                continue
+
         summary["after_trend"] += 1
 
         # --- STEP 6: SMC ---
@@ -3240,8 +3280,11 @@ def run_screener():
             stock_mm, acc_breakdown, trend_dict, smc_dict, entry_plan, mode
         )
 
-        if score < 40:
-            log.debug(f"    {ticker}: FAIL score ({score})")
+        # [OPTIMASI v2] Threshold dinaikkan 40→50.
+        # Backtest: score>=50 WR=60.0% PF=1.72x vs score>=40 WR=57.9% PF=1.65x.
+        _min_score = CONFIG.get("INTRADAY_MIN_SCORE", 50)
+        if score < _min_score:
+            log.debug(f"    {ticker}: FAIL score ({score} < {_min_score})")
             continue
 
         log.info(f"    ✅ {ticker}: Score {score}/100 ({tier}) | RR {entry_plan['rr_str']}")
