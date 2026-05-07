@@ -85,7 +85,7 @@
         "✅ Harga di zona FVG aktif"
       ],
       "warnings": [],
-      "updated_at": "21.30 WIB"
+      "updated_at": "22.33 WIB"
     }
   ],
   "logika_baru_calon_ara": [
@@ -93,10 +93,10 @@
       "ticker": "PYFA",
       "company": "Pyridam Farma Tbk",
       "type": "CALON_ARA",
-      "score": 94,
+      "score": 96,
       "score_tier": "STRONG",
       "pattern_type": "CONTINUATION",
-      "confluence_count": 10,
+      "confluence_count": 11,
       "entry_range": "408 – 515",
       "entry_lower": 408,
       "entry_upper": 515,
@@ -144,7 +144,7 @@
       "d2_body_pct": 1.0,
       "d2_vol_ratio_ma20": 2.72,
       "m1_last15_green": 13,
-      "m1_close_vs_vwap": -0.2,
+      "m1_close_vs_vwap": 0.22,
       "m1_close_pos_intra": 0.462,
       "m1_high_timing": 0.626,
       "m1_n_bars": 321,
@@ -165,6 +165,7 @@
         "Range expansion moderat: 1.6x avg-5d",
         "Harga di atas MA20",
         "Closing momentum kuat: 13/14 bar hijau (sinyal universal ARA)",
+        "Close sedikit di atas VWAP: +0.2%",
         "Broker signal: Big Accumulation (+10 poin)"
       ],
       "signals_negative": [],
@@ -173,7 +174,7 @@
         "SCREENER_TOP_VALUE"
       ],
       "warning": "⚠️ FALSE SIGNAL RATE TINGGI (~85-90%). Pipeline ini mendeteksi Tipe 1 (Continuation) dan Tipe 2 (Silent Accumulation). Tipe 3 (Out of Nowhere, ~48% ARA nyata) TIDAK BISA dideteksi dari OHLCV. Gunakan sebagai WATCHLIST saja. Konfirmasi dengan broker flow, news, dan analisis manual sebelum eksekusi.",
-      "generated_at": "21:30 WIB"
+      "generated_at": "22:34 WIB"
     },
     {
       "ticker": "CGAS",
@@ -230,7 +231,7 @@
       "d2_body_pct": 0.4,
       "d2_vol_ratio_ma20": 2.57,
       "m1_last15_green": 13,
-      "m1_close_vs_vwap": -3.42,
+      "m1_close_vs_vwap": -1.3,
       "m1_close_pos_intra": 0.25,
       "m1_high_timing": 0.01,
       "m1_n_bars": 308,
@@ -253,7 +254,6 @@
         "Closing momentum kuat: 13/14 bar hijau (sinyal universal ARA)"
       ],
       "signals_negative": [
-        "Close di bawah VWAP: -3.4%",
         "High intraday di awal sesi (1%) — profit taking sore"
       ],
       "universe_sources": [
@@ -261,7 +261,7 @@
         "GURU_94"
       ],
       "warning": "⚠️ FALSE SIGNAL RATE TINGGI (~85-90%). Pipeline ini mendeteksi Tipe 1 (Continuation) dan Tipe 2 (Silent Accumulation). Tipe 3 (Out of Nowhere, ~48% ARA nyata) TIDAK BISA dideteksi dari OHLCV. Gunakan sebagai WATCHLIST saja. Konfirmasi dengan broker flow, news, dan analisis manual sebelum eksekusi.",
-      "generated_at": "21:31 WIB"
+      "generated_at": "22:35 WIB"
     },
     {
       "ticker": "NIKL",
@@ -318,7 +318,7 @@
       "d2_body_pct": 0.837,
       "d2_vol_ratio_ma20": 11.74,
       "m1_last15_green": 14,
-      "m1_close_vs_vwap": -0.43,
+      "m1_close_vs_vwap": -1.49,
       "m1_close_pos_intra": 0.615,
       "m1_high_timing": 0.237,
       "m1_n_bars": 333,
@@ -350,7 +350,7 @@
         "SCREENER_TOP_VALUE"
       ],
       "warning": "⚠️ FALSE SIGNAL RATE TINGGI (~85-90%). Pipeline ini mendeteksi Tipe 1 (Continuation) dan Tipe 2 (Silent Accumulation). Tipe 3 (Out of Nowhere, ~48% ARA nyata) TIDAK BISA dideteksi dari OHLCV. Gunakan sebagai WATCHLIST saja. Konfirmasi dengan broker flow, news, dan analisis manual sebelum eksekusi.",
-      "generated_at": "21:30 WIB"
+      "generated_at": "22:34 WIB"
     },
     {
       "ticker": "MDLA",
@@ -407,7 +407,7 @@
       "d2_body_pct": 0.5,
       "d2_vol_ratio_ma20": 0.43,
       "m1_last15_green": 12,
-      "m1_close_vs_vwap": 1.07,
+      "m1_close_vs_vwap": 1.05,
       "m1_close_pos_intra": 0.619,
       "m1_high_timing": 0.678,
       "m1_n_bars": 177,
@@ -435,7 +435,7 @@
         "GURU_94"
       ],
       "warning": "⚠️ FALSE SIGNAL RATE TINGGI (~85-90%). Pipeline ini mendeteksi Tipe 1 (Continuation) dan Tipe 2 (Silent Accumulation). Tipe 3 (Out of Nowhere, ~48% ARA nyata) TIDAK BISA dideteksi dari OHLCV. Gunakan sebagai WATCHLIST saja. Konfirmasi dengan broker flow, news, dan analisis manual sebelum eksekusi.",
-      "generated_at": "21:31 WIB"
+      "generated_at": "22:35 WIB"
     },
     {
       "ticker": "DMAS",
@@ -524,7 +524,7 @@
         "SCREENER_TOP_VALUE"
       ],
       "warning": "⚠️ FALSE SIGNAL RATE TINGGI (~85-90%). Pipeline ini mendeteksi Tipe 1 (Continuation) dan Tipe 2 (Silent Accumulation). Tipe 3 (Out of Nowhere, ~48% ARA nyata) TIDAK BISA dideteksi dari OHLCV. Gunakan sebagai WATCHLIST saja. Konfirmasi dengan broker flow, news, dan analisis manual sebelum eksekusi.",
-      "generated_at": "21:30 WIB"
+      "generated_at": "22:34 WIB"
     }
   ],
   "bsjp_beli_sore_jual_pagi": [
@@ -999,7 +999,7 @@
   "swing_trading": [],
   "meta": {
     "status": "success",
-    "generated_at": "2026-05-07 21:31:58 WIB",
+    "generated_at": "2026-05-07 22:36:28 WIB",
     "date": "2026-05-07",
     "mode": "FULL_STOCKBIT",
     "session_label": "MARKET_DAY",
