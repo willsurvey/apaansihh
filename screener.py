@@ -32,6 +32,26 @@ import yfinance as yf
 
 warnings.filterwarnings("ignore")
 
+
+# =============================================================================
+# JSON ENCODER — Handle numpy types (bool_, int64, float64, ndarray)
+# Diperlukan karena pandas/numpy menghasilkan tipe non-native yang tidak bisa
+# di-serialize oleh json.dump standar (TypeError: bool is not JSON serializable)
+# =============================================================================
+class NumpyEncoder(json.JSONEncoder):
+    def default(self, obj):
+        if isinstance(obj, np.bool_):
+            return bool(obj)
+        if isinstance(obj, (np.int8, np.int16, np.int32, np.int64)):
+            return int(obj)
+        if isinstance(obj, (np.float16, np.float32, np.float64)):
+            if np.isnan(obj) or np.isinf(obj):
+                return None
+            return float(obj)
+        if isinstance(obj, np.ndarray):
+            return obj.tolist()
+        return super().default(obj)
+
 # =============================================================================
 # LOGGING SETUP
 # =============================================================================
@@ -4838,12 +4858,12 @@ def save_combined_output_v2(
 
     combined_path = CONFIG.get("ARA_OUTPUT_FILE", "combined_screening.json")
     with open(combined_path, "w", encoding="utf-8") as f:
-        json.dump(output, f, indent=2, ensure_ascii=False)
+        json.dump(output, f, indent=2, ensure_ascii=False, cls=NumpyEncoder)
     log.info(f"✅ Tersimpan: {combined_path}")
 
     dated_path = f"combined_screening_{today_str}.json"
     with open(dated_path, "w", encoding="utf-8") as f:
-        json.dump(output, f, indent=2, ensure_ascii=False)
+        json.dump(output, f, indent=2, ensure_ascii=False, cls=NumpyEncoder)
     log.info(f"✅ Tersimpan: {dated_path}")
 
 
@@ -6146,12 +6166,12 @@ def save_combined_output_v3(
 
     combined_path = CONFIG.get("ARA_OUTPUT_FILE", "combined_screening.json")
     with open(combined_path, "w", encoding="utf-8") as f:
-        json.dump(output, f, indent=2, ensure_ascii=False)
+        json.dump(output, f, indent=2, ensure_ascii=False, cls=NumpyEncoder)
     log.info(f"✅ Tersimpan: {combined_path}")
 
     dated_path = f"combined_screening_{today_str}.json"
     with open(dated_path, "w", encoding="utf-8") as f:
-        json.dump(output, f, indent=2, ensure_ascii=False)
+        json.dump(output, f, indent=2, ensure_ascii=False, cls=NumpyEncoder)
     log.info(f"✅ Tersimpan: {dated_path}")
 
 

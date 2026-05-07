@@ -129,6 +129,7 @@ jobs:
           else
             TODAY=$(date '+%Y-%m-%d %H:%M UTC')
             git commit -m "Screening results -- $TODAY [skip ci]"
+            git pull --rebase origin main
             git push
             echo "Hasil di-commit ke repo"
           fi
