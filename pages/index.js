@@ -340,72 +340,140 @@ function AraCard({ stock }) {
 }
 
 function BsjpCard({ stock }) {
+  const mkt = stock.market_data || {}
   const ep = stock.entry_plan || {}
+  const feat = stock.bsjp_features || {}
+  const s = stock.score ?? 0
+  const tierColor = stock.tier === 'S' ? 'var(--c-teal)' : stock.tier === 'A' ? 'var(--c-blue)' : 'var(--c-amber)'
+
   return (
     <div className={`${styles.card} ${styles.bsjpCard}`}>
       <div className={styles.cardHead}>
         <div className={styles.cardHeadLeft}>
+          <span className={styles.rankBadge}>#{stock.rank}</span>
           <div>
             <span className={styles.tickerText}>{stock.ticker}</span>
             <span className={styles.companyText}>{stock.company || 'BSJP Candidate'}</span>
           </div>
-          <span className={styles.tierBadge} style={{background: 'var(--c-blue)', color: '#fff', borderColor: 'var(--c-blue)'}}>BSJP</span>
+          <span className={styles.tierBadge} style={{background: tierColor, color: '#fff', borderColor: tierColor}}>Tier {stock.tier}</span>
         </div>
+        <ScoreRing score={s} />
       </div>
       <div className={styles.cardBody}>
+        {stock.universe_context?.in_mover_types?.length > 0 && (
+          <div className={styles.sourceTags}>
+            {stock.universe_context.in_mover_types.map((src, i) => <span key={i} className={styles.sourceTag}>{src}</span>)}
+          </div>
+        )}
         <div className={styles.statsRow}>
-          <div className={styles.stat}><span className={styles.statLbl}>Close</span><span className={styles.statVal}>Rp{formatNum(stock.close)}</span></div>
-          <div className={styles.stat}><span className={styles.statLbl}>Change</span><ChangeBadge val={stock.change_pct} /></div>
-          <div className={styles.stat}><span className={styles.statLbl}>Gap Target</span><ChangeBadge val={stock.target_gap_pct} /></div>
+          <div className={styles.stat}><span className={styles.statLbl}>Close</span><span className={styles.statVal}>Rp{formatNum(mkt.close)}</span></div>
+          <div className={styles.stat}><span className={styles.statLbl}>Change</span><ChangeBadge val={mkt.change_pct} /></div>
+          <div className={styles.stat}><span className={styles.statLbl}>Nilai</span><span className={styles.statVal}>{formatRp(mkt.value_today)}</span></div>
+          <div className={styles.stat}><span className={styles.statLbl}>Net Foreign</span><ChangeBadge val={mkt.net_foreign != null ? (mkt.net_foreign / 1e9).toFixed(2) : null} suffix='B' /></div>
+        </div>
+        <div className={styles.araMetrics}>
+          <div className={styles.metricItem}><span className={styles.metricLbl}>Vol/MA20</span><span className={styles.metricVal}>{fmt2(feat.vol_ratio20)}x</span></div>
+          <div className={styles.metricItem}><span className={styles.metricLbl}>Body Pct</span><span className={styles.metricVal}>{fmt2(feat.body_pct)}%</span></div>
+          <div className={styles.metricItem}><span className={styles.metricLbl}>Close Pos</span><span className={styles.metricVal}>{fmt2(feat.close_pos_pct)}%</span></div>
+          <div className={styles.metricItem}><span className={styles.metricLbl}>ATR</span><span className={styles.metricVal}>{fmt2(feat.atr_pct)}%</span></div>
+          {feat.above_ma20 != null && <div className={styles.metricItem}><span className={styles.metricLbl}>Di atas MA</span><span className={styles.metricVal} style={{color:'var(--c-teal)'}}>{[feat.above_ma20 && 'MA20', feat.above_ma50 && 'MA50', feat.above_ma200 && 'MA200'].filter(Boolean).join(' ') || '-'}</span></div>}
         </div>
         <div className={styles.entrySection}>
-          <span className={styles.blockTitle}>Rencana BSJP</span>
-          <div className={styles.miniRow}><span>Win Rate Hist.</span><strong>{(stock.win_rate * 100).toFixed(1)}%</strong></div>
-          <div className={styles.miniRow}><span>Avg Spike</span><strong>+{stock.avg_spike_pct}%</strong></div>
+          <span className={styles.blockTitle}>Rencana BSJP — Beli Sore, Jual Pagi</span>
+          <div className={styles.miniRow}><span>Strategi</span><strong>{ep.strategy}</strong></div>
+          <div className={styles.miniRow}><span>Entry Range</span><strong>{ep.entry_range}</strong></div>
+          {ep.entry_note && <div className={styles.entryNoteBox}>{ep.entry_note}</div>}
           <div className={styles.entryList} style={{marginTop: '12px'}}>
-             <EntryRow label="Entry (Sore)" price={stock.close} />
-             <EntryRow label="TP (Gap Up/Pagi)" price={ep.tp1} pct={ep.tp1_pct} note="Jual pagi hari" />
-             <EntryRow label="SL" price={ep.sl} pct={ep.sl_pct_risk} color="var(--c-coral)" />
+            <EntryRow label="Stop Loss" price={ep.stop_loss} color="var(--c-coral)" note={ep.stop_note} />
           </div>
+          <div className={styles.miniRow}><span>Target Pagi</span><strong>{ep.target_pct}</strong></div>
+          {ep.exit_strategy && <div className={styles.entryNoteBox}>{ep.exit_strategy}</div>}
         </div>
-        <div className={styles.signalBox}>
-          {stock.reasons?.map((r, i) => <div key={i} className={styles.signalItem}>+ {r}</div>)}
-        </div>
+        <div className={styles.miniRow}><span>Win Probability</span><strong>{stock.win_probability}</strong></div>
+        {stock.signals_positive?.length > 0 && (
+          <div className={styles.signalBox}>
+            {stock.signals_positive.map((r, i) => <div key={i} className={styles.signalItem}>+ {r}</div>)}
+          </div>
+        )}
+        {stock.signals_negative?.length > 0 && (
+          <div className={styles.warningBox}>
+            {stock.signals_negative.map((r, i) => <div key={i} className={styles.warningItem}>- {r}</div>)}
+          </div>
+        )}
+        {stock.disclaimer && <div className={`${styles.warningBox} ${styles.araWarning}`}><span className={styles.warningItem}>{stock.disclaimer}</span></div>}
       </div>
     </div>
   )
 }
 
 function BpjsCard({ stock }) {
-  const ep = stock.entry_plan || {}
+  const mkt = stock.market_data || {}
+  const tp = stock.trading_plan || {}
+  const d1 = stock.d1_features || {}
+  const s = stock.score ?? 0
+
   return (
     <div className={`${styles.card} ${styles.bpjsCard}`}>
       <div className={styles.cardHead}>
         <div className={styles.cardHeadLeft}>
+          <span className={styles.rankBadge}>#{stock.rank}</span>
           <div>
             <span className={styles.tickerText}>{stock.ticker}</span>
             <span className={styles.companyText}>{stock.company || 'BPJS Candidate'}</span>
           </div>
-          <span className={styles.tierBadge} style={{background: 'var(--c-teal)', color: '#fff', borderColor: 'var(--c-teal)'}}>BPJS</span>
+          <span className={styles.tierBadge} style={{background: 'var(--c-teal)', color: '#fff', borderColor: 'var(--c-teal)'}}>{stock.formula || 'BPJS'}</span>
         </div>
+        <ScoreRing score={s} />
       </div>
       <div className={styles.cardBody}>
+        {stock.universe_context?.in_mover_types?.length > 0 && (
+          <div className={styles.sourceTags}>
+            {stock.universe_context.in_mover_types.map((src, i) => <span key={i} className={styles.sourceTag}>{src}</span>)}
+          </div>
+        )}
         <div className={styles.statsRow}>
-          <div className={styles.stat}><span className={styles.statLbl}>Close</span><span className={styles.statVal}>Rp{formatNum(stock.close)}</span></div>
-          <div className={styles.stat}><span className={styles.statLbl}>Target</span><ChangeBadge val={stock.target_pct} /></div>
-          <div className={styles.stat}><span className={styles.statLbl}>Type</span><span className={styles.statVal}>{stock.momentum_type}</span></div>
+          <div className={styles.stat}><span className={styles.statLbl}>Close</span><span className={styles.statVal}>Rp{formatNum(mkt.close)}</span></div>
+          <div className={styles.stat}><span className={styles.statLbl}>Change</span><ChangeBadge val={mkt.change_pct} /></div>
+          <div className={styles.stat}><span className={styles.statLbl}>Nilai</span><span className={styles.statVal}>{formatRp(mkt.value_today)}</span></div>
+          <div className={styles.stat}><span className={styles.statLbl}>Net Foreign</span><ChangeBadge val={mkt.net_foreign != null ? (mkt.net_foreign / 1e9).toFixed(2) : null} suffix='B' /></div>
+        </div>
+        <div className={styles.araMetrics}>
+          <div className={styles.metricItem}><span className={styles.metricLbl}>Body D-1</span><span className={styles.metricVal}>{fmt2(d1.body_pct)}%</span></div>
+          <div className={styles.metricItem}><span className={styles.metricLbl}>Close Pos</span><span className={styles.metricVal}>{fmt2(d1.close_pos_pct)}%</span></div>
+          <div className={styles.metricItem}><span className={styles.metricLbl}>Vol Ratio</span><span className={styles.metricVal}>{fmt2(d1.vol_ratio)}x</span></div>
+          <div className={styles.metricItem}><span className={styles.metricLbl}>Change D-1</span><span className={styles.metricVal}><ChangeBadge val={d1.change_pct} /></span></div>
+          {d1.above_ma20 != null && <div className={styles.metricItem}><span className={styles.metricLbl}>Di atas MA</span><span className={styles.metricVal} style={{color:'var(--c-teal)'}}>{[d1.above_ma20 && 'MA20', d1.above_ma50 && 'MA50', d1.above_ma200 && 'MA200'].filter(Boolean).join(' ') || '-'}</span></div>}
         </div>
         <div className={styles.entrySection}>
-          <span className={styles.blockTitle}>Rencana BPJS</span>
-          <div className={styles.entryList}>
-             <EntryRow label="Entry (Pagi)" price={stock.close} note={ep.entry_note} />
-             <EntryRow label="TP (Sore)" price={ep.tp1} pct={ep.tp1_pct} note="Jual sebelum tutup" />
-             <EntryRow label="SL (Ketat)" price={ep.sl} pct={ep.sl_pct_risk} color="var(--c-coral)" />
+          <span className={styles.blockTitle}>Rencana BPJS — Beli Pagi, Jual Sore</span>
+          <div className={styles.miniRow}><span>Strategi</span><strong>{tp.strategy}</strong></div>
+          <div className={styles.miniRow}><span>Entry Range</span><strong>{tp.entry_range}</strong></div>
+          {tp.entry_note && <div className={styles.entryNoteBox}>{tp.entry_note}</div>}
+          <div className={styles.entryList} style={{marginTop: '12px'}}>
+            <EntryRow label="Target Konservatif" price={tp.target_modest} color="var(--c-teal)" />
+            <EntryRow label="Target Moderat" price={tp.target_moderate} color="var(--c-blue)" />
+            <EntryRow label="Stop Loss" price={tp.stop_loss} color="var(--c-coral)" note={tp.stop_note} />
           </div>
+          {tp.exit_strategy && <div className={styles.entryNoteBox}>{tp.exit_strategy}</div>}
         </div>
-        <div className={styles.signalBox}>
-          {stock.reasons?.map((r, i) => <div key={i} className={styles.signalItem}>+ {r}</div>)}
-        </div>
+        {stock.morning_confirmation_criteria?.length > 0 && (
+          <div className={styles.signalBox}>
+            <span className={styles.blockTitle} style={{marginBottom:'4px'}}>Konfirmasi Pagi</span>
+            {stock.morning_confirmation_criteria.map((c, i) => <div key={i} className={styles.signalItem}>{c}</div>)}
+          </div>
+        )}
+        {stock.timing_guide && <div className={styles.entryNoteBox}>{stock.timing_guide}</div>}
+        {stock.signals_positive?.length > 0 && (
+          <div className={styles.signalBox}>
+            {stock.signals_positive.map((r, i) => <div key={i} className={styles.signalItem}>+ {r}</div>)}
+          </div>
+        )}
+        {stock.signals_negative?.length > 0 && (
+          <div className={styles.warningBox}>
+            {stock.signals_negative.map((r, i) => <div key={i} className={styles.warningItem}>- {r}</div>)}
+          </div>
+        )}
+        {stock.disclaimer && <div className={`${styles.warningBox} ${styles.araWarning}`}><span className={styles.warningItem}>{stock.disclaimer}</span></div>}
       </div>
     </div>
   )
@@ -655,8 +723,8 @@ export default function Home({ initialData, loadError }) {
     return list
   }, [data, araSearch, araFilterPattern])
 
-  const bsjpStocks = data?.bsjp_candidates ?? []
-  const bpjsStocks = data?.bpjs_candidates ?? []
+  const bsjpStocks = data?.bsjp_beli_sore_jual_pagi ?? []
+  const bpjsStocks = data?.bpjs_beli_pagi_jual_sore ?? []
   const swingStocks = data?.swing_trading ?? []
 
   const meta = data?.meta || {}
@@ -735,8 +803,8 @@ export default function Home({ initialData, loadError }) {
               counts={{ 
                 intraday: data.logika_lama_intraday?.length ?? 0, 
                 ara: data.logika_baru_calon_ara?.length ?? 0,
-                bsjp: data.bsjp_candidates?.length ?? 0,
-                bpjs: data.bpjs_candidates?.length ?? 0,
+                bsjp: data.bsjp_beli_sore_jual_pagi?.length ?? 0,
+                bpjs: data.bpjs_beli_pagi_jual_sore?.length ?? 0,
                 swing: data.swing_trading?.length ?? 0
               }}
             />
