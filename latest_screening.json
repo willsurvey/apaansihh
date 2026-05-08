@@ -1,6 +1,6 @@
 {
   "status": "success",
-  "generated_at": "2026-05-08 16:29:15 WIB",
+  "generated_at": "2026-05-08 17:29:54 WIB",
   "date": "2026-05-08",
   "mode": "FULL_STOCKBIT",
   "session_label": "MARKET_DAY",
@@ -8,19 +8,19 @@
   "mode_warning": null,
   "total_saham": 1,
   "market_context": {
-    "ihsg_close": 6999,
-    "ihsg_change_pct": -2.44,
+    "ihsg_close": 6969,
+    "ihsg_change_pct": -2.86,
     "ihsg_trend": "BEARISH",
     "ihsg_above_ma50": false,
     "market_safe": true,
-    "warning": "⚠️ IHSG turun -2.4% kemarin. Trading dengan sangat hati-hati."
+    "warning": "⚠️ IHSG turun -2.9% kemarin. Trading dengan sangat hati-hati."
   },
   "screening_summary": {
     "universe": 972,
     "after_liquidity": 128,
-    "after_accumulation": 28,
+    "after_accumulation": 22,
     "after_trend": 4,
-    "after_smc": 3,
+    "after_smc": 1,
     "after_entry": 1,
     "final": 1
   },
@@ -58,8 +58,8 @@
       "market_data": {
         "close": 154,
         "change_pct": 1.99,
-        "value_today": 57705802700,
-        "frequency_today": 13952,
+        "value_today": 58145503500,
+        "frequency_today": 14071,
         "iep": 154,
         "iep_change_pct": 0
       },
@@ -79,7 +79,7 @@
       },
       "trend": {
         "ma50": 136.0,
-        "gap_from_ma50_pct": 12.68,
+        "gap_from_ma50_pct": 13.4,
         "ma50_slope": "POSITIVE"
       },
       "smc": {
@@ -129,7 +129,7 @@
         "✅ Swing Structure: BULLISH"
       ],
       "warnings": [],
-      "updated_at": "16.29 WIB"
+      "updated_at": "17.29 WIB"
     }
   ]
 }
