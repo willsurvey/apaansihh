@@ -87,7 +87,7 @@
         "✅ Swing Structure: BULLISH"
       ],
       "warnings": [],
-      "updated_at": "00.29 WIB"
+      "updated_at": "01.29 WIB"
     }
   ],
   "logika_baru_calon_ara": [
@@ -179,7 +179,7 @@
         "SCREENER_TOP_VALUE"
       ],
       "warning": "⚠️ FALSE SIGNAL RATE TINGGI (~85-90%). Pipeline ini mendeteksi Tipe 1 (Continuation) dan Tipe 2 (Silent Accumulation). Tipe 3 (Out of Nowhere, ~48% ARA nyata) TIDAK BISA dideteksi dari OHLCV. Gunakan sebagai WATCHLIST saja. Konfirmasi dengan broker flow, news, dan analisis manual sebelum eksekusi.",
-      "generated_at": "00:29 WIB"
+      "generated_at": "01:29 WIB"
     },
     {
       "ticker": "PYFA",
@@ -266,7 +266,7 @@
         "SCREENER_TOP_VALUE"
       ],
       "warning": "⚠️ FALSE SIGNAL RATE TINGGI (~85-90%). Pipeline ini mendeteksi Tipe 1 (Continuation) dan Tipe 2 (Silent Accumulation). Tipe 3 (Out of Nowhere, ~48% ARA nyata) TIDAK BISA dideteksi dari OHLCV. Gunakan sebagai WATCHLIST saja. Konfirmasi dengan broker flow, news, dan analisis manual sebelum eksekusi.",
-      "generated_at": "00:30 WIB"
+      "generated_at": "01:30 WIB"
     },
     {
       "ticker": "KAQI",
@@ -353,7 +353,7 @@
         "SCREENER_TOP_VALUE"
       ],
       "warning": "⚠️ FALSE SIGNAL RATE TINGGI (~85-90%). Pipeline ini mendeteksi Tipe 1 (Continuation) dan Tipe 2 (Silent Accumulation). Tipe 3 (Out of Nowhere, ~48% ARA nyata) TIDAK BISA dideteksi dari OHLCV. Gunakan sebagai WATCHLIST saja. Konfirmasi dengan broker flow, news, dan analisis manual sebelum eksekusi.",
-      "generated_at": "00:29 WIB"
+      "generated_at": "01:29 WIB"
     },
     {
       "ticker": "DMAS",
@@ -443,7 +443,7 @@
         "SCREENER_TOP_VALUE"
       ],
       "warning": "⚠️ FALSE SIGNAL RATE TINGGI (~85-90%). Pipeline ini mendeteksi Tipe 1 (Continuation) dan Tipe 2 (Silent Accumulation). Tipe 3 (Out of Nowhere, ~48% ARA nyata) TIDAK BISA dideteksi dari OHLCV. Gunakan sebagai WATCHLIST saja. Konfirmasi dengan broker flow, news, dan analisis manual sebelum eksekusi.",
-      "generated_at": "00:29 WIB"
+      "generated_at": "01:29 WIB"
     },
     {
       "ticker": "DPUM",
@@ -526,7 +526,7 @@
         "SCREENER_TOP_VALUE"
       ],
       "warning": "⚠️ FALSE SIGNAL RATE TINGGI (~85-90%). Pipeline ini mendeteksi Tipe 1 (Continuation) dan Tipe 2 (Silent Accumulation). Tipe 3 (Out of Nowhere, ~48% ARA nyata) TIDAK BISA dideteksi dari OHLCV. Gunakan sebagai WATCHLIST saja. Konfirmasi dengan broker flow, news, dan analisis manual sebelum eksekusi.",
-      "generated_at": "00:30 WIB"
+      "generated_at": "01:30 WIB"
     }
   ],
   "bsjp_beli_sore_jual_pagi": [
@@ -739,76 +739,6 @@
       "rank": 2
     },
     {
-      "ticker": "PADA",
-      "company": "Personel Alih Daya Tbk.",
-      "type": "WATCHLIST_BPJS",
-      "formula": "REVERSAL_BOUNCE",
-      "score": 45,
-      "market_data": {
-        "close": 184.0,
-        "change_pct": -9.57,
-        "value_today": 14027464900,
-        "net_foreign": -706388000
-      },
-      "d1_features": {
-        "body_pct": -4.17,
-        "close_pos_pct": 0.0,
-        "vol_ratio": 0.26,
-        "change_pct": -3.16,
-        "range_pct": 4.89,
-        "upper_wick": 11.1,
-        "above_ma20": true,
-        "above_ma50": true,
-        "above_ma200": true,
-        "atr_pct": 13.28
-      },
-      "trading_plan": {
-        "strategy": "Beli di pagi hari (09:00-09:30), jual sore (14:30-15:30)",
-        "entry_range": "182 – 188",
-        "entry_note": "JANGAN beli langsung. Konfirmasi dulu kriteria pagi hari.",
-        "stop_loss": 158,
-        "stop_note": "Cut loss jika turun di bawah 158 (1 ATR dari entry)",
-        "target_modest": 188,
-        "target_moderate": 191,
-        "exit_strategy": "Jual di sesi sore (14:30-15:30 WIB) tanpa menunggu close"
-      },
-      "morning_confirmation_criteria": [
-        "✅ Gap Down ≤2% dari PDC (sweet spot: gap down lalu diborong)",
-        "✅ Volume 15 menit pertama ≥ 1.5x rata-rata (ada minat beli)",
-        "✅ Harga rebound dari Low dalam 15 menit pertama",
-        "❌ JANGAN beli jika Gap Up >5% (WR hanya 11.8%, DD -6.67%)",
-        "❌ JANGAN beli jika volume 15 menit pertama sangat sepi"
-      ],
-      "timing_guide": "Pantau 09:00-09:15. Jika saham gap down lalu diborong (volume naik, harga rebound dari low), BELI. Target jual: 14:30-15:30 WIB.",
-      "universe_context": {
-        "in_mover_types": [
-          "MOVER_TYPE_TOP_LOSER",
-          "GURU_78_Daily Net Fo",
-          "SCREENER_TOP_VALUE"
-        ],
-        "from_gainer": false,
-        "from_screener": false
-      },
-      "signals_positive": [
-        "Formula: Reversal Bounce — D-1 merah (-4.2%), volume sepi (0.26x MA20), close bawah (0%). WR historis: 38.6% (n=31.924)",
-        "Di atas MA20 — support jangka pendek",
-        "Di atas MA50 — tren menengah masih ok",
-        "Di atas MA200 — tren utama masih bullish"
-      ],
-      "signals_negative": [],
-      "backtest_stats": {
-        "formula": "REVERSAL_BOUNCE",
-        "win_rate": "38.6%",
-        "sample_size": "n=31.924",
-        "profit_factor": "0.90x",
-        "total_backtest": "789.792 hari trading IHSG (956 saham)",
-        "gap_down_sweet_spot": "Gap Down >2%: WR 30.2%, upside +3.75%, DD -0.88%",
-        "gap_up_danger": "Gap Up >5%: WR 11.8%, DD -6.67% — HINDARI"
-      },
-      "disclaimer": "⚠️ INI WATCHLIST, BUKAN SINYAL BELI. Formula REVERSAL_BOUNCE dari backtest forward-looking 789.792 hari trading IHSG. WAJIB konfirmasi real-time pagi hari (lihat morning_confirmation_criteria). Tanpa konfirmasi, JANGAN eksekusi.",
-      "rank": 3
-    },
-    {
       "ticker": "PTRO",
       "company": "Petrosea Tbk.",
       "type": "WATCHLIST_BPJS",
@@ -879,13 +809,13 @@
         "gap_up_danger": "Gap Up >5%: WR 11.8%, DD -6.67% — HINDARI"
       },
       "disclaimer": "⚠️ INI WATCHLIST, BUKAN SINYAL BELI. Formula REVERSAL_BOUNCE dari backtest forward-looking 789.792 hari trading IHSG. WAJIB konfirmasi real-time pagi hari (lihat morning_confirmation_criteria). Tanpa konfirmasi, JANGAN eksekusi.",
-      "rank": 4
+      "rank": 3
     }
   ],
   "swing_trading": [],
   "meta": {
     "status": "success",
-    "generated_at": "2026-05-09 00:30:57 WIB",
+    "generated_at": "2026-05-09 01:30:50 WIB",
     "date": "2026-05-09",
     "mode": "FULL_STOCKBIT",
     "session_label": "PRE_MARKET_WEEKEND (Saturday)",
@@ -895,7 +825,7 @@
     "intraday_count": 1,
     "ara_count": 5,
     "bsjp_count": 1,
-    "bpjs_count": 4,
+    "bpjs_count": 3,
     "swing_count": 0,
     "ara_disclaimer": "Pipeline ARA v2: deteksi Tipe 1 (Continuation) & Tipe 2 (Silent Accumulation). Tipe 3 (Out of Nowhere, ~48% dari ARA nyata) tidak terdeteksi dari OHLCV. Precision: 8-15%. Backtest wajib sebelum live trading.",
     "bsjp_disclaimer": "Pipeline BSJP v1: hold overnight, jual pagi hari. Win rate historis: Tier S ~70%, Tier A ~64% (spike >2%). Backtest 252.480 hari perdagangan IHSG. Selalu pasang stop loss.",
