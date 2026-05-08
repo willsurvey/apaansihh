@@ -1,6 +1,6 @@
 {
   "status": "success",
-  "generated_at": "2026-05-08 17:29:54 WIB",
+  "generated_at": "2026-05-08 18:28:09 WIB",
   "date": "2026-05-08",
   "mode": "FULL_STOCKBIT",
   "session_label": "MARKET_DAY",
@@ -18,7 +18,7 @@
   "screening_summary": {
     "universe": 972,
     "after_liquidity": 128,
-    "after_accumulation": 22,
+    "after_accumulation": 24,
     "after_trend": 4,
     "after_smc": 1,
     "after_entry": 1,
@@ -60,21 +60,21 @@
         "change_pct": 1.99,
         "value_today": 58145503500,
         "frequency_today": 14071,
-        "iep": 154,
+        "iep": 0,
         "iep_change_pct": 0
       },
       "accumulation": {
         "broker_signal": "Big Acc",
-        "net_foreign_today": 12403353900,
-        "net_foreign_3d": 0,
-        "acc_score": 45,
+        "net_foreign_today": 16848704700,
+        "net_foreign_3d": 10,
+        "acc_score": 70,
         "score_breakdown": {
           "broker": 35,
-          "foreign_1d": 0,
-          "foreign_3d": 0,
+          "foreign_1d": 15,
+          "foreign_3d": 10,
           "candle": 0,
           "volume": 10,
-          "total": 45
+          "total": 70
         }
       },
       "trend": {
@@ -119,17 +119,18 @@
         "risk_note": "Max 2% dari total portofolio"
       },
       "scoring": {
-        "confidence_score": 55,
-        "tier": "MODERATE"
+        "confidence_score": 80,
+        "tier": "HIGH"
       },
       "signals": [
         "✅ Broker Signal: Big Acc",
-        "✅ Net Foreign Buy hari ini: Rp12.4B",
+        "✅ Net Foreign Buy hari ini: Rp16.8B",
+        "✅ Net Foreign Buy 3 hari berturut",
         "✅ Internal BOS Bullish (1H)",
         "✅ Swing Structure: BULLISH"
       ],
       "warnings": [],
-      "updated_at": "17.29 WIB"
+      "updated_at": "18.28 WIB"
     }
   ]
 }
