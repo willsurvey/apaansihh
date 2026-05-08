@@ -87,7 +87,7 @@
         "✅ Swing Structure: BULLISH"
       ],
       "warnings": [],
-      "updated_at": "20.28 WIB"
+      "updated_at": "21.28 WIB"
     }
   ],
   "logika_baru_calon_ara": [
@@ -180,7 +180,7 @@
         "SCREENER_TOP_VALUE"
       ],
       "warning": "⚠️ FALSE SIGNAL RATE TINGGI (~85-90%). Pipeline ini mendeteksi Tipe 1 (Continuation) dan Tipe 2 (Silent Accumulation). Tipe 3 (Out of Nowhere, ~48% ARA nyata) TIDAK BISA dideteksi dari OHLCV. Gunakan sebagai WATCHLIST saja. Konfirmasi dengan broker flow, news, dan analisis manual sebelum eksekusi.",
-      "generated_at": "20:28 WIB"
+      "generated_at": "21:28 WIB"
     },
     {
       "ticker": "HALO",
@@ -268,7 +268,7 @@
         "SCREENER_TOP_VALUE"
       ],
       "warning": "⚠️ FALSE SIGNAL RATE TINGGI (~85-90%). Pipeline ini mendeteksi Tipe 1 (Continuation) dan Tipe 2 (Silent Accumulation). Tipe 3 (Out of Nowhere, ~48% ARA nyata) TIDAK BISA dideteksi dari OHLCV. Gunakan sebagai WATCHLIST saja. Konfirmasi dengan broker flow, news, dan analisis manual sebelum eksekusi.",
-      "generated_at": "20:28 WIB"
+      "generated_at": "21:28 WIB"
     },
     {
       "ticker": "DKHH",
@@ -358,7 +358,7 @@
         "SCREENER_TOP_VALUE"
       ],
       "warning": "⚠️ FALSE SIGNAL RATE TINGGI (~85-90%). Pipeline ini mendeteksi Tipe 1 (Continuation) dan Tipe 2 (Silent Accumulation). Tipe 3 (Out of Nowhere, ~48% ARA nyata) TIDAK BISA dideteksi dari OHLCV. Gunakan sebagai WATCHLIST saja. Konfirmasi dengan broker flow, news, dan analisis manual sebelum eksekusi.",
-      "generated_at": "20:28 WIB"
+      "generated_at": "21:28 WIB"
     },
     {
       "ticker": "GSMF",
@@ -448,7 +448,7 @@
         "SCREENER_TOP_VALUE"
       ],
       "warning": "⚠️ FALSE SIGNAL RATE TINGGI (~85-90%). Pipeline ini mendeteksi Tipe 1 (Continuation) dan Tipe 2 (Silent Accumulation). Tipe 3 (Out of Nowhere, ~48% ARA nyata) TIDAK BISA dideteksi dari OHLCV. Gunakan sebagai WATCHLIST saja. Konfirmasi dengan broker flow, news, dan analisis manual sebelum eksekusi.",
-      "generated_at": "20:28 WIB"
+      "generated_at": "21:28 WIB"
     },
     {
       "ticker": "MORA",
@@ -536,7 +536,7 @@
         "SCREENER_TOP_VALUE"
       ],
       "warning": "⚠️ FALSE SIGNAL RATE TINGGI (~85-90%). Pipeline ini mendeteksi Tipe 1 (Continuation) dan Tipe 2 (Silent Accumulation). Tipe 3 (Out of Nowhere, ~48% ARA nyata) TIDAK BISA dideteksi dari OHLCV. Gunakan sebagai WATCHLIST saja. Konfirmasi dengan broker flow, news, dan analisis manual sebelum eksekusi.",
-      "generated_at": "20:29 WIB"
+      "generated_at": "21:30 WIB"
     }
   ],
   "bsjp_beli_sore_jual_pagi": [
@@ -1203,7 +1203,7 @@
   "swing_trading": [],
   "meta": {
     "status": "success",
-    "generated_at": "2026-05-08 20:29:49 WIB",
+    "generated_at": "2026-05-08 21:30:33 WIB",
     "date": "2026-05-08",
     "mode": "FULL_STOCKBIT",
     "session_label": "MARKET_DAY",
