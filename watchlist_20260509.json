@@ -1,6 +1,6 @@
 {
   "status": "success",
-  "generated_at": "2026-05-09 08:31:26 WIB",
+  "generated_at": "2026-05-09 09:28:24 WIB",
   "date": "2026-05-09",
   "mode": "FULL_STOCKBIT",
   "session_label": "PRE_MARKET_WEEKEND (Saturday)",
@@ -8,12 +8,12 @@
   "mode_warning": null,
   "total_saham": 1,
   "market_context": {
-    "ihsg_close": 7174,
-    "ihsg_change_pct": 1.15,
+    "ihsg_close": 6969,
+    "ihsg_change_pct": -2.86,
     "ihsg_trend": "BEARISH",
     "ihsg_above_ma50": false,
     "market_safe": true,
-    "warning": null
+    "warning": "⚠️ IHSG turun -2.9% kemarin. Trading dengan sangat hati-hati."
   },
   "screening_summary": {
     "universe": 972,
@@ -130,7 +130,7 @@
         "✅ Swing Structure: BULLISH"
       ],
       "warnings": [],
-      "updated_at": "08.31 WIB"
+      "updated_at": "09.28 WIB"
     }
   ]
 }
