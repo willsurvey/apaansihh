@@ -87,7 +87,7 @@
         "✅ Swing Structure: BULLISH"
       ],
       "warnings": [],
-      "updated_at": "04.29 WIB"
+      "updated_at": "05.29 WIB"
     }
   ],
   "logika_baru_calon_ara": [
@@ -180,7 +180,7 @@
         "SCREENER_TOP_VALUE"
       ],
       "warning": "⚠️ FALSE SIGNAL RATE TINGGI (~85-90%). Pipeline ini mendeteksi Tipe 1 (Continuation) dan Tipe 2 (Silent Accumulation). Tipe 3 (Out of Nowhere, ~48% ARA nyata) TIDAK BISA dideteksi dari OHLCV. Gunakan sebagai WATCHLIST saja. Konfirmasi dengan broker flow, news, dan analisis manual sebelum eksekusi.",
-      "generated_at": "04:29 WIB"
+      "generated_at": "05:29 WIB"
     },
     {
       "ticker": "HALO",
@@ -268,7 +268,7 @@
         "SCREENER_TOP_VALUE"
       ],
       "warning": "⚠️ FALSE SIGNAL RATE TINGGI (~85-90%). Pipeline ini mendeteksi Tipe 1 (Continuation) dan Tipe 2 (Silent Accumulation). Tipe 3 (Out of Nowhere, ~48% ARA nyata) TIDAK BISA dideteksi dari OHLCV. Gunakan sebagai WATCHLIST saja. Konfirmasi dengan broker flow, news, dan analisis manual sebelum eksekusi.",
-      "generated_at": "04:29 WIB"
+      "generated_at": "05:29 WIB"
     },
     {
       "ticker": "DKHH",
@@ -358,16 +358,16 @@
         "SCREENER_TOP_VALUE"
       ],
       "warning": "⚠️ FALSE SIGNAL RATE TINGGI (~85-90%). Pipeline ini mendeteksi Tipe 1 (Continuation) dan Tipe 2 (Silent Accumulation). Tipe 3 (Out of Nowhere, ~48% ARA nyata) TIDAK BISA dideteksi dari OHLCV. Gunakan sebagai WATCHLIST saja. Konfirmasi dengan broker flow, news, dan analisis manual sebelum eksekusi.",
-      "generated_at": "04:29 WIB"
+      "generated_at": "05:29 WIB"
     },
     {
       "ticker": "GSMF",
       "company": "Equity Development Investment Tbk.",
       "type": "CALON_ARA",
-      "score": 85,
+      "score": 87,
       "score_tier": "STRONG",
       "pattern_type": "CONTINUATION",
-      "confluence_count": 9,
+      "confluence_count": 10,
       "entry_range": "140 – 190",
       "entry_lower": 140,
       "entry_upper": 190,
@@ -415,10 +415,10 @@
       "d2_body_pct": 0.111,
       "d2_vol_ratio_ma20": 0.54,
       "m1_last15_green": 14,
-      "m1_close_vs_vwap": -3.78,
+      "m1_close_vs_vwap": 0.44,
       "m1_close_pos_intra": 0.394,
-      "m1_high_timing": 0.399,
-      "m1_n_bars": 268,
+      "m1_high_timing": 0.401,
+      "m1_n_bars": 269,
       "m1_data_available": true,
       "above_ma20": true,
       "above_ma50": true,
@@ -435,10 +435,10 @@
         "Range expansion: 2.0x avg-5d",
         "Harga di atas MA20",
         "Closing momentum kuat: 14/14 bar hijau (sinyal universal ARA)",
+        "Close sedikit di atas VWAP: +0.4%",
         "Broker signal: Big Accumulation (+10 poin)"
       ],
       "signals_negative": [
-        "Close di bawah VWAP: -3.8%",
         "5d trend terlalu cepat: +41.0%"
       ],
       "universe_sources": [
@@ -448,7 +448,7 @@
         "SCREENER_TOP_VALUE"
       ],
       "warning": "⚠️ FALSE SIGNAL RATE TINGGI (~85-90%). Pipeline ini mendeteksi Tipe 1 (Continuation) dan Tipe 2 (Silent Accumulation). Tipe 3 (Out of Nowhere, ~48% ARA nyata) TIDAK BISA dideteksi dari OHLCV. Gunakan sebagai WATCHLIST saja. Konfirmasi dengan broker flow, news, dan analisis manual sebelum eksekusi.",
-      "generated_at": "04:29 WIB"
+      "generated_at": "05:30 WIB"
     },
     {
       "ticker": "MORA",
@@ -536,7 +536,7 @@
         "SCREENER_TOP_VALUE"
       ],
       "warning": "⚠️ FALSE SIGNAL RATE TINGGI (~85-90%). Pipeline ini mendeteksi Tipe 1 (Continuation) dan Tipe 2 (Silent Accumulation). Tipe 3 (Out of Nowhere, ~48% ARA nyata) TIDAK BISA dideteksi dari OHLCV. Gunakan sebagai WATCHLIST saja. Konfirmasi dengan broker flow, news, dan analisis manual sebelum eksekusi.",
-      "generated_at": "04:30 WIB"
+      "generated_at": "05:31 WIB"
     }
   ],
   "bsjp_beli_sore_jual_pagi": [
@@ -1203,7 +1203,7 @@
   "swing_trading": [],
   "meta": {
     "status": "success",
-    "generated_at": "2026-05-10 04:31:04 WIB",
+    "generated_at": "2026-05-10 05:31:31 WIB",
     "date": "2026-05-10",
     "mode": "FULL_STOCKBIT",
     "session_label": "PRE_MARKET_WEEKEND (Sunday)",
