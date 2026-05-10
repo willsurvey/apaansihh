@@ -87,7 +87,7 @@
         "✅ Swing Structure: BULLISH"
       ],
       "warnings": [],
-      "updated_at": "23.27 WIB"
+      "updated_at": "00.27 WIB"
     }
   ],
   "logika_baru_calon_ara": [
@@ -180,7 +180,7 @@
         "SCREENER_TOP_VALUE"
       ],
       "warning": "⚠️ FALSE SIGNAL RATE TINGGI (~85-90%). Pipeline ini mendeteksi Tipe 1 (Continuation) dan Tipe 2 (Silent Accumulation). Tipe 3 (Out of Nowhere, ~48% ARA nyata) TIDAK BISA dideteksi dari OHLCV. Gunakan sebagai WATCHLIST saja. Konfirmasi dengan broker flow, news, dan analisis manual sebelum eksekusi.",
-      "generated_at": "23:28 WIB"
+      "generated_at": "00:28 WIB"
     },
     {
       "ticker": "HALO",
@@ -268,7 +268,7 @@
         "SCREENER_TOP_VALUE"
       ],
       "warning": "⚠️ FALSE SIGNAL RATE TINGGI (~85-90%). Pipeline ini mendeteksi Tipe 1 (Continuation) dan Tipe 2 (Silent Accumulation). Tipe 3 (Out of Nowhere, ~48% ARA nyata) TIDAK BISA dideteksi dari OHLCV. Gunakan sebagai WATCHLIST saja. Konfirmasi dengan broker flow, news, dan analisis manual sebelum eksekusi.",
-      "generated_at": "23:28 WIB"
+      "generated_at": "00:28 WIB"
     },
     {
       "ticker": "DKHH",
@@ -358,7 +358,7 @@
         "SCREENER_TOP_VALUE"
       ],
       "warning": "⚠️ FALSE SIGNAL RATE TINGGI (~85-90%). Pipeline ini mendeteksi Tipe 1 (Continuation) dan Tipe 2 (Silent Accumulation). Tipe 3 (Out of Nowhere, ~48% ARA nyata) TIDAK BISA dideteksi dari OHLCV. Gunakan sebagai WATCHLIST saja. Konfirmasi dengan broker flow, news, dan analisis manual sebelum eksekusi.",
-      "generated_at": "23:28 WIB"
+      "generated_at": "00:28 WIB"
     },
     {
       "ticker": "GSMF",
@@ -448,7 +448,7 @@
         "SCREENER_TOP_VALUE"
       ],
       "warning": "⚠️ FALSE SIGNAL RATE TINGGI (~85-90%). Pipeline ini mendeteksi Tipe 1 (Continuation) dan Tipe 2 (Silent Accumulation). Tipe 3 (Out of Nowhere, ~48% ARA nyata) TIDAK BISA dideteksi dari OHLCV. Gunakan sebagai WATCHLIST saja. Konfirmasi dengan broker flow, news, dan analisis manual sebelum eksekusi.",
-      "generated_at": "23:28 WIB"
+      "generated_at": "00:28 WIB"
     },
     {
       "ticker": "MORA",
@@ -536,7 +536,7 @@
         "SCREENER_TOP_VALUE"
       ],
       "warning": "⚠️ FALSE SIGNAL RATE TINGGI (~85-90%). Pipeline ini mendeteksi Tipe 1 (Continuation) dan Tipe 2 (Silent Accumulation). Tipe 3 (Out of Nowhere, ~48% ARA nyata) TIDAK BISA dideteksi dari OHLCV. Gunakan sebagai WATCHLIST saja. Konfirmasi dengan broker flow, news, dan analisis manual sebelum eksekusi.",
-      "generated_at": "23:29 WIB"
+      "generated_at": "00:28 WIB"
     }
   ],
   "bsjp_beli_sore_jual_pagi": [
@@ -544,7 +544,7 @@
       "ticker": "MEDS",
       "company": "Hetzer Medical Indonesia Tbk.",
       "tier": "S",
-      "score": 108,
+      "score": 113,
       "market_data": {
         "close": 117.0,
         "change_pct": 34.48,
@@ -590,7 +590,8 @@
         "Uptrend penuh: di atas MA20, MA50, MA200",
         "MA20 sedang naik — tren menguat",
         "Asing beli bersih hari ini (Rp 1.4B)",
-        "Masuk screener volume explosion Stockbit"
+        "Masuk screener volume explosion Stockbit",
+        "Hari Senin — win rate BSJP historis tertinggi"
       ],
       "signals_negative": [],
       "win_probability": "~70% berdasarkan backtest 1.796 kejadian historis",
@@ -601,7 +602,7 @@
       "ticker": "KAEF",
       "company": "Kimia Farma Tbk.",
       "tier": "S",
-      "score": 103,
+      "score": 108,
       "market_data": {
         "close": 635.0,
         "change_pct": 24.51,
@@ -646,7 +647,8 @@
         "Uptrend penuh: di atas MA20, MA50, MA200",
         "MA20 sedang naik — tren menguat",
         "Masuk screener volume explosion Stockbit",
-        "Saham naik signifikan hari ini (momentum)"
+        "Saham naik signifikan hari ini (momentum)",
+        "Hari Senin — win rate BSJP historis tertinggi"
       ],
       "signals_negative": [
         "Asing jual bersih hari ini — hati-hati"
@@ -659,7 +661,7 @@
       "ticker": "MAPI",
       "company": "Mitra Adiperkasa Tbk.",
       "tier": "A",
-      "score": 99,
+      "score": 104,
       "market_data": {
         "close": 1455.0,
         "change_pct": 12.36,
@@ -707,7 +709,8 @@
         "MA20 sedang naik — tren menguat",
         "Asing beli bersih hari ini (Rp 34.8B)",
         "Masuk screener volume explosion Stockbit",
-        "Saham naik signifikan hari ini (momentum)"
+        "Saham naik signifikan hari ini (momentum)",
+        "Hari Senin — win rate BSJP historis tertinggi"
       ],
       "signals_negative": [],
       "win_probability": "~64% berdasarkan backtest 3.330 kejadian historis",
@@ -718,7 +721,7 @@
       "ticker": "MORA",
       "company": "Ekamas Mora Republik Tbk.",
       "tier": "A",
-      "score": 99,
+      "score": 104,
       "market_data": {
         "close": 7500.0,
         "change_pct": 20,
@@ -765,7 +768,8 @@
         "MA20 sedang naik — tren menguat",
         "Asing beli bersih hari ini (Rp 30.1B)",
         "Masuk screener volume explosion Stockbit",
-        "Saham naik signifikan hari ini (momentum)"
+        "Saham naik signifikan hari ini (momentum)",
+        "Hari Senin — win rate BSJP historis tertinggi"
       ],
       "signals_negative": [],
       "win_probability": "~64% berdasarkan backtest 3.330 kejadian historis",
@@ -776,7 +780,7 @@
       "ticker": "MPOW",
       "company": "Megapower Makmur Tbk ",
       "tier": "S",
-      "score": 92,
+      "score": 97,
       "market_data": {
         "close": 148.0,
         "change_pct": 34.55,
@@ -820,7 +824,8 @@
         "Tutup di puncak absolut — tidak ada upper wick",
         "Uptrend penuh: di atas MA20, MA50, MA200",
         "MA20 sedang naik — tren menguat",
-        "Masuk screener volume explosion Stockbit"
+        "Masuk screener volume explosion Stockbit",
+        "Hari Senin — win rate BSJP historis tertinggi"
       ],
       "signals_negative": [
         "Asing jual bersih hari ini — hati-hati"
@@ -1203,12 +1208,12 @@
   "swing_trading": [],
   "meta": {
     "status": "success",
-    "generated_at": "2026-05-10 23:29:29 WIB",
-    "date": "2026-05-10",
+    "generated_at": "2026-05-11 00:29:15 WIB",
+    "date": "2026-05-11",
     "mode": "FULL_STOCKBIT",
-    "session_label": "PRE_MARKET_WEEKEND (Sunday)",
+    "session_label": "MARKET_DAY",
     "pipeline_version": "v5.0",
-    "session_warning": "⚠️ Screening akhir pekan — referensi persiapan saja, bukan sinyal eksekusi.",
+    "session_warning": null,
     "mode_warning": null,
     "intraday_count": 1,
     "ara_count": 5,
