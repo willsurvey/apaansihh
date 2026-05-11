@@ -1,6 +1,6 @@
 {
   "status": "success",
-  "generated_at": "2026-05-11 18:29:06 WIB",
+  "generated_at": "2026-05-11 19:28:16 WIB",
   "date": "2026-05-11",
   "mode": "FULL_STOCKBIT",
   "session_label": "MARKET_DAY",
@@ -53,7 +53,7 @@
         "MOVER_TYPE_TOP_VALUE",
         "MOVER_TYPE_NET_FOREIGN_BUY",
         "SCREENER_VOLUME_EXPLOSION",
-        "GURU_77_Foreign Flow",
+        "GURU_92_Big Accumula",
         "SCREENER_TOP_VALUE"
       ],
       "market_data": {
@@ -132,7 +132,7 @@
         "✅ Swing Structure: BULLISH"
       ],
       "warnings": [],
-      "updated_at": "18.29 WIB"
+      "updated_at": "19.28 WIB"
     },
     {
       "rank": 2,
@@ -142,7 +142,7 @@
       "universe_sources": [
         "MOVER_TYPE_NET_FOREIGN_BUY",
         "SCREENER_VOLUME_EXPLOSION",
-        "GURU_72_IHSG Short-t",
+        "GURU_92_Big Accumula",
         "SCREENER_TOP_VALUE"
       ],
       "market_data": {
@@ -220,7 +220,7 @@
         "✅ Swing Structure: BULLISH"
       ],
       "warnings": [],
-      "updated_at": "18.29 WIB"
+      "updated_at": "19.28 WIB"
     },
     {
       "rank": 3,
@@ -229,7 +229,7 @@
       "mode": "FULL_STOCKBIT",
       "universe_sources": [
         "SCREENER_VOLUME_EXPLOSION",
-        "GURU_77_Foreign Flow",
+        "GURU_63_High Volume ",
         "SCREENER_TOP_VALUE"
       ],
       "market_data": {
@@ -306,7 +306,7 @@
         "✅ Swing Structure: BULLISH"
       ],
       "warnings": [],
-      "updated_at": "18.29 WIB"
+      "updated_at": "19.28 WIB"
     }
   ]
 }
