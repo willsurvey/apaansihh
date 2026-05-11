@@ -1,6 +1,6 @@
 {
   "status": "success",
-  "generated_at": "2026-05-12 02:31:27 WIB",
+  "generated_at": "2026-05-12 03:30:44 WIB",
   "date": "2026-05-12",
   "mode": "FULL_STOCKBIT",
   "session_label": "MARKET_DAY",
@@ -79,8 +79,8 @@
         }
       },
       "trend": {
-        "ma50": 1244.0,
-        "gap_from_ma50_pct": 16.95,
+        "ma50": 1248.0,
+        "gap_from_ma50_pct": 20.63,
         "ma50_slope": "POSITIVE"
       },
       "smc": {
@@ -132,7 +132,7 @@
         "✅ Swing Structure: BULLISH"
       ],
       "warnings": [],
-      "updated_at": "02.31 WIB"
+      "updated_at": "03.30 WIB"
     },
     {
       "rank": 2,
@@ -168,8 +168,8 @@
         }
       },
       "trend": {
-        "ma50": 7515.0,
-        "gap_from_ma50_pct": 7.12,
+        "ma50": 7532.0,
+        "gap_from_ma50_pct": 8.87,
         "ma50_slope": "POSITIVE"
       },
       "smc": {
@@ -220,7 +220,7 @@
         "✅ Swing Structure: BULLISH"
       ],
       "warnings": [],
-      "updated_at": "02.31 WIB"
+      "updated_at": "03.30 WIB"
     },
     {
       "rank": 3,
@@ -255,8 +255,8 @@
         }
       },
       "trend": {
-        "ma50": 796.0,
-        "gap_from_ma50_pct": 5.5,
+        "ma50": 797.0,
+        "gap_from_ma50_pct": 6.66,
         "ma50_slope": "POSITIVE"
       },
       "smc": {
@@ -306,7 +306,7 @@
         "✅ Swing Structure: BULLISH"
       ],
       "warnings": [],
-      "updated_at": "02.31 WIB"
+      "updated_at": "03.30 WIB"
     }
   ]
 }
