@@ -1,6 +1,6 @@
 {
   "status": "success",
-  "generated_at": "2026-05-11 21:17:20 WIB",
+  "generated_at": "2026-05-11 22:29:19 WIB",
   "date": "2026-05-11",
   "mode": "FULL_STOCKBIT",
   "session_label": "MARKET_DAY",
@@ -17,9 +17,9 @@
   },
   "screening_summary": {
     "universe": 972,
-    "after_liquidity": 118,
-    "after_accumulation": 33,
-    "after_trend": 8,
+    "after_liquidity": 131,
+    "after_accumulation": 39,
+    "after_trend": 10,
     "after_smc": 5,
     "after_entry": 5,
     "final": 3
@@ -132,7 +132,7 @@
         "✅ Swing Structure: BULLISH"
       ],
       "warnings": [],
-      "updated_at": "21.17 WIB"
+      "updated_at": "22.29 WIB"
     },
     {
       "rank": 2,
@@ -220,7 +220,7 @@
         "✅ Swing Structure: BULLISH"
       ],
       "warnings": [],
-      "updated_at": "21.17 WIB"
+      "updated_at": "22.29 WIB"
     },
     {
       "rank": 3,
@@ -306,7 +306,7 @@
         "✅ Swing Structure: BULLISH"
       ],
       "warnings": [],
-      "updated_at": "21.17 WIB"
+      "updated_at": "22.29 WIB"
     }
   ]
 }
