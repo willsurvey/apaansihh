@@ -51,15 +51,15 @@
       "d1_close_pos": 0.921,
       "d1_bullish": true,
       "d1_range_expansion": 2.73,
-      "d1_value_rp": 5060956600000,
+      "d1_value_rp": 5060906200000,
       "d2_change_pct": 9.0,
       "d2_body_pct": 0.5,
       "d2_vol_ratio_ma20": 1.9,
       "m1_last15_green": 13,
       "m1_close_vs_vwap": 5.72,
       "m1_close_pos_intra": 0.919,
-      "m1_high_timing": 0.954,
-      "m1_n_bars": 263,
+      "m1_high_timing": 0.951,
+      "m1_n_bars": 264,
       "m1_data_available": true,
       "above_ma20": true,
       "above_ma50": true,
@@ -89,7 +89,7 @@
         "SCREENER_TOP_VALUE"
       ],
       "warning": "⚠️ FALSE SIGNAL RATE TINGGI (~85-90%). Pipeline ini mendeteksi Tipe 1 (Continuation) dan Tipe 2 (Silent Accumulation). Tipe 3 (Out of Nowhere, ~48% ARA nyata) TIDAK BISA dideteksi dari OHLCV. Gunakan sebagai WATCHLIST saja. Konfirmasi dengan broker flow, news, dan analisis manual sebelum eksekusi.",
-      "generated_at": "16:27 WIB"
+      "generated_at": "17:27 WIB"
     }
   ],
   "bsjp_beli_sore_jual_pagi": [
@@ -101,7 +101,7 @@
       "market_data": {
         "close": 140.0,
         "change_pct": 28.44,
-        "value_today": 47392754800,
+        "value_today": 47868362800,
         "net_foreign": -1335943500,
         "iep": 140,
         "iep_change_pct": 0
@@ -161,7 +161,7 @@
       "market_data": {
         "close": 125.0,
         "change_pct": 8,
-        "value_today": 41528735400,
+        "value_today": 41720165400,
         "net_foreign": 2401772400
       },
       "d1_features": {
@@ -234,7 +234,7 @@
       "market_data": {
         "close": 116.0,
         "change_pct": 4.31,
-        "value_today": 41324072800,
+        "value_today": 41573526400,
         "net_foreign": -11897155500
       },
       "d1_features": {
@@ -306,7 +306,7 @@
       "market_data": {
         "close": 115.0,
         "change_pct": -4.35,
-        "value_today": 23284101500,
+        "value_today": 23294540500,
         "net_foreign": -3288775800
       },
       "d1_features": {
@@ -373,7 +373,7 @@
   "swing_trading": [],
   "meta": {
     "status": "success",
-    "generated_at": "2026-05-22 16:28:14 WIB",
+    "generated_at": "2026-05-22 17:28:52 WIB",
     "date": "2026-05-22",
     "mode": "FULL_STOCKBIT",
     "session_label": "MARKET_DAY",
@@ -397,8 +397,8 @@
     }
   },
   "market_context": {
-    "ihsg_close": 6167,
-    "ihsg_change_pct": 1.19,
+    "ihsg_close": 6162,
+    "ihsg_change_pct": 1.1,
     "ihsg_trend": "BEARISH",
     "ihsg_above_ma50": false,
     "market_safe": true,
@@ -407,10 +407,10 @@
   "screening_summary": {
     "universe": 972,
     "after_liquidity": 88,
-    "after_accumulation": 12,
+    "after_accumulation": 33,
     "after_trend": 3,
-    "after_smc": 0,
-    "after_entry": 0,
+    "after_smc": 1,
+    "after_entry": 1,
     "final": 0
   },
   "config_ara": {
