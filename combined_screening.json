@@ -5,29 +5,29 @@
       "ticker": "DFAM",
       "company": "Dafam Property Indonesia Tbk.",
       "type": "CALON_ARA",
-      "score": 81,
+      "score": 94,
       "score_tier": "STRONG",
       "pattern_type": "CONTINUATION",
-      "confluence_count": 10,
-      "entry_range": "131 – 178",
-      "entry_lower": 131,
-      "entry_upper": 178,
-      "entry_note": "Pasang Limit Order pukul 19:00 di 132–178 (PDC hingga harga ARA). Tipe Quiet Accumulation gap lebih kecil — peluang fill order lebih tinggi dibanding Tipe Continuation.",
-      "entry_range_pct": 35.6,
-      "ara_price_ref": 178,
+      "confluence_count": 12,
+      "entry_range": "139 – 189",
+      "entry_lower": 139,
+      "entry_upper": 189,
+      "entry_note": "Pasang Limit Order pukul 19:00 di 140–189 (PDC hingga harga ARA). Tipe Quiet Accumulation gap lebih kecil — peluang fill order lebih tinggi dibanding Tipe Continuation.",
+      "entry_range_pct": 35.7,
+      "ara_price_ref": 189,
       "ara_limit_pct": 35.0,
       "gap_risk_note": "Backtest: 64% saham ARA Gap Up >2% di pagi hari. Median gap: +3.70% dari harga ARA. Limit Order berisiko tidak fill.",
-      "estimated_target_pct": "+6% hingga +15% dari harga beli",
-      "target_morning_exit": 192,
-      "target_base": 208,
-      "target_optimistic": 216,
+      "estimated_target_pct": "+6% hingga +16% dari harga beli",
+      "target_morning_exit": 204,
+      "target_base": 222,
+      "target_optimistic": 230,
       "target_morning_exit_pct": 6.0,
-      "target_base_pct": 15.0,
+      "target_base_pct": 16.0,
       "target_optimistic_pct": 20.0,
-      "target_note": "Pagi: 192 (~+6%) | Moderat: 208 (~+15%) | Full: 216 (~+20%) | JUAL PAGI, bukan hold sampai close.",
-      "assumed_entry": 181,
+      "target_note": "Pagi: 204 (~+6%) | Moderat: 222 (~+16%) | Full: 230 (~+20%) | JUAL PAGI, bukan hold sampai close.",
+      "assumed_entry": 192,
       "exit_timing_guide": "JUAL DI PAGI HARI (09:00-09:30 WIB). Backtest menunjukkan High D+1 median +16.77% dari harga ARA. Setelah 09:30, momentum sering berbalik. Jika masih ARA lagi (23.5% peluang), hold dengan trailing stop.",
-      "reason_beginner_friendly": "DFAM sudah naik 21% kemarin dengan volume 7x lebih besar dari biasanya. Ada pembeli besar yang masuk agresif. Jika momentum berlanjut, saham ini bisa naik lebih jauh besok. ✅ Broker signal: Big Acc. Skor kepercayaan: TINGGI.",
+      "reason_beginner_friendly": "DFAM sudah naik 28% kemarin dengan volume 10x lebih besar dari biasanya. Ada pembeli besar yang masuk agresif. Jika momentum berlanjut, saham ini bisa naik lebih jauh besok. ✅ Broker signal: Big Acc. Skor kepercayaan: TINGGI.",
       "risk_warning": "⚠️ FALSE SIGNAL RATE ~85-90%. Konfirmasi dengan broker flow, berita, dan analisis manual sebelum beli. | 📌 Batasi posisi: max 2% dari portofolio.",
       "d1p_backtest_stats": {
         "high_d1_median": "+16.77% dari harga ARA (n=2213)",
@@ -38,50 +38,50 @@
       },
       "broker_signal": "Big Acc",
       "d1_date": "2026-05-22",
-      "d1_close": 132.0,
+      "d1_close": 140.0,
       "d1_open": 108.0,
-      "d1_high": 140.0,
+      "d1_high": 143.0,
       "d1_low": 105.0,
-      "d1_change_pct": 21.1,
-      "d1_vol_ratio_ma20": 7.09,
-      "d1_vol_ratio_ma5": 4.57,
-      "d1_body_pct": 0.686,
-      "d1_upper_wick": 0.229,
-      "d1_lower_wick": 0.086,
-      "d1_close_pos": 0.771,
+      "d1_change_pct": 28.44,
+      "d1_vol_ratio_ma20": 9.57,
+      "d1_vol_ratio_ma5": 6.16,
+      "d1_body_pct": 0.842,
+      "d1_upper_wick": 0.079,
+      "d1_lower_wick": 0.079,
+      "d1_close_pos": 0.921,
       "d1_bullish": true,
-      "d1_range_expansion": 2.67,
-      "d1_value_rp": 3536285280000,
+      "d1_range_expansion": 2.73,
+      "d1_value_rp": 5060956600000,
       "d2_change_pct": 9.0,
       "d2_body_pct": 0.5,
       "d2_vol_ratio_ma20": 1.9,
-      "m1_last15_green": 6,
-      "m1_close_vs_vwap": 1.29,
-      "m1_close_pos_intra": 0.765,
-      "m1_high_timing": 0.543,
-      "m1_n_bars": 162,
+      "m1_last15_green": 13,
+      "m1_close_vs_vwap": 5.72,
+      "m1_close_pos_intra": 0.919,
+      "m1_high_timing": 0.954,
+      "m1_n_bars": 263,
       "m1_data_available": true,
       "above_ma20": true,
       "above_ma50": true,
       "ma20": 110.0,
       "ma50": 100.0,
       "up_streak_days": 1,
-      "trend_5d_pct": 5.6,
+      "trend_5d_pct": 12.0,
       "signals_positive": [
-        "Volume D-1 ekstrem: 7.1x MA20 (tier-2 ≥6x)",
+        "Volume D-1 ekstrem: 9.6x MA20 (tier-2 ≥6x)",
         "Volume D-2 elevated: 1.9x MA20 (akumulasi dini)",
-        "Continuation D-1: +21.1% vol 7.1x MA20",
+        "Continuation D-1: +28.4% vol 9.6x MA20",
         "D-2 early signal: +9.0% vol 1.9x",
         "Range expansion: 2.7x avg-5d",
         "Harga di atas MA20",
-        "5d trend sehat: +5.6%",
-        "Close intraday kuat: 0.77 (mendekati high harian)",
-        "Close sedikit di atas VWAP: +1.3%",
+        "5d trend sehat: +12.0%",
+        "Closing momentum kuat: 13/14 bar hijau (sinyal universal ARA)",
+        "Close intraday kuat: 0.92 (mendekati high harian)",
+        "Close di atas VWAP: +5.7%",
+        "High intraday di akhir sesi (95%)",
         "Broker signal: Big Accumulation (+10 poin)"
       ],
-      "signals_negative": [
-        "Closing momentum lemah: 6/14 bar hijau"
-      ],
+      "signals_negative": [],
       "universe_sources": [
         "SCREENER_VOL_EXPLOSION",
         "GURU_92",
@@ -89,10 +89,68 @@
         "SCREENER_TOP_VALUE"
       ],
       "warning": "⚠️ FALSE SIGNAL RATE TINGGI (~85-90%). Pipeline ini mendeteksi Tipe 1 (Continuation) dan Tipe 2 (Silent Accumulation). Tipe 3 (Out of Nowhere, ~48% ARA nyata) TIDAK BISA dideteksi dari OHLCV. Gunakan sebagai WATCHLIST saja. Konfirmasi dengan broker flow, news, dan analisis manual sebelum eksekusi.",
-      "generated_at": "14:28 WIB"
+      "generated_at": "16:27 WIB"
     }
   ],
-  "bsjp_beli_sore_jual_pagi": [],
+  "bsjp_beli_sore_jual_pagi": [
+    {
+      "ticker": "DFAM",
+      "company": "Dafam Property Indonesia Tbk.",
+      "tier": "A",
+      "score": 85,
+      "market_data": {
+        "close": 140.0,
+        "change_pct": 28.44,
+        "value_today": 47392754800,
+        "net_foreign": -1335943500,
+        "iep": 140,
+        "iep_change_pct": 0
+      },
+      "bsjp_features": {
+        "vol_ratio20": 6.32,
+        "body_pct": 29.63,
+        "close_pos_pct": 92.1,
+        "above_ma20": true,
+        "above_ma50": true,
+        "above_ma200": true,
+        "atr_pct": 11.84
+      },
+      "entry_plan": {
+        "strategy": "Beli di sesi akhir (14:30-15:45 WIB)",
+        "entry_range": "139 – 140",
+        "entry_note": "Limit order di harga saat ini atau sedikit di bawahnya",
+        "stop_loss": 104,
+        "stop_note": "Jika gap down besok, cut di bawah low hari ini",
+        "target_pct": "+2% s/d +8% di pagi hari",
+        "exit_strategy": "Jual di pre-opening (08:45-08:55) atau awal sesi pagi"
+      },
+      "universe_context": {
+        "in_mover_types": [
+          "MOVER_TYPE_TOP_VOLUME",
+          "SCREENER_VOLUME_EXPLOSION",
+          "GURU_92_Big Accumula",
+          "SCREENER_TOP_VALUE"
+        ],
+        "from_gainer": false,
+        "from_screener": true,
+        "from_top_value": true
+      },
+      "signals_positive": [
+        "Volume spike kuat 6.3x MA20",
+        "Candle hijau sangat kuat (29.6%)",
+        "Tutup dekat puncak (92%)",
+        "Uptrend penuh: di atas MA20, MA50, MA200",
+        "MA20 sedang naik — tren menguat",
+        "Masuk screener volume explosion Stockbit"
+      ],
+      "signals_negative": [
+        "Asing jual bersih hari ini — hati-hati"
+      ],
+      "win_probability": "~64% berdasarkan backtest 3.330 kejadian historis",
+      "disclaimer": "Tier A BSJP. Strategi hold overnight — ada risiko gap down. Selalu gunakan stop loss. Pastikan Anda bisa monitor pre-opening besok.",
+      "rank": 1
+    }
+  ],
   "bpjs_beli_pagi_jual_sore": [
     {
       "ticker": "ESIP",
@@ -102,8 +160,8 @@
       "score": 45,
       "market_data": {
         "close": 125.0,
-        "change_pct": 13.6,
-        "value_today": 37059227300,
+        "change_pct": 8,
+        "value_today": 41528735400,
         "net_foreign": 2401772400
       },
       "d1_features": {
@@ -139,13 +197,11 @@
       "universe_context": {
         "in_mover_types": [
           "MOVER_TYPE_TOP_VOLUME",
-          "MOVER_TYPE_TOP_VALUE",
           "MOVER_TYPE_NET_FOREIGN_BUY",
-          "MOVER_TYPE_TOP_GAINER",
           "GURU_78_Daily Net Fo",
           "SCREENER_TOP_VALUE"
         ],
-        "from_gainer": true,
+        "from_gainer": false,
         "from_screener": false
       },
       "signals_positive": [
@@ -177,8 +233,8 @@
       "score": 35,
       "market_data": {
         "close": 116.0,
-        "change_pct": 3.45,
-        "value_today": 33788760300,
+        "change_pct": 4.31,
+        "value_today": 41324072800,
         "net_foreign": -11897155500
       },
       "d1_features": {
@@ -249,8 +305,8 @@
       "score": 35,
       "market_data": {
         "close": 115.0,
-        "change_pct": 0,
-        "value_today": 15036293900,
+        "change_pct": -4.35,
+        "value_today": 23284101500,
         "net_foreign": -3288775800
       },
       "d1_features": {
@@ -317,7 +373,7 @@
   "swing_trading": [],
   "meta": {
     "status": "success",
-    "generated_at": "2026-05-22 14:29:06 WIB",
+    "generated_at": "2026-05-22 16:28:14 WIB",
     "date": "2026-05-22",
     "mode": "FULL_STOCKBIT",
     "session_label": "MARKET_DAY",
@@ -326,7 +382,7 @@
     "mode_warning": null,
     "intraday_count": 0,
     "ara_count": 1,
-    "bsjp_count": 0,
+    "bsjp_count": 1,
     "bpjs_count": 3,
     "swing_count": 0,
     "ara_disclaimer": "Pipeline ARA v2: deteksi Tipe 1 (Continuation) & Tipe 2 (Silent Accumulation). Tipe 3 (Out of Nowhere, ~48% dari ARA nyata) tidak terdeteksi dari OHLCV. Precision: 8-15%. Backtest wajib sebelum live trading.",
@@ -341,8 +397,8 @@
     }
   },
   "market_context": {
-    "ihsg_close": 6113,
-    "ihsg_change_pct": 0.3,
+    "ihsg_close": 6167,
+    "ihsg_change_pct": 1.19,
     "ihsg_trend": "BEARISH",
     "ihsg_above_ma50": false,
     "market_safe": true,
@@ -350,9 +406,9 @@
   },
   "screening_summary": {
     "universe": 972,
-    "after_liquidity": 83,
-    "after_accumulation": 10,
-    "after_trend": 2,
+    "after_liquidity": 88,
+    "after_accumulation": 12,
+    "after_trend": 3,
     "after_smc": 0,
     "after_entry": 0,
     "final": 0
