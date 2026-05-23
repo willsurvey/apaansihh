@@ -87,7 +87,7 @@
         "✅ Swing Structure: BULLISH"
       ],
       "warnings": [],
-      "updated_at": "23.27 WIB"
+      "updated_at": "00.27 WIB"
     }
   ],
   "logika_baru_calon_ara": [
@@ -178,7 +178,7 @@
         "SCREENER_TOP_VALUE"
       ],
       "warning": "⚠️ FALSE SIGNAL RATE TINGGI (~85-90%). Pipeline ini mendeteksi Tipe 1 (Continuation) dan Tipe 2 (Silent Accumulation). Tipe 3 (Out of Nowhere, ~48% ARA nyata) TIDAK BISA dideteksi dari OHLCV. Gunakan sebagai WATCHLIST saja. Konfirmasi dengan broker flow, news, dan analisis manual sebelum eksekusi.",
-      "generated_at": "23:28 WIB"
+      "generated_at": "00:27 WIB"
     },
     {
       "ticker": "MORA",
@@ -264,7 +264,7 @@
         "GURU_94"
       ],
       "warning": "⚠️ FALSE SIGNAL RATE TINGGI (~85-90%). Pipeline ini mendeteksi Tipe 1 (Continuation) dan Tipe 2 (Silent Accumulation). Tipe 3 (Out of Nowhere, ~48% ARA nyata) TIDAK BISA dideteksi dari OHLCV. Gunakan sebagai WATCHLIST saja. Konfirmasi dengan broker flow, news, dan analisis manual sebelum eksekusi.",
-      "generated_at": "23:28 WIB"
+      "generated_at": "00:28 WIB"
     }
   ],
   "bsjp_beli_sore_jual_pagi": [
@@ -620,10 +620,10 @@
   "swing_trading": [],
   "meta": {
     "status": "success",
-    "generated_at": "2026-05-23 23:29:09 WIB",
-    "date": "2026-05-23",
+    "generated_at": "2026-05-24 00:28:48 WIB",
+    "date": "2026-05-24",
     "mode": "FULL_STOCKBIT",
-    "session_label": "PRE_MARKET_WEEKEND (Saturday)",
+    "session_label": "PRE_MARKET_WEEKEND (Sunday)",
     "pipeline_version": "v5.0",
     "session_warning": "⚠️ Screening akhir pekan — referensi persiapan saja, bukan sinyal eksekusi.",
     "mode_warning": null,
