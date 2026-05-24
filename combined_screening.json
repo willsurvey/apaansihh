@@ -87,7 +87,7 @@
         "✅ Swing Structure: BULLISH"
       ],
       "warnings": [],
-      "updated_at": "23.29 WIB"
+      "updated_at": "00.27 WIB"
     }
   ],
   "logika_baru_calon_ara": [
@@ -178,7 +178,7 @@
         "SCREENER_TOP_VALUE"
       ],
       "warning": "⚠️ FALSE SIGNAL RATE TINGGI (~85-90%). Pipeline ini mendeteksi Tipe 1 (Continuation) dan Tipe 2 (Silent Accumulation). Tipe 3 (Out of Nowhere, ~48% ARA nyata) TIDAK BISA dideteksi dari OHLCV. Gunakan sebagai WATCHLIST saja. Konfirmasi dengan broker flow, news, dan analisis manual sebelum eksekusi.",
-      "generated_at": "23:30 WIB"
+      "generated_at": "00:27 WIB"
     },
     {
       "ticker": "MORA",
@@ -264,7 +264,7 @@
         "GURU_94"
       ],
       "warning": "⚠️ FALSE SIGNAL RATE TINGGI (~85-90%). Pipeline ini mendeteksi Tipe 1 (Continuation) dan Tipe 2 (Silent Accumulation). Tipe 3 (Out of Nowhere, ~48% ARA nyata) TIDAK BISA dideteksi dari OHLCV. Gunakan sebagai WATCHLIST saja. Konfirmasi dengan broker flow, news, dan analisis manual sebelum eksekusi.",
-      "generated_at": "23:30 WIB"
+      "generated_at": "00:28 WIB"
     }
   ],
   "bsjp_beli_sore_jual_pagi": [
@@ -272,7 +272,7 @@
       "ticker": "DFAM",
       "company": "Dafam Property Indonesia Tbk.",
       "tier": "A",
-      "score": 85,
+      "score": 90,
       "market_data": {
         "close": 140.0,
         "change_pct": 28.44,
@@ -316,7 +316,8 @@
         "Tutup dekat puncak (92%)",
         "Uptrend penuh: di atas MA20, MA50, MA200",
         "MA20 sedang naik — tren menguat",
-        "Masuk screener volume explosion Stockbit"
+        "Masuk screener volume explosion Stockbit",
+        "Hari Senin — win rate BSJP historis tertinggi"
       ],
       "signals_negative": [
         "Asing jual bersih hari ini — hati-hati"
@@ -620,12 +621,12 @@
   "swing_trading": [],
   "meta": {
     "status": "success",
-    "generated_at": "2026-05-24 23:31:13 WIB",
-    "date": "2026-05-24",
+    "generated_at": "2026-05-25 00:29:40 WIB",
+    "date": "2026-05-25",
     "mode": "FULL_STOCKBIT",
-    "session_label": "PRE_MARKET_WEEKEND (Sunday)",
+    "session_label": "MARKET_DAY",
     "pipeline_version": "v5.0",
-    "session_warning": "⚠️ Screening akhir pekan — referensi persiapan saja, bukan sinyal eksekusi.",
+    "session_warning": null,
     "mode_warning": null,
     "intraday_count": 1,
     "ara_count": 2,
