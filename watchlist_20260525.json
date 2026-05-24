@@ -1,6 +1,6 @@
 {
   "status": "success",
-  "generated_at": "2026-05-25 00:27:29 WIB",
+  "generated_at": "2026-05-25 01:29:01 WIB",
   "date": "2026-05-25",
   "mode": "FULL_STOCKBIT",
   "session_label": "MARKET_DAY",
@@ -130,7 +130,7 @@
         "✅ Swing Structure: BULLISH"
       ],
       "warnings": [],
-      "updated_at": "00.27 WIB"
+      "updated_at": "01.29 WIB"
     }
   ]
 }
