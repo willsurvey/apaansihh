@@ -56,10 +56,10 @@
       "d2_body_pct": 0.0,
       "d2_vol_ratio_ma20": 0.18,
       "m1_last15_green": 12,
-      "m1_close_vs_vwap": -6.95,
+      "m1_close_vs_vwap": -6.94,
       "m1_close_pos_intra": 0.28,
-      "m1_high_timing": 0.061,
-      "m1_n_bars": 115,
+      "m1_high_timing": 0.06,
+      "m1_n_bars": 116,
       "m1_data_available": true,
       "above_ma20": false,
       "above_ma50": false,
@@ -77,14 +77,14 @@
         "Closing momentum kuat: 12/14 bar hijau (sinyal universal ARA)"
       ],
       "signals_negative": [
-        "Close di bawah VWAP: -7.0%",
+        "Close di bawah VWAP: -6.9%",
         "High intraday di awal sesi (6%) — profit taking sore"
       ],
       "universe_sources": [
         "SCREENER_VOL_EXPLOSION"
       ],
       "warning": "⚠️ FALSE SIGNAL RATE TINGGI (~85-90%). Pipeline ini mendeteksi Tipe 1 (Continuation) dan Tipe 2 (Silent Accumulation). Tipe 3 (Out of Nowhere, ~48% ARA nyata) TIDAK BISA dideteksi dari OHLCV. Gunakan sebagai WATCHLIST saja. Konfirmasi dengan broker flow, news, dan analisis manual sebelum eksekusi.",
-      "generated_at": "12:28 WIB"
+      "generated_at": "13:28 WIB"
     },
     {
       "ticker": "CBRE",
@@ -140,11 +140,11 @@
       "d2_change_pct": 24.46,
       "d2_body_pct": 0.729,
       "d2_vol_ratio_ma20": 2.34,
-      "m1_last15_green": 13,
-      "m1_close_vs_vwap": -2.91,
-      "m1_close_pos_intra": 0.298,
-      "m1_high_timing": 0.118,
-      "m1_n_bars": 178,
+      "m1_last15_green": 12,
+      "m1_close_vs_vwap": -3.45,
+      "m1_close_pos_intra": 0.277,
+      "m1_high_timing": 0.117,
+      "m1_n_bars": 179,
       "m1_data_available": true,
       "above_ma20": false,
       "above_ma50": true,
@@ -160,10 +160,10 @@
         "Close pos rendah: 0.32 (buyers absorbed selling)",
         "D-2 early signal: +24.5% vol 2.3x",
         "Range expansion moderat: 1.7x avg-5d",
-        "Closing momentum kuat: 13/14 bar hijau (sinyal universal ARA)"
+        "Closing momentum kuat: 12/14 bar hijau (sinyal universal ARA)"
       ],
       "signals_negative": [
-        "Close di bawah VWAP: -2.9%",
+        "Close di bawah VWAP: -3.5%",
         "High intraday di awal sesi (12%) — profit taking sore"
       ],
       "universe_sources": [
@@ -171,7 +171,7 @@
         "SCREENER_TOP_VALUE"
       ],
       "warning": "⚠️ FALSE SIGNAL RATE TINGGI (~85-90%). Pipeline ini mendeteksi Tipe 1 (Continuation) dan Tipe 2 (Silent Accumulation). Tipe 3 (Out of Nowhere, ~48% ARA nyata) TIDAK BISA dideteksi dari OHLCV. Gunakan sebagai WATCHLIST saja. Konfirmasi dengan broker flow, news, dan analisis manual sebelum eksekusi.",
-      "generated_at": "12:28 WIB"
+      "generated_at": "13:28 WIB"
     },
     {
       "ticker": "MARK",
@@ -257,7 +257,7 @@
         "SCREENER_TOP_VALUE"
       ],
       "warning": "⚠️ FALSE SIGNAL RATE TINGGI (~85-90%). Pipeline ini mendeteksi Tipe 1 (Continuation) dan Tipe 2 (Silent Accumulation). Tipe 3 (Out of Nowhere, ~48% ARA nyata) TIDAK BISA dideteksi dari OHLCV. Gunakan sebagai WATCHLIST saja. Konfirmasi dengan broker flow, news, dan analisis manual sebelum eksekusi.",
-      "generated_at": "12:28 WIB"
+      "generated_at": "13:28 WIB"
     }
   ],
   "bsjp_beli_sore_jual_pagi": [],
@@ -265,7 +265,7 @@
   "swing_trading": [],
   "meta": {
     "status": "success",
-    "generated_at": "2026-05-25 12:29:02 WIB",
+    "generated_at": "2026-05-25 13:29:23 WIB",
     "date": "2026-05-25",
     "mode": "FULL_STOCKBIT",
     "session_label": "MARKET_DAY",
@@ -289,8 +289,8 @@
     }
   },
   "market_context": {
-    "ihsg_close": 6224,
-    "ihsg_change_pct": 1.02,
+    "ihsg_close": 6219,
+    "ihsg_change_pct": 0.93,
     "ihsg_trend": "BEARISH",
     "ihsg_above_ma50": false,
     "market_safe": true,
