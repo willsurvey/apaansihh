@@ -83,10 +83,11 @@
       "signals_negative": [],
       "universe_sources": [
         "SCREENER_VOL_EXPLOSION",
+        "GURU_92",
         "SCREENER_TOP_VALUE"
       ],
       "warning": "⚠️ FALSE SIGNAL RATE TINGGI (~85-90%). Pipeline ini mendeteksi Tipe 1 (Continuation) dan Tipe 2 (Silent Accumulation). Tipe 3 (Out of Nowhere, ~48% ARA nyata) TIDAK BISA dideteksi dari OHLCV. Gunakan sebagai WATCHLIST saja. Konfirmasi dengan broker flow, news, dan analisis manual sebelum eksekusi.",
-      "generated_at": "17:32 WIB"
+      "generated_at": "20:29 WIB"
     },
     {
       "ticker": "GULA",
@@ -173,7 +174,7 @@
         "SCREENER_TOP_VALUE"
       ],
       "warning": "⚠️ FALSE SIGNAL RATE TINGGI (~85-90%). Pipeline ini mendeteksi Tipe 1 (Continuation) dan Tipe 2 (Silent Accumulation). Tipe 3 (Out of Nowhere, ~48% ARA nyata) TIDAK BISA dideteksi dari OHLCV. Gunakan sebagai WATCHLIST saja. Konfirmasi dengan broker flow, news, dan analisis manual sebelum eksekusi.",
-      "generated_at": "17:32 WIB"
+      "generated_at": "20:28 WIB"
     },
     {
       "ticker": "TPIA",
@@ -261,7 +262,7 @@
         "SCREENER_TOP_VALUE"
       ],
       "warning": "⚠️ FALSE SIGNAL RATE TINGGI (~85-90%). Pipeline ini mendeteksi Tipe 1 (Continuation) dan Tipe 2 (Silent Accumulation). Tipe 3 (Out of Nowhere, ~48% ARA nyata) TIDAK BISA dideteksi dari OHLCV. Gunakan sebagai WATCHLIST saja. Konfirmasi dengan broker flow, news, dan analisis manual sebelum eksekusi.",
-      "generated_at": "17:32 WIB"
+      "generated_at": "20:28 WIB"
     },
     {
       "ticker": "IKAN",
@@ -344,22 +345,96 @@
         "SCREENER_VOL_EXPLOSION"
       ],
       "warning": "⚠️ FALSE SIGNAL RATE TINGGI (~85-90%). Pipeline ini mendeteksi Tipe 1 (Continuation) dan Tipe 2 (Silent Accumulation). Tipe 3 (Out of Nowhere, ~48% ARA nyata) TIDAK BISA dideteksi dari OHLCV. Gunakan sebagai WATCHLIST saja. Konfirmasi dengan broker flow, news, dan analisis manual sebelum eksekusi.",
-      "generated_at": "17:32 WIB"
+      "generated_at": "20:28 WIB"
     }
   ],
   "bsjp_beli_sore_jual_pagi": [],
   "bpjs_beli_pagi_jual_sore": [
     {
+      "ticker": "AUTO",
+      "company": "Astra Otoparts Tbk.",
+      "type": "WATCHLIST_BPJS",
+      "formula": "REVERSAL_BOUNCE",
+      "score": 50,
+      "market_data": {
+        "close": 2530.0,
+        "change_pct": -1.19,
+        "value_today": 11764846000,
+        "net_foreign": 834128000
+      },
+      "d1_features": {
+        "body_pct": -2.69,
+        "close_pos_pct": 12.5,
+        "vol_ratio": 0.92,
+        "change_pct": -1.17,
+        "range_pct": 3.16,
+        "upper_wick": 0.0,
+        "above_ma20": false,
+        "above_ma50": true,
+        "above_ma200": true,
+        "atr_pct": 3.11
+      },
+      "trading_plan": {
+        "strategy": "Beli di pagi hari (09:00-09:30), jual sore (14:30-15:30)",
+        "entry_range": "2,490 – 2,580",
+        "entry_note": "JANGAN beli langsung. Konfirmasi dulu kriteria pagi hari.",
+        "stop_loss": 2410,
+        "stop_note": "Cut loss jika turun di bawah 2,410 (1 ATR dari entry)",
+        "target_modest": 2580,
+        "target_moderate": 2630,
+        "exit_strategy": "Jual di sesi sore (14:30-15:30 WIB) tanpa menunggu close"
+      },
+      "morning_confirmation_criteria": [
+        "✅ Gap Down ≤2% dari PDC (sweet spot: gap down lalu diborong)",
+        "✅ Volume 15 menit pertama ≥ 1.5x rata-rata (ada minat beli)",
+        "✅ Harga rebound dari Low dalam 15 menit pertama",
+        "❌ JANGAN beli jika Gap Up >5% (WR hanya 11.8%, DD -6.67%)",
+        "❌ JANGAN beli jika volume 15 menit pertama sangat sepi"
+      ],
+      "timing_guide": "Pantau 09:00-09:15. Jika saham gap down lalu diborong (volume naik, harga rebound dari low), BELI. Target jual: 14:30-15:30 WIB.",
+      "universe_context": {
+        "in_mover_types": [
+          "MOVER_TYPE_NET_FOREIGN_BUY",
+          "SCREENER_VOLUME_EXPLOSION",
+          "GURU_72_IHSG Short-t",
+          "SCREENER_TOP_VALUE"
+        ],
+        "from_gainer": false,
+        "from_screener": true
+      },
+      "signals_positive": [
+        "Formula: Reversal Bounce — D-1 merah (-2.7%), volume sepi (0.92x MA20), close bawah (12%). WR historis: 38.6% (n=31.924)",
+        "Di atas MA50 — tren menengah masih ok",
+        "Di atas MA200 — tren utama masih bullish",
+        "Asing beli bersih hari ini (Rp 0.8B)",
+        "Masuk screener volume Stockbit — ada perhatian pasar"
+      ],
+      "signals_negative": [
+        "Di bawah MA20 — tekanan jangka pendek"
+      ],
+      "backtest_stats": {
+        "formula": "REVERSAL_BOUNCE",
+        "win_rate": "38.6%",
+        "sample_size": "n=31.924",
+        "profit_factor": "0.90x",
+        "total_backtest": "789.792 hari trading IHSG (956 saham)",
+        "gap_down_sweet_spot": "Gap Down >2%: WR 30.2%, upside +3.75%, DD -0.88%",
+        "gap_up_danger": "Gap Up >5%: WR 11.8%, DD -6.67% — HINDARI"
+      },
+      "disclaimer": "⚠️ INI WATCHLIST, BUKAN SINYAL BELI. Formula REVERSAL_BOUNCE dari backtest forward-looking 789.792 hari trading IHSG. WAJIB konfirmasi real-time pagi hari (lihat morning_confirmation_criteria). Tanpa konfirmasi, JANGAN eksekusi.",
+      "rank": 1
+    },
+    {
       "ticker": "KOTA",
       "company": "DMS Propertindo Tbk.",
       "type": "WATCHLIST_BPJS",
       "formula": "REVERSAL_BOUNCE",
-      "score": 35,
+      "score": 45,
       "market_data": {
         "close": 115.0,
         "change_pct": -8.7,
         "value_today": 26109276900,
-        "net_foreign": -11179667700
+        "net_foreign": 2311579600
       },
       "d1_features": {
         "body_pct": -7.26,
@@ -394,6 +469,7 @@
       "universe_context": {
         "in_mover_types": [
           "MOVER_TYPE_TOP_VOLUME",
+          "MOVER_TYPE_NET_FOREIGN_BUY",
           "MOVER_TYPE_TOP_LOSER",
           "GURU_72_IHSG Short-t",
           "SCREENER_TOP_VALUE"
@@ -404,11 +480,11 @@
       "signals_positive": [
         "Formula: Reversal Bounce — D-1 merah (-7.3%), volume sepi (0.17x MA20), close bawah (0%). WR historis: 38.6% (n=31.924)",
         "Di atas MA50 — tren menengah masih ok",
-        "Di atas MA200 — tren utama masih bullish"
+        "Di atas MA200 — tren utama masih bullish",
+        "Asing beli bersih hari ini (Rp 2.3B)"
       ],
       "signals_negative": [
-        "Di bawah MA20 — tekanan jangka pendek",
-        "Asing jual bersih besar — hati-hati gap down"
+        "Di bawah MA20 — tekanan jangka pendek"
       ],
       "backtest_stats": {
         "formula": "REVERSAL_BOUNCE",
@@ -420,19 +496,19 @@
         "gap_up_danger": "Gap Up >5%: WR 11.8%, DD -6.67% — HINDARI"
       },
       "disclaimer": "⚠️ INI WATCHLIST, BUKAN SINYAL BELI. Formula REVERSAL_BOUNCE dari backtest forward-looking 789.792 hari trading IHSG. WAJIB konfirmasi real-time pagi hari (lihat morning_confirmation_criteria). Tanpa konfirmasi, JANGAN eksekusi.",
-      "rank": 1
+      "rank": 2
     },
     {
       "ticker": "FORE",
       "company": "Fore Kopi Indonesia Tbk.",
       "type": "WATCHLIST_BPJS",
       "formula": "REVERSAL_BOUNCE",
-      "score": 35,
+      "score": 40,
       "market_data": {
         "close": 815.0,
         "change_pct": -7.98,
         "value_today": 22801041000,
-        "net_foreign": -4760078000
+        "net_foreign": -577351000
       },
       "d1_features": {
         "body_pct": -9.44,
@@ -479,8 +555,7 @@
         "Di atas MA200 — tren utama masih bullish"
       ],
       "signals_negative": [
-        "Di bawah MA20 — tekanan jangka pendek",
-        "Asing jual bersih besar — hati-hati gap down"
+        "Di bawah MA20 — tekanan jangka pendek"
       ],
       "backtest_stats": {
         "formula": "REVERSAL_BOUNCE",
@@ -492,13 +567,13 @@
         "gap_up_danger": "Gap Up >5%: WR 11.8%, DD -6.67% — HINDARI"
       },
       "disclaimer": "⚠️ INI WATCHLIST, BUKAN SINYAL BELI. Formula REVERSAL_BOUNCE dari backtest forward-looking 789.792 hari trading IHSG. WAJIB konfirmasi real-time pagi hari (lihat morning_confirmation_criteria). Tanpa konfirmasi, JANGAN eksekusi.",
-      "rank": 2
+      "rank": 3
     }
   ],
   "swing_trading": [],
   "meta": {
     "status": "success",
-    "generated_at": "2026-05-26 17:33:37 WIB",
+    "generated_at": "2026-05-26 20:29:59 WIB",
     "date": "2026-05-26",
     "mode": "FULL_STOCKBIT",
     "session_label": "MARKET_DAY",
@@ -508,7 +583,7 @@
     "intraday_count": 0,
     "ara_count": 4,
     "bsjp_count": 0,
-    "bpjs_count": 2,
+    "bpjs_count": 3,
     "swing_count": 0,
     "ara_disclaimer": "Pipeline ARA v2: deteksi Tipe 1 (Continuation) & Tipe 2 (Silent Accumulation). Tipe 3 (Out of Nowhere, ~48% dari ARA nyata) tidak terdeteksi dari OHLCV. Precision: 8-15%. Backtest wajib sebelum live trading.",
     "bsjp_disclaimer": "Pipeline BSJP v1: hold overnight, jual pagi hari. Win rate historis: Tier S ~70%, Tier A ~64% (spike >2%). Backtest 252.480 hari perdagangan IHSG. Selalu pasang stop loss.",
@@ -533,7 +608,7 @@
     "universe": 972,
     "after_liquidity": 82,
     "after_accumulation": 7,
-    "after_trend": 1,
+    "after_trend": 2,
     "after_smc": 0,
     "after_entry": 0,
     "final": 0
