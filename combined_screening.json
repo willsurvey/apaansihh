@@ -43,15 +43,15 @@
       "d1_high": 234.0,
       "d1_low": 214.0,
       "d1_change_pct": 9.35,
-      "d1_vol_ratio_ma20": 17.08,
-      "d1_vol_ratio_ma5": 8.37,
+      "d1_vol_ratio_ma20": 17.1,
+      "d1_vol_ratio_ma5": 8.38,
       "d1_body_pct": 0.0,
       "d1_upper_wick": 0.0,
       "d1_lower_wick": 1.0,
       "d1_close_pos": 1.0,
       "d1_bullish": false,
       "d1_range_expansion": 1.07,
-      "d1_value_rp": 619426080000,
+      "d1_value_rp": 620385480000,
       "d2_change_pct": 9.74,
       "d2_body_pct": 0.0,
       "d2_vol_ratio_ma20": 4.42,
@@ -59,7 +59,7 @@
       "m1_close_vs_vwap": 1.89,
       "m1_close_pos_intra": 1.0,
       "m1_high_timing": 0.0,
-      "m1_n_bars": 152,
+      "m1_n_bars": 159,
       "m1_data_available": true,
       "above_ma20": true,
       "above_ma50": true,
@@ -86,7 +86,7 @@
         "SCREENER_VOL_EXPLOSION"
       ],
       "warning": "⚠️ FALSE SIGNAL RATE TINGGI (~85-90%). Pipeline ini mendeteksi Tipe 1 (Continuation) dan Tipe 2 (Silent Accumulation). Tipe 3 (Out of Nowhere, ~48% ARA nyata) TIDAK BISA dideteksi dari OHLCV. Gunakan sebagai WATCHLIST saja. Konfirmasi dengan broker flow, news, dan analisis manual sebelum eksekusi.",
-      "generated_at": "14:26 WIB"
+      "generated_at": "15:28 WIB"
     },
     {
       "ticker": "MGNA",
@@ -130,23 +130,23 @@
       "d1_high": 118.0,
       "d1_low": 85.0,
       "d1_change_pct": 34.09,
-      "d1_vol_ratio_ma20": 15.34,
-      "d1_vol_ratio_ma5": 10.56,
+      "d1_vol_ratio_ma20": 15.4,
+      "d1_vol_ratio_ma5": 10.6,
       "d1_body_pct": 0.848,
       "d1_upper_wick": 0.0,
       "d1_lower_wick": 0.152,
       "d1_close_pos": 1.0,
       "d1_bullish": true,
       "d1_range_expansion": 1.17,
-      "d1_value_rp": 305880780000,
+      "d1_value_rp": 307118600000,
       "d2_change_pct": 0.0,
       "d2_body_pct": 0.0,
       "d2_vol_ratio_ma20": 0.73,
-      "m1_last15_green": 13,
-      "m1_close_vs_vwap": 3.81,
+      "m1_last15_green": 14,
+      "m1_close_vs_vwap": 3.79,
       "m1_close_pos_intra": 1.0,
-      "m1_high_timing": 0.148,
-      "m1_n_bars": 169,
+      "m1_high_timing": 0.132,
+      "m1_n_bars": 190,
       "m1_data_available": true,
       "above_ma20": false,
       "above_ma50": false,
@@ -155,21 +155,21 @@
       "up_streak_days": 0,
       "trend_5d_pct": 3.51,
       "signals_positive": [
-        "Volume D-1 ekstrem: 15.3x MA20 (tier-2 ≥6x)",
-        "Continuation D-1: +34.1% vol 15.3x MA20",
+        "Volume D-1 ekstrem: 15.4x MA20 (tier-2 ≥6x)",
+        "Continuation D-1: +34.1% vol 15.4x MA20",
         "5d trend sehat: +3.5%",
-        "Closing momentum kuat: 13/14 bar hijau (sinyal universal ARA)",
+        "Closing momentum kuat: 14/14 bar hijau (sinyal universal ARA)",
         "Close intraday kuat: 1.00 (mendekati high harian)",
         "Close di atas VWAP: +3.8%"
       ],
       "signals_negative": [
-        "High intraday di awal sesi (15%) — profit taking sore"
+        "High intraday di awal sesi (13%) — profit taking sore"
       ],
       "universe_sources": [
         "SCREENER_VOL_EXPLOSION"
       ],
       "warning": "⚠️ FALSE SIGNAL RATE TINGGI (~85-90%). Pipeline ini mendeteksi Tipe 1 (Continuation) dan Tipe 2 (Silent Accumulation). Tipe 3 (Out of Nowhere, ~48% ARA nyata) TIDAK BISA dideteksi dari OHLCV. Gunakan sebagai WATCHLIST saja. Konfirmasi dengan broker flow, news, dan analisis manual sebelum eksekusi.",
-      "generated_at": "14:26 WIB"
+      "generated_at": "15:28 WIB"
     }
   ],
   "bsjp_beli_sore_jual_pagi": [],
@@ -182,8 +182,8 @@
       "score": 35,
       "market_data": {
         "close": 115.0,
-        "change_pct": -5.22,
-        "value_today": 20331673200,
+        "change_pct": -6.96,
+        "value_today": 23186358900,
         "net_foreign": -11179667700
       },
       "d1_features": {
@@ -246,12 +246,84 @@
       },
       "disclaimer": "⚠️ INI WATCHLIST, BUKAN SINYAL BELI. Formula REVERSAL_BOUNCE dari backtest forward-looking 789.792 hari trading IHSG. WAJIB konfirmasi real-time pagi hari (lihat morning_confirmation_criteria). Tanpa konfirmasi, JANGAN eksekusi.",
       "rank": 1
+    },
+    {
+      "ticker": "FORE",
+      "company": "Fore Kopi Indonesia Tbk.",
+      "type": "WATCHLIST_BPJS",
+      "formula": "REVERSAL_BOUNCE",
+      "score": 35,
+      "market_data": {
+        "close": 815.0,
+        "change_pct": -5.52,
+        "value_today": 20112749000,
+        "net_foreign": -4760078000
+      },
+      "d1_features": {
+        "body_pct": -9.44,
+        "close_pos_pct": 5.0,
+        "vol_ratio": 0.88,
+        "change_pct": -9.94,
+        "range_pct": 12.27,
+        "upper_wick": 10.0,
+        "above_ma20": false,
+        "above_ma50": true,
+        "above_ma200": true,
+        "atr_pct": 9.99
+      },
+      "trading_plan": {
+        "strategy": "Beli di pagi hari (09:00-09:30), jual sore (14:30-15:30)",
+        "entry_range": "800 – 830",
+        "entry_note": "JANGAN beli langsung. Konfirmasi dulu kriteria pagi hari.",
+        "stop_loss": 720,
+        "stop_note": "Cut loss jika turun di bawah 720 (1 ATR dari entry)",
+        "target_modest": 830,
+        "target_moderate": 850,
+        "exit_strategy": "Jual di sesi sore (14:30-15:30 WIB) tanpa menunggu close"
+      },
+      "morning_confirmation_criteria": [
+        "✅ Gap Down ≤2% dari PDC (sweet spot: gap down lalu diborong)",
+        "✅ Volume 15 menit pertama ≥ 1.5x rata-rata (ada minat beli)",
+        "✅ Harga rebound dari Low dalam 15 menit pertama",
+        "❌ JANGAN beli jika Gap Up >5% (WR hanya 11.8%, DD -6.67%)",
+        "❌ JANGAN beli jika volume 15 menit pertama sangat sepi"
+      ],
+      "timing_guide": "Pantau 09:00-09:15. Jika saham gap down lalu diborong (volume naik, harga rebound dari low), BELI. Target jual: 14:30-15:30 WIB.",
+      "universe_context": {
+        "in_mover_types": [
+          "MOVER_TYPE_TOP_LOSER",
+          "GURU_72_IHSG Short-t",
+          "SCREENER_TOP_VALUE"
+        ],
+        "from_gainer": false,
+        "from_screener": false
+      },
+      "signals_positive": [
+        "Formula: Reversal Bounce — D-1 merah (-9.4%), volume sepi (0.88x MA20), close bawah (5%). WR historis: 38.6% (n=31.924)",
+        "Di atas MA50 — tren menengah masih ok",
+        "Di atas MA200 — tren utama masih bullish"
+      ],
+      "signals_negative": [
+        "Di bawah MA20 — tekanan jangka pendek",
+        "Asing jual bersih besar — hati-hati gap down"
+      ],
+      "backtest_stats": {
+        "formula": "REVERSAL_BOUNCE",
+        "win_rate": "38.6%",
+        "sample_size": "n=31.924",
+        "profit_factor": "0.90x",
+        "total_backtest": "789.792 hari trading IHSG (956 saham)",
+        "gap_down_sweet_spot": "Gap Down >2%: WR 30.2%, upside +3.75%, DD -0.88%",
+        "gap_up_danger": "Gap Up >5%: WR 11.8%, DD -6.67% — HINDARI"
+      },
+      "disclaimer": "⚠️ INI WATCHLIST, BUKAN SINYAL BELI. Formula REVERSAL_BOUNCE dari backtest forward-looking 789.792 hari trading IHSG. WAJIB konfirmasi real-time pagi hari (lihat morning_confirmation_criteria). Tanpa konfirmasi, JANGAN eksekusi.",
+      "rank": 2
     }
   ],
   "swing_trading": [],
   "meta": {
     "status": "success",
-    "generated_at": "2026-05-26 14:27:26 WIB",
+    "generated_at": "2026-05-26 15:29:01 WIB",
     "date": "2026-05-26",
     "mode": "FULL_STOCKBIT",
     "session_label": "MARKET_DAY",
@@ -261,7 +333,7 @@
     "intraday_count": 0,
     "ara_count": 2,
     "bsjp_count": 0,
-    "bpjs_count": 1,
+    "bpjs_count": 2,
     "swing_count": 0,
     "ara_disclaimer": "Pipeline ARA v2: deteksi Tipe 1 (Continuation) & Tipe 2 (Silent Accumulation). Tipe 3 (Out of Nowhere, ~48% dari ARA nyata) tidak terdeteksi dari OHLCV. Precision: 8-15%. Backtest wajib sebelum live trading.",
     "bsjp_disclaimer": "Pipeline BSJP v1: hold overnight, jual pagi hari. Win rate historis: Tier S ~70%, Tier A ~64% (spike >2%). Backtest 252.480 hari perdagangan IHSG. Selalu pasang stop loss.",
@@ -275,8 +347,8 @@
     }
   },
   "market_context": {
-    "ihsg_close": 6140,
-    "ihsg_change_pct": -1.07,
+    "ihsg_close": 6171,
+    "ihsg_change_pct": -0.56,
     "ihsg_trend": "BEARISH",
     "ihsg_above_ma50": false,
     "market_safe": true,
@@ -284,7 +356,7 @@
   },
   "screening_summary": {
     "universe": 972,
-    "after_liquidity": 76,
+    "after_liquidity": 81,
     "after_accumulation": 9,
     "after_trend": 2,
     "after_smc": 0,
