@@ -87,7 +87,7 @@
         "SCREENER_TOP_VALUE"
       ],
       "warning": "⚠️ FALSE SIGNAL RATE TINGGI (~85-90%). Pipeline ini mendeteksi Tipe 1 (Continuation) dan Tipe 2 (Silent Accumulation). Tipe 3 (Out of Nowhere, ~48% ARA nyata) TIDAK BISA dideteksi dari OHLCV. Gunakan sebagai WATCHLIST saja. Konfirmasi dengan broker flow, news, dan analisis manual sebelum eksekusi.",
-      "generated_at": "03:29 WIB"
+      "generated_at": "04:27 WIB"
     },
     {
       "ticker": "GULA",
@@ -174,7 +174,7 @@
         "SCREENER_TOP_VALUE"
       ],
       "warning": "⚠️ FALSE SIGNAL RATE TINGGI (~85-90%). Pipeline ini mendeteksi Tipe 1 (Continuation) dan Tipe 2 (Silent Accumulation). Tipe 3 (Out of Nowhere, ~48% ARA nyata) TIDAK BISA dideteksi dari OHLCV. Gunakan sebagai WATCHLIST saja. Konfirmasi dengan broker flow, news, dan analisis manual sebelum eksekusi.",
-      "generated_at": "03:29 WIB"
+      "generated_at": "04:27 WIB"
     },
     {
       "ticker": "TPIA",
@@ -262,7 +262,7 @@
         "SCREENER_TOP_VALUE"
       ],
       "warning": "⚠️ FALSE SIGNAL RATE TINGGI (~85-90%). Pipeline ini mendeteksi Tipe 1 (Continuation) dan Tipe 2 (Silent Accumulation). Tipe 3 (Out of Nowhere, ~48% ARA nyata) TIDAK BISA dideteksi dari OHLCV. Gunakan sebagai WATCHLIST saja. Konfirmasi dengan broker flow, news, dan analisis manual sebelum eksekusi.",
-      "generated_at": "03:28 WIB"
+      "generated_at": "04:27 WIB"
     },
     {
       "ticker": "IKAN",
@@ -272,11 +272,11 @@
       "score_tier": "MODERATE",
       "pattern_type": "SILENT_ACCUMULATION",
       "confluence_count": 6,
-      "entry_range": "83 – 113",
+      "entry_range": "83 – 86",
       "entry_lower": 83,
-      "entry_upper": 113,
-      "entry_note": "Pasang Limit Order pukul 19:00 di 84–113 (PDC hingga harga ARA). Tipe Quiet Accumulation gap lebih kecil — peluang fill order lebih tinggi dibanding Tipe Continuation.",
-      "entry_range_pct": 35.7,
+      "entry_upper": 86,
+      "entry_note": "Pasang Limit Order pukul 19:00 di 84–113 (PDC hingga harga ARA). Tipe Quiet Accumulation gap lebih kecil — peluang fill order lebih tinggi dibanding Tipe Continuation. (batas atas: OB 1H aktif)",
+      "entry_range_pct": 3.6,
       "ara_price_ref": 113,
       "ara_limit_pct": 35.0,
       "gap_risk_note": "Backtest: 64% saham ARA Gap Up >2% di pagi hari. Median gap: +3.70% dari harga ARA. Limit Order berisiko tidak fill.",
@@ -345,7 +345,7 @@
         "SCREENER_VOL_EXPLOSION"
       ],
       "warning": "⚠️ FALSE SIGNAL RATE TINGGI (~85-90%). Pipeline ini mendeteksi Tipe 1 (Continuation) dan Tipe 2 (Silent Accumulation). Tipe 3 (Out of Nowhere, ~48% ARA nyata) TIDAK BISA dideteksi dari OHLCV. Gunakan sebagai WATCHLIST saja. Konfirmasi dengan broker flow, news, dan analisis manual sebelum eksekusi.",
-      "generated_at": "03:28 WIB"
+      "generated_at": "04:27 WIB"
     }
   ],
   "bsjp_beli_sore_jual_pagi": [],
@@ -573,7 +573,7 @@
   "swing_trading": [],
   "meta": {
     "status": "success",
-    "generated_at": "2026-05-29 03:29:56 WIB",
+    "generated_at": "2026-05-29 04:28:02 WIB",
     "date": "2026-05-29",
     "mode": "FULL_STOCKBIT",
     "session_label": "MARKET_DAY",
