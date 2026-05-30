@@ -86,7 +86,7 @@
         "SCREENER_TOP_VALUE"
       ],
       "warning": "⚠️ FALSE SIGNAL RATE TINGGI (~85-90%). Pipeline ini mendeteksi Tipe 1 (Continuation) dan Tipe 2 (Silent Accumulation). Tipe 3 (Out of Nowhere, ~48% ARA nyata) TIDAK BISA dideteksi dari OHLCV. Gunakan sebagai WATCHLIST saja. Konfirmasi dengan broker flow, news, dan analisis manual sebelum eksekusi.",
-      "generated_at": "08:34 WIB"
+      "generated_at": "09:28 WIB"
     },
     {
       "ticker": "CUAN",
@@ -143,7 +143,7 @@
       "d2_body_pct": 0.197,
       "d2_vol_ratio_ma20": 2.06,
       "m1_last15_green": 14,
-      "m1_close_vs_vwap": 0.03,
+      "m1_close_vs_vwap": 0.02,
       "m1_close_pos_intra": 1.0,
       "m1_high_timing": 0.0,
       "m1_n_bars": 260,
@@ -174,7 +174,7 @@
         "SCREENER_TOP_VALUE"
       ],
       "warning": "⚠️ FALSE SIGNAL RATE TINGGI (~85-90%). Pipeline ini mendeteksi Tipe 1 (Continuation) dan Tipe 2 (Silent Accumulation). Tipe 3 (Out of Nowhere, ~48% ARA nyata) TIDAK BISA dideteksi dari OHLCV. Gunakan sebagai WATCHLIST saja. Konfirmasi dengan broker flow, news, dan analisis manual sebelum eksekusi.",
-      "generated_at": "08:34 WIB"
+      "generated_at": "09:28 WIB"
     },
     {
       "ticker": "MPMX",
@@ -231,7 +231,7 @@
       "d2_body_pct": 0.647,
       "d2_vol_ratio_ma20": 6.61,
       "m1_last15_green": 13,
-      "m1_close_vs_vwap": 0.2,
+      "m1_close_vs_vwap": 0.09,
       "m1_close_pos_intra": 0.667,
       "m1_high_timing": 0.57,
       "m1_n_bars": 258,
@@ -249,7 +249,7 @@
         "Harga di atas MA20",
         "5d trend sehat: +13.5%",
         "Closing momentum kuat: 13/14 bar hijau (sinyal universal ARA)",
-        "Close sedikit di atas VWAP: +0.2%",
+        "Close sedikit di atas VWAP: +0.1%",
         "Broker signal: Big Accumulation (+10 poin)"
       ],
       "signals_negative": [],
@@ -259,7 +259,7 @@
         "SCREENER_TOP_VALUE"
       ],
       "warning": "⚠️ FALSE SIGNAL RATE TINGGI (~85-90%). Pipeline ini mendeteksi Tipe 1 (Continuation) dan Tipe 2 (Silent Accumulation). Tipe 3 (Out of Nowhere, ~48% ARA nyata) TIDAK BISA dideteksi dari OHLCV. Gunakan sebagai WATCHLIST saja. Konfirmasi dengan broker flow, news, dan analisis manual sebelum eksekusi.",
-      "generated_at": "08:35 WIB"
+      "generated_at": "09:29 WIB"
     },
     {
       "ticker": "AMRT",
@@ -316,10 +316,10 @@
       "d2_body_pct": 0.071,
       "d2_vol_ratio_ma20": 4.93,
       "m1_last15_green": 12,
-      "m1_close_vs_vwap": -0.54,
+      "m1_close_vs_vwap": -0.27,
       "m1_close_pos_intra": 0.36,
       "m1_high_timing": 0.101,
-      "m1_n_bars": 267,
+      "m1_n_bars": 268,
       "m1_data_available": true,
       "above_ma20": false,
       "above_ma50": false,
@@ -343,7 +343,7 @@
         "SCREENER_TOP_VALUE"
       ],
       "warning": "⚠️ FALSE SIGNAL RATE TINGGI (~85-90%). Pipeline ini mendeteksi Tipe 1 (Continuation) dan Tipe 2 (Silent Accumulation). Tipe 3 (Out of Nowhere, ~48% ARA nyata) TIDAK BISA dideteksi dari OHLCV. Gunakan sebagai WATCHLIST saja. Konfirmasi dengan broker flow, news, dan analisis manual sebelum eksekusi.",
-      "generated_at": "08:34 WIB"
+      "generated_at": "09:28 WIB"
     },
     {
       "ticker": "EMAS",
@@ -400,7 +400,7 @@
       "d2_body_pct": 0.444,
       "d2_vol_ratio_ma20": 1.5,
       "m1_last15_green": 13,
-      "m1_close_vs_vwap": 0.22,
+      "m1_close_vs_vwap": 0.11,
       "m1_close_pos_intra": 0.545,
       "m1_high_timing": 0.608,
       "m1_n_bars": 263,
@@ -419,7 +419,7 @@
         "VCP Squeeze kuat D-1: 0.58x (coiling — tekanan terpendam)",
         "5d trend sehat: +14.3%",
         "Closing momentum kuat: 13/14 bar hijau (sinyal universal ARA)",
-        "Close sedikit di atas VWAP: +0.2%",
+        "Close sedikit di atas VWAP: +0.1%",
         "Broker signal: Big Accumulation (+10 poin)"
       ],
       "signals_negative": [],
@@ -429,7 +429,7 @@
         "SCREENER_TOP_VALUE"
       ],
       "warning": "⚠️ FALSE SIGNAL RATE TINGGI (~85-90%). Pipeline ini mendeteksi Tipe 1 (Continuation) dan Tipe 2 (Silent Accumulation). Tipe 3 (Out of Nowhere, ~48% ARA nyata) TIDAK BISA dideteksi dari OHLCV. Gunakan sebagai WATCHLIST saja. Konfirmasi dengan broker flow, news, dan analisis manual sebelum eksekusi.",
-      "generated_at": "08:35 WIB"
+      "generated_at": "09:29 WIB"
     }
   ],
   "bsjp_beli_sore_jual_pagi": [
@@ -784,7 +784,7 @@
   "swing_trading": [],
   "meta": {
     "status": "success",
-    "generated_at": "2026-05-30 08:36:14 WIB",
+    "generated_at": "2026-05-30 09:30:27 WIB",
     "date": "2026-05-30",
     "mode": "FULL_STOCKBIT",
     "session_label": "PRE_MARKET_WEEKEND (Saturday)",
@@ -808,8 +808,8 @@
     }
   },
   "market_context": {
-    "ihsg_close": 6130,
-    "ihsg_change_pct": -1.23,
+    "ihsg_close": 6127,
+    "ihsg_change_pct": -0.05,
     "ihsg_trend": "BEARISH",
     "ihsg_above_ma50": false,
     "market_safe": true,
