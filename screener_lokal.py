@@ -1,13 +1,22 @@
 #!/usr/bin/env python3
 # =============================================================================
-# SCREENER TRADER INDONESIA - FINAL PRODUCTION VERSION
+# SCREENER LOKAL - VERSI PC LOKAL (1:1 dari screener.py)
 # =============================================================================
 # Strategi  : Pre-market intraday, limit order
 # Universe  : Market Mover Stockbit (MODE A) / Yahoo Finance 958 saham (MODE B)
 # Sinyal    : Broker Accumulation + Foreign Flow + SMC Structure (LuxAlgo benar)
 # Entry     : PDH/PDL/PDC + Bid Wall + Order Block zone
-# Output    : latest_screening.json (max 3 saham)
-# Jadwal    : Dipanggil oleh GitHub Actions setiap hari kerja jam 18:00 WIB
+# Output    : latest_screening.json (max 5 saham)
+# Cara run  : python screener_lokal.py
+#
+# SETUP LOKAL:
+#   Buat file ".env" di folder ini dengan isi:
+#     STOCKBIT_USERNAME=email_anda@example.com
+#     STOCKBIT_PASSWORD=password_anda
+#     STOCKBIT_PLAYER_ID=   (opsional, bisa kosong)
+#
+#   Install dependensi:
+#     pip install -r requirements.txt python-dotenv
 # =============================================================================
 
 import os
@@ -31,6 +40,28 @@ import requests
 import yfinance as yf
 
 warnings.filterwarnings("ignore")
+
+# =============================================================================
+# LOAD .env FILE (lokal) — baca STOCKBIT_USERNAME, STOCKBIT_PASSWORD, dll.
+# Jika sudah set environment variable manual (via CMD/PowerShell), baris ini
+# tidak merusak apapun — dotenv tidak overwrite env yang sudah ada.
+# =============================================================================
+try:
+    from dotenv import load_dotenv
+    # Cari .env di folder yang sama dengan script ini
+    _env_path = Path(__file__).parent / ".env"
+    if _env_path.exists():
+        load_dotenv(dotenv_path=_env_path, override=False)
+        print(f"[INFO] .env loaded dari: {_env_path}")
+    else:
+        # Fallback: cari .env di direktori kerja (cwd)
+        load_dotenv(override=False)
+except ImportError:
+    print(
+        "[WARNING] python-dotenv tidak terinstall. "
+        "Jalankan: pip install python-dotenv\n"
+        "Atau set environment variable secara manual di terminal."
+    )
 
 
 # =============================================================================
@@ -61,7 +92,7 @@ logging.basicConfig(
     datefmt="%Y-%m-%d %H:%M:%S",
     handlers=[
         logging.StreamHandler(sys.stdout),
-        logging.FileHandler("screener.log", encoding="utf-8"),
+        logging.FileHandler("screener_lokal.log", encoding="utf-8"),
     ],
 )
 log = logging.getLogger(__name__)
@@ -200,7 +231,7 @@ CONFIG = {
 
     # --- Output ---
     "MAX_OUTPUT": 5,
-    "IHSG_3DAY_DOWN_STOP": True,
+    "IHSG_3DAY_DOWN_STOP": False,
     "IHSG_1DAY_DOWN_WARNING": -1.5,  # %
 
     # --- IHSG ticker ---
@@ -3103,7 +3134,7 @@ def get_session_label() -> str:
 
 def run_screener():
     """
-    Main function — dipanggil oleh GitHub Actions setiap hari kerja 18:00 WIB.
+    Main function — jalankan dengan: python screener_lokal.py
     """
     start_time = time.time()
 
@@ -6251,18 +6282,30 @@ if __name__ == "__main__":
     import argparse
 
     parser = argparse.ArgumentParser(
-        description="Screener Trader Indonesia — Intraday + ARA v2 Pipeline",
+        description="Screener Lokal — Intraday + ARA v2 + BSJP + BPJS + SWING Pipeline",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 Contoh penggunaan:
-  python screener.py               # Full pipeline (default)
-  python screener.py --ara-only    # ARA v2 saja
-  python screener.py --no-ara      # Intraday saja
+  python screener_lokal.py               # Full pipeline (default)
+  python screener_lokal.py --ara-only    # ARA v2 saja
+  python screener_lokal.py --no-ara      # Intraday saja
+  python screener_lokal.py --yahoo-only  # Paksa mode Yahoo Only (tanpa Stockbit login)
+
+Setup .env:
+  Buat file ".env" di folder ini:
+    STOCKBIT_USERNAME=email_anda@example.com
+    STOCKBIT_PASSWORD=password_anda
         """
     )
-    parser.add_argument("--ara-only", action="store_true", help="Jalankan ARA v2 pipeline saja")
-    parser.add_argument("--no-ara",   action="store_true", help="Skip ARA, intraday saja")
+    parser.add_argument("--ara-only",   action="store_true", help="Jalankan ARA v2 pipeline saja")
+    parser.add_argument("--no-ara",     action="store_true", help="Skip ARA, intraday saja")
+    parser.add_argument("--yahoo-only", action="store_true", help="Paksa mode Yahoo Finance Only (tanpa login Stockbit)")
     args = parser.parse_args()
+
+    # Force Yahoo Only mode jika diminta
+    if args.yahoo_only:
+        os.environ["FORCE_MODE"] = "YAHOO_ONLY"
+        log.info("⚙️ Mode override: YAHOO_ONLY (--yahoo-only)")
 
     try:
         if args.ara_only:
@@ -6280,8 +6323,7 @@ Contoh penggunaan:
             )
             log.info(f"✅ ARA-only selesai: {len(ara_r)} kandidat")
         else:
-            # Full pipeline — run_screener() menangani intraday lama.
-            # Shim save_combined_output (di atas) sudah redirect ke v2.
+            # Full pipeline — semua 5 pipeline berjalan.
             # Jika --no-ara, patch CONFIG agar ARA_ENABLED=False.
             if args.no_ara:
                 CONFIG["ARA_ENABLED"] = False
@@ -6289,7 +6331,7 @@ Contoh penggunaan:
             run_screener()
 
     except KeyboardInterrupt:
-        log.info("⏹️  Dihentikan oleh user")
+        log.info("⏹️  Dihentikan oleh user (Ctrl+C)")
         sys.exit(0)
     except Exception as e:
         log.error(f"💥 ERROR KRITIS: {e}")
