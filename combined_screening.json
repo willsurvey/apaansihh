@@ -86,7 +86,7 @@
         "SCREENER_TOP_VALUE"
       ],
       "warning": "⚠️ FALSE SIGNAL RATE TINGGI (~85-90%). Pipeline ini mendeteksi Tipe 1 (Continuation) dan Tipe 2 (Silent Accumulation). Tipe 3 (Out of Nowhere, ~48% ARA nyata) TIDAK BISA dideteksi dari OHLCV. Gunakan sebagai WATCHLIST saja. Konfirmasi dengan broker flow, news, dan analisis manual sebelum eksekusi.",
-      "generated_at": "23:29 WIB"
+      "generated_at": "00:28 WIB"
     },
     {
       "ticker": "CUAN",
@@ -174,7 +174,7 @@
         "SCREENER_TOP_VALUE"
       ],
       "warning": "⚠️ FALSE SIGNAL RATE TINGGI (~85-90%). Pipeline ini mendeteksi Tipe 1 (Continuation) dan Tipe 2 (Silent Accumulation). Tipe 3 (Out of Nowhere, ~48% ARA nyata) TIDAK BISA dideteksi dari OHLCV. Gunakan sebagai WATCHLIST saja. Konfirmasi dengan broker flow, news, dan analisis manual sebelum eksekusi.",
-      "generated_at": "23:29 WIB"
+      "generated_at": "00:28 WIB"
     },
     {
       "ticker": "MPMX",
@@ -259,7 +259,7 @@
         "SCREENER_TOP_VALUE"
       ],
       "warning": "⚠️ FALSE SIGNAL RATE TINGGI (~85-90%). Pipeline ini mendeteksi Tipe 1 (Continuation) dan Tipe 2 (Silent Accumulation). Tipe 3 (Out of Nowhere, ~48% ARA nyata) TIDAK BISA dideteksi dari OHLCV. Gunakan sebagai WATCHLIST saja. Konfirmasi dengan broker flow, news, dan analisis manual sebelum eksekusi.",
-      "generated_at": "23:30 WIB"
+      "generated_at": "00:29 WIB"
     },
     {
       "ticker": "AMRT",
@@ -343,7 +343,7 @@
         "SCREENER_TOP_VALUE"
       ],
       "warning": "⚠️ FALSE SIGNAL RATE TINGGI (~85-90%). Pipeline ini mendeteksi Tipe 1 (Continuation) dan Tipe 2 (Silent Accumulation). Tipe 3 (Out of Nowhere, ~48% ARA nyata) TIDAK BISA dideteksi dari OHLCV. Gunakan sebagai WATCHLIST saja. Konfirmasi dengan broker flow, news, dan analisis manual sebelum eksekusi.",
-      "generated_at": "23:29 WIB"
+      "generated_at": "00:28 WIB"
     },
     {
       "ticker": "EMAS",
@@ -429,7 +429,7 @@
         "SCREENER_TOP_VALUE"
       ],
       "warning": "⚠️ FALSE SIGNAL RATE TINGGI (~85-90%). Pipeline ini mendeteksi Tipe 1 (Continuation) dan Tipe 2 (Silent Accumulation). Tipe 3 (Out of Nowhere, ~48% ARA nyata) TIDAK BISA dideteksi dari OHLCV. Gunakan sebagai WATCHLIST saja. Konfirmasi dengan broker flow, news, dan analisis manual sebelum eksekusi.",
-      "generated_at": "23:29 WIB"
+      "generated_at": "00:29 WIB"
     }
   ],
   "bsjp_beli_sore_jual_pagi": [
@@ -437,7 +437,7 @@
       "ticker": "KJEN",
       "company": "Krida Jaringan Nusantara Tbk.",
       "tier": "A",
-      "score": 84,
+      "score": 89,
       "market_data": {
         "close": 212.0,
         "change_pct": 34.18,
@@ -481,7 +481,8 @@
         "Tutup di puncak absolut — tidak ada upper wick",
         "Uptrend penuh: di atas MA20, MA50, MA200",
         "MA20 sedang naik — tren menguat",
-        "Masuk screener volume explosion Stockbit"
+        "Masuk screener volume explosion Stockbit",
+        "Hari Senin — win rate BSJP historis tertinggi"
       ],
       "signals_negative": [
         "Asing jual bersih hari ini — hati-hati"
@@ -784,12 +785,12 @@
   "swing_trading": [],
   "meta": {
     "status": "success",
-    "generated_at": "2026-05-31 23:30:23 WIB",
-    "date": "2026-05-31",
+    "generated_at": "2026-06-01 00:30:01 WIB",
+    "date": "2026-06-01",
     "mode": "FULL_STOCKBIT",
-    "session_label": "PRE_MARKET_WEEKEND (Sunday)",
+    "session_label": "MARKET_DAY",
     "pipeline_version": "v5.0",
-    "session_warning": "⚠️ Screening akhir pekan — referensi persiapan saja, bukan sinyal eksekusi.",
+    "session_warning": null,
     "mode_warning": null,
     "intraday_count": 0,
     "ara_count": 5,
