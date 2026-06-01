@@ -36,11 +36,13 @@
       "universe_context": {
         "in_mover_types": [
           "MOVER_TYPE_TOP_VOLUME",
-          "SCREENER_VOLUME_EXPLOSION"
+          "SCREENER_VOLUME_EXPLOSION",
+          "GURU_92_Big Accumula",
+          "SCREENER_TOP_VALUE"
         ],
         "from_gainer": false,
         "from_screener": true,
-        "from_top_value": false
+        "from_top_value": true
       },
       "signals_positive": [
         "Volume spike 3.6x MA20",
@@ -105,7 +107,9 @@
         "in_mover_types": [
           "MOVER_TYPE_NET_FOREIGN_BUY",
           "MOVER_TYPE_TOP_GAINER",
-          "SCREENER_VOLUME_EXPLOSION"
+          "SCREENER_VOLUME_EXPLOSION",
+          "GURU_78_Daily Net Fo",
+          "SCREENER_TOP_VALUE"
         ],
         "from_gainer": true,
         "from_screener": true
@@ -175,7 +179,9 @@
       "universe_context": {
         "in_mover_types": [
           "MOVER_TYPE_TOP_VOLUME",
-          "MOVER_TYPE_NET_FOREIGN_BUY"
+          "MOVER_TYPE_NET_FOREIGN_BUY",
+          "GURU_92_Big Accumula",
+          "SCREENER_TOP_VALUE"
         ],
         "from_gainer": false,
         "from_screener": false
@@ -245,7 +251,9 @@
       "universe_context": {
         "in_mover_types": [
           "MOVER_TYPE_TOP_VOLUME",
-          "SCREENER_VOLUME_EXPLOSION"
+          "SCREENER_VOLUME_EXPLOSION",
+          "GURU_92_Big Accumula",
+          "SCREENER_TOP_VALUE"
         ],
         "from_gainer": false,
         "from_screener": true
@@ -312,7 +320,9 @@
       "timing_guide": "Pantau 09:00-09:05. Jika saham gap down > 3% lalu diborong (volume naik, harga rebound dari low), BELI. Target jual: sesi sore 14:30-15:30 WIB.",
       "universe_context": {
         "in_mover_types": [
-          "MOVER_TYPE_NET_FOREIGN_BUY"
+          "MOVER_TYPE_NET_FOREIGN_BUY",
+          "GURU_92_Big Accumula",
+          "SCREENER_TOP_VALUE"
         ],
         "from_gainer": false,
         "from_screener": false
@@ -340,7 +350,7 @@
   "swing_trading": [],
   "meta": {
     "status": "success",
-    "generated_at": "2026-06-02 00:05:53 WIB",
+    "generated_at": "2026-06-02 01:30:06 WIB",
     "date": "2026-06-02",
     "mode": "FULL_STOCKBIT",
     "session_label": "MARKET_DAY",
@@ -372,10 +382,10 @@
     "warning": null
   },
   "screening_summary": {
-    "universe": 109,
-    "after_liquidity": 17,
-    "after_accumulation": 2,
-    "after_trend": 0,
+    "universe": 972,
+    "after_liquidity": 84,
+    "after_accumulation": 17,
+    "after_trend": 2,
     "after_smc": 0,
     "after_entry": 0,
     "final": 0
