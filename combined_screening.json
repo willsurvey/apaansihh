@@ -10,13 +10,13 @@
       "market_data": {
         "close": 525.0,
         "change_pct": 24.41,
-        "value_today": 13236992000,
+        "value_today": 13374752000,
         "net_foreign": 107567400,
         "iep": 440,
         "iep_change_pct": -16.19047619047619
       },
       "bsjp_features": {
-        "vol_ratio20": 4.77,
+        "vol_ratio20": 4.81,
         "body_pct": 19.32,
         "close_pos_pct": 100.0,
         "above_ma20": true,
@@ -59,13 +59,69 @@
       "win_probability": "~64% berdasarkan backtest 3.330 kejadian historis",
       "disclaimer": "Tier A BSJP. Strategi hold overnight — ada risiko gap down. Selalu gunakan stop loss. Pastikan Anda bisa monitor pre-opening besok.",
       "rank": 1
+    },
+    {
+      "ticker": "KUAS",
+      "company": "Ace Oldfields Tbk.",
+      "tier": "A",
+      "score": 93,
+      "market_data": {
+        "close": 119.0,
+        "change_pct": 27.47,
+        "value_today": 14976776800,
+        "net_foreign": 36421900,
+        "iep": 102,
+        "iep_change_pct": -12.068965517241379
+      },
+      "bsjp_features": {
+        "vol_ratio20": 3.53,
+        "body_pct": 15.53,
+        "close_pos_pct": 95.0,
+        "above_ma20": true,
+        "above_ma50": true,
+        "above_ma200": true,
+        "atr_pct": 9.85
+      },
+      "entry_plan": {
+        "strategy": "Beli di sesi akhir (14:30-15:45 WIB)",
+        "entry_range": "118 – 119",
+        "entry_note": "Limit order di harga saat ini atau sedikit di bawahnya",
+        "stop_loss": 99,
+        "stop_note": "Jika gap down besok, cut di bawah low hari ini",
+        "target_pct": "+2% s/d +8% di pagi hari",
+        "exit_strategy": "Jual di pre-opening (08:45-08:55) atau awal sesi pagi"
+      },
+      "universe_context": {
+        "in_mover_types": [
+          "MOVER_TYPE_TOP_VOLUME",
+          "SCREENER_VOLUME_EXPLOSION",
+          "GURU_87_Reversal on ",
+          "SCREENER_TOP_VALUE"
+        ],
+        "from_gainer": false,
+        "from_screener": true,
+        "from_top_value": true
+      },
+      "signals_positive": [
+        "Volume spike 3.5x MA20",
+        "Candle hijau sangat kuat (15.5%)",
+        "Tutup sangat dekat puncak (95%)",
+        "Uptrend penuh: di atas MA20, MA50, MA200",
+        "Asing beli bersih hari ini (Rp 0.0B)",
+        "Masuk screener volume explosion Stockbit",
+        "Hari Selasa — win rate BSJP historis tertinggi"
+      ],
+      "signals_negative": [],
+      "win_probability": "~64% berdasarkan backtest 3.330 kejadian historis",
+      "disclaimer": "Tier A BSJP. Strategi hold overnight — ada risiko gap down. Selalu gunakan stop loss. Pastikan Anda bisa monitor pre-opening besok.",
+      "rank": 2
     }
   ],
   "bpjs_beli_pagi_jual_sore": [],
   "swing_trading": [],
   "meta": {
     "status": "success",
-    "generated_at": "2026-06-02 14:27:40 WIB",
+    "generated_at": "2026-06-02 15:31:46 WIB",
     "date": "2026-06-02",
     "mode": "FULL_STOCKBIT",
     "session_label": "MARKET_DAY",
@@ -74,7 +130,7 @@
     "mode_warning": null,
     "intraday_count": 0,
     "ara_count": 0,
-    "bsjp_count": 1,
+    "bsjp_count": 2,
     "bpjs_count": 0,
     "swing_count": 0,
     "ara_disclaimer": "Pipeline ARA v2: deteksi Tipe 1 (Continuation) & Tipe 2 (Silent Accumulation). Tipe 3 (Out of Nowhere, ~48% dari ARA nyata) tidak terdeteksi dari OHLCV. Precision: 8-15%. Backtest wajib sebelum live trading.",
@@ -89,8 +145,8 @@
     }
   },
   "market_context": {
-    "ihsg_close": 6215,
-    "ihsg_change_pct": 1.43,
+    "ihsg_close": 6197,
+    "ihsg_change_pct": 1.14,
     "ihsg_trend": "BEARISH",
     "ihsg_above_ma50": false,
     "market_safe": true,
@@ -98,7 +154,7 @@
   },
   "screening_summary": {
     "universe": 972,
-    "after_liquidity": 80,
+    "after_liquidity": 84,
     "after_accumulation": 6,
     "after_trend": 1,
     "after_smc": 0,
