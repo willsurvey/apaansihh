@@ -10,13 +10,13 @@
       "market_data": {
         "close": 525.0,
         "change_pct": 24.41,
-        "value_today": 13678464500,
+        "value_today": 14027694500,
         "net_foreign": 107567400,
         "iep": 525,
         "iep_change_pct": 0
       },
       "bsjp_features": {
-        "vol_ratio20": 4.96,
+        "vol_ratio20": 4.95,
         "body_pct": 19.32,
         "close_pos_pct": 100.0,
         "above_ma20": true,
@@ -68,7 +68,7 @@
       "market_data": {
         "close": 122.0,
         "change_pct": 34.07,
-        "value_today": 20295936800,
+        "value_today": 20322032600,
         "net_foreign": 36421900,
         "iep": 122,
         "iep_change_pct": 0
@@ -124,7 +124,7 @@
       "market_data": {
         "close": 382.0,
         "change_pct": 13.69,
-        "value_today": 25772619800,
+        "value_today": 26194500600,
         "net_foreign": -492795600,
         "iep": 382,
         "iep_change_pct": 0
@@ -180,7 +180,7 @@
   "swing_trading": [],
   "meta": {
     "status": "success",
-    "generated_at": "2026-06-02 16:28:38 WIB",
+    "generated_at": "2026-06-02 17:33:41 WIB",
     "date": "2026-06-02",
     "mode": "FULL_STOCKBIT",
     "session_label": "MARKET_DAY",
@@ -204,8 +204,8 @@
     }
   },
   "market_context": {
-    "ihsg_close": 6182,
-    "ihsg_change_pct": 0.91,
+    "ihsg_close": 6195,
+    "ihsg_change_pct": 1.11,
     "ihsg_trend": "BEARISH",
     "ihsg_above_ma50": false,
     "market_safe": true,
@@ -214,9 +214,9 @@
   "screening_summary": {
     "universe": 972,
     "after_liquidity": 85,
-    "after_accumulation": 6,
-    "after_trend": 1,
-    "after_smc": 0,
+    "after_accumulation": 11,
+    "after_trend": 2,
+    "after_smc": 1,
     "after_entry": 0,
     "final": 0
   },
