@@ -95,7 +95,7 @@
         "in_mover_types": [
           "MOVER_TYPE_TOP_GAINER",
           "SCREENER_VOLUME_EXPLOSION",
-          "GURU_92_Big Accumula",
+          "GURU_63_High Volume ",
           "SCREENER_TOP_VALUE"
         ],
         "from_gainer": true,
@@ -154,7 +154,7 @@
         "in_mover_types": [
           "MOVER_TYPE_TOP_VOLUME",
           "SCREENER_VOLUME_EXPLOSION",
-          "GURU_87_Reversal on ",
+          "GURU_92_Big Accumula",
           "SCREENER_TOP_VALUE"
         ],
         "from_gainer": false,
@@ -223,7 +223,7 @@
         "in_mover_types": [
           "MOVER_TYPE_NET_FOREIGN_BUY",
           "SCREENER_VOLUME_EXPLOSION",
-          "GURU_72_IHSG Short-t",
+          "GURU_92_Big Accumula",
           "SCREENER_TOP_VALUE"
         ],
         "from_gainer": false,
@@ -254,7 +254,7 @@
   "swing_trading": [],
   "meta": {
     "status": "success",
-    "generated_at": "2026-06-02 18:33:58 WIB",
+    "generated_at": "2026-06-02 19:31:37 WIB",
     "date": "2026-06-02",
     "mode": "FULL_STOCKBIT",
     "session_label": "MARKET_DAY",
