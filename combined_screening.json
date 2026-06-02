@@ -65,7 +65,7 @@
   "swing_trading": [],
   "meta": {
     "status": "success",
-    "generated_at": "2026-06-02 12:27:51 WIB",
+    "generated_at": "2026-06-02 13:28:18 WIB",
     "date": "2026-06-02",
     "mode": "FULL_STOCKBIT",
     "session_label": "MARKET_DAY",
@@ -89,8 +89,8 @@
     }
   },
   "market_context": {
-    "ihsg_close": 6215,
-    "ihsg_change_pct": 1.44,
+    "ihsg_close": 6218,
+    "ihsg_change_pct": 1.49,
     "ihsg_trend": "BEARISH",
     "ihsg_above_ma50": false,
     "market_safe": true,
