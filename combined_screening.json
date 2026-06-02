@@ -36,11 +36,13 @@
       "universe_context": {
         "in_mover_types": [
           "MOVER_TYPE_TOP_GAINER",
-          "SCREENER_VOLUME_EXPLOSION"
+          "SCREENER_VOLUME_EXPLOSION",
+          "GURU_63_High Volume ",
+          "SCREENER_TOP_VALUE"
         ],
         "from_gainer": true,
         "from_screener": true,
-        "from_top_value": false
+        "from_top_value": true
       },
       "signals_positive": [
         "Volume spike 3.1x MA20",
@@ -92,11 +94,13 @@
       "universe_context": {
         "in_mover_types": [
           "MOVER_TYPE_TOP_GAINER",
-          "SCREENER_VOLUME_EXPLOSION"
+          "SCREENER_VOLUME_EXPLOSION",
+          "GURU_63_High Volume ",
+          "SCREENER_TOP_VALUE"
         ],
         "from_gainer": true,
         "from_screener": true,
-        "from_top_value": false
+        "from_top_value": true
       },
       "signals_positive": [
         "Volume spike 5.0x MA20",
@@ -149,11 +153,13 @@
       "universe_context": {
         "in_mover_types": [
           "MOVER_TYPE_TOP_VOLUME",
-          "SCREENER_VOLUME_EXPLOSION"
+          "SCREENER_VOLUME_EXPLOSION",
+          "GURU_92_Big Accumula",
+          "SCREENER_TOP_VALUE"
         ],
         "from_gainer": false,
         "from_screener": true,
-        "from_top_value": false
+        "from_top_value": true
       },
       "signals_positive": [
         "Volume spike 4.2x MA20",
@@ -177,7 +183,7 @@
       "company": "Mark Dynamics Indonesia Tbk.",
       "type": "WATCHLIST_BPJS",
       "formula": "REVERSAL_BOUNCE",
-      "score": 50,
+      "score": 55,
       "market_data": {
         "close": 795.0,
         "change_pct": 0.63,
@@ -215,17 +221,21 @@
       "timing_guide": "Pantau 09:00-09:05. Jika saham gap down > 3% lalu diborong (volume naik, harga rebound dari low), BELI. Target jual: sesi sore 14:30-15:30 WIB.",
       "universe_context": {
         "in_mover_types": [
-          "MOVER_TYPE_NET_FOREIGN_BUY"
+          "MOVER_TYPE_NET_FOREIGN_BUY",
+          "SCREENER_VOLUME_EXPLOSION",
+          "GURU_92_Big Accumula",
+          "SCREENER_TOP_VALUE"
         ],
         "from_gainer": false,
-        "from_screener": false
+        "from_screener": true
       },
       "signals_positive": [
         "Formula: Reversal Bounce — D-1 merah (-3.0%), volume sepi (0.97x MA20), close bawah (17%). WR historis: 38.6% (n=31.924)",
         "Di atas MA20 — support jangka pendek",
         "Di atas MA50 — tren menengah masih ok",
         "Di atas MA200 — tren utama masih bullish",
-        "Asing beli bersih hari ini (Rp 0.9B)"
+        "Asing beli bersih hari ini (Rp 0.9B)",
+        "Masuk screener volume Stockbit — ada perhatian pasar"
       ],
       "signals_negative": [],
       "backtest_stats": {
@@ -244,7 +254,7 @@
   "swing_trading": [],
   "meta": {
     "status": "success",
-    "generated_at": "2026-06-02 22:05:19 WIB",
+    "generated_at": "2026-06-02 23:30:19 WIB",
     "date": "2026-06-02",
     "mode": "FULL_STOCKBIT",
     "session_label": "MARKET_DAY",
@@ -276,11 +286,11 @@
     "warning": null
   },
   "screening_summary": {
-    "universe": 142,
-    "after_liquidity": 6,
-    "after_accumulation": 0,
-    "after_trend": 0,
-    "after_smc": 0,
+    "universe": 972,
+    "after_liquidity": 85,
+    "after_accumulation": 12,
+    "after_trend": 3,
+    "after_smc": 1,
     "after_entry": 0,
     "final": 0
   },
