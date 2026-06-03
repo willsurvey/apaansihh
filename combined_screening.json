@@ -14,8 +14,8 @@
       "market_data": {
         "close": 795,
         "change_pct": -0.62,
-        "value_today": 16382819500,
-        "frequency_today": 1981,
+        "value_today": 16386158500,
+        "frequency_today": 1982,
         "iep": 795,
         "iep_change_pct": 0
       },
@@ -35,7 +35,7 @@
       },
       "trend": {
         "ma50": 763.0,
-        "gap_from_ma50_pct": 3.52,
+        "gap_from_ma50_pct": 4.16,
         "ma50_slope": "POSITIVE"
       },
       "smc": {
@@ -85,103 +85,13 @@
         "✅ Net Foreign Buy hari ini: Rp0.9B",
         "✅ Harga di zona Order Block aktif",
         "✅ Swing Structure: BULLISH",
-        "✅ Pullback ke MA50 (3.5% di atas MA50)"
+        "✅ Pullback ke MA50 (4.2% di atas MA50)"
       ],
       "warnings": [],
-      "updated_at": "16.26 WIB"
+      "updated_at": "17.29 WIB"
     }
   ],
   "logika_baru_calon_ara": [
-    {
-      "ticker": "VISI",
-      "company": "Satu Visi Putra Tbk.",
-      "type": "CALON_ARA",
-      "score": 78,
-      "score_tier": "STRONG",
-      "pattern_type": "CONTINUATION",
-      "confluence_count": 10,
-      "entry_range": "1,020 – 1,285",
-      "entry_lower": 1020,
-      "entry_upper": 1285,
-      "entry_note": "Pasang Limit Order pukul 19:00 di 1,030–1,285 (PDC hingga harga ARA). Tipe Quiet Accumulation gap lebih kecil — peluang fill order lebih tinggi dibanding Tipe Continuation.",
-      "entry_range_pct": 25.7,
-      "ara_price_ref": 1285,
-      "ara_limit_pct": 25.0,
-      "gap_risk_note": "Backtest: 64% saham ARA Gap Up >2% di pagi hari. Median gap: +3.70% dari harga ARA. Limit Order berisiko tidak fill.",
-      "estimated_target_pct": "+7% hingga +16% dari harga beli",
-      "target_morning_exit": 1390,
-      "target_base": 1510,
-      "target_optimistic": 1565,
-      "target_morning_exit_pct": 7.0,
-      "target_base_pct": 16.0,
-      "target_optimistic_pct": 20.0,
-      "target_note": "Pagi: 1,390 (~+7%) | Moderat: 1,510 (~+16%) | Full: 1,565 (~+20%) | JUAL PAGI, bukan hold sampai close.",
-      "assumed_entry": 1305,
-      "exit_timing_guide": "JUAL DI PAGI HARI (09:00-09:30 WIB). Backtest menunjukkan High D+1 median +16.77% dari harga ARA. Setelah 09:30, momentum sering berbalik. Jika masih ARA lagi (23.5% peluang), hold dengan trailing stop.",
-      "reason_beginner_friendly": "VISI sudah naik 14% kemarin dengan volume 24x lebih besar dari biasanya. Ada pembeli besar yang masuk agresif. Jika momentum berlanjut, saham ini bisa naik lebih jauh besok. ✅ Broker signal: Big Acc. Skor kepercayaan: TINGGI.",
-      "risk_warning": "⚠️ FALSE SIGNAL RATE ~85-90%. Konfirmasi dengan broker flow, berita, dan analisis manual sebelum beli. | 📌 Batasi posisi: max 2% dari portofolio.",
-      "d1p_backtest_stats": {
-        "high_d1_median": "+16.77% dari harga ARA (n=2213)",
-        "profit_morning": "84.5% sempat naik >5% di D+1",
-        "close_d1_profit": "hanya 48.9% (hampir coin flip — JANGAN hold)",
-        "continued_ara_pct": "23.5% lanjut ARA hari berikutnya",
-        "sample_size": "n=2.213 kunci ARA pertama pada saham liquid"
-      },
-      "broker_signal": "Big Acc",
-      "d1_date": "2026-06-03",
-      "d1_close": 1030.0,
-      "d1_open": 920.0,
-      "d1_high": 1130.0,
-      "d1_low": 920.0,
-      "d1_change_pct": 13.81,
-      "d1_vol_ratio_ma20": 24.3,
-      "d1_vol_ratio_ma5": 18.82,
-      "d1_body_pct": 0.524,
-      "d1_upper_wick": 0.476,
-      "d1_lower_wick": 0.0,
-      "d1_close_pos": 0.524,
-      "d1_bullish": true,
-      "d1_range_expansion": 1.67,
-      "d1_value_rp": 2486409700000,
-      "d2_change_pct": 21.48,
-      "d2_body_pct": 0.78,
-      "d2_vol_ratio_ma20": 5.2,
-      "m1_last15_green": 13,
-      "m1_close_vs_vwap": 1.1,
-      "m1_close_pos_intra": 0.5,
-      "m1_high_timing": 0.036,
-      "m1_n_bars": 280,
-      "m1_data_available": true,
-      "above_ma20": true,
-      "above_ma50": true,
-      "ma20": 794.0,
-      "ma50": 696.0,
-      "up_streak_days": 2,
-      "trend_5d_pct": 35.53,
-      "signals_positive": [
-        "Volume D-1 ekstrem: 24.3x MA20 (tier-2 ≥6x)",
-        "Volume D-2 elevated: 5.2x MA20 (akumulasi dini)",
-        "Continuation D-1: +13.8% vol 24.3x MA20",
-        "Upper wick rejection: 0.48 (smart money absorption)",
-        "Close pos rendah: 0.52 (buyers absorbed selling)",
-        "D-2 early signal: +21.5% vol 5.2x",
-        "Range expansion moderat: 1.7x avg-5d",
-        "Harga di atas MA20",
-        "Close sedikit di atas VWAP: +1.1%",
-        "Broker signal: Big Accumulation (+10 poin)"
-      ],
-      "signals_negative": [
-        "Closing flat bias: 9/14 bar flat — indikasi tidak aktif",
-        "High intraday di awal sesi (4%) — profit taking sore"
-      ],
-      "universe_sources": [
-        "GURU_92",
-        "GURU_94",
-        "SCREENER_TOP_VALUE"
-      ],
-      "warning": "⚠️ FALSE SIGNAL RATE TINGGI (~85-90%). Pipeline ini mendeteksi Tipe 1 (Continuation) dan Tipe 2 (Silent Accumulation). Tipe 3 (Out of Nowhere, ~48% ARA nyata) TIDAK BISA dideteksi dari OHLCV. Gunakan sebagai WATCHLIST saja. Konfirmasi dengan broker flow, news, dan analisis manual sebelum eksekusi.",
-      "generated_at": "16:27 WIB"
-    },
     {
       "ticker": "BEER",
       "company": "Jobubu Jarum Minahasa Tbk.",
@@ -232,15 +142,15 @@
       "d1_close_pos": 0.759,
       "d1_bullish": true,
       "d1_range_expansion": 1.46,
-      "d1_value_rp": 1165152560000,
+      "d1_value_rp": 1165128360000,
       "d2_change_pct": 34.94,
       "d2_body_pct": 0.968,
       "d2_vol_ratio_ma20": 9.17,
       "m1_last15_green": 12,
       "m1_close_vs_vwap": 2.08,
       "m1_close_pos_intra": 0.759,
-      "m1_high_timing": 0.366,
-      "m1_n_bars": 298,
+      "m1_high_timing": 0.365,
+      "m1_n_bars": 299,
       "m1_data_available": true,
       "above_ma20": true,
       "above_ma50": false,
@@ -268,7 +178,7 @@
         "GURU_94"
       ],
       "warning": "⚠️ FALSE SIGNAL RATE TINGGI (~85-90%). Pipeline ini mendeteksi Tipe 1 (Continuation) dan Tipe 2 (Silent Accumulation). Tipe 3 (Out of Nowhere, ~48% ARA nyata) TIDAK BISA dideteksi dari OHLCV. Gunakan sebagai WATCHLIST saja. Konfirmasi dengan broker flow, news, dan analisis manual sebelum eksekusi.",
-      "generated_at": "16:27 WIB"
+      "generated_at": "17:30 WIB"
     }
   ],
   "bsjp_beli_sore_jual_pagi": [
@@ -280,13 +190,13 @@
       "market_data": {
         "close": 655.0,
         "change_pct": 24.76,
-        "value_today": 49340504200,
+        "value_today": 49822780700,
         "net_foreign": -1171630600,
         "iep": 655,
         "iep_change_pct": 0
       },
       "bsjp_features": {
-        "vol_ratio20": 8.4,
+        "vol_ratio20": 8.39,
         "body_pct": 24.76,
         "close_pos_pct": 100.0,
         "above_ma20": true,
@@ -338,7 +248,7 @@
       "market_data": {
         "close": 167.0,
         "change_pct": 34.68,
-        "value_today": 35978038400,
+        "value_today": 37201012800,
         "net_foreign": -3813000,
         "iep": 167,
         "iep_change_pct": 0
@@ -398,7 +308,7 @@
       "market_data": {
         "close": 124.0,
         "change_pct": 34.68,
-        "value_today": 35978038400,
+        "value_today": 37201012800,
         "net_foreign": -3813000
       },
       "d1_features": {
@@ -464,7 +374,7 @@
   "swing_trading": [],
   "meta": {
     "status": "success",
-    "generated_at": "2026-06-03 16:28:30 WIB",
+    "generated_at": "2026-06-03 17:30:55 WIB",
     "date": "2026-06-03",
     "mode": "FULL_STOCKBIT",
     "session_label": "MARKET_DAY",
@@ -472,7 +382,7 @@
     "session_warning": null,
     "mode_warning": null,
     "intraday_count": 1,
-    "ara_count": 2,
+    "ara_count": 1,
     "bsjp_count": 2,
     "bpjs_count": 1,
     "swing_count": 0,
@@ -488,17 +398,17 @@
     }
   },
   "market_context": {
-    "ihsg_close": 5952,
-    "ihsg_change_pct": -3.92,
+    "ihsg_close": 5941,
+    "ihsg_change_pct": -4.11,
     "ihsg_trend": "BEARISH",
     "ihsg_above_ma50": false,
     "market_safe": true,
-    "warning": "⚠️ IHSG turun -3.9% kemarin. Trading dengan sangat hati-hati."
+    "warning": "⚠️ IHSG turun -4.1% kemarin. Trading dengan sangat hati-hati."
   },
   "screening_summary": {
     "universe": 972,
     "after_liquidity": 81,
-    "after_accumulation": 5,
+    "after_accumulation": 6,
     "after_trend": 1,
     "after_smc": 1,
     "after_entry": 1,

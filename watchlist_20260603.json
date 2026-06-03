@@ -1,6 +1,6 @@
 {
   "status": "success",
-  "generated_at": "2026-06-03 16:26:57 WIB",
+  "generated_at": "2026-06-03 17:29:31 WIB",
   "date": "2026-06-03",
   "mode": "FULL_STOCKBIT",
   "session_label": "MARKET_DAY",
@@ -8,17 +8,17 @@
   "mode_warning": null,
   "total_saham": 1,
   "market_context": {
-    "ihsg_close": 5952,
-    "ihsg_change_pct": -3.92,
+    "ihsg_close": 5941,
+    "ihsg_change_pct": -4.11,
     "ihsg_trend": "BEARISH",
     "ihsg_above_ma50": false,
     "market_safe": true,
-    "warning": "⚠️ IHSG turun -3.9% kemarin. Trading dengan sangat hati-hati."
+    "warning": "⚠️ IHSG turun -4.1% kemarin. Trading dengan sangat hati-hati."
   },
   "screening_summary": {
     "universe": 972,
     "after_liquidity": 81,
-    "after_accumulation": 5,
+    "after_accumulation": 6,
     "after_trend": 1,
     "after_smc": 1,
     "after_entry": 1,
@@ -57,8 +57,8 @@
       "market_data": {
         "close": 795,
         "change_pct": -0.62,
-        "value_today": 16382819500,
-        "frequency_today": 1981,
+        "value_today": 16386158500,
+        "frequency_today": 1982,
         "iep": 795,
         "iep_change_pct": 0
       },
@@ -78,7 +78,7 @@
       },
       "trend": {
         "ma50": 763.0,
-        "gap_from_ma50_pct": 3.52,
+        "gap_from_ma50_pct": 4.16,
         "ma50_slope": "POSITIVE"
       },
       "smc": {
@@ -128,10 +128,10 @@
         "✅ Net Foreign Buy hari ini: Rp0.9B",
         "✅ Harga di zona Order Block aktif",
         "✅ Swing Structure: BULLISH",
-        "✅ Pullback ke MA50 (3.5% di atas MA50)"
+        "✅ Pullback ke MA50 (4.2% di atas MA50)"
       ],
       "warnings": [],
-      "updated_at": "16.26 WIB"
+      "updated_at": "17.29 WIB"
     }
   ]
 }
