@@ -6,7 +6,7 @@
   "swing_trading": [],
   "meta": {
     "status": "no_signal",
-    "generated_at": "2026-06-04 12:28:39 WIB",
+    "generated_at": "2026-06-04 13:27:59 WIB",
     "date": "2026-06-04",
     "mode": "FULL_STOCKBIT",
     "session_label": "MARKET_DAY",
@@ -30,12 +30,12 @@
     }
   },
   "market_context": {
-    "ihsg_close": 5750,
-    "ihsg_change_pct": -3.21,
+    "ihsg_close": 5734,
+    "ihsg_change_pct": -3.48,
     "ihsg_trend": "BEARISH",
     "ihsg_above_ma50": false,
     "market_safe": true,
-    "warning": "⚠️ IHSG turun -3.2% kemarin. Trading dengan sangat hati-hati."
+    "warning": "⚠️ IHSG turun -3.5% kemarin. Trading dengan sangat hati-hati."
   },
   "screening_summary": {
     "universe": 972,
