@@ -1,12 +1,70 @@
 {
   "logika_lama_intraday": [],
   "logika_baru_calon_ara": [],
-  "bsjp_beli_sore_jual_pagi": [],
+  "bsjp_beli_sore_jual_pagi": [
+    {
+      "ticker": "NZIA",
+      "company": "Nusantara Almazia Tbk",
+      "tier": "A",
+      "score": 84,
+      "market_data": {
+        "close": 258.0,
+        "change_pct": 32.99,
+        "value_today": 51365630000,
+        "net_foreign": -1115873600,
+        "iep": 0,
+        "iep_change_pct": 0
+      },
+      "bsjp_features": {
+        "vol_ratio20": 4.2,
+        "body_pct": 24.04,
+        "close_pos_pct": 100.0,
+        "above_ma20": true,
+        "above_ma50": true,
+        "above_ma200": true,
+        "atr_pct": 12.85
+      },
+      "entry_plan": {
+        "strategy": "Beli di sesi akhir (14:30-15:45 WIB)",
+        "entry_range": "256 – 258",
+        "entry_note": "Limit order di harga saat ini atau sedikit di bawahnya",
+        "stop_loss": 163,
+        "stop_note": "Jika gap down besok, cut di bawah low hari ini",
+        "target_pct": "+2% s/d +8% di pagi hari",
+        "exit_strategy": "Jual di pre-opening (08:45-08:55) atau awal sesi pagi"
+      },
+      "universe_context": {
+        "in_mover_types": [
+          "MOVER_TYPE_TOP_VOLUME",
+          "SCREENER_VOLUME_EXPLOSION",
+          "GURU_92_Big Accumula",
+          "SCREENER_TOP_VALUE"
+        ],
+        "from_gainer": false,
+        "from_screener": true,
+        "from_top_value": true
+      },
+      "signals_positive": [
+        "Volume spike 4.2x MA20",
+        "Candle hijau sangat kuat (24.0%)",
+        "Tutup di puncak absolut — tidak ada upper wick",
+        "Uptrend penuh: di atas MA20, MA50, MA200",
+        "MA20 sedang naik — tren menguat",
+        "Masuk screener volume explosion Stockbit"
+      ],
+      "signals_negative": [
+        "Asing jual bersih hari ini — hati-hati"
+      ],
+      "win_probability": "~64% berdasarkan backtest 3.330 kejadian historis",
+      "disclaimer": "Tier A BSJP. Strategi hold overnight — ada risiko gap down. Selalu gunakan stop loss. Pastikan Anda bisa monitor pre-opening besok.",
+      "rank": 1
+    }
+  ],
   "bpjs_beli_pagi_jual_sore": [],
   "swing_trading": [],
   "meta": {
-    "status": "no_signal",
-    "generated_at": "2026-06-05 00:30:24 WIB",
+    "status": "success",
+    "generated_at": "2026-06-05 01:31:38 WIB",
     "date": "2026-06-05",
     "mode": "FULL_STOCKBIT",
     "session_label": "MARKET_DAY",
@@ -15,7 +73,7 @@
     "mode_warning": null,
     "intraday_count": 0,
     "ara_count": 0,
-    "bsjp_count": 0,
+    "bsjp_count": 1,
     "bpjs_count": 0,
     "swing_count": 0,
     "ara_disclaimer": "Pipeline ARA v2: deteksi Tipe 1 (Continuation) & Tipe 2 (Silent Accumulation). Tipe 3 (Out of Nowhere, ~48% dari ARA nyata) tidak terdeteksi dari OHLCV. Precision: 8-15%. Backtest wajib sebelum live trading.",
