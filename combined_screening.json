@@ -1,100 +1,40 @@
 {
   "logika_lama_intraday": [],
   "logika_baru_calon_ara": [],
-  "bsjp_beli_sore_jual_pagi": [
-    {
-      "ticker": "MMIX",
-      "company": "Multi Medika Internasional Tbk.",
-      "tier": "S",
-      "score": 103,
-      "market_data": {
-        "close": 655.0,
-        "change_pct": 14.5,
-        "value_today": 67598672500,
-        "net_foreign": -2323957500,
-        "iep": 0,
-        "iep_change_pct": 0
-      },
-      "bsjp_features": {
-        "vol_ratio20": 8.39,
-        "body_pct": 24.76,
-        "close_pos_pct": 100.0,
-        "above_ma20": true,
-        "above_ma50": true,
-        "above_ma200": true,
-        "atr_pct": 7.94
-      },
-      "entry_plan": {
-        "strategy": "Beli di sesi akhir (14:30-15:45 WIB)",
-        "entry_range": "650 – 655",
-        "entry_note": "Limit order di harga saat ini atau sedikit di bawahnya",
-        "stop_loss": 456,
-        "stop_note": "Jika gap down besok, cut di bawah low hari ini",
-        "target_pct": "+2% s/d +10% di pagi hari",
-        "exit_strategy": "Jual di pre-opening (08:45-08:55) atau awal sesi pagi"
-      },
-      "universe_context": {
-        "in_mover_types": [
-          "MOVER_TYPE_TOP_VOLUME",
-          "MOVER_TYPE_TOP_VALUE",
-          "MOVER_TYPE_TOP_GAINER",
-          "SCREENER_VOLUME_EXPLOSION",
-          "GURU_92_Big Accumula"
-        ],
-        "from_gainer": true,
-        "from_screener": true,
-        "from_top_value": false
-      },
-      "signals_positive": [
-        "Volume ledakan ekstrem 8.4x MA20",
-        "Candle hijau sangat kuat (24.8%)",
-        "Tutup di puncak absolut — tidak ada upper wick",
-        "Uptrend penuh: di atas MA20, MA50, MA200",
-        "MA20 sedang naik — tren menguat",
-        "Masuk screener volume explosion Stockbit",
-        "Saham naik signifikan hari ini (momentum)"
-      ],
-      "signals_negative": [
-        "Asing jual bersih hari ini — hati-hati"
-      ],
-      "win_probability": "~70% berdasarkan backtest 1.796 kejadian historis",
-      "disclaimer": "Tier S BSJP. Strategi hold overnight — ada risiko gap down. Selalu gunakan stop loss. Pastikan Anda bisa monitor pre-opening besok.",
-      "rank": 1
-    }
-  ],
+  "bsjp_beli_sore_jual_pagi": [],
   "bpjs_beli_pagi_jual_sore": [
     {
-      "ticker": "PACK",
-      "company": "Abadi Nusantara Hijau Investama Tbk ",
+      "ticker": "DMAS",
+      "company": "Puradelta Lestari Tbk",
       "type": "WATCHLIST_BPJS",
       "formula": "REVERSAL_BOUNCE",
-      "score": 45,
+      "score": 35,
       "market_data": {
-        "close": 246.0,
-        "change_pct": -9.76,
-        "value_today": 88691437200,
-        "net_foreign": 8063539000
+        "close": 148.0,
+        "change_pct": -3.27,
+        "value_today": 18342969100,
+        "net_foreign": -3239837100
       },
       "d1_features": {
-        "body_pct": -9.56,
-        "close_pos_pct": 0.0,
-        "vol_ratio": 0.88,
-        "change_pct": -9.56,
-        "range_pct": 12.2,
-        "upper_wick": 13.3,
+        "body_pct": -3.27,
+        "close_pos_pct": 14.3,
+        "vol_ratio": 0.68,
+        "change_pct": -3.27,
+        "range_pct": 4.73,
+        "upper_wick": 14.3,
         "above_ma20": false,
         "above_ma50": true,
-        "above_ma200": false,
-        "atr_pct": 16.78
+        "above_ma200": true,
+        "atr_pct": 4.01
       },
       "trading_plan": {
         "strategy": "Beli di pagi hari (09:00-09:30), jual sore (14:30-15:30)",
-        "entry_range": "244 – 250",
+        "entry_range": "146 – 151",
         "entry_note": "JANGAN beli langsung. Konfirmasi dulu kriteria pagi hari.",
-        "stop_loss": 202,
-        "stop_note": "Cut loss jika turun di bawah 202 (1 ATR dari entry)",
-        "target_modest": 250,
-        "target_moderate": 256,
+        "stop_loss": 140,
+        "stop_note": "Cut loss jika turun di bawah 140 (1 ATR dari entry)",
+        "target_modest": 151,
+        "target_moderate": 154,
         "exit_strategy": "Jual di sesi sore (14:30-15:30 WIB) tanpa menunggu close"
       },
       "morning_confirmation_criteria": [
@@ -106,22 +46,19 @@
       "timing_guide": "Pantau 09:00-09:05. Jika saham gap down > 3% lalu diborong (volume naik, harga rebound dari low), BELI. Target jual: sesi sore 14:30-15:30 WIB.",
       "universe_context": {
         "in_mover_types": [
-          "MOVER_TYPE_TOP_VOLUME",
-          "MOVER_TYPE_TOP_VALUE",
-          "MOVER_TYPE_NET_FOREIGN_BUY",
-          "SCREENER_VOLUME_EXPLOSION"
+          "MOVER_TYPE_TOP_VOLUME"
         ],
         "from_gainer": false,
-        "from_screener": true
+        "from_screener": false
       },
       "signals_positive": [
-        "Formula: Reversal Bounce — D-1 merah (-9.6%), volume sepi (0.88x MA20), close bawah (0%). WR historis: 38.6% (n=31.924)",
+        "Formula: Reversal Bounce — D-1 merah (-3.3%), volume sepi (0.68x MA20), close bawah (14%). WR historis: 38.6% (n=31.924)",
         "Di atas MA50 — tren menengah masih ok",
-        "Asing beli bersih hari ini (Rp 8.1B)",
-        "Masuk screener volume Stockbit — ada perhatian pasar"
+        "Di atas MA200 — tren utama masih bullish"
       ],
       "signals_negative": [
-        "Di bawah MA20 — tekanan jangka pendek"
+        "Di bawah MA20 — tekanan jangka pendek",
+        "Asing jual bersih besar — hati-hati gap down"
       ],
       "backtest_stats": {
         "formula": "REVERSAL_BOUNCE",
@@ -139,7 +76,7 @@
   "swing_trading": [],
   "meta": {
     "status": "success",
-    "generated_at": "2026-06-06 01:22:39 WIB",
+    "generated_at": "2026-06-06 01:28:19 WIB",
     "date": "2026-06-06",
     "mode": "FULL_STOCKBIT",
     "session_label": "PRE_MARKET_WEEKEND (Saturday)",
@@ -148,7 +85,7 @@
     "mode_warning": null,
     "intraday_count": 0,
     "ara_count": 0,
-    "bsjp_count": 1,
+    "bsjp_count": 0,
     "bpjs_count": 1,
     "swing_count": 0,
     "ara_disclaimer": "Pipeline ARA v2: deteksi Tipe 1 (Continuation) & Tipe 2 (Silent Accumulation). Tipe 3 (Out of Nowhere, ~48% dari ARA nyata) tidak terdeteksi dari OHLCV. Precision: 8-15%. Backtest wajib sebelum live trading.",
@@ -171,9 +108,9 @@
     "warning": "⚠️ IHSG turun -1.7% kemarin. Trading dengan sangat hati-hati."
   },
   "screening_summary": {
-    "universe": 442,
-    "after_liquidity": 28,
-    "after_accumulation": 5,
+    "universe": 70,
+    "after_liquidity": 4,
+    "after_accumulation": 1,
     "after_trend": 0,
     "after_smc": 0,
     "after_entry": 0,
