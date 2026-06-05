@@ -5365,18 +5365,18 @@ def _bpjs_compute_d1_features(ticker: str) -> Optional[Dict]:
         if "volume" not in df.columns:
             return None
 
-        # Ambil 3 baris terakhir: D-2, D-1, D-0 (hari ini)
-        # Tapi karena pipeline berjalan setelah market close,
-        # baris terakhir df = D-0 (hari ini), baris[-2] = D-1
+        # Screener berjalan setelah market close (18:00 WIB).
+        # df.iloc[-1] = close HARI INI → ini adalah D-1 untuk beli BESOK PAGI.
+        # df.iloc[-2] = close kemarin → D-2.
+        # BUG FIX: sebelumnya pakai iloc[-2] sebagai D-1 (salah, itu 2 hari lalu).
         if len(df) < 3:
             return None
 
-        d0 = df.iloc[-1]   # Hari ini (D-0)
-        d1 = df.iloc[-2]   # Kemarin (D-1)
-        d2 = df.iloc[-3]   # 2 hari lalu (D-2)
+        d1 = df.iloc[-1]   # Hari ini (= D-1 untuk beli besok)
+        d2 = df.iloc[-2]   # Kemarin (= D-2)
 
-        # Volume MA20
-        vol_ma20 = df["volume"].rolling(20).mean().iloc[-2]  # MA20 pada D-1
+        # Volume MA20 — dihitung pada bar D-1 (hari ini = iloc[-1])
+        vol_ma20 = df["volume"].rolling(20).mean().iloc[-1]  # MA20 pada D-1 (hari ini)
         if pd.isna(vol_ma20) or vol_ma20 == 0:
             return None
 
@@ -5404,15 +5404,15 @@ def _bpjs_compute_d1_features(ticker: str) -> Optional[Dict]:
 
         # D-2 change vs D-3
         if len(df) >= 4:
-            d3_c = float(df.iloc[-4]["close"])
+            d3_c = float(df.iloc[-3]["close"])
             d2_chg = (d2_c - d3_c) / d3_c if d3_c > 0 else 0
         else:
             d2_chg = 0
 
-        # Moving averages (dihitung pada D-1)
-        ma20  = df["close"].rolling(20).mean().iloc[-2]
-        ma50  = df["close"].rolling(50).mean().iloc[-2]
-        ma200 = df["close"].rolling(200).mean().iloc[-2] if len(df) >= 200 else np.nan
+        # Moving averages — dihitung pada D-1 (hari ini = iloc[-1])
+        ma20  = df["close"].rolling(20).mean().iloc[-1]
+        ma50  = df["close"].rolling(50).mean().iloc[-1]
+        ma200 = df["close"].rolling(200).mean().iloc[-1] if len(df) >= 200 else np.nan
 
         above_ma20  = (not pd.isna(ma20))  and d1_c > ma20
         above_ma50  = (not pd.isna(ma50))  and d1_c > ma50
@@ -5426,11 +5426,11 @@ def _bpjs_compute_d1_features(ticker: str) -> Optional[Dict]:
                 (df["low"]  - df["close"].shift(1)).abs()
             )
         ))
-        atr14   = tr.rolling(14).mean().iloc[-2]  # ATR14 pada D-1
+        atr14   = tr.rolling(14).mean().iloc[-1]  # ATR14 pada D-1 (hari ini)
         atr_pct = float(atr14) / d1_c if (not pd.isna(atr14) and d1_c > 0) else 0
 
         # Value MA20 (untuk validasi likuiditas historis)
-        val_ma20 = (df["close"] * df["volume"]).rolling(20).mean().iloc[-2]
+        val_ma20 = (df["close"] * df["volume"]).rolling(20).mean().iloc[-1]
 
         return {
             "d1_body":       round(d1_body, 4),
