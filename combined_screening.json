@@ -38,7 +38,8 @@
           "MOVER_TYPE_TOP_VOLUME",
           "MOVER_TYPE_TOP_VALUE",
           "MOVER_TYPE_TOP_GAINER",
-          "SCREENER_VOLUME_EXPLOSION"
+          "SCREENER_VOLUME_EXPLOSION",
+          "GURU_92_Big Accumula"
         ],
         "from_gainer": true,
         "from_screener": true,
@@ -138,7 +139,7 @@
   "swing_trading": [],
   "meta": {
     "status": "success",
-    "generated_at": "2026-06-06 00:40:27 WIB",
+    "generated_at": "2026-06-06 00:58:22 WIB",
     "date": "2026-06-06",
     "mode": "FULL_STOCKBIT",
     "session_label": "PRE_MARKET_WEEKEND (Saturday)",
@@ -170,9 +171,9 @@
     "warning": "⚠️ IHSG turun -1.7% kemarin. Trading dengan sangat hati-hati."
   },
   "screening_summary": {
-    "universe": 159,
-    "after_liquidity": 5,
-    "after_accumulation": 0,
+    "universe": 444,
+    "after_liquidity": 4,
+    "after_accumulation": 2,
     "after_trend": 0,
     "after_smc": 0,
     "after_entry": 0,
