@@ -148,7 +148,7 @@
   "swing_trading": [],
   "meta": {
     "status": "success",
-    "generated_at": "2026-06-06 04:50:53 WIB",
+    "generated_at": "2026-06-06 04:59:41 WIB",
     "date": "2026-06-06",
     "mode": "FULL_STOCKBIT",
     "session_label": "PRE_MARKET_WEEKEND (Saturday)",
@@ -180,12 +180,12 @@
     "warning": "⚠️ IHSG turun -1.7% kemarin. Trading dengan sangat hati-hati."
   },
   "screening_summary": {
-    "universe": 298,
-    "after_liquidity": 55,
-    "after_accumulation": 11,
-    "after_trend": 1,
-    "after_smc": 1,
-    "after_entry": 1,
+    "universe": 139,
+    "after_liquidity": 8,
+    "after_accumulation": 1,
+    "after_trend": 0,
+    "after_smc": 0,
+    "after_entry": 0,
     "final": 0
   },
   "config_ara": {
