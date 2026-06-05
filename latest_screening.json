@@ -1,6 +1,6 @@
 {
   "status": "no_signal",
-  "generated_at": "2026-06-06 04:27:59 WIB",
+  "generated_at": "2026-06-06 04:38:35 WIB",
   "date": "2026-06-06",
   "mode": "FULL_STOCKBIT",
   "session_label": "PRE_MARKET_WEEKEND (Saturday)",
@@ -16,9 +16,9 @@
     "warning": "⚠️ IHSG turun -1.7% kemarin. Trading dengan sangat hati-hati."
   },
   "screening_summary": {
-    "universe": 70,
-    "after_liquidity": 10,
-    "after_accumulation": 3,
+    "universe": 107,
+    "after_liquidity": 3,
+    "after_accumulation": 0,
     "after_trend": 0,
     "after_smc": 0,
     "after_entry": 0,
