@@ -1,70 +1,12 @@
 {
   "logika_lama_intraday": [],
   "logika_baru_calon_ara": [],
-  "bsjp_beli_sore_jual_pagi": [
-    {
-      "ticker": "MUTU",
-      "company": "Mutuagung Lestari Tbk.",
-      "tier": "S",
-      "score": 98,
-      "market_data": {
-        "close": 121.0,
-        "change_pct": 17.65,
-        "value_today": 10190924400,
-        "net_foreign": 12039000,
-        "iep": 106,
-        "iep_change_pct": -11.666666666666666
-      },
-      "bsjp_features": {
-        "vol_ratio20": 9.84,
-        "body_pct": 14.15,
-        "close_pos_pct": 83.3,
-        "above_ma20": true,
-        "above_ma50": true,
-        "above_ma200": true,
-        "atr_pct": 7.44
-      },
-      "entry_plan": {
-        "strategy": "Beli di sesi akhir (14:30-15:45 WIB)",
-        "entry_range": "120 – 121",
-        "entry_note": "Limit order di harga saat ini atau sedikit di bawahnya",
-        "stop_loss": 105,
-        "stop_note": "Jika gap down besok, cut di bawah low hari ini",
-        "target_pct": "+2% s/d +10% di pagi hari",
-        "exit_strategy": "Jual di pre-opening (08:45-08:55) atau awal sesi pagi"
-      },
-      "universe_context": {
-        "in_mover_types": [
-          "MOVER_TYPE_TOP_VOLUME",
-          "MOVER_TYPE_TOP_GAINER",
-          "SCREENER_VOLUME_EXPLOSION",
-          "GURU_63_High Volume ",
-          "SCREENER_TOP_VALUE"
-        ],
-        "from_gainer": true,
-        "from_screener": true,
-        "from_top_value": true
-      },
-      "signals_positive": [
-        "Volume ledakan ekstrem 9.8x MA20",
-        "Candle hijau sangat kuat (14.1%)",
-        "Tutup di 83% dari range",
-        "Uptrend penuh: di atas MA20, MA50, MA200",
-        "Asing beli bersih hari ini (Rp 0.0B)",
-        "Masuk screener volume explosion Stockbit",
-        "Saham naik signifikan hari ini (momentum)"
-      ],
-      "signals_negative": [],
-      "win_probability": "~70% berdasarkan backtest 1.796 kejadian historis",
-      "disclaimer": "Tier S BSJP. Strategi hold overnight — ada risiko gap down. Selalu gunakan stop loss. Pastikan Anda bisa monitor pre-opening besok.",
-      "rank": 1
-    }
-  ],
+  "bsjp_beli_sore_jual_pagi": [],
   "bpjs_beli_pagi_jual_sore": [],
   "swing_trading": [],
   "meta": {
-    "status": "success",
-    "generated_at": "2026-06-05 10:58:24 WIB",
+    "status": "no_signal",
+    "generated_at": "2026-06-05 11:28:52 WIB",
     "date": "2026-06-05",
     "mode": "FULL_STOCKBIT",
     "session_label": "MARKET_DAY",
@@ -73,7 +15,7 @@
     "mode_warning": null,
     "intraday_count": 0,
     "ara_count": 0,
-    "bsjp_count": 1,
+    "bsjp_count": 0,
     "bpjs_count": 0,
     "swing_count": 0,
     "ara_disclaimer": "Pipeline ARA v2: deteksi Tipe 1 (Continuation) & Tipe 2 (Silent Accumulation). Tipe 3 (Out of Nowhere, ~48% dari ARA nyata) tidak terdeteksi dari OHLCV. Precision: 8-15%. Backtest wajib sebelum live trading.",
@@ -88,19 +30,19 @@
     }
   },
   "market_context": {
-    "ihsg_close": 5697,
-    "ihsg_change_pct": -4.11,
+    "ihsg_close": 5714,
+    "ihsg_change_pct": -3.82,
     "ihsg_trend": "BEARISH",
     "ihsg_above_ma50": false,
     "market_safe": true,
-    "warning": "⚠️ IHSG turun -4.1% kemarin. Trading dengan sangat hati-hati."
+    "warning": "⚠️ IHSG turun -3.8% kemarin. Trading dengan sangat hati-hati."
   },
   "screening_summary": {
     "universe": 972,
-    "after_liquidity": 63,
-    "after_accumulation": 7,
-    "after_trend": 0,
-    "after_smc": 0,
+    "after_liquidity": 67,
+    "after_accumulation": 8,
+    "after_trend": 1,
+    "after_smc": 1,
     "after_entry": 0,
     "final": 0
   },
