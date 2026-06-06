@@ -8,7 +8,7 @@
       "company": "Puradelta Lestari Tbk",
       "type": "WATCHLIST_BPJS",
       "formula": "REVERSAL_BOUNCE",
-      "score": 40,
+      "score": 35,
       "market_data": {
         "close": 148.0,
         "change_pct": -3.27,
@@ -46,17 +46,15 @@
       "timing_guide": "Pantau 09:00-09:05. Jika saham gap down > 3% lalu diborong (volume naik, harga rebound dari low), BELI. Target jual: sesi sore 14:30-15:30 WIB.",
       "universe_context": {
         "in_mover_types": [
-          "MOVER_TYPE_TOP_VOLUME",
-          "SCREENER_VOLUME_EXPLOSION"
+          "MOVER_TYPE_TOP_VOLUME"
         ],
         "from_gainer": false,
-        "from_screener": true
+        "from_screener": false
       },
       "signals_positive": [
         "Formula: Reversal Bounce — D-1 merah (-3.3%), volume sepi (0.68x MA20), close bawah (14%). WR historis: 38.6% (n=31.924)",
         "Di atas MA50 — tren menengah masih ok",
-        "Di atas MA200 — tren utama masih bullish",
-        "Masuk screener volume Stockbit — ada perhatian pasar"
+        "Di atas MA200 — tren utama masih bullish"
       ],
       "signals_negative": [
         "Di bawah MA20 — tekanan jangka pendek",
@@ -73,82 +71,12 @@
       },
       "disclaimer": "⚠️ INI WATCHLIST, BUKAN SINYAL BELI. Formula REVERSAL_BOUNCE dari backtest forward-looking 789.792 hari trading IHSG. WAJIB konfirmasi real-time pagi hari (lihat morning_confirmation_criteria). Tanpa konfirmasi, JANGAN eksekusi.",
       "rank": 1
-    },
-    {
-      "ticker": "BDMN",
-      "company": "Bank Danamon Indonesia Tbk.",
-      "type": "WATCHLIST_BPJS",
-      "formula": "REVERSAL_BOUNCE",
-      "score": 35,
-      "market_data": {
-        "close": 4200.0,
-        "change_pct": -2.1,
-        "value_today": 31470446000,
-        "net_foreign": 14228429000
-      },
-      "d1_features": {
-        "body_pct": -2.1,
-        "close_pos_pct": 13.0,
-        "vol_ratio": 0.55,
-        "change_pct": -2.1,
-        "range_pct": 5.48,
-        "upper_wick": 47.8,
-        "above_ma20": false,
-        "above_ma50": true,
-        "above_ma200": true,
-        "atr_pct": 7.59
-      },
-      "trading_plan": {
-        "strategy": "Beli di pagi hari (09:00-09:30), jual sore (14:30-15:30)",
-        "entry_range": "4,130 – 4,280",
-        "entry_note": "JANGAN beli langsung. Konfirmasi dulu kriteria pagi hari.",
-        "stop_loss": 3810,
-        "stop_note": "Cut loss jika turun di bawah 3,810 (1 ATR dari entry)",
-        "target_modest": 4280,
-        "target_moderate": 4370,
-        "exit_strategy": "Jual di sesi sore (14:30-15:30 WIB) tanpa menunggu close"
-      },
-      "morning_confirmation_criteria": [
-        "⚠️ WAJIB: Hanya beli jika terjadi Gap Down > 3% di pagi hari (09:00-09:05 WIB)",
-        "✅ Skenario Gap Down >3% memiliki Profit Factor 6.78x & Win Rate 44.5%!",
-        "✅ Volume 15 menit pertama ≥ 1.5x rata-rata (menandakan buying interest)",
-        "❌ JANGAN BELI jika harga flat, gap up, atau gap down < 1% (Expected Value negatif)"
-      ],
-      "timing_guide": "Pantau 09:00-09:05. Jika saham gap down > 3% lalu diborong (volume naik, harga rebound dari low), BELI. Target jual: sesi sore 14:30-15:30 WIB.",
-      "universe_context": {
-        "in_mover_types": [
-          "MOVER_TYPE_NET_FOREIGN_BUY"
-        ],
-        "from_gainer": false,
-        "from_screener": false
-      },
-      "signals_positive": [
-        "Formula: Reversal Bounce — D-1 merah (-2.1%), volume sepi (0.55x MA20), close bawah (13%). WR historis: 38.6% (n=31.924)",
-        "Di atas MA50 — tren menengah masih ok",
-        "Di atas MA200 — tren utama masih bullish",
-        "Asing beli bersih hari ini (Rp 14.2B)"
-      ],
-      "signals_negative": [
-        "Di bawah MA20 — tekanan jangka pendek",
-        "Upper wick besar (48%) — tekanan jual D-1"
-      ],
-      "backtest_stats": {
-        "formula": "REVERSAL_BOUNCE",
-        "win_rate": "38.6%",
-        "sample_size": "n=31.924",
-        "profit_factor": "0.90x",
-        "total_backtest": "789.792 hari trading IHSG (956 saham)",
-        "gap_down_sweet_spot": "Gap Down >2%: WR 30.2%, upside +3.75%, DD -0.88%",
-        "gap_up_danger": "Gap Up >5%: WR 11.8%, DD -6.67% — HINDARI"
-      },
-      "disclaimer": "⚠️ INI WATCHLIST, BUKAN SINYAL BELI. Formula REVERSAL_BOUNCE dari backtest forward-looking 789.792 hari trading IHSG. WAJIB konfirmasi real-time pagi hari (lihat morning_confirmation_criteria). Tanpa konfirmasi, JANGAN eksekusi.",
-      "rank": 2
     }
   ],
   "swing_trading": [],
   "meta": {
     "status": "success",
-    "generated_at": "2026-06-06 07:00:31 WIB",
+    "generated_at": "2026-06-06 07:12:39 WIB",
     "date": "2026-06-06",
     "mode": "FULL_STOCKBIT",
     "session_label": "PRE_MARKET_WEEKEND (Saturday)",
@@ -158,7 +86,7 @@
     "intraday_count": 0,
     "ara_count": 0,
     "bsjp_count": 0,
-    "bpjs_count": 2,
+    "bpjs_count": 1,
     "swing_count": 0,
     "ara_disclaimer": "Pipeline ARA v2: deteksi Tipe 1 (Continuation) & Tipe 2 (Silent Accumulation). Tipe 3 (Out of Nowhere, ~48% dari ARA nyata) tidak terdeteksi dari OHLCV. Precision: 8-15%. Backtest wajib sebelum live trading.",
     "bsjp_disclaimer": "Pipeline BSJP v1: hold overnight, jual pagi hari. Win rate historis: Tier S ~70%, Tier A ~64% (spike >2%). Backtest 252.480 hari perdagangan IHSG. Selalu pasang stop loss.",
@@ -180,8 +108,8 @@
     "warning": "⚠️ IHSG turun -1.7% kemarin. Trading dengan sangat hati-hati."
   },
   "screening_summary": {
-    "universe": 119,
-    "after_liquidity": 5,
+    "universe": 49,
+    "after_liquidity": 0,
     "after_accumulation": 0,
     "after_trend": 0,
     "after_smc": 0,
