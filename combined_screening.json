@@ -148,7 +148,7 @@
   "swing_trading": [],
   "meta": {
     "status": "success",
-    "generated_at": "2026-06-06 06:54:13 WIB",
+    "generated_at": "2026-06-06 07:00:31 WIB",
     "date": "2026-06-06",
     "mode": "FULL_STOCKBIT",
     "session_label": "PRE_MARKET_WEEKEND (Saturday)",
@@ -181,7 +181,7 @@
   },
   "screening_summary": {
     "universe": 119,
-    "after_liquidity": 2,
+    "after_liquidity": 5,
     "after_accumulation": 0,
     "after_trend": 0,
     "after_smc": 0,
