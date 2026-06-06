@@ -8,7 +8,7 @@
       "company": "Puradelta Lestari Tbk",
       "type": "WATCHLIST_BPJS",
       "formula": "REVERSAL_BOUNCE",
-      "score": 40,
+      "score": 35,
       "market_data": {
         "close": 148.0,
         "change_pct": -3.27,
@@ -46,17 +46,15 @@
       "timing_guide": "Pantau 09:00-09:05. Jika saham gap down > 3% lalu diborong (volume naik, harga rebound dari low), BELI. Target jual: sesi sore 14:30-15:30 WIB.",
       "universe_context": {
         "in_mover_types": [
-          "MOVER_TYPE_TOP_VOLUME",
-          "SCREENER_VOLUME_EXPLOSION"
+          "MOVER_TYPE_TOP_VOLUME"
         ],
         "from_gainer": false,
-        "from_screener": true
+        "from_screener": false
       },
       "signals_positive": [
         "Formula: Reversal Bounce — D-1 merah (-3.3%), volume sepi (0.68x MA20), close bawah (14%). WR historis: 38.6% (n=31.924)",
         "Di atas MA50 — tren menengah masih ok",
-        "Di atas MA200 — tren utama masih bullish",
-        "Masuk screener volume Stockbit — ada perhatian pasar"
+        "Di atas MA200 — tren utama masih bullish"
       ],
       "signals_negative": [
         "Di bawah MA20 — tekanan jangka pendek",
@@ -148,7 +146,7 @@
   "swing_trading": [],
   "meta": {
     "status": "success",
-    "generated_at": "2026-06-06 08:13:25 WIB",
+    "generated_at": "2026-06-06 08:24:16 WIB",
     "date": "2026-06-06",
     "mode": "FULL_STOCKBIT",
     "session_label": "PRE_MARKET_WEEKEND (Saturday)",
@@ -180,9 +178,9 @@
     "warning": "⚠️ IHSG turun -1.7% kemarin. Trading dengan sangat hati-hati."
   },
   "screening_summary": {
-    "universe": 250,
-    "after_liquidity": 12,
-    "after_accumulation": 1,
+    "universe": 90,
+    "after_liquidity": 8,
+    "after_accumulation": 2,
     "after_trend": 0,
     "after_smc": 0,
     "after_entry": 0,
