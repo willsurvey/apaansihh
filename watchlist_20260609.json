@@ -1,6 +1,6 @@
 {
   "status": "success",
-  "generated_at": "2026-06-09 11:15:12 WIB",
+  "generated_at": "2026-06-09 11:27:29 WIB",
   "date": "2026-06-09",
   "mode": "FULL_STOCKBIT",
   "session_label": "MARKET_DAY",
@@ -8,17 +8,17 @@
   "mode_warning": null,
   "total_saham": 1,
   "market_context": {
-    "ihsg_close": 5449,
-    "ihsg_change_pct": 2.01,
+    "ihsg_close": 5490,
+    "ihsg_change_pct": 2.78,
     "ihsg_trend": "BEARISH",
     "ihsg_above_ma50": false,
     "market_safe": true,
     "warning": null
   },
   "screening_summary": {
-    "universe": 343,
-    "after_liquidity": 43,
-    "after_accumulation": 11,
+    "universe": 235,
+    "after_liquidity": 33,
+    "after_accumulation": 10,
     "after_trend": 1,
     "after_smc": 1,
     "after_entry": 1,
@@ -53,7 +53,7 @@
         "GURU_92_Big Accumula"
       ],
       "market_data": {
-        "close": 392,
+        "close": 394,
         "change_pct": 0,
         "value_today": 0,
         "frequency_today": 0,
@@ -76,7 +76,7 @@
       },
       "trend": {
         "ma50": 388.0,
-        "gap_from_ma50_pct": 0.61,
+        "gap_from_ma50_pct": 1.62,
         "ma50_slope": "POSITIVE"
       },
       "smc": {
@@ -93,21 +93,21 @@
         "entry_direction": "PULLBACK",
         "entry_direction_label": "⚠️ WATCHLIST ONLY: Tunggu pantulan di area OB, jangan pasang antrian beli buta (blind limit order) karena risiko whipsaw pagi sangat tinggi!",
         "entry_direction_reason": "",
-        "entry_1": 390,
+        "entry_1": 392,
         "entry_1_pct": 20,
         "entry_1_note": "Pullback ringan / Bid Wall area",
-        "entry_2": 384,
+        "entry_2": 386,
         "entry_2_pct": 50,
         "entry_2_note": "Area OB / FVG / Support",
         "entry_3": 378,
         "entry_3_pct": 30,
         "entry_3_note": "Deep pullback / PDL area",
         "average_entry": 384,
-        "entry_zone": "378 - 390",
+        "entry_zone": "378 - 392",
         "sl": 374,
         "sl_pct_risk": 2.6,
         "sl_note": "Cut loss disarankan menggunakan Closing Basis (akhir sesi/harian) untuk menghindari sapuan ekor candle (whipsaw) di pagi hari.",
-        "tp1": 392,
+        "tp1": 394,
         "tp1_note": "PDH / Target psikologis intraday",
         "tp2": 416,
         "tp2_note": "Weak High / Supply Zone 1H",
@@ -124,10 +124,10 @@
       "signals": [
         "✅ Broker Signal: Big Acc",
         "✅ Harga di zona FVG aktif",
-        "✅ Pullback ke MA50 (0.6% di atas MA50)"
+        "✅ Pullback ke MA50 (1.6% di atas MA50)"
       ],
       "warnings": [],
-      "updated_at": "11.15 WIB"
+      "updated_at": "11.27 WIB"
     }
   ]
 }
