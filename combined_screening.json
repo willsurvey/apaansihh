@@ -6,7 +6,7 @@
   "swing_trading": [],
   "meta": {
     "status": "no_signal",
-    "generated_at": "2026-06-09 09:58:47 WIB",
+    "generated_at": "2026-06-09 10:06:01 WIB",
     "date": "2026-06-09",
     "mode": "FULL_STOCKBIT",
     "session_label": "MARKET_DAY",
@@ -30,17 +30,17 @@
     }
   },
   "market_context": {
-    "ihsg_close": 5442,
-    "ihsg_change_pct": 1.88,
+    "ihsg_close": 5434,
+    "ihsg_change_pct": 1.73,
     "ihsg_trend": "BEARISH",
     "ihsg_above_ma50": false,
     "market_safe": true,
     "warning": null
   },
   "screening_summary": {
-    "universe": 72,
+    "universe": 147,
     "after_liquidity": 10,
-    "after_accumulation": 2,
+    "after_accumulation": 4,
     "after_trend": 0,
     "after_smc": 0,
     "after_entry": 0,
