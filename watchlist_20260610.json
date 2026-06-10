@@ -1,6 +1,6 @@
 {
   "status": "no_signal",
-  "generated_at": "2026-06-10 13:56:30 WIB",
+  "generated_at": "2026-06-10 14:28:35 WIB",
   "date": "2026-06-10",
   "mode": "FULL_STOCKBIT",
   "session_label": "MARKET_DAY",
@@ -8,8 +8,8 @@
   "mode_warning": null,
   "total_saham": 0,
   "market_context": {
-    "ihsg_close": 5881,
-    "ihsg_change_pct": 10.09,
+    "ihsg_close": 5875,
+    "ihsg_change_pct": 9.99,
     "ihsg_trend": "BEARISH",
     "ihsg_above_ma50": false,
     "market_safe": true,
