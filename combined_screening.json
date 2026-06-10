@@ -12,7 +12,7 @@
       "market_data": {
         "close": 3880.0,
         "change_pct": -2.27,
-        "value_today": 13643352000,
+        "value_today": 13825324000,
         "net_foreign": 6674565000
       },
       "d1_features": {
@@ -79,7 +79,7 @@
   "swing_trading": [],
   "meta": {
     "status": "success",
-    "generated_at": "2026-06-10 16:30:58 WIB",
+    "generated_at": "2026-06-10 17:31:38 WIB",
     "date": "2026-06-10",
     "mode": "FULL_STOCKBIT",
     "session_label": "MARKET_DAY",
@@ -103,8 +103,8 @@
     }
   },
   "market_context": {
-    "ihsg_close": 5900,
-    "ihsg_change_pct": 10.45,
+    "ihsg_close": 5902,
+    "ihsg_change_pct": 10.49,
     "ihsg_trend": "BEARISH",
     "ihsg_above_ma50": false,
     "market_safe": true,
