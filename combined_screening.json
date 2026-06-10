@@ -6,7 +6,7 @@
   "swing_trading": [],
   "meta": {
     "status": "no_signal",
-    "generated_at": "2026-06-10 20:46:21 WIB",
+    "generated_at": "2026-06-10 21:26:44 WIB",
     "date": "2026-06-10",
     "mode": "FULL_STOCKBIT",
     "session_label": "MARKET_DAY",
@@ -38,9 +38,9 @@
     "warning": null
   },
   "screening_summary": {
-    "universe": 510,
-    "after_liquidity": 34,
-    "after_accumulation": 5,
+    "universe": 102,
+    "after_liquidity": 13,
+    "after_accumulation": 1,
     "after_trend": 0,
     "after_smc": 0,
     "after_entry": 0,
