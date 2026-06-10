@@ -4,81 +4,83 @@
   "bsjp_beli_sore_jual_pagi": [],
   "bpjs_beli_pagi_jual_sore": [
     {
-      "ticker": "BREN",
-      "company": "Barito Renewables Energy Tbk.",
+      "ticker": "KETR",
+      "company": "Ketrosden Triasmitra Tbk.",
       "type": "WATCHLIST_BPJS",
-      "formula": "QUIET_CONTINUATION",
-      "score": 30,
+      "formula": "REVERSAL_BOUNCE",
+      "score": 45,
       "market_data": {
-        "close": 4170.0,
-        "change_pct": 1.96,
-        "value_today": 196617192000,
-        "net_foreign": -38298441000
+        "close": 530.0,
+        "change_pct": -5.36,
+        "value_today": 24757830000,
+        "net_foreign": 1644330000
       },
       "d1_features": {
-        "body_pct": 1.96,
-        "close_pos_pct": 60.0,
-        "vol_ratio": 0.39,
-        "change_pct": 1.96,
-        "range_pct": 9.59,
-        "upper_wick": 40.0,
-        "above_ma20": true,
-        "above_ma50": false,
+        "body_pct": -5.36,
+        "close_pos_pct": 25.0,
+        "vol_ratio": 0.67,
+        "change_pct": -5.36,
+        "range_pct": 11.32,
+        "upper_wick": 25.0,
+        "above_ma20": false,
+        "above_ma50": true,
         "above_ma200": false,
-        "atr_pct": 11.51
+        "atr_pct": 12.39
       },
       "trading_plan": {
         "strategy": "Beli di pagi hari (09:00-09:30), jual sore (14:30-15:30)",
-        "entry_range": "3,930 – 4,250",
+        "entry_range": "510 – 540",
         "entry_note": "JANGAN beli langsung. Konfirmasi dulu kriteria pagi hari.",
-        "stop_loss": 3450,
-        "stop_note": "Cut loss jika turun di bawah 3,450 (1 ATR dari entry)",
-        "target_modest": 4250,
-        "target_moderate": 4340,
+        "stop_loss": 444,
+        "stop_note": "Cut loss jika turun di bawah 444 (1 ATR dari entry)",
+        "target_modest": 540,
+        "target_moderate": 550,
         "exit_strategy": "Jual di sesi sore (14:30-15:30 WIB) tanpa menunggu close"
       },
       "morning_confirmation_criteria": [
-        "⚠️ WAJIB: Utamakan jika terjadi Gap Down > 3% saat open untuk risk/reward terbaik",
-        "✅ Skenario Gap Down >3% memiliki Profit Factor 6.78x & Win Rate 44.5%",
-        "✅ Volume 15 menit pertama normal/stabil di atas rata-rata",
-        "❌ JANGAN BELI jika Gap Up > 3% (euforia rawan bull trap, PF hanya 0.3x)",
-        "❌ JANGAN BELI jika langsung longsor drastis tanpa rebound dari low"
+        "⚠️ WAJIB: Hanya beli jika terjadi Gap Down > 3% di pagi hari (09:00-09:05 WIB)",
+        "✅ Skenario Gap Down >3% memiliki Profit Factor 6.78x & Win Rate 44.5%!",
+        "✅ Volume 15 menit pertama ≥ 1.5x rata-rata (menandakan buying interest)",
+        "❌ JANGAN BELI jika harga flat, gap up, atau gap down < 1% (Expected Value negatif)"
       ],
-      "timing_guide": "Pantau 09:00-09:10. Beli jika terjadi gap down > 3% lalu ada rebound volume stabil. Target jual: sesi sore 14:30-15:30 WIB.",
+      "timing_guide": "Pantau 09:00-09:05. Jika saham gap down > 3% lalu diborong (volume naik, harga rebound dari low), BELI. Target jual: sesi sore 14:30-15:30 WIB.",
       "universe_context": {
         "in_mover_types": [
-          "MOVER_TYPE_TOP_VALUE",
-          "GURU_78_Daily Net Fo",
+          "MOVER_TYPE_NET_FOREIGN_BUY",
+          "MOVER_TYPE_TOP_LOSER",
+          "SCREENER_VOLUME_EXPLOSION",
+          "GURU_72_IHSG Short-t",
           "SCREENER_TOP_VALUE"
         ],
         "from_gainer": false,
-        "from_screener": false
+        "from_screener": true
       },
       "signals_positive": [
-        "Formula: Quiet Continuation — D-1 hijau tipis (+2.0%), volume mati (0.39x MA20), close tengah (60%). WR historis: 49.8% (n=1.371)",
-        "Di atas MA20 — support jangka pendek"
+        "Formula: Reversal Bounce — D-1 merah (-5.4%), volume sepi (0.67x MA20), close bawah (25%). WR historis: 38.6% (n=31.924)",
+        "Di atas MA50 — tren menengah masih ok",
+        "Asing beli bersih hari ini (Rp 1.6B)",
+        "Masuk screener volume Stockbit — ada perhatian pasar"
       ],
       "signals_negative": [
-        "Upper wick besar (40%) — tekanan jual D-1",
-        "Asing jual bersih besar — hati-hati gap down"
+        "Di bawah MA20 — tekanan jangka pendek"
       ],
       "backtest_stats": {
-        "formula": "QUIET_CONTINUATION",
-        "win_rate": "49.8%",
-        "sample_size": "n=1.371",
-        "profit_factor": "1.04x",
+        "formula": "REVERSAL_BOUNCE",
+        "win_rate": "38.6%",
+        "sample_size": "n=31.924",
+        "profit_factor": "0.90x",
         "total_backtest": "789.792 hari trading IHSG (956 saham)",
         "gap_down_sweet_spot": "Gap Down >2%: WR 30.2%, upside +3.75%, DD -0.88%",
         "gap_up_danger": "Gap Up >5%: WR 11.8%, DD -6.67% — HINDARI"
       },
-      "disclaimer": "⚠️ INI WATCHLIST, BUKAN SINYAL BELI. Formula QUIET_CONTINUATION dari backtest forward-looking 789.792 hari trading IHSG. WAJIB konfirmasi real-time pagi hari (lihat morning_confirmation_criteria). Tanpa konfirmasi, JANGAN eksekusi.",
+      "disclaimer": "⚠️ INI WATCHLIST, BUKAN SINYAL BELI. Formula REVERSAL_BOUNCE dari backtest forward-looking 789.792 hari trading IHSG. WAJIB konfirmasi real-time pagi hari (lihat morning_confirmation_criteria). Tanpa konfirmasi, JANGAN eksekusi.",
       "rank": 1
     }
   ],
   "swing_trading": [],
   "meta": {
     "status": "success",
-    "generated_at": "2026-06-10 13:03:17 WIB",
+    "generated_at": "2026-06-10 13:57:35 WIB",
     "date": "2026-06-10",
     "mode": "FULL_STOCKBIT",
     "session_label": "MARKET_DAY",
