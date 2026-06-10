@@ -10,31 +10,31 @@
       "formula": "REVERSAL_BOUNCE",
       "score": 35,
       "market_data": {
-        "close": 3870.0,
-        "change_pct": -0.5,
-        "value_today": 10885503000,
+        "close": 3880.0,
+        "change_pct": -2.27,
+        "value_today": 13643352000,
         "net_foreign": 6674565000
       },
       "d1_features": {
-        "body_pct": -2.27,
-        "close_pos_pct": 10.5,
-        "vol_ratio": 0.27,
-        "change_pct": -2.52,
-        "range_pct": 4.91,
+        "body_pct": -2.02,
+        "close_pos_pct": 15.8,
+        "vol_ratio": 0.28,
+        "change_pct": -2.27,
+        "range_pct": 4.9,
         "upper_wick": 42.1,
         "above_ma20": false,
         "above_ma50": true,
         "above_ma200": true,
-        "atr_pct": 8.05
+        "atr_pct": 8.03
       },
       "trading_plan": {
         "strategy": "Beli di pagi hari (09:00-09:30), jual sore (14:30-15:30)",
-        "entry_range": "3,810 – 3,950",
+        "entry_range": "3,810 – 3,960",
         "entry_note": "JANGAN beli langsung. Konfirmasi dulu kriteria pagi hari.",
         "stop_loss": 3500,
         "stop_note": "Cut loss jika turun di bawah 3,500 (1 ATR dari entry)",
-        "target_modest": 3950,
-        "target_moderate": 4020,
+        "target_modest": 3960,
+        "target_moderate": 4040,
         "exit_strategy": "Jual di sesi sore (14:30-15:30 WIB) tanpa menunggu close"
       },
       "morning_confirmation_criteria": [
@@ -54,7 +54,7 @@
         "from_screener": false
       },
       "signals_positive": [
-        "Formula: Reversal Bounce — D-1 merah (-2.3%), volume sepi (0.27x MA20), close bawah (11%). WR historis: 38.6% (n=31.924)",
+        "Formula: Reversal Bounce — D-1 merah (-2.0%), volume sepi (0.28x MA20), close bawah (16%). WR historis: 38.6% (n=31.924)",
         "Di atas MA50 — tren menengah masih ok",
         "Di atas MA200 — tren utama masih bullish",
         "Asing beli bersih hari ini (Rp 6.7B)"
@@ -79,7 +79,7 @@
   "swing_trading": [],
   "meta": {
     "status": "success",
-    "generated_at": "2026-06-10 16:00:04 WIB",
+    "generated_at": "2026-06-10 16:30:58 WIB",
     "date": "2026-06-10",
     "mode": "FULL_STOCKBIT",
     "session_label": "MARKET_DAY",
@@ -103,8 +103,8 @@
     }
   },
   "market_context": {
-    "ihsg_close": 5919,
-    "ihsg_change_pct": 10.8,
+    "ihsg_close": 5900,
+    "ihsg_change_pct": 10.45,
     "ihsg_trend": "BEARISH",
     "ihsg_above_ma50": false,
     "market_safe": true,
@@ -114,7 +114,7 @@
     "universe": 972,
     "after_liquidity": 82,
     "after_accumulation": 6,
-    "after_trend": 1,
+    "after_trend": 0,
     "after_smc": 0,
     "after_entry": 0,
     "final": 0
