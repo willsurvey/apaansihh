@@ -24,10 +24,10 @@ print("    PASS")
 # Test 2: Score - Stage 2 Golden Setup
 feat_gold = {
     "is_stage2": True, "ma50_slope": 0.02, "dist_ma20": 0.05,
-    "squeeze": 0.25, "vol_ratio": 0.35, "rsi": 70.0,
+    "squeeze": 0.25, "vol_ratio": 0.35, "rsi": 60.0,
     "atr_pct": 0.025, "val_ma20": 20e9, "dist_52w": -0.05,
     "close": 5000, "ma20": 4762, "ma50": 4500, "ma200": 4000,
-    "above_ma200": True,
+    "above_ma200": True, "adx": 30.0,
 }
 score, pos, neg = _swing_score(feat_gold, {"net_foreign_today": 5e9})
 print(f"\n[2] Golden Setup: score={score}, pos={len(pos)}, neg={len(neg)}")

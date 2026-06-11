@@ -28,13 +28,13 @@ print("=" * 65)
 # Buat mock universe dari data OHLCV sample
 # Simulasi: ambil 50 saham terlikuid sebagai mock "universe intraday"
 # ----------------------------------------------------------------
-files = sorted(glob.glob(os.path.join(DATA_DIR, "*_1D_Max.csv")))
+files = sorted(glob.glob(os.path.join(DATA_DIR, "*_1d_Max.csv")))
 
 mock_universe = []
 print(f"\nMembangun mock universe dari {len(files)} file OHLCV...")
 
 for f in files:
-    ticker = Path(f).stem.replace("_1D_Max", "")
+    ticker = Path(f).stem.split("_")[0]
     try:
         df = pd.read_csv(f)
         df.columns = [c.lower() for c in df.columns]

@@ -49,7 +49,9 @@ feat_rev = {
     "d1_open":       1030,
 }
 stock_mm_rev = {"net_foreign_today": 5e9, "from_screener": True}
+CONFIG["BPJS_REVERSAL_ENABLED"] = True
 score_rev, formula_rev, pos_rev, neg_rev = _bpjs_score(feat_rev, stock_mm_rev)
+CONFIG["BPJS_REVERSAL_ENABLED"] = False
 print(f"\n[2] Score Reversal: score={score_rev}, formula={formula_rev}")
 print(f"    Signals+: {len(pos_rev)}, Signals-: {len(neg_rev)}")
 # Reversal cocok, tapi juga bisa cocok Quiet? Tidak, karena d1_body = -0.03 < QC_BODY_MIN 0.01
