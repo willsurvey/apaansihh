@@ -11,14 +11,14 @@
       "score": 55,
       "market_data": {
         "close": 530.0,
-        "change_pct": -8.62,
-        "value_today": 15201966000,
+        "change_pct": -7.76,
+        "value_today": 15445658500,
         "net_foreign": 3669675000
       },
       "d1_features": {
         "body_pct": -8.62,
         "close_pos_pct": 16.7,
-        "vol_ratio": 0.65,
+        "vol_ratio": 0.67,
         "change_pct": -8.62,
         "range_pct": 11.32,
         "upper_wick": 0.0,
@@ -56,7 +56,7 @@
         "from_screener": true
       },
       "signals_positive": [
-        "Formula: Reversal Bounce — D-1 merah (-8.6%), volume sepi (0.65x MA20), close bawah (17%). WR historis: 38.6% (n=31.924)",
+        "Formula: Reversal Bounce — D-1 merah (-8.6%), volume sepi (0.67x MA20), close bawah (17%). WR historis: 38.6% (n=31.924)",
         "Di atas MA20 — support jangka pendek",
         "Di atas MA50 — tren menengah masih ok",
         "Di atas MA200 — tren utama masih bullish",
@@ -80,7 +80,7 @@
   "swing_trading": [],
   "meta": {
     "status": "success",
-    "generated_at": "2026-06-11 13:29:58 WIB",
+    "generated_at": "2026-06-11 14:01:02 WIB",
     "date": "2026-06-11",
     "mode": "FULL_STOCKBIT",
     "session_label": "MARKET_DAY",
@@ -113,7 +113,7 @@
   },
   "screening_summary": {
     "universe": 972,
-    "after_liquidity": 73,
+    "after_liquidity": 75,
     "after_accumulation": 1,
     "after_trend": 0,
     "after_smc": 0,
