@@ -6928,9 +6928,14 @@ Contoh penggunaan:
             token_r, mode_r = get_valid_token()
             market_r = get_ihsg_context()
             ara_r = run_ara_pipeline_v2(token_r, mode_r)
-            save_combined_output_v2(
+            save_combined_output_v3(
                 intraday_results=[],
                 ara_results=ara_r,
+                bsjp_results=[],
+                bpjs_results=[],
+                swing_results=[],
+                trend_results=[],
+                position_results=[],
                 mode=mode_r,
                 market_ctx=market_r,
                 intraday_summary={},
@@ -6938,8 +6943,8 @@ Contoh penggunaan:
             )
             log.info(f"✅ ARA-only selesai: {len(ara_r)} kandidat")
         else:
-            # Full pipeline — run_screener() menangani intraday lama.
-            # Shim save_combined_output (di atas) sudah redirect ke v2.
+            # Full pipeline — run_screener() menangani semua 7 pipeline.
+            # Shim save_combined_output (di atas) sudah redirect ke v3.
             # Jika --no-ara, patch CONFIG agar ARA_ENABLED=False.
             if args.no_ara:
                 CONFIG["ARA_ENABLED"] = False
