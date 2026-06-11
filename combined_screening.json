@@ -89,7 +89,7 @@
         "SCREENER_TOP_VALUE"
       ],
       "warning": "⚠️ FALSE SIGNAL RATE TINGGI (~85-90%). Pipeline ini mendeteksi Tipe 1 (Continuation) dan Tipe 2 (Silent Accumulation). Tipe 3 (Out of Nowhere, ~48% ARA nyata) TIDAK BISA dideteksi dari OHLCV. Gunakan sebagai WATCHLIST saja. Konfirmasi dengan broker flow, news, dan analisis manual sebelum eksekusi.",
-      "generated_at": "04:40 WIB"
+      "generated_at": "05:27 WIB"
     }
   ],
   "bsjp_beli_sore_jual_pagi": [],
@@ -99,7 +99,7 @@
   "position_trading": [],
   "meta": {
     "status": "success",
-    "generated_at": "2026-06-12 04:42:39 WIB",
+    "generated_at": "2026-06-12 05:34:28 WIB",
     "date": "2026-06-12",
     "mode": "FULL_STOCKBIT",
     "session_label": "MARKET_DAY",
@@ -135,10 +135,10 @@
     "warning": null
   },
   "screening_summary": {
-    "universe": 288,
-    "after_liquidity": 57,
-    "after_accumulation": 18,
-    "after_trend": 4,
+    "universe": 972,
+    "after_liquidity": 77,
+    "after_accumulation": 24,
+    "after_trend": 5,
     "after_smc": 2,
     "after_entry": 1,
     "final": 0
