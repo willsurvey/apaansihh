@@ -64,6 +64,7 @@ except ImportError:
     )
 
 
+
 # =============================================================================
 # JSON ENCODER — Handle numpy types (bool_, int64, float64, ndarray)
 # Diperlukan karena pandas/numpy menghasilkan tipe non-native yang tidak bisa
@@ -231,7 +232,7 @@ CONFIG = {
 
     # --- Output ---
     "MAX_OUTPUT": 5,
-    "IHSG_3DAY_DOWN_STOP": False,
+    "IHSG_3DAY_DOWN_STOP": True,
     "IHSG_1DAY_DOWN_WARNING": -1.5,  # %
 
     # --- IHSG ticker ---
@@ -329,16 +330,17 @@ CONFIG = {
 
     # BSJP Tier S (lebih selektif, win rate lebih tinggi)
     # Win Rate historis: spike >2% = ~70%, avg spike = ~9.85%
-    "BSJP_TIER_S_VOL":      6.0,   # Vol >= 6x MA20 (diubah dari 5.0)
-    "BSJP_TIER_S_CPOS":     0.80,  # Tutup di >=80% dari range harian (diubah dari 0.95)
+    "BSJP_TIER_S_VOL":      5.0,   # Backtest: 5.0+0.95+ADX25 = WR 51.5%
+    "BSJP_TIER_S_CPOS":     0.95,  # KRITIS — naik dari 0.80, penyebab WR rendah sebelumnya
     "BSJP_TIER_S_BODY":     0.05,  # Body candle >= 5% (diubah dari 0.04)
     # Wajib: above_ma20 AND above_ma50
 
     # BSJP Tier A (lebih banyak sinyal, win rate tetap solid)
     # Win Rate historis: spike >2% = ~64%, avg spike = ~7.55%
-    "BSJP_TIER_A_VOL":      3.0,   # Vol >= 3x MA20
-    "BSJP_TIER_A_CPOS":     0.90,  # Tutup di >=90% dari range harian
+    "BSJP_TIER_A_VOL":      4.0,   # Vol >= 4x MA20 (diubah dari 3.0)
+    "BSJP_TIER_A_CPOS":     0.92,  # Tutup di >=92% dari range harian (diubah dari 0.90)
     "BSJP_TIER_A_BODY":     0.03,  # Body candle >= 3%
+    "BSJP_ADX_MIN":         25,    # [BARU] ADX >= 25 wajib — tanpa ini WR drop ke 31-37%
     # Wajib: above_ma20 AND above_ma50 AND above_ma200
 
     # Scoring bonus (memanfaatkan data universe yang sudah ada — gratis!)
@@ -376,6 +378,7 @@ CONFIG = {
     # OUTPUT: key baru "bpjs_beli_pagi_jual_sore" di combined_screening.json
     # =========================================================================
     "BPJS_ENABLED":         True,
+    "BPJS_REVERSAL_ENABLED": False,  # [BARU] WR max 43% N=53 — tidak stabil, dinonaktifkan
     "BPJS_MAX_OUTPUT":      5,
 
     # Filter universe
@@ -438,18 +441,19 @@ CONFIG = {
     "SWING_MA50_SLOPE_MIN":   0.01,  # MA50 naik >1% per 10 hari
 
     # Golden Setup: Posisi vs MA20
-    "SWING_DIST_MA20_MIN":    0.03,  # +3% di atas MA20
-    "SWING_DIST_MA20_MAX":    0.08,  # +8% di atas MA20 (tidak overextended)
+    "SWING_DIST_MA20_MIN":    0.02,  # Diperlonggar sedikit (dari 0.03)
+    "SWING_DIST_MA20_MAX":    0.10,  # Diperlonggar sedikit (dari 0.08)
 
     # Golden Setup: Volatility Contraction
     "SWING_SQUEEZE_MAX":      0.35,  # Range 5d < 35% dari Range 20d
 
     # Golden Setup: Volume Dryness
-    "SWING_VOL_5D_MAX":       0.50,  # Vol rata-rata 5d < 50% MA20
+    "SWING_VOL_5D_MAX":       0.60,  # Optimal di 0.60 (dari 0.50)
 
     # RSI filter
-    "SWING_RSI_MIN":          55,    # RSI minimum (bukan oversold)
-    "SWING_RSI_MAX":          80,    # RSI max (tidak terlalu overbought)
+    "SWING_RSI_MIN":          45,    # Setup squeeze muncul saat RSI belum overbought (dari 55)
+    "SWING_RSI_MAX":          65,    # WR 52.0% di range 45-65 vs 47.7% di 55-80 (dari 80)
+    "SWING_ADX_MIN":          25,    # [BARU] ADX >= 25 wajib — filter noise dramatis
 
     # Exit parameters
     "SWING_TARGET_PCT":       0.10,  # Target +10%
@@ -462,6 +466,59 @@ CONFIG = {
     "SWING_BONUS_TIGHT_ATR":    5,   # ATR < 3% (volatilitas rendah)
     "SWING_BONUS_NET_FOREIGN":  5,
     "SWING_BONUS_NEAR_52W_HIGH":5,   # Dekat 52-week high (<10%)
+
+    # =========================================================================
+    # PIPELINE TREND FOLLOWING — v1.0
+    # =========================================================================
+    # Backtest: 956 saham IHSG, TF: 1D + 1Wk.
+    # FORMULA: ADX_D>=30 + RSI[50-75] + MACD>0 + Mom5>0 + WkADX>=25 + WkOBV>MA
+    # WR (Max High>=10% dalam 20 hari): 54.7%
+    # Kill switch: IHSG < MA200 → return []
+    # Output: key "trend_following" di combined_screening.json
+    # =========================================================================
+    "TREND_ENABLED":              True,
+    "TREND_MAX_OUTPUT":           5,
+    "TREND_MIN_VALUE_20D":        1_000_000_000,  # Rp 1M value MA20
+    "TREND_ADX_MIN":              30,    # ADX Daily >= 30
+    "TREND_RSI_MIN":              50,    # RSI >= 50
+    "TREND_RSI_MAX":              75,    # RSI <= 75
+    "TREND_REQUIRE_ABOVE_MA200":  True,
+    "TREND_WK_ADX_MIN":           25,    # Weekly ADX >= 25
+    "TREND_WK_OBV_ABOVE_MA":      True,
+    "TREND_BONUS_MOM5":           5,
+    "TREND_BONUS_WK_OBV":         10,
+    "TREND_BONUS_ABOVE_MA200":    5,
+    "TREND_BONUS_NET_FOREIGN":    5,
+    "TREND_TARGET_PCT":           0.10,
+    "TREND_STOP_LOSS_PCT":        0.07,
+    "TREND_MAX_HOLD_DAYS":        20,
+
+    # =========================================================================
+    # PIPELINE POSITION TRADING — v1.0
+    # =========================================================================
+    # Backtest: 956 saham IHSG, TF: 1Wk + 1Mo + 1D.
+    # FORMULA: Near52Hi>=85% + WkRSI[55-80] + WkADX>=20 + WkOBV>MA + MoRSI>=50
+    # WR (Max High>=20% dalam 60 hari): 38.7%
+    # Tidak ada kill switch IHSG.
+    # Output: key "position_trading" di combined_screening.json
+    # =========================================================================
+    "POSITION_ENABLED":              True,
+    "POSITION_MAX_OUTPUT":           5,
+    "POSITION_MIN_VALUE_20D":        2_000_000_000,  # Rp 2M value MA20
+    "POSITION_NEAR_52W_PCT":         0.85,  # Close >= 85% dari 52W high
+    "POSITION_WK_RSI_MIN":           55,
+    "POSITION_WK_RSI_MAX":           80,
+    "POSITION_WK_ADX_MIN":           20,
+    "POSITION_WK_OBV_ABOVE_MA":      True,
+    "POSITION_MO_RSI_MIN":           50,
+    "POSITION_REQUIRE_ABOVE_MA200":  True,
+    "POSITION_BONUS_NEAR_ATH":       10,   # Close >= 95% dari 52W high
+    "POSITION_BONUS_MO_RSI":          5,
+    "POSITION_BONUS_WK_OBV":         10,
+    "POSITION_BONUS_NET_FOREIGN":     5,
+    "POSITION_TARGET_PCT":            0.20,
+    "POSITION_STOP_LOSS_PCT":         0.10,
+    "POSITION_MAX_HOLD_DAYS":         60,
 }
 
 os.makedirs(CONFIG["DATA_DIR"], exist_ok=True)
@@ -1933,6 +1990,93 @@ def get_daily_data(ticker: str) -> Optional[pd.DataFrame]:
         return None
 
 
+# ── Cache in-memory weekly & monthly ─────────────────────────────────────
+_weekly_cache:  Dict[str, Optional[pd.DataFrame]] = {}
+_monthly_cache: Dict[str, Optional[pd.DataFrame]] = {}
+
+_WEEKLY_CHUNK  = 50
+_MONTHLY_CHUNK = 50
+_BULK_SLEEP    = 2.0
+
+
+def _normalize_yf_df(df: pd.DataFrame, is_intraday: bool = False) -> Optional[pd.DataFrame]:
+    """Standarisasi DataFrame yfinance: flatten MultiIndex, lowercase kolom, rename date."""
+    if df is None or df.empty:
+        return None
+    if isinstance(df.columns, pd.MultiIndex):
+        df.columns = [col[0].lower() for col in df.columns]
+    else:
+        df.columns = [c.lower() for c in df.columns]
+    df = df.reset_index()
+    date_candidates = [c for c in df.columns if "date" in c or "datetime" in c]
+    if not date_candidates:
+        return None
+    df.rename(columns={date_candidates[0]: "date"}, inplace=True)
+    df = df.dropna(subset=["close"]).reset_index(drop=True)
+    return df if not df.empty else None
+
+
+def get_weekly_data(ticker: str) -> Optional[pd.DataFrame]:
+    """
+    Fetch data OHLCV weekly untuk 1 ticker. Cache in-memory per sesi screener.
+    """
+    if ticker in _weekly_cache:
+        return _weekly_cache[ticker]
+    try:
+        yf_ticker = f"{ticker}.JK" if not ticker.endswith(".JK") and not ticker.startswith("^") else ticker
+        raw = yf.download(
+            tickers=[yf_ticker],
+            period="max",
+            interval="1wk",
+            group_by="ticker",
+            auto_adjust=True,
+            progress=False,
+        )
+        if raw is None or raw.empty:
+            _weekly_cache[ticker] = None
+            return None
+        # Extract single ticker dari group_by result
+        if isinstance(raw.columns, pd.MultiIndex):
+            raw = raw[yf_ticker] if yf_ticker in raw.columns.get_level_values(0) else raw
+        df = _normalize_yf_df(raw)
+        _weekly_cache[ticker] = df
+        return df
+    except Exception as e:
+        log.debug(f"get_weekly_data {ticker}: {e}")
+        _weekly_cache[ticker] = None
+        return None
+
+
+def get_monthly_data(ticker: str) -> Optional[pd.DataFrame]:
+    """
+    Fetch data OHLCV monthly untuk 1 ticker. Cache in-memory per sesi screener.
+    """
+    if ticker in _monthly_cache:
+        return _monthly_cache[ticker]
+    try:
+        yf_ticker = f"{ticker}.JK" if not ticker.endswith(".JK") and not ticker.startswith("^") else ticker
+        raw = yf.download(
+            tickers=[yf_ticker],
+            period="max",
+            interval="1mo",
+            group_by="ticker",
+            auto_adjust=True,
+            progress=False,
+        )
+        if raw is None or raw.empty:
+            _monthly_cache[ticker] = None
+            return None
+        if isinstance(raw.columns, pd.MultiIndex):
+            raw = raw[yf_ticker] if yf_ticker in raw.columns.get_level_values(0) else raw
+        df = _normalize_yf_df(raw)
+        _monthly_cache[ticker] = df
+        return df
+    except Exception as e:
+        log.debug(f"get_monthly_data {ticker}: {e}")
+        _monthly_cache[ticker] = None
+        return None
+
+
 def check_trend_context(ticker: str) -> Tuple[bool, Optional[Dict]]:
     """
     Cek trend dengan MA50 Yahoo Finance.
@@ -3134,7 +3278,7 @@ def get_session_label() -> str:
 
 def run_screener():
     """
-    Main function — jalankan dengan: python screener_lokal.py
+    Main function — dipanggil oleh GitHub Actions setiap hari kerja 18:00 WIB.
     """
     start_time = time.time()
 
@@ -3170,6 +3314,19 @@ def run_screener():
     if not market_ctx["market_safe"]:
         log.warning("🛑 Market tidak aman — output kosong")
         save_output([], mode, market_ctx, {"stopped": "market_unsafe"}, session_label)
+        save_combined_output(
+            intraday_results=[],
+            ara_results=[],
+            bsjp_results=[],
+            bpjs_results=[],
+            swing_results=[],
+            trend_results=[],
+            position_results=[],
+            mode=mode,
+            market_ctx=market_ctx,
+            intraday_summary={"stopped": "market_unsafe"},
+            session_label=session_label,
+        )
         return
 
     # ----------------------------------------------------------------
@@ -3468,6 +3625,22 @@ def run_screener():
     if CONFIG.get("SWING_ENABLED", True):
         swing_results = run_swing_pipeline(universe, mode, market_ctx)
 
+    # ----------------------------------------------------------------
+    # PIPELINE TREND FOLLOWING — dijalankan setelah Swing selesai
+    # Memanfaatkan `universe` dan cache OHLCV/Weekly yang sudah ada.
+    # ----------------------------------------------------------------
+    trend_results = []
+    if CONFIG.get("TREND_ENABLED", True):
+        trend_results = run_trend_pipeline(universe, mode, market_ctx)
+
+    # ----------------------------------------------------------------
+    # PIPELINE POSITION TRADING — dijalankan setelah Trend selesai
+    # Memanfaatkan `universe` dan cache OHLCV/Weekly/Monthly yang sudah ada.
+    # ----------------------------------------------------------------
+    position_results = []
+    if CONFIG.get("POSITION_ENABLED", True):
+        position_results = run_position_pipeline(universe, mode, market_ctx)
+
     # Simpan output gabungan (combined_screening.json)
     save_combined_output(
         intraday_results=results,
@@ -3475,6 +3648,8 @@ def run_screener():
         bsjp_results=bsjp_results,
         bpjs_results=bpjs_results,
         swing_results=swing_results,
+        trend_results=trend_results,
+        position_results=position_results,
         mode=mode,
         market_ctx=market_ctx,
         intraday_summary=summary,
@@ -3489,6 +3664,8 @@ def run_screener():
     log.info(f"   BSJP kandidat:     {len(bsjp_results)} saham → combined_screening.json")
     log.info(f"   BPJS watchlist:    {len(bpjs_results)} saham → combined_screening.json")
     log.info(f"   SWING watchlist:   {len(swing_results)} saham → combined_screening.json")
+    log.info(f"   TREND watchlist:   {len(trend_results)} saham → combined_screening.json")
+    log.info(f"   POSITION watchlist:{len(position_results)} saham → combined_screening.json")
     log.info(f"   ⏱️  Total waktu: {elapsed_total:.1f} menit")
     log.info("=" * 70)
 
@@ -3540,6 +3717,8 @@ def save_combined_output(
     bsjp_results: Optional[List[Dict]] = None,
     bpjs_results: Optional[List[Dict]] = None,
     swing_results: Optional[List[Dict]] = None,
+    trend_results: Optional[List[Dict]] = None,
+    position_results: Optional[List[Dict]] = None,
 ):
     """
     Shim: redirect ke save_combined_output_v3.
@@ -3552,6 +3731,8 @@ def save_combined_output(
         bsjp_results=bsjp_results or [],
         bpjs_results=bpjs_results or [],
         swing_results=swing_results or [],
+        trend_results=trend_results or [],
+        position_results=position_results or [],
         mode=mode,
         market_ctx=market_ctx,
         intraday_summary=intraday_summary,
@@ -4892,6 +5073,11 @@ def save_combined_output_v2(
     output = {
         "logika_lama_intraday":  intraday_results,
         "logika_baru_calon_ara": ara_results,
+        "bsjp_beli_sore_jual_pagi": [],
+        "bpjs_beli_pagi_jual_sore": [],
+        "swing_trading":            [],
+        "trend_following":          [],
+        "position_trading":         [],
 
         "meta": {
             "status":           "success" if (intraday_results or ara_results) else "no_signal",
@@ -5039,6 +5225,13 @@ def _bsjp_compute_ohlcv_features(ticker: str) -> Optional[Dict]:
         # Nilai tukar hari ini (untuk filter tambahan di pemanggil)
         val_ma20 = (df["close"] * df["volume"]).rolling(20).mean().iloc[-1]
 
+        # ADX via pandas_ta (sudah diimport sebagai `ta` di baris 29)
+        adx_df  = ta.adx(df["high"], df["low"], df["close"], length=14)
+        adx_val = float(adx_df["ADX_14"].iloc[-1]) if (
+            adx_df is not None and not adx_df.empty and
+            not pd.isna(adx_df["ADX_14"].iloc[-1])
+        ) else 0.0
+
         return {
             "vol_ratio20":  round(vol_ratio20, 2),
             "body_pct":     round(body_pct, 4),
@@ -5054,6 +5247,7 @@ def _bsjp_compute_ohlcv_features(ticker: str) -> Optional[Dict]:
             "high":         high,
             "low":          low,
             "open":         open_,
+            "adx":          round(adx_val, 1),   # [BARU]
         }
     except Exception as e:
         log.debug(f"    BSJP feature error {ticker}: {e}")
@@ -5079,6 +5273,17 @@ def _bsjp_score(feat_ohlcv: Dict, stock_mm: Dict) -> Tuple[int, str, List[str], 
     above_ma50  = feat_ohlcv["above_ma50"]
     above_ma200 = feat_ohlcv["above_ma200"]
     ma20_slope  = feat_ohlcv["ma20_slope"]
+
+    # ── ADX GATE (wajib) ────────────────────────────────────────────────────
+    # Backtest: tanpa ADX filter → WR Tier S 37.6%, Tier A 31.5%
+    # Dengan ADX>=25 → WR Tier S 51.5%, Tier A 43.1%
+    adx = feat_ohlcv.get("adx", 0.0)
+    if adx < CONFIG.get("BSJP_ADX_MIN", 25):
+        return 0, "NONE", [], [
+            f"ADX terlalu lemah ({adx:.1f} < {CONFIG.get('BSJP_ADX_MIN', 25)}) "
+            f"— tren tidak cukup kuat untuk BSJP"
+        ]
+    # ── AKHIR ADX GATE ──────────────────────────────────────────────────────
 
     # ---- TENTUKAN TIER TEKNIKAL ----
     tier_s = (
@@ -5519,6 +5724,9 @@ def _bpjs_score(feat: Dict, stock_mm: Dict) -> Tuple[int, str, List[str], List[s
         d1_cpos  <= CONFIG["BPJS_REV_CPOS_MAX"] and
         above_ma50  # Trend masih ok meski D-1 merah
     )
+    # Guard: Reversal disabled via config (WR max 43%, N tidak cukup stabil)
+    if not CONFIG.get("BPJS_REVERSAL_ENABLED", False):
+        is_reversal = False
 
     # ---- CEK FORMULA 2: Quiet Continuation ----
     # D-1 hijau solid/tipis + vol mati + close tengah + uptrend
@@ -5906,6 +6114,13 @@ def _swing_compute_features(ticker: str) -> Optional[Dict]:
             high_52w = float(h.max())
         dist_52w = (curr_c - high_52w) / high_52w if high_52w > 0 else -1
 
+        # ADX via pandas_ta
+        adx_df  = ta.adx(h, l, c, length=14)
+        adx_val = float(adx_df["ADX_14"].iloc[-1]) if (
+            adx_df is not None and not adx_df.empty and
+            not pd.isna(adx_df["ADX_14"].iloc[-1])
+        ) else 0.0
+
         return {
             "is_stage2": is_stage2, "ma50_slope": round(ma50_slope, 4),
             "dist_ma20": round(dist_ma20, 4), "squeeze": round(squeeze, 4),
@@ -5914,6 +6129,7 @@ def _swing_compute_features(ticker: str) -> Optional[Dict]:
             "dist_52w": round(dist_52w, 4), "close": curr_c,
             "ma20": round(curr_ma20, 2), "ma50": round(curr_ma50, 2),
             "ma200": round(curr_ma200, 2), "above_ma200": curr_c > curr_ma200,
+            "adx": round(adx_val, 1),   # [BARU]
         }
     except Exception as e:
         log.debug(f"    SWING feature error {ticker}: {e}")
@@ -5930,6 +6146,13 @@ def _swing_score(feat: Dict, stock_mm: Dict) -> Tuple[int, List[str], List[str]]
         return 0, [], ["Bukan Stage 2 Uptrend"]
     if feat["ma50_slope"] < CONFIG["SWING_MA50_SLOPE_MIN"]:
         return 0, [], [f"MA50 slope terlalu flat ({feat['ma50_slope']*100:.1f}%)"]
+
+    # ADX Gate (wajib — ditambahkan v2.0)
+    if feat.get("adx", 0) < CONFIG.get("SWING_ADX_MIN", 25):
+        return 0, [], [
+            f"ADX terlalu lemah ({feat.get('adx', 0):.0f} < "
+            f"{CONFIG.get('SWING_ADX_MIN', 25)}) — squeeze belum mature"
+        ]
 
     score += 25
     sig_pos.append(
@@ -5970,9 +6193,9 @@ def _swing_score(feat: Dict, stock_mm: Dict) -> Tuple[int, List[str], List[str]]
 
     rsi = feat["rsi"]
     if CONFIG["SWING_RSI_MIN"] <= rsi <= CONFIG["SWING_RSI_MAX"]:
-        if 65 <= rsi <= 80:
+        if 55 <= rsi <= 65:
             score += CONFIG["SWING_BONUS_RSI_SWEET"]
-            sig_pos.append(f"RSI sweet spot ({rsi:.0f}) — PF 1.81x")
+            sig_pos.append(f"RSI sweet spot ({rsi:.0f}) — momentum awal uptrend, WR 52.0%")
         else:
             sig_pos.append(f"RSI netral ({rsi:.0f})")
     elif rsi < CONFIG["SWING_RSI_MIN"]:
@@ -5997,6 +6220,402 @@ def _swing_score(feat: Dict, stock_mm: Dict) -> Tuple[int, List[str], List[str]]
         sig_pos.append(f"Asing beli bersih (Rp {nf/1e9:.1f}B)")
 
     return max(0, score), sig_pos, sig_neg
+
+
+def _trend_score(feat: Dict, stock_mm: Dict) -> Tuple[int, List[str], List[str]]:
+    """
+    Hitung skor Trend Following v1.0.
+    Return: (score, signals_positive, signals_negative)
+
+    Backtest: 956 saham, WR (Max High>=10% dalam 20 hari) = 54.7%
+    Formula: ADX_D>=30 + RSI[50-75] + MACD>0 + Mom5>0 + WkADX>=25 + WkOBV>MA
+    """
+    score = 0
+    sig_pos: List[str] = []
+    sig_neg: List[str] = []
+
+    # Gate 1: Stage 2 Uptrend
+    if not feat.get("is_stage2", False):
+        return 0, [], ["Bukan Stage 2 Uptrend"]
+
+    # Gate 2: ADX kuat
+    adx = feat.get("adx", 0.0)
+    adx_min = CONFIG.get("TREND_ADX_MIN", 30)
+    if adx < adx_min:
+        return 0, [], [f"ADX terlalu lemah ({adx:.0f} < {adx_min})"]
+
+    # Gate 3: RSI range sehat
+    rsi = feat.get("rsi", 0.0)
+    rsi_min = CONFIG.get("TREND_RSI_MIN", 50)
+    rsi_max = CONFIG.get("TREND_RSI_MAX", 75)
+    if not (rsi_min <= rsi <= rsi_max):
+        return 0, [], [f"RSI di luar range ({rsi:.0f}, butuh {rsi_min}–{rsi_max})"]
+
+    # Gate 4: MACD Histogram positif
+    if feat.get("macd_hist", 0.0) <= 0:
+        return 0, [], ["MACD Histogram negatif — momentum menurun"]
+
+    # Semua gate lolos
+    score += 40
+    sig_pos.append(
+        f"Stage 2 + ADX kuat ({adx:.0f}) + RSI sehat ({rsi:.0f}) + MACD positif "
+        f"— WR historis 54.7% (hit +10% dalam 20 hari)"
+    )
+
+    # Bonus: Momentum 5 hari
+    if feat.get("mom5", 0.0) > 0:
+        score += CONFIG.get("TREND_BONUS_MOM5", 5)
+        sig_pos.append(f"Momentum 5 hari positif (+{feat.get('mom5', 0)*100:.1f}%)")
+
+    # Bonus: Di atas MA200
+    if feat.get("above_ma200", False):
+        score += CONFIG.get("TREND_BONUS_ABOVE_MA200", 5)
+        sig_pos.append("Di atas MA200 — tren primer bullish")
+    else:
+        sig_neg.append("Di bawah MA200")
+
+    # Bonus: Weekly ADX
+    wk_adx = feat.get("wk_adx", 0.0)
+    if wk_adx >= CONFIG.get("TREND_WK_ADX_MIN", 25):
+        score += 10
+        sig_pos.append(f"Weekly ADX kuat ({wk_adx:.0f})")
+    else:
+        sig_neg.append(f"Weekly ADX lemah ({wk_adx:.0f})")
+
+    # Bonus: Weekly OBV
+    if feat.get("wk_obv_above_ma", False):
+        score += CONFIG.get("TREND_BONUS_WK_OBV", 10)
+        sig_pos.append("Weekly OBV di atas MA20 — akumulasi mingguan positif")
+    else:
+        sig_neg.append("Weekly OBV di bawah MA20")
+
+    # Bonus: Net foreign
+    nf = stock_mm.get("net_foreign_today", 0) or 0
+    if nf > 0:
+        score += CONFIG.get("TREND_BONUS_NET_FOREIGN", 5)
+        sig_pos.append(f"Asing beli bersih (Rp {nf/1e9:.1f}B)")
+
+    return max(0, score), sig_pos, sig_neg
+
+
+def run_trend_pipeline(
+    universe: List[Dict], mode: str, market_ctx: Dict
+) -> List[Dict]:
+    """
+    Pipeline Trend Following v1.0 — ADX Kuat + MACD + Weekly Confirmation.
+    Kill switch: IHSG < MA200. Output: key "trend_following" di JSON.
+    WR: 54.7% (Max High>=10% dalam 20 hari)
+    """
+    log.info("\n" + "=" * 70)
+    log.info("📈 TREND FOLLOWING PIPELINE v1.0")
+    log.info(f"   Universe input: {len(universe)} saham")
+    log.info("=" * 70)
+
+    if not CONFIG.get("TREND_ENABLED", True):
+        return []
+
+    # Kill switch: IHSG < MA200
+    try:
+        ihsg_df = get_daily_data("^JKSE")
+        if ihsg_df is not None and len(ihsg_df) >= 200:
+            ihsg_c = ihsg_df["close"].astype(float)
+            if float(ihsg_c.iloc[-1]) < float(ihsg_c.rolling(200).mean().iloc[-1]):
+                log.warning("   ⛔ KILL SWITCH: IHSG < MA200. Trend Following mati.")
+                return []
+    except Exception as e:
+        log.warning(f"   IHSG check error: {e}")
+
+    min_val = CONFIG.get("TREND_MIN_VALUE_20D", 1_000_000_000)
+    candidates = []
+
+    for stock in universe:
+        ticker = stock.get("ticker", "")
+        if not ticker:
+            continue
+
+        # Daily data (sudah di cache via get_daily_data)
+        df = get_daily_data(ticker)
+        if df is None or len(df) < 210:
+            continue
+        df.columns = [c.lower() if isinstance(c, str) else str(c) for c in df.columns]
+
+        try:
+            c = df["close"].astype(float)
+            h = df["high"].astype(float)
+            l = df["low"].astype(float)
+            v = df["volume"].astype(float)
+
+            val_ma20 = float((c * v).rolling(20).mean().iloc[-1])
+            if pd.isna(val_ma20) or val_ma20 < min_val:
+                continue
+
+            ma50  = float(c.rolling(50).mean().iloc[-1])
+            ma200 = float(c.rolling(200).mean().iloc[-1])
+            curr  = float(c.iloc[-1])
+            is_stage2 = curr > ma50 and ma50 > ma200
+
+            # ADX via pandas_ta
+            adx_df  = ta.adx(h, l, c, length=14)
+            adx_val = float(adx_df["ADX_14"].iloc[-1]) if (
+                adx_df is not None and not adx_df.empty and
+                not pd.isna(adx_df["ADX_14"].iloc[-1])
+            ) else 0.0
+
+            # RSI (gunakan fungsi yang sudah ada di screener)
+            rsi_val = float(_swing_compute_rsi(c, 14).iloc[-1])
+
+            # MACD Histogram
+            ema12 = c.ewm(span=12, adjust=False).mean()
+            ema26 = c.ewm(span=26, adjust=False).mean()
+            macd_line = ema12 - ema26
+            signal    = macd_line.ewm(span=9, adjust=False).mean()
+            macd_h    = float((macd_line - signal).iloc[-1])
+
+            # Momentum 5 hari
+            mom5 = float(c.iloc[-1] / c.iloc[-6] - 1) if len(c) > 5 else 0.0
+
+            # Weekly data
+            wk_adx_val = 0.0
+            wk_obv_above_ma = False
+            df_wk = get_weekly_data(ticker)
+            if df_wk is not None and len(df_wk) >= 30:
+                wk_c = df_wk["close"].astype(float)
+                wk_v = df_wk["volume"].astype(float)
+                wk_h = df_wk["high"].astype(float)
+                wk_l = df_wk["low"].astype(float)
+                wk_adx_df  = ta.adx(wk_h, wk_l, wk_c, length=14)
+                wk_adx_val = float(wk_adx_df["ADX_14"].iloc[-1]) if (
+                    wk_adx_df is not None and not wk_adx_df.empty and
+                    not pd.isna(wk_adx_df["ADX_14"].iloc[-1])
+                ) else 0.0
+                wk_obv = (np.sign(wk_c.diff().fillna(0)) * wk_v).cumsum()
+                wk_obv_ma = wk_obv.rolling(20).mean()
+                wk_obv_above_ma = bool(float(wk_obv.iloc[-1]) > float(wk_obv_ma.iloc[-1]))
+
+            feat = {
+                "is_stage2":       is_stage2,
+                "adx":             adx_val,
+                "rsi":             rsi_val,
+                "macd_hist":       macd_h,
+                "mom5":            mom5,
+                "above_ma200":     curr > ma200,
+                "wk_adx":          wk_adx_val,
+                "wk_obv_above_ma": wk_obv_above_ma,
+            }
+
+            score, sig_pos, sig_neg = _trend_score(feat, stock)
+            if score <= 0:
+                continue
+
+            candidates.append({
+                "ticker":           ticker,
+                "company":          stock.get("name", ticker),
+                "score":            score,
+                "close":            curr,
+                "adx":              round(adx_val, 1),
+                "rsi":              round(rsi_val, 1),
+                "macd_hist":        round(macd_h, 4),
+                "wk_adx":           round(wk_adx_val, 1),
+                "wk_obv_above_ma":  wk_obv_above_ma,
+                "target_pct":       CONFIG.get("TREND_TARGET_PCT", 0.10),
+                "stop_loss_pct":    CONFIG.get("TREND_STOP_LOSS_PCT", 0.07),
+                "max_hold_days":    CONFIG.get("TREND_MAX_HOLD_DAYS", 20),
+                "signals_positive": sig_pos,
+                "signals_negative": sig_neg,
+                "pipeline":         "trend_following",
+            })
+        except Exception as e:
+            log.debug(f"   TREND {ticker}: {e}")
+            continue
+
+    candidates.sort(key=lambda x: x["score"], reverse=True)
+    hasil = candidates[:CONFIG.get("TREND_MAX_OUTPUT", 5)]
+    log.info(f"   Kandidat lolos: {len(candidates)} | Output: {len(hasil)}")
+    log.info("=" * 70)
+    return hasil
+
+
+def _position_score(feat: Dict, stock_mm: Dict) -> Tuple[int, List[str], List[str]]:
+    """
+    Hitung skor Position Trading v1.0.
+    Return: (score, signals_positive, signals_negative)
+
+    Backtest: 956 saham, WR (Max High>=20% dalam 60 hari) = 38.7%
+    Formula: Near52Hi>=85% + WkRSI[55-80] + WkADX>=20 + WkOBV>MA + MoRSI>=50
+    """
+    score = 0
+    sig_pos: List[str] = []
+    sig_neg: List[str] = []
+
+    # Gate 1: Near 52-Week High
+    near52 = feat.get("near_52w_pct", 0.0)
+    thresh = CONFIG.get("POSITION_NEAR_52W_PCT", 0.85)
+    if near52 < thresh:
+        return 0, [], [
+            f"Terlalu jauh dari 52W High ({near52*100:.0f}% dari high, butuh >={thresh*100:.0f}%)"
+        ]
+
+    # Gate 2: Weekly RSI
+    wk_rsi = feat.get("wk_rsi", 0.0)
+    wk_rsi_min = CONFIG.get("POSITION_WK_RSI_MIN", 55)
+    wk_rsi_max = CONFIG.get("POSITION_WK_RSI_MAX", 80)
+    if not (wk_rsi_min <= wk_rsi <= wk_rsi_max):
+        return 0, [], [f"Weekly RSI di luar range ({wk_rsi:.0f}, butuh {wk_rsi_min}–{wk_rsi_max})"]
+
+    # Gate 3: Weekly ADX
+    wk_adx = feat.get("wk_adx", 0.0)
+    wk_adx_min = CONFIG.get("POSITION_WK_ADX_MIN", 20)
+    if wk_adx < wk_adx_min:
+        return 0, [], [f"Weekly ADX lemah ({wk_adx:.0f} < {wk_adx_min})"]
+
+    # Gate 4: Monthly RSI
+    mo_rsi = feat.get("mo_rsi", 50.0)
+    mo_rsi_min = CONFIG.get("POSITION_MO_RSI_MIN", 50)
+    if mo_rsi < mo_rsi_min:
+        return 0, [], [f"Monthly RSI terlalu rendah ({mo_rsi:.0f}) — makro bearish"]
+
+    score += 40
+    sig_pos.append(
+        f"Near 52W High ({near52*100:.0f}%) + Wk RSI ({wk_rsi:.0f}) "
+        f"+ Wk ADX ({wk_adx:.0f}) — WR 38.7% (hit +20%, 60 hari)"
+    )
+
+    if near52 >= 0.95:
+        score += CONFIG.get("POSITION_BONUS_NEAR_ATH", 10)
+        sig_pos.append(f"Sangat dekat ATH ({near52*100:.0f}%) — breakout potential")
+
+    if mo_rsi >= 60:
+        score += CONFIG.get("POSITION_BONUS_MO_RSI", 5)
+        sig_pos.append(f"Monthly RSI kuat ({mo_rsi:.0f})")
+
+    if feat.get("wk_obv_above_ma", False):
+        score += CONFIG.get("POSITION_BONUS_WK_OBV", 10)
+        sig_pos.append("Weekly OBV di atas MA20 — akumulasi jangka panjang")
+    else:
+        sig_neg.append("Weekly OBV di bawah MA20")
+
+    if feat.get("above_ma200", False):
+        sig_pos.append("Di atas MA200 Daily — tren primer bullish")
+    else:
+        sig_neg.append("Di bawah MA200 Daily")
+
+    nf = stock_mm.get("net_foreign_today", 0) or 0
+    if nf > 0:
+        score += CONFIG.get("POSITION_BONUS_NET_FOREIGN", 5)
+        sig_pos.append(f"Asing beli bersih (Rp {nf/1e9:.1f}B)")
+
+    return max(0, score), sig_pos, sig_neg
+
+
+def run_position_pipeline(
+    universe: List[Dict], mode: str, market_ctx: Dict
+) -> List[Dict]:
+    """
+    Pipeline Position Trading v1.0 — Near 52W High + Weekly/Monthly Confirm.
+    Tidak ada kill switch IHSG. Output: key "position_trading" di JSON.
+    WR: 38.7% (Max High>=20% dalam 60 hari)
+    """
+    log.info("\n" + "=" * 70)
+    log.info("📊 POSITION TRADING PIPELINE v1.0")
+    log.info(f"   Universe input: {len(universe)} saham")
+    log.info("=" * 70)
+
+    if not CONFIG.get("POSITION_ENABLED", True):
+        return []
+
+    min_val = CONFIG.get("POSITION_MIN_VALUE_20D", 2_000_000_000)
+    candidates = []
+
+    for stock in universe:
+        ticker = stock.get("ticker", "")
+        if not ticker:
+            continue
+
+        df = get_daily_data(ticker)
+        if df is None or len(df) < 210:
+            continue
+        df.columns = [c.lower() if isinstance(c, str) else str(c) for c in df.columns]
+
+        try:
+            c = df["close"].astype(float)
+            h = df["high"].astype(float)
+            v = df["volume"].astype(float)
+
+            val_ma20 = float((c * v).rolling(20).mean().iloc[-1])
+            if pd.isna(val_ma20) or val_ma20 < min_val:
+                continue
+
+            curr  = float(c.iloc[-1])
+            ma200 = float(c.rolling(200).mean().iloc[-1])
+            hi52w = float(h.iloc[-252:].max()) if len(h) >= 252 else float(h.max())
+            near52_pct = curr / hi52w if hi52w > 0 else 0.0
+
+            # Weekly
+            wk_rsi_val = 0.0
+            wk_adx_val = 0.0
+            wk_obv_above_ma = False
+            df_wk = get_weekly_data(ticker)
+            if df_wk is not None and len(df_wk) >= 30:
+                wk_c = df_wk["close"].astype(float)
+                wk_v = df_wk["volume"].astype(float)
+                wk_h = df_wk["high"].astype(float)
+                wk_l = df_wk["low"].astype(float)
+                wk_rsi_val = float(_swing_compute_rsi(wk_c, 14).iloc[-1])
+                wk_adx_df  = ta.adx(wk_h, wk_l, wk_c, length=14)
+                wk_adx_val = float(wk_adx_df["ADX_14"].iloc[-1]) if (
+                    wk_adx_df is not None and not wk_adx_df.empty and
+                    not pd.isna(wk_adx_df["ADX_14"].iloc[-1])
+                ) else 0.0
+                wk_obv = (np.sign(wk_c.diff().fillna(0)) * wk_v).cumsum()
+                wk_obv_ma = wk_obv.rolling(20).mean()
+                wk_obv_above_ma = bool(float(wk_obv.iloc[-1]) > float(wk_obv_ma.iloc[-1]))
+
+            # Monthly
+            mo_rsi_val = 50.0
+            df_mo = get_monthly_data(ticker)
+            if df_mo is not None and len(df_mo) >= 6:
+                mo_c = df_mo["close"].astype(float)
+                mo_rsi_val = float(_swing_compute_rsi(mo_c, 14).iloc[-1])
+
+            feat = {
+                "near_52w_pct":    near52_pct,
+                "above_ma200":     curr > ma200,
+                "wk_rsi":          wk_rsi_val,
+                "wk_adx":          wk_adx_val,
+                "wk_obv_above_ma": wk_obv_above_ma,
+                "mo_rsi":          mo_rsi_val,
+            }
+
+            score, sig_pos, sig_neg = _position_score(feat, stock)
+            if score <= 0:
+                continue
+
+            candidates.append({
+                "ticker":           ticker,
+                "company":          stock.get("name", ticker),
+                "score":            score,
+                "close":            curr,
+                "near_52w_pct":     round(near52_pct * 100, 1),
+                "wk_rsi":           round(wk_rsi_val, 1),
+                "wk_adx":           round(wk_adx_val, 1),
+                "mo_rsi":           round(mo_rsi_val, 1),
+                "wk_obv_above_ma":  wk_obv_above_ma,
+                "target_pct":       CONFIG.get("POSITION_TARGET_PCT", 0.20),
+                "stop_loss_pct":    CONFIG.get("POSITION_STOP_LOSS_PCT", 0.10),
+                "max_hold_days":    CONFIG.get("POSITION_MAX_HOLD_DAYS", 60),
+                "signals_positive": sig_pos,
+                "signals_negative": sig_neg,
+                "pipeline":         "position_trading",
+            })
+        except Exception as e:
+            log.debug(f"   POSITION {ticker}: {e}")
+            continue
+
+    candidates.sort(key=lambda x: x["score"], reverse=True)
+    hasil = candidates[:CONFIG.get("POSITION_MAX_OUTPUT", 5)]
+    log.info(f"   Kandidat lolos: {len(candidates)} | Output: {len(hasil)}")
+    log.info("=" * 70)
+    return hasil
 
 
 def run_swing_pipeline(
@@ -6149,12 +6768,20 @@ def save_combined_output_v3(
     market_ctx: Dict,
     intraday_summary: Dict,
     session_label: str = "MARKET_DAY",
+    trend_results: Optional[List[Dict]] = None,
+    position_results: Optional[List[Dict]] = None,
 ):
-    """Simpan output gabungan ke combined_screening.json (v5 — 5 pipeline)."""
+    """Simpan output gabungan ke combined_screening.json (v7 — 7 pipeline)."""
     today     = datetime.now().strftime("%Y-%m-%d")
     today_str = datetime.now().strftime("%Y%m%d")
 
-    any_signal = intraday_results or ara_results or bsjp_results or bpjs_results or swing_results
+    t_res = trend_results or []
+    p_res = position_results or []
+
+    any_signal = (
+        intraday_results or ara_results or bsjp_results or
+        bpjs_results or swing_results or t_res or p_res
+    )
 
     output = {
         "logika_lama_intraday":     intraday_results,
@@ -6162,6 +6789,8 @@ def save_combined_output_v3(
         "bsjp_beli_sore_jual_pagi": bsjp_results,
         "bpjs_beli_pagi_jual_sore": bpjs_results,
         "swing_trading":            swing_results,
+        "trend_following":          t_res,
+        "position_trading":         p_res,
 
         "meta": {
             "status":           "success" if any_signal else "no_signal",
@@ -6169,20 +6798,22 @@ def save_combined_output_v3(
             "date":             today,
             "mode":             mode,
             "session_label":    session_label,
-            "pipeline_version": "v5.0",
+            "pipeline_version": "v7.0",
             "session_warning": (
-                "\u26a0\ufe0f Screening akhir pekan \u2014 referensi persiapan saja, bukan sinyal eksekusi."
+                "⚠️ Screening akhir pekan — referensi persiapan saja, bukan sinyal eksekusi."
                 if "PRE_MARKET_WEEKEND" in session_label else None
             ),
             "mode_warning": (
                 None if mode == "FULL_STOCKBIT"
-                else "\u26a0\ufe0f TOKEN TIDAK TERSEDIA \u2014 ARA pipeline tidak berjalan"
+                else "⚠️ TOKEN TIDAK TERSEDIA — ARA pipeline tidak berjalan"
             ),
             "intraday_count": len(intraday_results),
             "ara_count":      len(ara_results),
             "bsjp_count":     len(bsjp_results),
             "bpjs_count":     len(bpjs_results),
             "swing_count":    len(swing_results),
+            "trend_count":    len(t_res),
+            "position_count": len(p_res),
             "ara_disclaimer": (
                 "Pipeline ARA v2: deteksi Tipe 1 (Continuation) & Tipe 2 (Silent Accumulation). "
                 "Tipe 3 (Out of Nowhere, ~48% dari ARA nyata) tidak terdeteksi dari OHLCV. "
@@ -6205,6 +6836,15 @@ def save_combined_output_v3(
                 "KILL SWITCH aktif jika IHSG < MA200 (bear market). "
                 "Backtest 467.390 hari trading IHSG. SL -6% keras."
             ),
+            "trend_disclaimer": (
+                "Pipeline TREND FOLLOWING v1: ADX kuat + RSI + MACD + Weekly Confirmation. "
+                "WR: 54.7% (Max High>=10% dalam 20 hari). "
+                "KILL SWITCH aktif jika IHSG < MA200."
+            ),
+            "position_disclaimer": (
+                "Pipeline POSITION TRADING v1: Near 52W High + Weekly/Monthly Confirm. "
+                "WR: 38.7% (Max High>=20% dalam 60 hari)."
+            ),
             "scoring_breakdown": {
                 "daily_max": 70, "minute_max": 20, "stockbit_bonus": 10, "total_max": 100,
             },
@@ -6223,7 +6863,7 @@ def save_combined_output_v3(
         "config_bsjp": {
             "min_value_today_rp":  CONFIG.get("BSJP_MIN_VALUE_TODAY", 10_000_000_000),
             "tier_s_vol":          CONFIG.get("BSJP_TIER_S_VOL", 5.0),
-            "tier_a_vol":          CONFIG.get("BSJP_TIER_A_VOL", 3.0),
+            "tier_a_vol":          CONFIG.get("BSJP_TIER_A_VOL", 4.0),
             "max_output":          CONFIG.get("BSJP_MAX_OUTPUT", 5),
             "backtest_sample_size": 252480,
         },
@@ -6234,17 +6874,36 @@ def save_combined_output_v3(
         },
         "config_swing": {
             "min_value_20d_rp":     CONFIG.get("SWING_MIN_VALUE_20D", 5_000_000_000),
-            "dist_ma20_range":      f"{CONFIG.get('SWING_DIST_MA20_MIN', 0.03)}-{CONFIG.get('SWING_DIST_MA20_MAX', 0.08)}",
+            "dist_ma20_range":      f"{CONFIG.get('SWING_DIST_MA20_MIN', 0.02)}-{CONFIG.get('SWING_DIST_MA20_MAX', 0.10)}",
             "squeeze_max":          CONFIG.get("SWING_SQUEEZE_MAX", 0.35),
-            "vol_5d_max":           CONFIG.get("SWING_VOL_5D_MAX", 0.50),
-            "rsi_range":            f"{CONFIG.get('SWING_RSI_MIN', 55)}-{CONFIG.get('SWING_RSI_MAX', 80)}",
+            "vol_5d_max":           CONFIG.get("SWING_VOL_5D_MAX", 0.60),
+            "rsi_range":            f"{CONFIG.get('SWING_RSI_MIN', 45)}-{CONFIG.get('SWING_RSI_MAX', 65)}",
             "target_pct":           CONFIG.get("SWING_TARGET_PCT", 0.10),
             "stop_loss_pct":        CONFIG.get("SWING_STOP_LOSS_PCT", 0.06),
-            "max_hold_days":        CONFIG.get("SWING_MAX_HOLD_DAYS", 15),
+            "max_hold_days":        CONFIG.get("SWING_MAX_HOLD_DAYS", 20),
             "max_output":           CONFIG.get("SWING_MAX_OUTPUT", 5),
             "backtest_sample_size": 467390,
             "golden_setup_pf":      "1.60x",
             "golden_setup_ev":      "+2.14% per trade",
+        },
+        "config_trend": {
+            "min_value_20d_rp":     CONFIG.get("TREND_MIN_VALUE_20D", 1_000_000_000),
+            "adx_min":              CONFIG.get("TREND_ADX_MIN", 30),
+            "rsi_range":            f"{CONFIG.get('TREND_RSI_MIN', 50)}-{CONFIG.get('TREND_RSI_MAX', 75)}",
+            "wk_adx_min":           CONFIG.get("TREND_WK_ADX_MIN", 25),
+            "target_pct":           CONFIG.get("TREND_TARGET_PCT", 0.10),
+            "stop_loss_pct":        CONFIG.get("TREND_STOP_LOSS_PCT", 0.07),
+            "max_hold_days":        CONFIG.get("TREND_MAX_HOLD_DAYS", 20),
+        },
+        "config_position": {
+            "min_value_20d_rp":     CONFIG.get("POSITION_MIN_VALUE_20D", 2_000_000_000),
+            "near_52w_pct":         CONFIG.get("POSITION_NEAR_52W_PCT", 0.85),
+            "wk_rsi_range":         f"{CONFIG.get('POSITION_WK_RSI_MIN', 55)}-{CONFIG.get('POSITION_WK_RSI_MAX', 80)}",
+            "wk_adx_min":           CONFIG.get("POSITION_WK_ADX_MIN", 20),
+            "mo_rsi_min":           CONFIG.get("POSITION_MO_RSI_MIN", 50),
+            "target_pct":           CONFIG.get("POSITION_TARGET_PCT", 0.20),
+            "stop_loss_pct":        CONFIG.get("POSITION_STOP_LOSS_PCT", 0.10),
+            "max_hold_days":        CONFIG.get("POSITION_MAX_HOLD_DAYS", 60),
         },
     }
 
@@ -6282,30 +6941,18 @@ if __name__ == "__main__":
     import argparse
 
     parser = argparse.ArgumentParser(
-        description="Screener Lokal — Intraday + ARA v2 + BSJP + BPJS + SWING Pipeline",
+        description="Screener Trader Indonesia — Intraday + ARA v2 Pipeline",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 Contoh penggunaan:
-  python screener_lokal.py               # Full pipeline (default)
-  python screener_lokal.py --ara-only    # ARA v2 saja
-  python screener_lokal.py --no-ara      # Intraday saja
-  python screener_lokal.py --yahoo-only  # Paksa mode Yahoo Only (tanpa Stockbit login)
-
-Setup .env:
-  Buat file ".env" di folder ini:
-    STOCKBIT_USERNAME=email_anda@example.com
-    STOCKBIT_PASSWORD=password_anda
+  python screener.py               # Full pipeline (default)
+  python screener.py --ara-only    # ARA v2 saja
+  python screener.py --no-ara      # Intraday saja
         """
     )
-    parser.add_argument("--ara-only",   action="store_true", help="Jalankan ARA v2 pipeline saja")
-    parser.add_argument("--no-ara",     action="store_true", help="Skip ARA, intraday saja")
-    parser.add_argument("--yahoo-only", action="store_true", help="Paksa mode Yahoo Finance Only (tanpa login Stockbit)")
+    parser.add_argument("--ara-only", action="store_true", help="Jalankan ARA v2 pipeline saja")
+    parser.add_argument("--no-ara",   action="store_true", help="Skip ARA, intraday saja")
     args = parser.parse_args()
-
-    # Force Yahoo Only mode jika diminta
-    if args.yahoo_only:
-        os.environ["FORCE_MODE"] = "YAHOO_ONLY"
-        log.info("⚙️ Mode override: YAHOO_ONLY (--yahoo-only)")
 
     try:
         if args.ara_only:
@@ -6313,9 +6960,14 @@ Setup .env:
             token_r, mode_r = get_valid_token()
             market_r = get_ihsg_context()
             ara_r = run_ara_pipeline_v2(token_r, mode_r)
-            save_combined_output_v2(
+            save_combined_output_v3(
                 intraday_results=[],
                 ara_results=ara_r,
+                bsjp_results=[],
+                bpjs_results=[],
+                swing_results=[],
+                trend_results=[],
+                position_results=[],
                 mode=mode_r,
                 market_ctx=market_r,
                 intraday_summary={},
@@ -6323,7 +6975,8 @@ Setup .env:
             )
             log.info(f"✅ ARA-only selesai: {len(ara_r)} kandidat")
         else:
-            # Full pipeline — semua 5 pipeline berjalan.
+            # Full pipeline — run_screener() menangani semua 7 pipeline.
+            # Shim save_combined_output (di atas) sudah redirect ke v3.
             # Jika --no-ara, patch CONFIG agar ARA_ENABLED=False.
             if args.no_ara:
                 CONFIG["ARA_ENABLED"] = False
@@ -6331,7 +6984,7 @@ Setup .env:
             run_screener()
 
     except KeyboardInterrupt:
-        log.info("⏹️  Dihentikan oleh user (Ctrl+C)")
+        log.info("⏹️  Dihentikan oleh user")
         sys.exit(0)
     except Exception as e:
         log.error(f"💥 ERROR KRITIS: {e}")
