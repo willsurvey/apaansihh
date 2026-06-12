@@ -37,11 +37,12 @@
         "in_mover_types": [
           "MOVER_TYPE_TOP_GAINER",
           "SCREENER_VOLUME_EXPLOSION",
-          "GURU_63_High Volume "
+          "GURU_63_High Volume ",
+          "SCREENER_TOP_VALUE"
         ],
         "from_gainer": true,
         "from_screener": true,
-        "from_top_value": false
+        "from_top_value": true
       },
       "signals_positive": [
         "Volume spike 5.0x MA20",
@@ -107,7 +108,8 @@
           "MOVER_TYPE_TOP_VOLUME",
           "MOVER_TYPE_TOP_VALUE",
           "MOVER_TYPE_NET_FOREIGN_BUY",
-          "GURU_92_Big Accumula"
+          "GURU_92_Big Accumula",
+          "SCREENER_TOP_VALUE"
         ],
         "from_gainer": false,
         "from_screener": false
@@ -176,7 +178,9 @@
       "timing_guide": "Pantau 09:00-09:10. Beli jika terjadi gap down > 3% lalu ada rebound volume stabil. Target jual: sesi sore 14:30-15:30 WIB.",
       "universe_context": {
         "in_mover_types": [
-          "MOVER_TYPE_TOP_VALUE"
+          "MOVER_TYPE_TOP_VALUE",
+          "GURU_78_Daily Net Fo",
+          "SCREENER_TOP_VALUE"
         ],
         "from_gainer": false,
         "from_screener": false
@@ -208,7 +212,7 @@
   "position_trading": [],
   "meta": {
     "status": "success",
-    "generated_at": "2026-06-12 16:48:36 WIB",
+    "generated_at": "2026-06-12 17:33:31 WIB",
     "date": "2026-06-12",
     "mode": "FULL_STOCKBIT",
     "session_label": "MARKET_DAY",
@@ -244,8 +248,8 @@
     "warning": null
   },
   "screening_summary": {
-    "universe": 500,
-    "after_liquidity": 60,
+    "universe": 972,
+    "after_liquidity": 76,
     "after_accumulation": 8,
     "after_trend": 1,
     "after_smc": 1,
