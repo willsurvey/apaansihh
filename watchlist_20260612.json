@@ -1,6 +1,6 @@
 {
   "status": "success",
-  "generated_at": "2026-06-12 18:28:42 WIB",
+  "generated_at": "2026-06-12 19:29:04 WIB",
   "date": "2026-06-12",
   "mode": "FULL_STOCKBIT",
   "session_label": "MARKET_DAY",
@@ -50,7 +50,7 @@
       "mode": "FULL_STOCKBIT",
       "universe_sources": [
         "MOVER_TYPE_NET_FOREIGN_BUY",
-        "GURU_72_IHSG Short-t",
+        "GURU_92_Big Accumula",
         "SCREENER_TOP_VALUE"
       ],
       "market_data": {
@@ -128,7 +128,7 @@
         "✅ Harga di zona FVG aktif"
       ],
       "warnings": [],
-      "updated_at": "18.28 WIB"
+      "updated_at": "19.29 WIB"
     }
   ]
 }
