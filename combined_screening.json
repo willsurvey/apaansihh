@@ -8,8 +8,8 @@
   "position_trading": [],
   "meta": {
     "status": "no_signal",
-    "generated_at": "2026-06-29 22:19:28 WIB",
-    "date": "2026-06-29",
+    "generated_at": "2026-06-30 20:09:09 WIB",
+    "date": "2026-06-30",
     "mode": "FULL_STOCKBIT",
     "session_label": "MARKET_DAY",
     "pipeline_version": "v7.0",
@@ -36,21 +36,15 @@
     }
   },
   "market_context": {
-    "ihsg_close": 5820,
-    "ihsg_change_pct": -1.28,
+    "ihsg_close": 5643,
+    "ihsg_change_pct": -3.05,
     "ihsg_trend": "BEARISH",
     "ihsg_above_ma50": false,
-    "market_safe": true,
-    "warning": null
+    "market_safe": false,
+    "warning": "IHSG turun 3 hari berturut-turut. Tidak ada output hari ini."
   },
   "screening_summary": {
-    "universe": 978,
-    "after_liquidity": 68,
-    "after_accumulation": 12,
-    "after_trend": 0,
-    "after_smc": 0,
-    "after_entry": 0,
-    "final": 0
+    "stopped": "market_unsafe"
   },
   "config_ara": {
     "vol_ma20_tier1": 3.0,
