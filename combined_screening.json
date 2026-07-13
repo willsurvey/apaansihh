@@ -2,163 +2,14 @@
   "logika_lama_intraday": [],
   "logika_baru_calon_ara": [],
   "bsjp_beli_sore_jual_pagi": [],
-  "bpjs_beli_pagi_jual_sore": [
-    {
-      "ticker": "MEDC",
-      "company": "Medco Energi Internasional Tbk",
-      "type": "WATCHLIST_BPJS",
-      "formula": "QUIET_CONTINUATION",
-      "score": 50,
-      "market_data": {
-        "close": 1175.0,
-        "change_pct": 0.86,
-        "value_today": 29374110000,
-        "net_foreign": 10425456500
-      },
-      "d1_features": {
-        "body_pct": 1.73,
-        "close_pos_pct": 57.1,
-        "vol_ratio": 0.47,
-        "change_pct": 0.86,
-        "range_pct": 2.98,
-        "upper_wick": 42.9,
-        "above_ma20": true,
-        "above_ma50": false,
-        "above_ma200": false,
-        "atr_pct": 4.41
-      },
-      "trading_plan": {
-        "strategy": "Beli di pagi hari (09:00-09:30), jual sore (14:30-15:30)",
-        "entry_range": "1,150 – 1,200",
-        "entry_note": "JANGAN beli langsung. Konfirmasi dulu kriteria pagi hari.",
-        "stop_loss": 1100,
-        "stop_note": "Cut loss jika turun di bawah 1,100 (1 ATR dari entry)",
-        "target_modest": 1200,
-        "target_moderate": 1220,
-        "exit_strategy": "Jual di sesi sore (14:30-15:30 WIB) tanpa menunggu close"
-      },
-      "morning_confirmation_criteria": [
-        "⚠️ WAJIB: Utamakan jika terjadi Gap Down > 3% saat open untuk risk/reward terbaik",
-        "✅ Skenario Gap Down >3% memiliki Profit Factor 6.78x & Win Rate 44.5%",
-        "✅ Volume 15 menit pertama normal/stabil di atas rata-rata",
-        "❌ JANGAN BELI jika Gap Up > 3% (euforia rawan bull trap, PF hanya 0.3x)",
-        "❌ JANGAN BELI jika langsung longsor drastis tanpa rebound dari low"
-      ],
-      "timing_guide": "Pantau 09:00-09:10. Beli jika terjadi gap down > 3% lalu ada rebound volume stabil. Target jual: sesi sore 14:30-15:30 WIB.",
-      "universe_context": {
-        "in_mover_types": [
-          "MOVER_TYPE_TOP_VALUE",
-          "MOVER_TYPE_NET_FOREIGN_BUY",
-          "SCREENER_VOLUME_EXPLOSION",
-          "GURU_92_Big Accumula",
-          "SCREENER_TOP_VALUE"
-        ],
-        "from_gainer": false,
-        "from_screener": true
-      },
-      "signals_positive": [
-        "Formula: Quiet Continuation — D-1 hijau tipis (+1.7%), volume mati (0.47x MA20), close tengah (57%). WR historis: 49.8% (n=1.371)",
-        "Di atas MA20 — support jangka pendek",
-        "Range D-1 kecil (3.0%) — noise rendah besok",
-        "Asing beli bersih hari ini (Rp 10.4B)",
-        "Masuk screener volume Stockbit — ada perhatian pasar"
-      ],
-      "signals_negative": [
-        "Upper wick besar (43%) — tekanan jual D-1"
-      ],
-      "backtest_stats": {
-        "formula": "QUIET_CONTINUATION",
-        "win_rate": "49.8%",
-        "sample_size": "n=1.371",
-        "profit_factor": "1.04x",
-        "total_backtest": "789.792 hari trading IHSG (956 saham)",
-        "gap_down_sweet_spot": "Gap Down >2%: WR 30.2%, upside +3.75%, DD -0.88%",
-        "gap_up_danger": "Gap Up >5%: WR 11.8%, DD -6.67% — HINDARI"
-      },
-      "disclaimer": "⚠️ INI WATCHLIST, BUKAN SINYAL BELI. Formula QUIET_CONTINUATION dari backtest forward-looking 789.792 hari trading IHSG. WAJIB konfirmasi real-time pagi hari (lihat morning_confirmation_criteria). Tanpa konfirmasi, JANGAN eksekusi.",
-      "rank": 1
-    },
-    {
-      "ticker": "ANTM",
-      "company": "Aneka Tambang Tbk.",
-      "type": "WATCHLIST_BPJS",
-      "formula": "QUIET_CONTINUATION",
-      "score": 35,
-      "market_data": {
-        "close": 2900.0,
-        "change_pct": 1.75,
-        "value_today": 174380794000,
-        "net_foreign": -9308967000
-      },
-      "d1_features": {
-        "body_pct": 1.05,
-        "close_pos_pct": 57.1,
-        "vol_ratio": 0.5,
-        "change_pct": 1.75,
-        "range_pct": 2.41,
-        "upper_wick": 42.9,
-        "above_ma20": true,
-        "above_ma50": false,
-        "above_ma200": false,
-        "atr_pct": 4.61
-      },
-      "trading_plan": {
-        "strategy": "Beli di pagi hari (09:00-09:30), jual sore (14:30-15:30)",
-        "entry_range": "2,830 – 2,960",
-        "entry_note": "JANGAN beli langsung. Konfirmasi dulu kriteria pagi hari.",
-        "stop_loss": 2700,
-        "stop_note": "Cut loss jika turun di bawah 2,700 (1 ATR dari entry)",
-        "target_modest": 2960,
-        "target_moderate": 3020,
-        "exit_strategy": "Jual di sesi sore (14:30-15:30 WIB) tanpa menunggu close"
-      },
-      "morning_confirmation_criteria": [
-        "⚠️ WAJIB: Utamakan jika terjadi Gap Down > 3% saat open untuk risk/reward terbaik",
-        "✅ Skenario Gap Down >3% memiliki Profit Factor 6.78x & Win Rate 44.5%",
-        "✅ Volume 15 menit pertama normal/stabil di atas rata-rata",
-        "❌ JANGAN BELI jika Gap Up > 3% (euforia rawan bull trap, PF hanya 0.3x)",
-        "❌ JANGAN BELI jika langsung longsor drastis tanpa rebound dari low"
-      ],
-      "timing_guide": "Pantau 09:00-09:10. Beli jika terjadi gap down > 3% lalu ada rebound volume stabil. Target jual: sesi sore 14:30-15:30 WIB.",
-      "universe_context": {
-        "in_mover_types": [
-          "MOVER_TYPE_TOP_VOLUME",
-          "MOVER_TYPE_TOP_VALUE",
-          "GURU_92_Big Accumula",
-          "SCREENER_TOP_VALUE"
-        ],
-        "from_gainer": false,
-        "from_screener": false
-      },
-      "signals_positive": [
-        "Formula: Quiet Continuation — D-1 hijau tipis (+1.1%), volume mati (0.50x MA20), close tengah (57%). WR historis: 49.8% (n=1.371)",
-        "Di atas MA20 — support jangka pendek",
-        "Range D-1 kecil (2.4%) — noise rendah besok"
-      ],
-      "signals_negative": [
-        "Upper wick besar (43%) — tekanan jual D-1",
-        "Asing jual bersih besar — hati-hati gap down"
-      ],
-      "backtest_stats": {
-        "formula": "QUIET_CONTINUATION",
-        "win_rate": "49.8%",
-        "sample_size": "n=1.371",
-        "profit_factor": "1.04x",
-        "total_backtest": "789.792 hari trading IHSG (956 saham)",
-        "gap_down_sweet_spot": "Gap Down >2%: WR 30.2%, upside +3.75%, DD -0.88%",
-        "gap_up_danger": "Gap Up >5%: WR 11.8%, DD -6.67% — HINDARI"
-      },
-      "disclaimer": "⚠️ INI WATCHLIST, BUKAN SINYAL BELI. Formula QUIET_CONTINUATION dari backtest forward-looking 789.792 hari trading IHSG. WAJIB konfirmasi real-time pagi hari (lihat morning_confirmation_criteria). Tanpa konfirmasi, JANGAN eksekusi.",
-      "rank": 2
-    }
-  ],
+  "bpjs_beli_pagi_jual_sore": [],
   "swing_trading": [],
   "trend_following": [],
   "position_trading": [],
   "meta": {
-    "status": "success",
-    "generated_at": "2026-07-10 20:48:28 WIB",
-    "date": "2026-07-10",
+    "status": "no_signal",
+    "generated_at": "2026-07-13 20:58:19 WIB",
+    "date": "2026-07-13",
     "mode": "FULL_STOCKBIT",
     "session_label": "MARKET_DAY",
     "pipeline_version": "v7.0",
@@ -167,7 +18,7 @@
     "intraday_count": 0,
     "ara_count": 0,
     "bsjp_count": 0,
-    "bpjs_count": 2,
+    "bpjs_count": 0,
     "swing_count": 0,
     "trend_count": 0,
     "position_count": 0,
@@ -185,8 +36,8 @@
     }
   },
   "market_context": {
-    "ihsg_close": 5924,
-    "ihsg_change_pct": 0.2,
+    "ihsg_close": 6037,
+    "ihsg_change_pct": 1.92,
     "ihsg_trend": "BEARISH",
     "ihsg_above_ma50": false,
     "market_safe": true,
@@ -194,9 +45,9 @@
   },
   "screening_summary": {
     "universe": 978,
-    "after_liquidity": 80,
-    "after_accumulation": 26,
-    "after_trend": 2,
+    "after_liquidity": 96,
+    "after_accumulation": 43,
+    "after_trend": 1,
     "after_smc": 0,
     "after_entry": 0,
     "final": 0
