@@ -10,7 +10,8 @@
         "MOVER_TYPE_NET_FOREIGN_BUY",
         "MOVER_TYPE_TOP_GAINER",
         "SCREENER_VOLUME_EXPLOSION",
-        "GURU_92_Big Accumula"
+        "GURU_92_Big Accumula",
+        "SCREENER_TOP_VALUE"
       ],
       "market_data": {
         "close": 1680,
@@ -40,7 +41,7 @@
         "ma50_slope": "POSITIVE"
       },
       "smc": {
-        "internal_structure": "BOS_BULLISH",
+        "internal_structure": "CHoCH_BULLISH",
         "swing_trend_bias": "BULLISH",
         "ob_zone": null,
         "fvg_zone": "1650 - 1680",
@@ -78,18 +79,18 @@
         "risk_note": "Max 2% dari total portofolio"
       },
       "scoring": {
-        "confidence_score": 75,
+        "confidence_score": 80,
         "tier": "HIGH"
       },
       "signals": [
         "✅ Broker Signal: Big Acc",
         "✅ Net Foreign Buy hari ini: Rp9.9B",
-        "✅ Internal BOS Bullish (1H)",
+        "✅ Internal CHoCH Bullish (1H)",
         "✅ Harga di zona FVG aktif",
         "✅ Swing Structure: BULLISH"
       ],
       "warnings": [],
-      "updated_at": "19.09 WIB"
+      "updated_at": "18.53 WIB"
     },
     {
       "rank": 2,
@@ -98,12 +99,13 @@
       "mode": "FULL_STOCKBIT",
       "universe_sources": [
         "SCREENER_VOLUME_EXPLOSION",
-        "GURU_92_Big Accumula"
+        "GURU_92_Big Accumula",
+        "SCREENER_TOP_VALUE"
       ],
       "market_data": {
         "close": 7475,
         "change_pct": 0,
-        "value_today": 0,
+        "value_today": 10662502500.0,
         "frequency_today": 0,
         "iep": 0,
         "iep_change_pct": 0
@@ -177,7 +179,7 @@
         "✅ Swing Structure: BULLISH"
       ],
       "warnings": [],
-      "updated_at": "19.09 WIB"
+      "updated_at": "18.53 WIB"
     },
     {
       "rank": 3,
@@ -188,7 +190,8 @@
         "MOVER_TYPE_TOP_VALUE",
         "MOVER_TYPE_NET_FOREIGN_BUY",
         "SCREENER_VOLUME_EXPLOSION",
-        "GURU_92_Big Accumula"
+        "GURU_92_Big Accumula",
+        "SCREENER_TOP_VALUE"
       ],
       "market_data": {
         "close": 9425,
@@ -266,7 +269,7 @@
         "✅ Swing Structure: BULLISH"
       ],
       "warnings": [],
-      "updated_at": "19.09 WIB"
+      "updated_at": "18.53 WIB"
     }
   ],
   "logika_baru_calon_ara": [
@@ -309,26 +312,26 @@
       "d1_date": "2026-08-14",
       "d1_close": 316.0,
       "d1_open": 326.0,
-      "d1_high": 364.0,
+      "d1_high": 368.0,
       "d1_low": 312.0,
       "d1_change_pct": 5.33,
       "d1_vol_ratio_ma20": 33.66,
       "d1_vol_ratio_ma5": 10.06,
-      "d1_body_pct": 0.192,
-      "d1_upper_wick": 0.731,
-      "d1_lower_wick": 0.077,
-      "d1_close_pos": 0.077,
+      "d1_body_pct": 0.179,
+      "d1_upper_wick": 0.75,
+      "d1_lower_wick": 0.071,
+      "d1_close_pos": 0.071,
       "d1_bullish": false,
-      "d1_range_expansion": 2.15,
+      "d1_range_expansion": 2.32,
       "d1_value_rp": 2991148560000,
       "d2_change_pct": 25.0,
       "d2_body_pct": 0.0,
       "d2_vol_ratio_ma20": 15.38,
       "m1_last15_green": 12,
-      "m1_close_vs_vwap": -6.04,
+      "m1_close_vs_vwap": -6.01,
       "m1_close_pos_intra": 0.077,
       "m1_high_timing": 0.004,
-      "m1_n_bars": 261,
+      "m1_n_bars": 260,
       "m1_data_available": true,
       "above_ma20": true,
       "above_ma50": true,
@@ -339,11 +342,11 @@
       "signals_positive": [
         "Volume D-1 ekstrem: 33.7x MA20 (tier-2 ≥6x)",
         "Volume D-2 elevated: 15.4x MA20 (akumulasi dini)",
-        "Upper wick rejection: 0.73 (smart money absorption)",
-        "Body kecil D-1: 0.19 (candle akumulasi)",
-        "Close pos rendah: 0.08 (buyers absorbed selling)",
+        "Upper wick rejection: 0.75 (smart money absorption)",
+        "Body kecil D-1: 0.18 (candle akumulasi)",
+        "Close pos rendah: 0.07 (buyers absorbed selling)",
         "D-2 early signal: +25.0% vol 15.4x",
-        "Range expansion: 2.1x avg-5d",
+        "Range expansion: 2.3x avg-5d",
         "Harga di atas MA20",
         "Broker signal: Big Accumulation (+10 poin)"
       ],
@@ -358,7 +361,7 @@
         "SCREENER_TOP_VALUE"
       ],
       "warning": "⚠️ FALSE SIGNAL RATE TINGGI (~85-90%). Pipeline ini mendeteksi Tipe 1 (Continuation) dan Tipe 2 (Silent Accumulation). Tipe 3 (Out of Nowhere, ~48% ARA nyata) TIDAK BISA dideteksi dari OHLCV. Gunakan sebagai WATCHLIST saja. Konfirmasi dengan broker flow, news, dan analisis manual sebelum eksekusi.",
-      "generated_at": "19:10 WIB"
+      "generated_at": "18:53 WIB"
     }
   ],
   "bsjp_beli_sore_jual_pagi": [
@@ -366,7 +369,7 @@
       "ticker": "BYAN",
       "company": "Bayan Resources Tbk.",
       "tier": "S",
-      "score": 113,
+      "score": 118,
       "market_data": {
         "close": 14400.0,
         "change_pct": 20,
@@ -397,11 +400,12 @@
         "in_mover_types": [
           "MOVER_TYPE_TOP_GAINER",
           "SCREENER_VOLUME_EXPLOSION",
-          "GURU_94_Bandar Bulli"
+          "GURU_94_Bandar Bulli",
+          "SCREENER_TOP_VALUE"
         ],
         "from_gainer": true,
         "from_screener": true,
-        "from_top_value": false
+        "from_top_value": true
       },
       "signals_positive": [
         "Volume ledakan ekstrem 14.4x MA20",
@@ -411,7 +415,8 @@
         "MA20 sedang naik — tren menguat",
         "Asing beli bersih hari ini (Rp 2.0B)",
         "Masuk screener volume explosion Stockbit",
-        "Saham naik signifikan hari ini (momentum)"
+        "Saham naik signifikan hari ini (momentum)",
+        "Hari Senin — win rate BSJP historis tertinggi"
       ],
       "signals_negative": [],
       "win_probability": "~70% berdasarkan backtest 1.796 kejadian historis",
@@ -425,8 +430,8 @@
   "position_trading": [],
   "meta": {
     "status": "success",
-    "generated_at": "2026-08-14 19:17:00 WIB",
-    "date": "2026-08-14",
+    "generated_at": "2026-08-17 19:02:09 WIB",
+    "date": "2026-08-17",
     "mode": "FULL_STOCKBIT",
     "session_label": "MARKET_DAY",
     "pipeline_version": "v7.0",
@@ -461,12 +466,12 @@
     "warning": null
   },
   "screening_summary": {
-    "universe": 885,
-    "after_liquidity": 98,
+    "universe": 978,
+    "after_liquidity": 119,
     "after_accumulation": 41,
-    "after_trend": 17,
-    "after_smc": 6,
-    "after_entry": 3,
+    "after_trend": 16,
+    "after_smc": 7,
+    "after_entry": 4,
     "final": 3
   },
   "config_ara": {
