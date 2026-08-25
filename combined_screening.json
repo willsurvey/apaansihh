@@ -10,7 +10,7 @@
         "MOVER_TYPE_TOP_VALUE",
         "MOVER_TYPE_TOP_GAINER",
         "SCREENER_VOLUME_EXPLOSION",
-        "GURU_77_Foreign Flow",
+        "GURU_92_Big Accumula",
         "SCREENER_TOP_VALUE"
       ],
       "market_data": {
@@ -90,7 +90,7 @@
         "✅ Swing Structure: BULLISH"
       ],
       "warnings": [],
-      "updated_at": "18.58 WIB"
+      "updated_at": "18.56 WIB"
     },
     {
       "rank": 2,
@@ -102,7 +102,7 @@
         "MOVER_TYPE_TOP_VALUE",
         "MOVER_TYPE_NET_FOREIGN_BUY",
         "SCREENER_VOLUME_EXPLOSION",
-        "GURU_72_IHSG Short-t",
+        "GURU_92_Big Accumula",
         "SCREENER_TOP_VALUE"
       ],
       "market_data": {
@@ -133,7 +133,7 @@
         "ma50_slope": "POSITIVE"
       },
       "smc": {
-        "internal_structure": "BOS_BULLISH",
+        "internal_structure": "CHoCH_BULLISH",
         "swing_trend_bias": "BULLISH",
         "ob_zone": null,
         "fvg_zone": "695 - 720",
@@ -171,18 +171,18 @@
         "risk_note": "Max 2% dari total portofolio"
       },
       "scoring": {
-        "confidence_score": 75,
+        "confidence_score": 80,
         "tier": "HIGH"
       },
       "signals": [
         "✅ Broker Signal: Big Acc",
         "✅ Net Foreign Buy hari ini: Rp56.2B",
-        "✅ Internal BOS Bullish (1H)",
+        "✅ Internal CHoCH Bullish (1H)",
         "✅ Harga di zona FVG aktif",
         "✅ Swing Structure: BULLISH"
       ],
       "warnings": [],
-      "updated_at": "18.58 WIB"
+      "updated_at": "18.56 WIB"
     },
     {
       "rank": 3,
@@ -192,7 +192,7 @@
       "universe_sources": [
         "MOVER_TYPE_TOP_VOLUME",
         "SCREENER_VOLUME_EXPLOSION",
-        "GURU_78_Daily Net Fo",
+        "GURU_92_Big Accumula",
         "SCREENER_TOP_VALUE"
       ],
       "market_data": {
@@ -272,7 +272,7 @@
         "✅ Swing Structure: BULLISH"
       ],
       "warnings": [],
-      "updated_at": "18.58 WIB"
+      "updated_at": "18.56 WIB"
     },
     {
       "rank": 4,
@@ -361,7 +361,7 @@
         "✅ Swing Structure: BULLISH"
       ],
       "warnings": [],
-      "updated_at": "18.58 WIB"
+      "updated_at": "18.56 WIB"
     },
     {
       "rank": 5,
@@ -372,7 +372,7 @@
         "MOVER_TYPE_TOP_VALUE",
         "MOVER_TYPE_NET_FOREIGN_BUY",
         "SCREENER_VOLUME_EXPLOSION",
-        "GURU_72_IHSG Short-t",
+        "GURU_92_Big Accumula",
         "SCREENER_TOP_VALUE"
       ],
       "market_data": {
@@ -452,7 +452,7 @@
         "✅ Swing Structure: BULLISH"
       ],
       "warnings": [],
-      "updated_at": "18.58 WIB"
+      "updated_at": "18.56 WIB"
     }
   ],
   "logika_baru_calon_ara": [
@@ -511,10 +511,10 @@
       "d2_body_pct": 0.106,
       "d2_vol_ratio_ma20": 12.62,
       "m1_last15_green": 14,
-      "m1_close_vs_vwap": 9.39,
+      "m1_close_vs_vwap": 6.05,
       "m1_close_pos_intra": 1.0,
-      "m1_high_timing": 0.958,
-      "m1_n_bars": 306,
+      "m1_high_timing": 0.957,
+      "m1_n_bars": 305,
       "m1_data_available": true,
       "above_ma20": true,
       "above_ma50": true,
@@ -530,7 +530,7 @@
         "Range expansion: 3.2x avg-5d",
         "Harga di atas MA20",
         "Close intraday kuat: 1.00 (mendekati high harian)",
-        "Close di atas VWAP: +9.4%",
+        "Close di atas VWAP: +6.0%",
         "High intraday di akhir sesi (96%)",
         "Broker signal: Big Accumulation (+10 poin)"
       ],
@@ -545,7 +545,7 @@
         "SCREENER_TOP_VALUE"
       ],
       "warning": "⚠️ FALSE SIGNAL RATE TINGGI (~85-90%). Pipeline ini mendeteksi Tipe 1 (Continuation) dan Tipe 2 (Silent Accumulation). Tipe 3 (Out of Nowhere, ~48% ARA nyata) TIDAK BISA dideteksi dari OHLCV. Gunakan sebagai WATCHLIST saja. Konfirmasi dengan broker flow, news, dan analisis manual sebelum eksekusi.",
-      "generated_at": "18:58 WIB"
+      "generated_at": "18:56 WIB"
     }
   ],
   "bsjp_beli_sore_jual_pagi": [
@@ -584,7 +584,7 @@
         "in_mover_types": [
           "MOVER_TYPE_TOP_VOLUME",
           "SCREENER_VOLUME_EXPLOSION",
-          "GURU_63_High Volume ",
+          "GURU_92_Big Accumula",
           "SCREENER_TOP_VALUE"
         ],
         "from_gainer": false,
@@ -598,7 +598,7 @@
         "Uptrend penuh: di atas MA20, MA50, MA200",
         "MA20 sedang naik — tren menguat",
         "Masuk screener volume explosion Stockbit",
-        "Hari Senin — win rate BSJP historis tertinggi"
+        "Hari Selasa — win rate BSJP historis tertinggi"
       ],
       "signals_negative": [
         "Asing jual bersih hari ini — hati-hati"
@@ -657,7 +657,7 @@
         "MA20 sedang naik — tren menguat",
         "Masuk screener volume explosion Stockbit",
         "Saham naik signifikan hari ini (momentum)",
-        "Hari Senin — win rate BSJP historis tertinggi"
+        "Hari Selasa — win rate BSJP historis tertinggi"
       ],
       "signals_negative": [
         "Asing jual bersih hari ini — hati-hati"
@@ -673,8 +673,8 @@
   "position_trading": [],
   "meta": {
     "status": "success",
-    "generated_at": "2026-08-24 19:04:11 WIB",
-    "date": "2026-08-24",
+    "generated_at": "2026-08-25 19:08:26 WIB",
+    "date": "2026-08-25",
     "mode": "FULL_STOCKBIT",
     "session_label": "MARKET_DAY",
     "pipeline_version": "v7.0",
@@ -710,7 +710,7 @@
   },
   "screening_summary": {
     "universe": 979,
-    "after_liquidity": 118,
+    "after_liquidity": 114,
     "after_accumulation": 33,
     "after_trend": 20,
     "after_smc": 11,
