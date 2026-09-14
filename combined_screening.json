@@ -8,8 +8,8 @@
   "position_trading": [],
   "meta": {
     "status": "no_signal",
-    "generated_at": "2026-09-11 21:50:47 WIB",
-    "date": "2026-09-11",
+    "generated_at": "2026-09-14 23:47:53 WIB",
+    "date": "2026-09-14",
     "mode": "FULL_STOCKBIT",
     "session_label": "MARKET_DAY",
     "pipeline_version": "v7.0",
@@ -36,8 +36,8 @@
     }
   },
   "market_context": {
-    "ihsg_close": 6541,
-    "ihsg_change_pct": -0.73,
+    "ihsg_close": 6534,
+    "ihsg_change_pct": -0.1,
     "ihsg_trend": "BULLISH",
     "ihsg_above_ma50": true,
     "market_safe": false,
