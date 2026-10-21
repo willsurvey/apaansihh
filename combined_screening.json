@@ -6,43 +6,42 @@
       "company": "Pakuwon Jati Tbk.",
       "mode": "FULL_STOCKBIT",
       "universe_sources": [
-        "MOVER_TYPE_NET_FOREIGN_BUY",
-        "SCREENER_VOLUME_EXPLOSION"
+        "MOVER_TYPE_NET_FOREIGN_BUY"
       ],
       "market_data": {
-        "close": 270,
-        "change_pct": 6.3,
-        "value_today": 27600268600,
-        "frequency_today": 5067,
+        "close": 278,
+        "change_pct": 2.96,
+        "value_today": 19858512800,
+        "frequency_today": 5749,
         "iep": 0,
         "iep_change_pct": 0
       },
       "accumulation": {
         "broker_signal": "Neutral",
-        "net_foreign_today": 7764162200,
+        "net_foreign_today": 5594213000,
         "net_foreign_3d": 10,
-        "acc_score": 50,
+        "acc_score": 40,
         "score_breakdown": {
           "broker": 5,
           "foreign_1d": 15,
           "foreign_3d": 10,
           "candle": 10,
-          "volume": 10,
-          "total": 50
+          "volume": 0,
+          "total": 40
         }
       },
       "trend": {
         "ma50": 268.0,
-        "gap_from_ma50_pct": 0.79,
+        "gap_from_ma50_pct": 3.64,
         "ma50_slope": "POSITIVE"
       },
       "smc": {
         "internal_structure": "CHoCH_BULLISH",
         "swing_trend_bias": "BEARISH",
         "ob_zone": null,
-        "fvg_zone": "254 - 266",
+        "fvg_zone": null,
         "strong_low": 258.0,
-        "weak_high": 264.0
+        "weak_high": 294.0
       },
       "entry_plan": {
         "whipsaw_risk": "HIGH",
@@ -50,43 +49,42 @@
         "entry_direction": "PULLBACK",
         "entry_direction_label": "⚠️ WATCHLIST ONLY: Tunggu pantulan di area OB, jangan pasang antrian beli buta (blind limit order) karena risiko whipsaw pagi sangat tinggi!",
         "entry_direction_reason": "",
-        "entry_1": 268,
+        "entry_1": 276,
         "entry_1_pct": 20,
         "entry_1_note": "Pullback ringan / Bid Wall area",
-        "entry_2": 260,
+        "entry_2": 274,
         "entry_2_pct": 50,
         "entry_2_note": "Area OB / FVG / Support",
-        "entry_3": 256,
+        "entry_3": 270,
         "entry_3_pct": 30,
         "entry_3_note": "Deep pullback / PDL area",
-        "average_entry": 260,
-        "entry_zone": "256 - 268",
-        "sl": 252,
-        "sl_pct_risk": 3.08,
+        "average_entry": 274,
+        "entry_zone": "270 - 276",
+        "sl": 266,
+        "sl_pct_risk": 2.92,
         "sl_note": "Cut loss disarankan menggunakan Closing Basis (akhir sesi/harian) untuk menghindari sapuan ekor candle (whipsaw) di pagi hari.",
-        "tp1": 274,
+        "tp1": 278,
         "tp1_note": "PDH / Target psikologis intraday",
-        "tp2": 282,
+        "tp2": 294,
         "tp2_note": "Weak High / Supply Zone 1H",
-        "tp3": 290,
+        "tp3": 302,
         "tp3_note": "RR minimum 1:2.0",
-        "rr_ratio": "1:3.8",
+        "rr_ratio": "1:3.5",
         "risk_pct": 2,
         "risk_note": "Max 2% dari total portofolio"
       },
       "scoring": {
-        "confidence_score": 60,
+        "confidence_score": 55,
         "tier": "MODERATE"
       },
       "signals": [
-        "✅ Net Foreign Buy hari ini: Rp7.8B",
+        "✅ Net Foreign Buy hari ini: Rp5.6B",
         "✅ Net Foreign Buy 3 hari berturut",
         "✅ Internal CHoCH Bullish (1H)",
-        "✅ Harga di zona FVG aktif",
-        "✅ Pullback ke MA50 (0.8% di atas MA50)"
+        "✅ Pullback ke MA50 (3.6% di atas MA50)"
       ],
       "warnings": [],
-      "updated_at": "22.45 WIB"
+      "updated_at": "22.54 WIB"
     }
   ],
   "logika_baru_calon_ara": [],
@@ -97,8 +95,8 @@
   "position_trading": [],
   "meta": {
     "status": "success",
-    "generated_at": "2026-10-20 22:51:50 WIB",
-    "date": "2026-10-20",
+    "generated_at": "2026-10-21 22:56:42 WIB",
+    "date": "2026-10-21",
     "mode": "FULL_STOCKBIT",
     "session_label": "MARKET_DAY",
     "pipeline_version": "v7.0",
@@ -125,18 +123,18 @@
     }
   },
   "market_context": {
-    "ihsg_close": 5278,
-    "ihsg_change_pct": 5.65,
+    "ihsg_close": 5328,
+    "ihsg_change_pct": 0.94,
     "ihsg_trend": "BEARISH",
     "ihsg_above_ma50": false,
     "market_safe": true,
     "warning": null
   },
   "screening_summary": {
-    "universe": 439,
-    "after_liquidity": 66,
-    "after_accumulation": 22,
-    "after_trend": 3,
+    "universe": 101,
+    "after_liquidity": 33,
+    "after_accumulation": 16,
+    "after_trend": 1,
     "after_smc": 1,
     "after_entry": 1,
     "final": 1
