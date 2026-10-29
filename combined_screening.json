@@ -8,8 +8,8 @@
   "position_trading": [],
   "meta": {
     "status": "no_signal",
-    "generated_at": "2026-10-29 00:36:58 WIB",
-    "date": "2026-10-29",
+    "generated_at": "2026-10-30 00:56:22 WIB",
+    "date": "2026-10-30",
     "mode": "FULL_STOCKBIT",
     "session_label": "MARKET_DAY",
     "pipeline_version": "v7.0",
@@ -45,8 +45,8 @@
   },
   "screening_summary": {
     "universe": 976,
-    "after_liquidity": 67,
-    "after_accumulation": 18,
+    "after_liquidity": 73,
+    "after_accumulation": 4,
     "after_trend": 0,
     "after_smc": 0,
     "after_entry": 0,
