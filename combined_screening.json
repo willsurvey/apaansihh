@@ -13,16 +13,16 @@
         "SCREENER_TOP_VALUE"
       ],
       "market_data": {
-        "close": 5500,
-        "change_pct": 0.92,
-        "value_today": 277881892500,
-        "frequency_today": 13742,
+        "close": 5700,
+        "change_pct": 3.64,
+        "value_today": 249109805000,
+        "frequency_today": 11576,
         "iep": 0,
         "iep_change_pct": 0
       },
       "accumulation": {
         "broker_signal": "Big Acc",
-        "net_foreign_today": 78626835000,
+        "net_foreign_today": 101049320000,
         "net_foreign_3d": 10,
         "acc_score": 65,
         "score_breakdown": {
@@ -35,8 +35,8 @@
         }
       },
       "trend": {
-        "ma50": 4738.0,
-        "gap_from_ma50_pct": 15.02,
+        "ma50": 4752.0,
+        "gap_from_ma50_pct": 15.74,
         "ma50_slope": "POSITIVE"
       },
       "smc": {
@@ -53,27 +53,27 @@
         "entry_direction": "PULLBACK",
         "entry_direction_label": "⚠️ WATCHLIST ONLY: Tunggu pantulan di area OB, jangan pasang antrian beli buta (blind limit order) karena risiko whipsaw pagi sangat tinggi!",
         "entry_direction_reason": "",
-        "entry_1": 5475,
+        "entry_1": 5650,
         "entry_1_pct": 20,
         "entry_1_note": "Pullback ringan / Bid Wall area",
-        "entry_2": 5450,
+        "entry_2": 5575,
         "entry_2_pct": 50,
         "entry_2_note": "Area OB / FVG / Support",
-        "entry_3": 5400,
+        "entry_3": 5425,
         "entry_3_pct": 30,
         "entry_3_note": "Deep pullback / PDL area",
-        "average_entry": 5450,
-        "entry_zone": "5400 - 5475",
-        "sl": 5350,
-        "sl_pct_risk": 1.83,
+        "average_entry": 5550,
+        "entry_zone": "5425 - 5650",
+        "sl": 5375,
+        "sl_pct_risk": 3.15,
         "sl_note": "Cut loss disarankan menggunakan Closing Basis (akhir sesi/harian) untuk menghindari sapuan ekor candle (whipsaw) di pagi hari.",
-        "tp1": 5500,
+        "tp1": 5700,
         "tp1_note": "PDH / Target psikologis intraday",
-        "tp2": 5675,
+        "tp2": 5875,
         "tp2_note": "Weak High / Supply Zone 1H",
-        "tp3": 5850,
+        "tp3": 6050,
         "tp3_note": "RR minimum 1:2.0",
-        "rr_ratio": "1:4.0",
+        "rr_ratio": "1:2.9",
         "risk_pct": 2,
         "risk_note": "Max 2% dari total portofolio"
       },
@@ -83,139 +83,50 @@
       },
       "signals": [
         "✅ Broker Signal: Big Acc",
-        "✅ Net Foreign Buy hari ini: Rp78.6B",
+        "✅ Net Foreign Buy hari ini: Rp101.0B",
         "✅ Net Foreign Buy 3 hari berturut",
         "✅ Internal BOS Bullish (1H)",
         "✅ Swing Structure: BULLISH"
       ],
       "warnings": [],
-      "updated_at": "01.52 WIB"
-    },
-    {
-      "rank": 2,
-      "ticker": "INTP",
-      "company": "Indocement Tunggal Prakarsa Tbk.",
-      "mode": "FULL_STOCKBIT",
-      "universe_sources": [
-        "MOVER_TYPE_NET_FOREIGN_BUY",
-        "GURU_77_Foreign Flow",
-        "SCREENER_TOP_VALUE"
-      ],
-      "market_data": {
-        "close": 6025,
-        "change_pct": 3.43,
-        "value_today": 7995567500,
-        "frequency_today": 1795,
-        "iep": 0,
-        "iep_change_pct": 0
-      },
-      "accumulation": {
-        "broker_signal": "Normal Acc",
-        "net_foreign_today": 3718122500,
-        "net_foreign_3d": 10,
-        "acc_score": 35,
-        "score_breakdown": {
-          "broker": 5,
-          "foreign_1d": 15,
-          "foreign_3d": 10,
-          "candle": 10,
-          "volume": -5,
-          "total": 35
-        }
-      },
-      "trend": {
-        "ma50": 5337.0,
-        "gap_from_ma50_pct": 9.14,
-        "ma50_slope": "POSITIVE"
-      },
-      "smc": {
-        "internal_structure": "BOS_BULLISH",
-        "swing_trend_bias": "BULLISH",
-        "ob_zone": null,
-        "fvg_zone": "5950 - 6025",
-        "strong_low": 5475.0,
-        "weak_high": 5950.0
-      },
-      "entry_plan": {
-        "whipsaw_risk": "HIGH",
-        "execution_note": "⚠️ WATCHLIST ONLY: Abaikan limit order statis. Tunggu pantulan di area OB sebelum entry, jangan pasang antrian beli karena risiko whipsaw pagi sangat tinggi!",
-        "entry_direction": "PULLBACK",
-        "entry_direction_label": "⚠️ WATCHLIST ONLY: Tunggu pantulan di area OB, jangan pasang antrian beli buta (blind limit order) karena risiko whipsaw pagi sangat tinggi!",
-        "entry_direction_reason": "",
-        "entry_1": 6000,
-        "entry_1_pct": 20,
-        "entry_1_note": "Pullback ringan / Bid Wall area",
-        "entry_2": 5950,
-        "entry_2_pct": 50,
-        "entry_2_note": "Area OB / FVG / Support",
-        "entry_3": 5825,
-        "entry_3_pct": 30,
-        "entry_3_note": "Deep pullback / PDL area",
-        "average_entry": 5925,
-        "entry_zone": "5825 - 6000",
-        "sl": 5775,
-        "sl_pct_risk": 2.53,
-        "sl_note": "Cut loss disarankan menggunakan Closing Basis (akhir sesi/harian) untuk menghindari sapuan ekor candle (whipsaw) di pagi hari.",
-        "tp1": 6050,
-        "tp1_note": "PDH / Target psikologis intraday",
-        "tp2": 6225,
-        "tp2_note": "Weak High / Supply Zone 1H",
-        "tp3": 6400,
-        "tp3_note": "RR minimum 1:2.0",
-        "rr_ratio": "1:3.2",
-        "risk_pct": 2,
-        "risk_note": "Max 2% dari total portofolio"
-      },
-      "scoring": {
-        "confidence_score": 50,
-        "tier": "MODERATE"
-      },
-      "signals": [
-        "✅ Net Foreign Buy hari ini: Rp3.7B",
-        "✅ Net Foreign Buy 3 hari berturut",
-        "✅ Internal BOS Bullish (1H)",
-        "✅ Harga di zona FVG aktif",
-        "✅ Swing Structure: BULLISH"
-      ],
-      "warnings": [],
-      "updated_at": "01.52 WIB"
+      "updated_at": "04.18 WIB"
     }
   ],
   "logika_baru_calon_ara": [],
   "bsjp_beli_sore_jual_pagi": [],
   "bpjs_beli_pagi_jual_sore": [
     {
-      "ticker": "TLKM",
-      "company": "PT Telkom Indonesia (Persero) Tbk",
+      "ticker": "ADMR",
+      "company": "Alamtri Minerals Indonesia Tbk.",
       "type": "WATCHLIST_BPJS",
       "formula": "QUIET_CONTINUATION",
-      "score": 30,
+      "score": 45,
       "market_data": {
-        "close": 2130.0,
-        "change_pct": 1.41,
-        "value_today": 316576850000,
-        "net_foreign": -78483993000
+        "close": 1335.0,
+        "change_pct": -6.37,
+        "value_today": 68116984500,
+        "net_foreign": -10934376500
       },
       "d1_features": {
-        "body_pct": 2.4,
-        "close_pos_pct": 58.3,
-        "vol_ratio": 0.47,
-        "change_pct": 3.4,
-        "range_pct": 5.63,
-        "upper_wick": 41.7,
+        "body_pct": 1.14,
+        "close_pos_pct": 70.0,
+        "vol_ratio": 0.49,
+        "change_pct": 2.3,
+        "range_pct": 3.75,
+        "upper_wick": 30.0,
         "above_ma20": true,
         "above_ma50": false,
         "above_ma200": false,
-        "atr_pct": 4.49
+        "atr_pct": 4.95
       },
       "trading_plan": {
         "strategy": "Beli di pagi hari (09:00-09:30), jual sore (14:30-15:30)",
-        "entry_range": "2,080 – 2,170",
+        "entry_range": "1,300 – 1,360",
         "entry_note": "JANGAN beli langsung. Konfirmasi dulu kriteria pagi hari.",
-        "stop_loss": 1985,
-        "stop_note": "Cut loss jika turun di bawah 1,985 (1 ATR dari entry)",
-        "target_modest": 2170,
-        "target_moderate": 2220,
+        "stop_loss": 1235,
+        "stop_note": "Cut loss jika turun di bawah 1,235 (1 ATR dari entry)",
+        "target_modest": 1360,
+        "target_moderate": 1390,
         "exit_strategy": "Jual di sesi sore (14:30-15:30 WIB) tanpa menunggu close"
       },
       "morning_confirmation_criteria": [
@@ -228,20 +139,21 @@
       "timing_guide": "Pantau 09:00-09:10. Beli jika terjadi gap down > 3% lalu ada rebound volume stabil. Target jual: sesi sore 14:30-15:30 WIB.",
       "universe_context": {
         "in_mover_types": [
-          "MOVER_TYPE_TOP_VOLUME",
           "MOVER_TYPE_TOP_VALUE",
+          "MOVER_TYPE_TOP_LOSER",
+          "SCREENER_VOLUME_EXPLOSION",
           "GURU_78_Daily Net Fo",
           "SCREENER_TOP_VALUE"
         ],
         "from_gainer": false,
-        "from_screener": false
+        "from_screener": true
       },
       "signals_positive": [
-        "Formula: Quiet Continuation — D-1 hijau tipis (+2.4%), volume mati (0.47x MA20), close tengah (58%). WR historis: 49.8% (n=1.371)",
-        "Di atas MA20 — support jangka pendek"
+        "Formula: Quiet Continuation — D-1 hijau tipis (+1.1%), volume mati (0.49x MA20), close tengah (70%). WR historis: 49.8% (n=1.371)",
+        "Di atas MA20 — support jangka pendek",
+        "Masuk screener volume Stockbit — ada perhatian pasar"
       ],
       "signals_negative": [
-        "Upper wick besar (42%) — tekanan jual D-1",
         "Asing jual bersih besar — hati-hati gap down"
       ],
       "backtest_stats": {
@@ -262,14 +174,14 @@
   "position_trading": [],
   "meta": {
     "status": "success",
-    "generated_at": "2026-11-14 01:58:55 WIB",
-    "date": "2026-11-14",
+    "generated_at": "2026-11-17 04:26:10 WIB",
+    "date": "2026-11-17",
     "mode": "FULL_STOCKBIT",
-    "session_label": "PRE_MARKET_WEEKEND (Saturday)",
+    "session_label": "MARKET_DAY",
     "pipeline_version": "v7.0",
-    "session_warning": "⚠️ Screening akhir pekan — referensi persiapan saja, bukan sinyal eksekusi.",
+    "session_warning": null,
     "mode_warning": null,
-    "intraday_count": 2,
+    "intraday_count": 1,
     "ara_count": 0,
     "bsjp_count": 0,
     "bpjs_count": 1,
@@ -290,8 +202,8 @@
     }
   },
   "market_context": {
-    "ihsg_close": 5250,
-    "ihsg_change_pct": 2.66,
+    "ihsg_close": 5344,
+    "ihsg_change_pct": 1.78,
     "ihsg_trend": "BEARISH",
     "ihsg_above_ma50": false,
     "market_safe": true,
@@ -299,12 +211,12 @@
   },
   "screening_summary": {
     "universe": 959,
-    "after_liquidity": 81,
-    "after_accumulation": 43,
-    "after_trend": 2,
-    "after_smc": 2,
-    "after_entry": 2,
-    "final": 2
+    "after_liquidity": 55,
+    "after_accumulation": 8,
+    "after_trend": 1,
+    "after_smc": 1,
+    "after_entry": 1,
+    "final": 1
   },
   "config_ara": {
     "vol_ma20_tier1": 3.0,
